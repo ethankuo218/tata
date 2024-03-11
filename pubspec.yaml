@@ -1,0 +1,46 @@
+name: eq_chat
+description: "A new Flutter project."
+
+# Prevent accidental publishing to pub.dev.
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  cloud_firestore: ^4.15.8
+  cupertino_icons: ^1.0.6
+  firebase_auth: ^4.17.8
+  firebase_core: ^2.25.4
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_svg: ^2.0.10+1
+  font_awesome_flutter: ^10.7.0
+  google_sign_in: ^6.2.1
+  rive: ^0.12.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Enable generation of localized Strings from arb files.
+  generate: true
+
+  assets:
+    # Add assets from the images directory to the application.
+    - assets/avaters/
+    - assets/Backgrounds/
+    - assets/Fonts/
+    - assets/icons/
+    - assets/images/
+    - assets/RiveAssets/
+    - assets/shapes/
