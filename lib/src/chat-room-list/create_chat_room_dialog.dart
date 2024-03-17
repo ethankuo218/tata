@@ -7,7 +7,7 @@ Future<Object?> createChatRoomDialog(BuildContext context,
   final screenHeight = MediaQuery.of(context).size.height;
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
-  late ChatRoomType selectedType = ChatRoomType.private;
+  late ChatRoomType selectedType = ChatRoomType.normal;
 
   return showGeneralDialog(
       barrierDismissible: true,
@@ -77,12 +77,9 @@ Future<Object?> createChatRoomDialog(BuildContext context,
                           onChanged: (ChatRoomType? newValue) {
                             selectedType = newValue!;
                           },
-                          items: <ChatRoomType>[
-                            ChatRoomType.private,
-                            ChatRoomType.group,
-                            ChatRoomType.midnightTarot
-                          ].map<DropdownMenuItem<ChatRoomType>>(
-                              (ChatRoomType value) {
+                          items: <ChatRoomType>[ChatRoomType.normal]
+                              .map<DropdownMenuItem<ChatRoomType>>(
+                                  (ChatRoomType value) {
                             return DropdownMenuItem<ChatRoomType>(
                               value: value,
                               child: Text(ChatRoomType.toText(value.enumValue)),

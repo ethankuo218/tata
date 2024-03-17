@@ -3,18 +3,26 @@ import 'package:eq_chat/src/models/chat_room.dart';
 import 'package:eq_chat/src/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 class ChatService extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
-  // Get Chat Room List
-  Stream<QuerySnapshot> getChatRoomList() {
+  // Get Lobby Chat Room List
+  // TODO: pagination
+  Stream<QuerySnapshot> getLobbyChatRoomList() {
+    return _fireStore.collection('chat_rooms').snapshots();
+  }
+
+  // Get User Chat Room List
+  // TODO: pagination
+  Stream<QuerySnapshot> getUserChatRoomList() {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
     return _fireStore
         .collection('chat_rooms')
-        // .where('members', arrayContains: currentUserId)
+        .where('members', arrayContains: currentUserId)
         .snapshots();
   }
 
@@ -55,7 +63,6 @@ class ChatService extends ChangeNotifier {
   Future<String> createChatRoom(
     String title,
     String description,
-    ChatRoomType type,
     int limit,
   ) async {
     final DocumentReference newChatRoomDoc =
@@ -63,7 +70,7 @@ class ChatService extends ChangeNotifier {
 
     final ChatRoom newChatRoom = ChatRoom(
         id: newChatRoomDoc.id,
-        type: type,
+        type: ChatRoomType.normal,
         title: title,
         description: description,
         limit: limit,
@@ -99,6 +106,75 @@ class ChatService extends ChangeNotifier {
 
     // navigate to chat room list in controller
   }
+
+  // Realtime Pair
+  Future<String?> realtimePair(String userId) async {
+    final String currentUserId = _firebaseAuth.currentUser!.uid;
+
+    // find a realtime chat room with members less than 2
+    final QuerySnapshot<Map<String, dynamic>> chatRoomSnapshot =
+        await _fireStore
+            .collection('chat_rooms')
+            .where('type', isEqualTo: ChatRoomType.realtime)
+            .get();
+
+    for (var element in chatRoomSnapshot.docs) {
+      final ChatRoom chatRoom = ChatRoom.fromMap(element.data());
+
+      if (chatRoom.members.length < 2) {
+        // join the chat room
+        await _fireStore.collection('chat_rooms').doc(chatRoom.id).update({
+          'members': FieldValue.arrayUnion([currentUserId, userId])
+        });
+
+        // navigate to chat room in controller
+        return chatRoom.id;
+      }
+    }
+
+    return waitForPaired();
+  }
+
+  Future<String?> waitForPaired() async {
+    final String currentUserId = _firebaseAuth.currentUser!.uid;
+
+    // create a new realtime chat room and wait for the other user
+    final DocumentReference newChatRoomDoc =
+        _fireStore.collection('chat_rooms').doc();
+
+    final ChatRoom newChatRoom = ChatRoom(
+      id: newChatRoomDoc.id,
+      type: ChatRoomType.realtime,
+      title: '',
+      description: '',
+      limit: 2,
+      members: [currentUserId],
+    );
+
+    newChatRoomDoc.set(newChatRoom.toMap());
+    // check every 3 secs for 10 times
+    for (var i = 0; i < 10; i++) {
+      await Future.delayed(const Duration(seconds: 3));
+
+      // check if chat room have member > 1
+      final QuerySnapshot<Map<String, dynamic>> chatRoomSnapshot =
+          await _fireStore
+              .collection('chat_rooms')
+              .where('id', isEqualTo: newChatRoomDoc.id)
+              .get();
+
+      final bool isPaired =
+          ChatRoom.fromMap(chatRoomSnapshot.docs[0].data()).members.length > 1;
+
+      if (isPaired) {
+        // navigate to chat room in controller
+        return newChatRoomDoc.id;
+      }
+    }
+    return null;
+
+    // stop waiting and navigate to chat room list in controller
+  }
 }
 
 // Join A Chat Room: 
@@ -112,3 +188,10 @@ class ChatService extends ChangeNotifier {
 // -> Join by id 
 // -> Get Messages Stream by id
 // Send message | Leave chat room
+
+// Realtime Pair:
+// Get the chat room list with type: realtime
+// Found → Add user to member list & navigate to chat room.
+// Not found →  Create a new chat room & waiting 
+// Check every 3 secs → 10 times → stop
+// Chat room have member > 1 → navigate to chat room

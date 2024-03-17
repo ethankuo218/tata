@@ -57,9 +57,8 @@ class ChatRoom {
 }
 
 enum ChatRoomType {
-  private(1),
-  group(2),
-  midnightTarot(3);
+  normal(1),
+  realtime(2);
 
   const ChatRoomType(this.enumValue);
 
@@ -74,13 +73,11 @@ enum ChatRoomType {
   static String toText(int x) {
     switch (x) {
       case 1:
-        return 'Private';
+        return 'Normal';
       case 2:
-        return 'Group';
-      case 3:
-        return 'Midnight Tarot';
+        return 'Realtime';
       default:
-        return 'Private';
+        return 'Normal';
     }
   }
 

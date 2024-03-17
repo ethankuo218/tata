@@ -82,7 +82,7 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
               separatorBuilder: (BuildContext context, int index) =>
                   const SizedBox(height: 20),
             ),
-            stream: ChatService().getChatRoomList(),
+            stream: ChatService().getLobbyChatRoomList(),
           ),
         ),
       ]),
@@ -128,8 +128,8 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
                 if (_ == null) {
                   return;
                 }
-                ChatService().createChatRoom(
-                    _["title"], _["description"], _["type"], _["limit"]);
+                ChatService()
+                    .createChatRoom(_["title"], _["description"], _["limit"]);
               });
             },
             child: Container(

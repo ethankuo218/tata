@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:rive/rive.dart';
 import 'components/animated_button.dart';
 import 'custom_sign_in_dialog.dart';
@@ -24,22 +25,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
         body: Stack(
       children: [
         Positioned(
-            width: MediaQuery.of(context).size.width * 1.7,
-            bottom: 200,
-            left: 100,
-            child: Image.asset('assets/Backgrounds/Spline.png')),
+            height: screenHeight,
+            // width: screenWidth * 1.5,
+            left: screenWidth * -0.44,
+            child: Image.asset('assets/Backgrounds/Background.png')),
         Positioned.fill(
             child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 10),
-        )),
-        const RiveAnimation.asset('assets/RiveAssets/shapes.riv'),
-        Positioned.fill(
-            child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 10),
+          filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
           child: const SizedBox(),
         )),
         AnimatedPositioned(
@@ -51,7 +50,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Spacer(),
                     const SizedBox(
@@ -60,13 +59,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         Text(
                           "TATA",
                           style: TextStyle(
-                              fontSize: 70, fontFamily: "Poppins", height: 1.2),
+                              color: Colors.white,
+                              fontSize: 70,
+                              fontFamily: "Poppins",
+                              height: 1.2),
                         ),
                         SizedBox(
                           height: 30,
-                        ),
-                        Text(
-                            "Centered on enhancing your digital communication, designed to foster thoughtful, empathetic conversations and promote a deeper understanding.")
+                        )
                       ]),
                     ),
                     const Spacer(
@@ -88,13 +88,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         });
                       },
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24.0),
-                      child: Text(
-                        "Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates",
-                        style: TextStyle(),
-                      ),
-                    )
+                    SizedBox(
+                      height: screenHeight * 0.15,
+                    ),
                   ]),
             ),
           ),

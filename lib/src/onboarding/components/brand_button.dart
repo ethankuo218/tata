@@ -9,7 +9,7 @@ class BrandButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late SvgPicture brandIcon;
+    late dynamic brandIcon;
 
     switch (brand) {
       case Brand.apple:
@@ -20,6 +20,11 @@ class BrandButton extends StatelessWidget {
         break;
       case Brand.facebook:
         brandIcon = SvgPicture.asset('assets/icons/facebook-icon.svg');
+      case Brand.phone:
+        brandIcon = const Icon(
+          Icons.phone,
+          size: 35,
+        );
         break;
     }
 
@@ -47,7 +52,8 @@ class BrandButton extends StatelessWidget {
 enum Brand {
   apple(1),
   google(2),
-  facebook(3);
+  facebook(3),
+  phone(4);
 
   const Brand(this.enumValue);
 

@@ -42,6 +42,9 @@ class AuthService {
   // Apple Sign In
   signInWithApple() async {}
 
+  // Phone Number Sign In
+  signInWithPhoneNumber() async {}
+
   Future<void> signOut() async {
     return await FirebaseAuth.instance.signOut();
   }

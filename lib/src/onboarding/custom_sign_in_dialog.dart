@@ -61,14 +61,15 @@ Future<Object?> customSignInDialog(BuildContext context,
 
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => const ChatRoomListPage()));
+                                  builder: (context) =>
+                                      const ChatRoomListPage()));
                         },
                       ),
                       const Padding(
                           padding: EdgeInsets.symmetric(vertical: 15)),
                       BrandButton(
-                        brand: Brand.facebook,
-                        onPress: () => AuthService().signInWithGoogle(),
+                        brand: Brand.phone,
+                        onPress: () => AuthService().signInWithPhoneNumber(),
                       ),
                     ]),
                     const Positioned(
