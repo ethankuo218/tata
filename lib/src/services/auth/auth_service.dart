@@ -12,6 +12,10 @@ class AuthService {
     // begin interactive sign in process
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
+    if (googleUser == null) {
+      return Future.error('User cancelled the login process');
+    }
+
     try {
       // obtain auth details from request
       final GoogleSignInAuthentication googleAuth =

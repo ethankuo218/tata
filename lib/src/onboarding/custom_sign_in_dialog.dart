@@ -1,6 +1,8 @@
 import 'package:eq_chat/src/chat-room-list/chat_room_list_page.dart';
 import 'package:eq_chat/src/onboarding/components/brand_button.dart';
 import 'package:eq_chat/src/services/auth/auth_service.dart';
+import 'package:eq_chat/src/services/snackbar.service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Future<Object?> customSignInDialog(BuildContext context,
@@ -56,13 +58,20 @@ Future<Object?> customSignInDialog(BuildContext context,
                       BrandButton(
                         brand: Brand.google,
                         onPress: () async {
-                          await AuthService().signInWithGoogle();
-                          if (!context.mounted) return;
+                          try {
+                            await AuthService().signInWithGoogle();
 
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ChatRoomListPage()));
+                            if (!context.mounted) return;
+
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ChatRoomListPage()));
+                          } catch (e) {
+                            if (kDebugMode) {
+                              print(e);
+                            }
+                          }
                         },
                       ),
                       const Padding(
