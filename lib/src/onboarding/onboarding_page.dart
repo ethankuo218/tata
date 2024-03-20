@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:rive/rive.dart';
 import 'components/animated_button.dart';
 import 'custom_sign_in_dialog.dart';
@@ -32,12 +31,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
       children: [
         Positioned(
             height: screenHeight,
-            // width: screenWidth * 1.5,
-            left: screenWidth * -0.44,
+            left: screenWidth * -0.465,
             child: Image.asset('assets/Backgrounds/Background.png')),
         Positioned.fill(
             child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+          filter: ImageFilter.blur(sigmaX: 1.1, sigmaY: 1),
           child: const SizedBox(),
         )),
         AnimatedPositioned(
@@ -71,22 +69,22 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     const Spacer(
                       flex: 2,
                     ),
-                    AnimatedButton(
-                      btnAnimationController: _btnAnimationController,
-                      press: () {
-                        _btnAnimationController.isActive = true;
-                        Future.delayed(const Duration(milliseconds: 800), () {
-                          setState(() {
-                            isSignInDialogShown = true;
-                          });
-                          customSignInDialog(context, onClosed: (_) {
-                            setState(() {
-                              isSignInDialogShown = false;
-                            });
-                          });
-                        });
-                      },
-                    ),
+                    // AnimatedButton(
+                    //   btnAnimationController: _btnAnimationController,
+                    //   press: () {
+                    //     _btnAnimationController.isActive = true;
+                    //     Future.delayed(const Duration(milliseconds: 800), () {
+                    //       setState(() {
+                    //         isSignInDialogShown = true;
+                    //       });
+                    //       customSignInDialog(context, onClosed: (_) {
+                    //         setState(() {
+                    //           isSignInDialogShown = false;
+                    //         });
+                    //       });
+                    //     });
+                    //   },
+                    // ),
                     SizedBox(
                       height: screenHeight * 0.15,
                     ),

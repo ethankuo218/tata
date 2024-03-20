@@ -5,6 +5,7 @@ import '../models/chat_room.dart';
 Future<Object?> createChatRoomDialog(BuildContext context,
     {required ValueChanged onClosed}) {
   final screenHeight = MediaQuery.of(context).size.height;
+  final screenWidth = MediaQuery.of(context).size.width;
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   late ChatRoomType selectedType = ChatRoomType.normal;
@@ -25,11 +26,11 @@ Future<Object?> createChatRoomDialog(BuildContext context,
       pageBuilder: (context, _, __) => Center(
             child: Container(
               height: screenHeight * 0.6,
-              margin: const EdgeInsets.symmetric(horizontal: 16),
+              margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
               padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-              decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.95),
-                  borderRadius: const BorderRadius.all(Radius.circular(40))),
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(40))),
               child: Scaffold(
                 backgroundColor: Colors.transparent,
                 resizeToAvoidBottomInset: false,
@@ -87,8 +88,10 @@ Future<Object?> createChatRoomDialog(BuildContext context,
                           }).toList(),
                         ),
                       ),
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 30)),
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: screenHeight * 0.03),
+                      ),
                       // create button
                       ElevatedButton(
                           onPressed: () {

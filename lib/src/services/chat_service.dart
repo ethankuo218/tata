@@ -108,34 +108,37 @@ class ChatService extends ChangeNotifier {
   }
 
   // Realtime Pair
-  Future<String?> realtimePair(String userId) async {
+  Future<ChatRoom?> realtimePair() async {
+    print("Start pairing");
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
     // find a realtime chat room with members less than 2
     final QuerySnapshot<Map<String, dynamic>> chatRoomSnapshot =
         await _fireStore
             .collection('chat_rooms')
-            .where('type', isEqualTo: ChatRoomType.realtime)
+            .where('type', isEqualTo: ChatRoomType.realtime.toString())
             .get();
-
+    print(chatRoomSnapshot.docs.length);
     for (var element in chatRoomSnapshot.docs) {
       final ChatRoom chatRoom = ChatRoom.fromMap(element.data());
-
+      print(chatRoom.title);
       if (chatRoom.members.length < 2) {
+        print("Found a chat room with members less than 2");
         // join the chat room
         await _fireStore.collection('chat_rooms').doc(chatRoom.id).update({
-          'members': FieldValue.arrayUnion([currentUserId, userId])
+          'members': FieldValue.arrayUnion([currentUserId])
         });
 
         // navigate to chat room in controller
-        return chatRoom.id;
+        return chatRoom;
       }
     }
-
+    print("Not found a chat room with members less than 2");
     return waitForPaired();
   }
 
-  Future<String?> waitForPaired() async {
+  Future<ChatRoom?> waitForPaired() async {
+    print("Waiting for paired");
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
     // create a new realtime chat room and wait for the other user
@@ -150,10 +153,11 @@ class ChatService extends ChangeNotifier {
       limit: 2,
       members: [currentUserId],
     );
-
+    print("Create a new chat room: ${newChatRoom.id}");
     newChatRoomDoc.set(newChatRoom.toMap());
     // check every 3 secs for 10 times
     for (var i = 0; i < 10; i++) {
+      print("Checking for the $i time");
       await Future.delayed(const Duration(seconds: 3));
 
       // check if chat room have member > 1
@@ -168,9 +172,11 @@ class ChatService extends ChangeNotifier {
 
       if (isPaired) {
         // navigate to chat room in controller
-        return newChatRoomDoc.id;
+        print("Paired");
+        return newChatRoom;
       }
     }
+    print("Stop waiting");
     return null;
 
     // stop waiting and navigate to chat room list in controller
