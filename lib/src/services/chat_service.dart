@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eq_chat/src/models/chat_room.dart';
-import 'package:eq_chat/src/models/message.dart';
+import 'package:tata/src/models/chat_room.dart';
+import 'package:tata/src/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';

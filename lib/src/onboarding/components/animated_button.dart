@@ -16,11 +16,11 @@ class AnimatedButton extends StatelessWidget {
     return GestureDetector(
       onTap: press,
       child: SizedBox(
-        height: 64,
-        width: 260,
+        height: 230,
+        width: 300,
         child: Stack(children: [
           RiveAnimation.asset(
-            "assets/RiveAssets/button.riv",
+            "assets/RiveAssets/login_button.riv",
             controllers: [_btnAnimationController],
           ),
           const Positioned.fill(

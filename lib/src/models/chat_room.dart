@@ -1,4 +1,4 @@
-import 'package:eq_chat/src/models/message.dart';
+import 'package:tata/src/models/message.dart';
 
 class ChatRoom {
   final String id;

@@ -1,5 +1,5 @@
-import 'package:eq_chat/src/models/chat_room.dart';
-import 'package:eq_chat/src/services/chat_service.dart';
+import 'package:tata/src/models/chat_room.dart';
+import 'package:tata/src/services/chat_service.dart';
 import 'package:flutter/material.dart';
 
 class RealtimePairPage extends StatefulWidget {

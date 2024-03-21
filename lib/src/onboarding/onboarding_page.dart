@@ -69,22 +69,22 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     const Spacer(
                       flex: 2,
                     ),
-                    // AnimatedButton(
-                    //   btnAnimationController: _btnAnimationController,
-                    //   press: () {
-                    //     _btnAnimationController.isActive = true;
-                    //     Future.delayed(const Duration(milliseconds: 800), () {
-                    //       setState(() {
-                    //         isSignInDialogShown = true;
-                    //       });
-                    //       customSignInDialog(context, onClosed: (_) {
-                    //         setState(() {
-                    //           isSignInDialogShown = false;
-                    //         });
-                    //       });
-                    //     });
-                    //   },
-                    // ),
+                    AnimatedButton(
+                      btnAnimationController: _btnAnimationController,
+                      press: () {
+                        _btnAnimationController.isActive = true;
+                        Future.delayed(const Duration(milliseconds: 800), () {
+                          setState(() {
+                            isSignInDialogShown = true;
+                          });
+                          customSignInDialog(context, onClosed: (_) {
+                            setState(() {
+                              isSignInDialogShown = false;
+                            });
+                          });
+                        });
+                      },
+                    ),
                     SizedBox(
                       height: screenHeight * 0.15,
                     ),

@@ -1,7 +1,7 @@
-import 'package:eq_chat/src/chat-room-list/components/chat_room_category_tile.dart';
-import 'package:eq_chat/src/chat-room-list/components/chat_room_tile.dart';
-import 'package:eq_chat/src/models/chat_room.dart';
-import 'package:eq_chat/src/services/chat_service.dart';
+import 'package:tata/src/chat-room-list/components/chat_room_category_tile.dart';
+import 'package:tata/src/chat-room-list/components/chat_room_tile.dart';
+import 'package:tata/src/models/chat_room.dart';
+import 'package:tata/src/services/chat_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

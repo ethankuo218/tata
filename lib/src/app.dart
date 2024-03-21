@@ -1,7 +1,7 @@
-import 'package:eq_chat/src/chat-room/chat_room_page.dart';
-import 'package:eq_chat/src/models/chat_room.dart';
-import 'package:eq_chat/src/realtime_pair/realtime_pair_page.dart';
-import 'package:eq_chat/src/services/auth/auth_gate.dart';
+import 'package:tata/src/chat-room/chat_room_page.dart';
+import 'package:tata/src/models/chat_room.dart';
+import 'package:tata/src/realtime_pair/realtime_pair_page.dart';
+import 'package:tata/src/services/auth/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

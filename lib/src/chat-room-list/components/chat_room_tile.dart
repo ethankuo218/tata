@@ -1,4 +1,4 @@
-import 'package:eq_chat/src/models/chat_room.dart';
+import 'package:tata/src/models/chat_room.dart';
 import 'package:flutter/material.dart';
 
 class ChatRoomTile extends StatelessWidget {

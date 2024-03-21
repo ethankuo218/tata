@@ -1,7 +1,6 @@
-import 'package:eq_chat/src/chat-room-list/chat_room_list_page.dart';
-import 'package:eq_chat/src/onboarding/components/brand_button.dart';
-import 'package:eq_chat/src/services/auth/auth_service.dart';
-import 'package:eq_chat/src/services/snackbar.service.dart';
+import 'package:tata/src/chat-room-list/chat_room_list_page.dart';
+import 'package:tata/src/onboarding/components/brand_button.dart';
+import 'package:tata/src/services/auth/auth_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

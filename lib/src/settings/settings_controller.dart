@@ -1,4 +1,4 @@
-import 'package:eq_chat/src/services/auth/auth_service.dart';
+import 'package:tata/src/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 import '../onboarding/onboarding_page.dart';
