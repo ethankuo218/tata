@@ -1,7 +1,7 @@
 import 'package:tata/src/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
-import '../onboarding/onboarding_page.dart';
+import '../login/login_page.dart';
 import 'settings_service.dart';
 
 /// A class that many Widgets can interact with to read user settings, update
@@ -56,6 +56,6 @@ class SettingsController with ChangeNotifier {
     if (!context.mounted) return;
 
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const OnboardingPage()));
+        MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

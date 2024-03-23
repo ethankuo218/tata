@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../chat-room-list/chat_room_list_page.dart';
-import '../../onboarding/onboarding_page.dart';
+import '../../login/login_page.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -16,7 +16,7 @@ class AuthGate extends StatelessWidget {
           if (snapshot.hasData) {
             return const ChatRoomListPage();
           } else {
-            return const OnboardingPage();
+            return const LoginPage();
           }
         },
       ),

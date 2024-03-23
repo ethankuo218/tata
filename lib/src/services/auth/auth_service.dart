@@ -7,6 +7,9 @@ class AuthService {
 
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
+  // Apple Sign In
+  signInWithApple() async {}
+
   // Google Sign In
   Future<UserCredential> signInWithGoogle() async {
     // begin interactive sign in process
@@ -42,9 +45,6 @@ class AuthService {
       throw Exception(e.code);
     }
   }
-
-  // Apple Sign In
-  signInWithApple() async {}
 
   // Phone Number Sign In
   signInWithPhoneNumber() async {}
