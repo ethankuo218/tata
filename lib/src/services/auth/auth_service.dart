@@ -49,7 +49,7 @@ class AuthService {
   // Phone Number Sign In
   signInWithPhoneNumber() async {}
 
-  Future<void> signOut() async {
-    return await FirebaseAuth.instance.signOut();
+  void signOut() {
+    FirebaseAuth.instance.signOut();
   }
 }

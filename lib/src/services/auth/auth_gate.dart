@@ -13,11 +13,11 @@ class AuthGate extends StatelessWidget {
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return const ChatRoomListPage();
-          } else {
+          if (!snapshot.hasData) {
             return const LoginPage();
           }
+
+          return const ChatRoomListPage();
         },
       ),
     );

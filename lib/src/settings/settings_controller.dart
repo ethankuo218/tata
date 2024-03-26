@@ -1,7 +1,7 @@
 import 'package:tata/src/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
-import '../login/login_page.dart';
+import '../services/auth/auth_gate.dart';
 import 'settings_service.dart';
 
 /// A class that many Widgets can interact with to read user settings, update
@@ -50,12 +50,9 @@ class SettingsController with ChangeNotifier {
     await _settingsService.updateThemeMode(newThemeMode);
   }
 
-  Future<void> signOut(BuildContext context) async {
-    await AuthService().signOut();
-
-    if (!context.mounted) return;
-
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginPage()));
+  void signOut(BuildContext context) {
+    AuthService().signOut();
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const AuthGate()));
   }
 }
