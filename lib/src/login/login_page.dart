@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
             child: SizedBox(
           height: screenHeight,
           width: screenWidth,
-          child: Image.asset('assets/Backgrounds/background.png',
+          child: Image.asset('assets/backgrounds/background.png',
               fit: BoxFit.cover),
         )),
         Positioned.fill(

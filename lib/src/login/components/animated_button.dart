@@ -63,7 +63,7 @@ class AnimatedButton extends StatelessWidget {
         width: 250,
         child: Stack(children: [
           RiveAnimation.asset(
-            "assets/RiveAssets/login_button.riv",
+            "assets/rive-assets/login_button.riv",
             controllers: [_btnAnimationController],
             fit: BoxFit.cover,
           ),

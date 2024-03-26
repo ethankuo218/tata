@@ -33,7 +33,7 @@ flutter:
   fonts:
     - family: MedievalSharp
       fonts:
-        - asset: assets/Fonts/MedievalSharp-Regular.ttf
+        - asset: assets/fonts/MedievalSharp-Regular.ttf
           weight: 400
 
   uses-material-design: true
@@ -44,9 +44,9 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/avaters/
-    - assets/Backgrounds/
-    - assets/Fonts/
+    - assets/backgrounds/
+    - assets/fonts/
     - assets/icons/
     - assets/images/
-    - assets/RiveAssets/
+    - assets/rive-assets/
     - assets/shapes/
