@@ -1,4 +1,5 @@
 import 'package:tata/src/chat-room/chat_room_page.dart';
+import 'package:tata/src/login/login_page.dart';
 import 'package:tata/src/models/chat_room.dart';
 import 'package:tata/src/realtime_pair/realtime_pair_page.dart';
 import 'package:tata/src/services/auth/auth_gate.dart';
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.black,
             ),
-            scaffoldBackgroundColor: Colors.black,
+            scaffoldBackgroundColor: const Color.fromARGB(255, 41, 41, 41),
             bottomSheetTheme: const BottomSheetThemeData(
               surfaceTintColor: Colors.transparent,
             ),
