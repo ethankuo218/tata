@@ -66,7 +66,11 @@ class _LoginPageState extends State<LoginPage> {
               brand: Brand.apple,
               btnAnimationController: _btnAnimationController,
               onPress: () {
-                AuthService().signInWithApple();
+                try {
+                  AuthService().signInWithApple();
+                } catch (e) {
+                  print(e);
+                }
               },
             ),
             AnimatedButton(
