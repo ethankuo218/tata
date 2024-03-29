@@ -21,7 +21,10 @@ dependencies:
   flutter_svg: ^2.0.10+1
   font_awesome_flutter: ^10.7.0
   google_sign_in: ^6.2.1
+  phone_form_field: ^9.2.3
+  pinput: ^4.0.0
   rive: ^0.12.4
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   flutter_test:

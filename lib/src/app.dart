@@ -1,6 +1,7 @@
 import 'package:tata/src/chat-room/chat_room_page.dart';
-import 'package:tata/src/login/login_page.dart';
 import 'package:tata/src/models/chat_room.dart';
+import 'package:tata/src/phone-verify/phone_verify_input_page.dart';
+import 'package:tata/src/phone-verify/phone_verify_otp_page.dart';
 import 'package:tata/src/realtime_pair/realtime_pair_page.dart';
 import 'package:tata/src/services/auth/auth_gate.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +84,10 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
+                  case PhoneVerifyInputPage.routeName:
+                    return const PhoneVerifyInputPage();
+                  case PhoneVerifyOtpPage.routeName:
+                    return const PhoneVerifyOtpPage();
                   case ChatRoomListPage.routeName:
                     return const ChatRoomListPage();
                   case ChatRoomPage.routeName:

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -62,17 +63,15 @@ class _LoginPageState extends State<LoginPage> {
             const Spacer(
               flex: 1,
             ),
-            AnimatedButton(
-              brand: Brand.apple,
-              btnAnimationController: _btnAnimationController,
-              onPress: () {
-                try {
-                  AuthService().signInWithApple();
-                } catch (e) {
-                  print(e);
-                }
-              },
-            ),
+            Platform.isIOS
+                ? AnimatedButton(
+                    brand: Brand.apple,
+                    btnAnimationController: _btnAnimationController,
+                    onPress: () {
+                      AuthService().signInWithApple();
+                    },
+                  )
+                : const SizedBox(),
             AnimatedButton(
               brand: Brand.google,
               btnAnimationController: _btnAnimationController,
@@ -84,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               brand: Brand.phone,
               btnAnimationController: _btnAnimationController,
               onPress: () {
-                AuthService().signInWithPhoneNumber();
+                Navigator.pushNamed(context, '/phone-verify/phone-input');
               },
             ),
             SizedBox(
