@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                         ? Colors.purple.withOpacity(0.8)
                         : Colors.white.withOpacity(0.3),
                   ),
-                  label: 'Home',
+                  label: '',
                 ),
                 NavigationDestination(
                   icon: FaIcon(
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                         ? Colors.purple.withOpacity(0.8)
                         : Colors.white.withOpacity(0.3),
                   ),
-                  label: 'Chat Rooms',
+                  label: '',
                 ),
                 GestureDetector(
                   onTap: () {
@@ -208,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                         ? Colors.purple.withOpacity(0.8)
                         : Colors.white.withOpacity(0.3),
                   ),
-                  label: 'Activity',
+                  label: '',
                 ),
                 NavigationDestination(
                   icon: FaIcon(
@@ -217,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                         ? Colors.purple.withOpacity(0.8)
                         : Colors.white.withOpacity(0.3),
                   ),
-                  label: 'User',
+                  label: '',
                 ),
               ]),
         ));
