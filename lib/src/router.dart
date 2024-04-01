@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tata/src/chat-room/chat_room_page.dart';
 import 'package:tata/src/home/home_page.dart';
 import 'package:tata/src/models/chat_room.dart';
+import 'package:tata/src/models/phone_verify_argument.dart';
 import 'package:tata/src/phone-verify/phone_verify_input_page.dart';
 import 'package:tata/src/phone-verify/phone_verify_otp_page.dart';
 import 'package:tata/src/services/auth/auth_gate.dart';
@@ -21,7 +22,9 @@ class AppRouter {
       case PhoneVerifyInputPage.routeName:
         return MaterialPageRoute(builder: (_) => const PhoneVerifyInputPage());
       case PhoneVerifyOtpPage.routeName:
-        return MaterialPageRoute(builder: (_) => const PhoneVerifyOtpPage());
+        final args = settings.arguments as PhoneVerifyArgument;
+        return MaterialPageRoute(
+            builder: (_) => PhoneVerifyOtpPage(args: args));
       case SettingsView.routeName:
         return MaterialPageRoute(
             builder: (_) => SettingsView(controller: settingsController));

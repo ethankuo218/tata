@@ -2,15 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:phone_form_field/phone_form_field.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tata/src/models/phone_verify_argument.dart';
 import 'package:tata/src/services/auth/auth_gate.dart';
 import 'package:tata/src/services/auth/auth_service.dart';
 
 class PhoneVerifyOtpPage extends StatefulWidget {
-  const PhoneVerifyOtpPage({super.key});
+  const PhoneVerifyOtpPage({super.key, required this.args});
 
   static const String routeName = '/phone-verify-otp';
+
+  final PhoneVerifyArgument args;
 
   @override
   State<PhoneVerifyOtpPage> createState() => _PhoneVerifyOtpPageState();
@@ -46,10 +49,11 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    final args =
-        ModalRoute.of(context)!.settings.arguments as PhoneVerifyArgument;
+    final String verificationId = widget.args.verificationId;
+    final PhoneNumber phoneNumber = widget.args.phoneNumber;
+
     final displayPhoneNumber =
-        '+${args.phoneNumber.countryCode} ${'*' * (args.phoneNumber.nsn.length - 2)}${args.phoneNumber.nsn.substring(args.phoneNumber.nsn.length - 2)}';
+        '+${phoneNumber.countryCode} ${'*' * (phoneNumber.nsn.length - 2)}${phoneNumber.nsn.substring(phoneNumber.nsn.length - 2)}';
 
     const focusedBorderColor = Colors.purple;
 
@@ -110,9 +114,8 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
                             value!.length == 6 ? null : 'Invalid OTP',
                         hapticFeedbackType: HapticFeedbackType.lightImpact,
                         onCompleted: (pin) {
-                          AuthService()
-                              .verifyOtp(args.verificationId, pin)
-                              .then((value) => Navigator.push(
+                          AuthService().verifyOtp(verificationId, pin).then(
+                              (value) => Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => const AuthGate())));
@@ -181,7 +184,7 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
                           }
                         });
 
-                        AuthService().resendOtp(args.phoneNumber);
+                        AuthService().resendOtp(phoneNumber);
                       })
               ])),
               SizedBox(height: screenHeight * 0.1),
@@ -198,7 +201,7 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
                               if (formKey.currentState!.validate()) {
                                 AuthService()
                                     .verifyOtp(
-                                        args.verificationId, pinController.text)
+                                        verificationId, pinController.text)
                                     .then((value) => Navigator.push(
                                         context,
                                         MaterialPageRoute(

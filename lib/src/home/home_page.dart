@@ -4,6 +4,7 @@ import 'package:tata/src/chat-room-list/components/chat_room_category_tile.dart'
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tata/src/chat-room-list/create_chat_room_dialog.dart';
 import 'package:tata/src/services/chat_service.dart';
+import 'package:tata/src/settings/settings_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -54,8 +55,17 @@ class _HomePageState extends State<HomePage> {
 
   void _onItemTapped(int index) {
     setState(() {
-      if (index != 2) {
-        _selectedIndex = index;
+      switch (index) {
+        case 0:
+        case 1:
+        case 3:
+          _selectedIndex = index;
+          break;
+        case 2:
+          break;
+        case 4:
+          Navigator.pushNamed(context, SettingsView.routeName);
+          break;
       }
     });
   }
