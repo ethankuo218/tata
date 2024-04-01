@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tata/src/core/tarot.dart';
 import 'package:tata/src/models/chat_room.dart';
 
 Future<Object?> createChatRoomDetailDialog(BuildContext context,
@@ -36,13 +37,14 @@ Future<Object?> createChatRoomDetailDialog(BuildContext context,
                       children: [
                         Container(
                             height: 200,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage('assets/images/death.jpg'),
+                                image: AssetImage(Tarot.getTarotCardImage(
+                                    chatRoomInfo.backgroundImage)),
                                 fit: BoxFit.cover,
                                 alignment: Alignment.topCenter,
                               ),
-                              borderRadius: BorderRadius.vertical(
+                              borderRadius: const BorderRadius.vertical(
                                   top: Radius.circular(10),
                                   bottom: Radius.zero),
                             ),
@@ -119,18 +121,40 @@ Future<Object?> createChatRoomDetailDialog(BuildContext context,
                           vertical: 10, horizontal: 20),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(Icons.person,
-                              color: Colors.white.withOpacity(0.4)),
-                          const SizedBox(width: 5),
-                          Text(chatRoomInfo.members.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white.withOpacity(0.4),
-                                  fontSize: 16))
+                          Container(
+                            width: 80,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 2,
+                                  color: Colors.purple.withOpacity(0.5)),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Center(
+                              child: Text(chatRoomInfo.category,
+                                  style: const TextStyle(
+                                      color: Colors.purple, fontSize: 16)),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 2),
+                            child: Row(
+                              children: [
+                                Icon(Icons.person,
+                                    color: Colors.white.withOpacity(0.4)),
+                                const SizedBox(width: 5),
+                                Text(chatRoomInfo.members.length.toString(),
+                                    style: TextStyle(
+                                        color: Colors.white.withOpacity(0.4),
+                                        fontSize: 16)),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
+                    const SizedBox(height: 5),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.0),
                       child: Text('Description',
@@ -141,7 +165,7 @@ Future<Object?> createChatRoomDetailDialog(BuildContext context,
                     ),
                     const SizedBox(height: 10),
                     Container(
-                        height: screenHeight * 0.2,
+                        height: screenHeight * 0.18,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Scrollbar(
                             child: SingleChildScrollView(
