@@ -17,5 +17,5 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp(settingsController: settingsController));
+  runApp(App(settingsController: settingsController));
 }

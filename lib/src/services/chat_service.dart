@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tata/src/core/tarot.dart';
 import 'package:tata/src/models/chat_room.dart';
 import 'package:tata/src/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,6 +64,8 @@ class ChatService extends ChangeNotifier {
   Future<String> createChatRoom(
     String title,
     String description,
+    String category,
+    TarotCard backgroundImage,
     int limit,
   ) async {
     final DocumentReference newChatRoomDoc =
@@ -73,7 +76,10 @@ class ChatService extends ChangeNotifier {
         type: ChatRoomType.normal,
         title: title,
         description: description,
+        category: category,
+        backgroundImage: backgroundImage,
         limit: limit,
+        hostId: _firebaseAuth.currentUser!.uid,
         members: [_firebaseAuth.currentUser!.uid]);
 
     // create chat room
@@ -150,6 +156,8 @@ class ChatService extends ChangeNotifier {
       type: ChatRoomType.realtime,
       title: '',
       description: '',
+      category: '',
+      backgroundImage: TarotCard.fool,
       limit: 2,
       members: [currentUserId],
     );

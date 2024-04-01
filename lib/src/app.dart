@@ -1,20 +1,14 @@
-import 'package:tata/src/chat-room/chat_room_page.dart';
-import 'package:tata/src/models/chat_room.dart';
-import 'package:tata/src/phone-verify/phone_verify_input_page.dart';
-import 'package:tata/src/phone-verify/phone_verify_otp_page.dart';
-import 'package:tata/src/realtime_pair/realtime_pair_page.dart';
+import 'package:tata/src/router.dart';
 import 'package:tata/src/services/auth/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'chat-room-list/chat_room_list_page.dart';
 import 'settings/settings_controller.dart';
-import 'settings/settings_view.dart';
 
 /// The Widget that configures your application.
-class MyApp extends StatelessWidget {
-  const MyApp({
+class App extends StatelessWidget {
+  const App({
     super.key,
     required this.settingsController,
   });
@@ -49,58 +43,26 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [
             Locale('en', ''), // English, no country code
           ],
-
-          // Use AppLocalizations to configure the correct application title
-          // depending on the user's locale.
-          //
-          // The appTitle is defined in .arb files found in the localization
-          // directory.
-          onGenerateTitle: (BuildContext context) =>
-              AppLocalizations.of(context)!.appTitle,
-
-          // Define a light and dark color theme. Then, read the user's
-          // preferred ThemeMode (light, dark, or system default) from the
-          // SettingsController to display the correct theme.
           theme: ThemeData(
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.black,
             ),
-            scaffoldBackgroundColor: const Color.fromARGB(255, 41, 41, 41),
+            scaffoldBackgroundColor: Colors.black,
             bottomSheetTheme: const BottomSheetThemeData(
-              surfaceTintColor: Colors.transparent,
+              surfaceTintColor: Colors.black,
             ),
             primarySwatch: Colors.purple,
-            fontFamily: "Intel",
+            fontFamily: "YuseiMagic",
           ),
-          // darkTheme: ThemeData.dark(),
-          // themeMode: settingsController.themeMode,
 
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
-          onGenerateRoute: (RouteSettings routeSettings) {
-            return MaterialPageRoute<void>(
-              settings: routeSettings,
-              builder: (BuildContext context) {
-                switch (routeSettings.name) {
-                  case SettingsView.routeName:
-                    return SettingsView(controller: settingsController);
-                  case PhoneVerifyInputPage.routeName:
-                    return const PhoneVerifyInputPage();
-                  case PhoneVerifyOtpPage.routeName:
-                    return const PhoneVerifyOtpPage();
-                  case ChatRoomListPage.routeName:
-                    return const ChatRoomListPage();
-                  case ChatRoomPage.routeName:
-                    return ChatRoomPage(
-                        chatRoomInfo: routeSettings.arguments as ChatRoom);
-                  case RealtimePairPage.routeName:
-                    return const RealtimePairPage();
-                  default:
-                    return const AuthGate();
-                }
-              },
-            );
-          },
+          onGenerateRoute: (RouteSettings routeSettings) =>
+              AppRouter.generateRoute(
+            routeSettings,
+            settingsController,
+          ),
+          initialRoute: AuthGate.routeName,
         );
       },
     );

@@ -38,6 +38,10 @@ flutter:
       fonts:
         - asset: assets/fonts/MedievalSharp-Regular.ttf
           weight: 400
+    - family: YuseiMagic
+      fonts:
+        - asset: assets/fonts/YuseiMagic-Regular.ttf
+          weight: 400
 
   uses-material-design: true
 
@@ -46,10 +50,11 @@ flutter:
 
   assets:
     # Add assets from the images directory to the application.
-    - assets/avaters/
+    - assets/avatars/
     - assets/backgrounds/
     - assets/fonts/
     - assets/icons/
     - assets/images/
+    - assets/images/tarot/
     - assets/rive-assets/
     - assets/shapes/

@@ -1,3 +1,4 @@
+import 'package:tata/src/core/tarot.dart';
 import 'package:tata/src/models/message.dart';
 
 class ChatRoom {
@@ -6,6 +7,8 @@ class ChatRoom {
   final String title;
   final String description;
   final int limit;
+  final String category;
+  final TarotCard backgroundImage;
   final String? hostId;
   late List<Message>? messages = [];
   late Message? latestMessage;
@@ -17,6 +20,8 @@ class ChatRoom {
     required this.title,
     required this.description,
     required this.limit,
+    required this.category,
+    required this.backgroundImage,
     this.messages,
     this.latestMessage,
     this.hostId,
@@ -30,6 +35,8 @@ class ChatRoom {
       title: map['title'],
       description: map['description'],
       limit: map['limit'],
+      category: map['category'],
+      backgroundImage: TarotCard.toEnum(map['background_image']),
       messages:
           List<Message>.from(map['messages'].map((e) => Message.fromMap(e))),
       latestMessage: map['latest_message'] == null
@@ -47,6 +54,8 @@ class ChatRoom {
       'title': title,
       'description': description,
       'limit': limit,
+      'category': category,
+      'background_image': TarotCard.toValue(backgroundImage),
       'messages':
           messages == null ? [] : messages?.map((e) => e.toMap()).toList(),
       'latest_message': latestMessage?.toMap(),
