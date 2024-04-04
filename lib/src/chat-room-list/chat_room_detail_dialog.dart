@@ -40,7 +40,7 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(Tarot.getTarotCardImage(
-                                    chatRoomInfo.backgroundImage)),
+                                    chatRoomInfo.backgroundImage!)),
                                 fit: BoxFit.cover,
                                 alignment: Alignment.topCenter,
                               ),

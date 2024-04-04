@@ -13,7 +13,10 @@ class ChatService extends ChangeNotifier {
   // Get Lobby Chat Room List
   // TODO: pagination
   Stream<QuerySnapshot> getLobbyChatRoomList() {
-    return _fireStore.collection('chat_rooms').snapshots();
+    return _fireStore
+        .collection('chat_rooms')
+        .where('type', isEqualTo: ChatRoomType.normal.value)
+        .snapshots();
   }
 
   // Get User Chat Room List

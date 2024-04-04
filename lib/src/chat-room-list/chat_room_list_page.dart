@@ -23,6 +23,7 @@ class ChatRoomListPage extends StatefulWidget {
 
 class _ChatRoomListPageState extends State<ChatRoomListPage> {
   late User user;
+  late bool isLoading = false;
 
   @override
   void initState() {
@@ -33,8 +34,6 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading = false;
-
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),

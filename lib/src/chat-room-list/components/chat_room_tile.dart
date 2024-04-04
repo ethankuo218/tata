@@ -12,7 +12,7 @@ class ChatRoomTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String backgroundImage =
-        Tarot.getTarotCardImage(chatRoomInfo.backgroundImage);
+        Tarot.getTarotCardImage(chatRoomInfo.backgroundImage!);
     return GestureDetector(
         onTap: () => onTap(),
         child: Stack(

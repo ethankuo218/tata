@@ -8,7 +8,7 @@ class ChatRoom {
   final String description;
   final int limit;
   final String category;
-  final TarotCard backgroundImage;
+  final TarotCard? backgroundImage;
   final String? hostId;
   late List<Message>? messages = [];
   late Message? latestMessage;
@@ -21,7 +21,7 @@ class ChatRoom {
     required this.description,
     required this.limit,
     required this.category,
-    required this.backgroundImage,
+    this.backgroundImage,
     this.messages,
     this.latestMessage,
     this.hostId,
@@ -32,11 +32,13 @@ class ChatRoom {
     return ChatRoom(
       id: map['id'],
       type: ChatRoomType.toEnum(map['type']),
-      title: map['title'],
-      description: map['description'],
+      title: map['title'] ?? '',
+      description: map['description'] ?? '',
       limit: map['limit'],
-      category: map['category'],
-      backgroundImage: TarotCard.toEnum(map['background_image']),
+      category: map['category'] ?? '',
+      backgroundImage: map['background_image'] != null
+          ? TarotCard.toEnum(map['background_image'])
+          : null,
       messages:
           List<Message>.from(map['messages'].map((e) => Message.fromMap(e))),
       latestMessage: map['latest_message'] == null
@@ -50,12 +52,13 @@ class ChatRoom {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'type': type.enumValue,
+      'type': type.value,
       'title': title,
       'description': description,
       'limit': limit,
       'category': category,
-      'background_image': TarotCard.toValue(backgroundImage),
+      'background_image':
+          backgroundImage == null ? null : TarotCard.toValue(backgroundImage!),
       'messages':
           messages == null ? [] : messages?.map((e) => e.toMap()).toList(),
       'latest_message': latestMessage?.toMap(),
@@ -69,14 +72,19 @@ enum ChatRoomType {
   normal(1),
   realtime(2);
 
-  const ChatRoomType(this.enumValue);
+  const ChatRoomType(this.value);
 
   /// Convert value to enum type
   ///
   /// When value not found, and [defaultValue] is null will Return first enum value.
   factory ChatRoomType.toEnum(int x, {dynamic defaultValue}) {
-    var filter = values.where((element) => element.enumValue == x);
-    return filter.isNotEmpty ? filter.first : defaultValue ?? values.first;
+    var filter = values.where((element) => element.value == x);
+
+    if (filter.isEmpty) {
+      throw Exception('Invalid input value');
+    }
+
+    return filter.first;
   }
 
   static String toText(int x) {
@@ -90,5 +98,5 @@ enum ChatRoomType {
     }
   }
 
-  final int enumValue;
+  final int value;
 }
