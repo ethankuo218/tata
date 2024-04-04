@@ -22,9 +22,9 @@ class AppRouter {
       case PhoneVerifyInputPage.routeName:
         return MaterialPageRoute(builder: (_) => const PhoneVerifyInputPage());
       case PhoneVerifyOtpPage.routeName:
-        final args = settings.arguments as PhoneVerifyArgument;
         return MaterialPageRoute(
-            builder: (_) => PhoneVerifyOtpPage(args: args));
+            builder: (_) => PhoneVerifyOtpPage(
+                args: settings.arguments as PhoneVerifyArgument));
       case SettingsView.routeName:
         return MaterialPageRoute(
             builder: (_) => SettingsView(controller: settingsController));

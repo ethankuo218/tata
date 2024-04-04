@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tata/src/core/tarot.dart';
 import 'package:tata/src/models/chat_room.dart';
 
-Future<Object?> createChatRoomDetailDialog(BuildContext context,
+Future<Object?> showChatRoomDetailDialog(BuildContext context,
     {required ChatRoom chatRoomInfo, required ValueChanged onClosed}) {
   final screenHeight = MediaQuery.of(context).size.height;
   final screenWidth = MediaQuery.of(context).size.width;

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tata/src/chat-room-list/chat_room_list_page.dart';
 import 'package:tata/src/chat-room-list/components/chat_room_category_tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tata/src/chat-room-list/create_chat_room_dialog.dart';
-import 'package:tata/src/services/chat_service.dart';
+import 'package:tata/src/realtime_pair/realtime_pair_page.dart';
 import 'package:tata/src/settings/settings_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -62,6 +61,7 @@ class _HomePageState extends State<HomePage> {
           _selectedIndex = index;
           break;
         case 2:
+          Navigator.pushNamed(context, RealtimePairPage.routeName);
           break;
         case 4:
           Navigator.pushNamed(context, SettingsView.routeName);
@@ -85,11 +85,6 @@ class _HomePageState extends State<HomePage> {
                 )),
             titleSpacing: 20,
             centerTitle: false,
-            // shape: Border(
-            //     bottom: BorderSide(
-            //   color: Colors.white.withOpacity(0.3),
-            //   width: 0,
-            // )),
             bottom: _selectedIndex == 0
                 ? PreferredSize(
                     preferredSize: const Size.fromHeight(45),
@@ -125,7 +120,6 @@ class _HomePageState extends State<HomePage> {
               (states) => TextStyle(
                 color: Colors.white.withOpacity(0.7),
                 fontSize: 12,
-                // fontWeight: FontWeight.bold,
               ),
             ),
             iconTheme: MaterialStateProperty.resolveWith(
@@ -163,13 +157,6 @@ class _HomePageState extends State<HomePage> {
                 GestureDetector(
                   onTap: () {
                     // navigate to create chat room page
-                    createChatRoomDialog(context, onClosed: (_) {
-                      if (_ == null) {
-                        return;
-                      }
-                      ChatService().createChatRoom(_["title"], _["description"],
-                          _["category"], _["backgroundImage"], _["limit"]);
-                    });
                   },
                   child: Stack(children: [
                     Positioned.fill(
@@ -193,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               child: const Center(
                                 child: FaIcon(
-                                  FontAwesomeIcons.plus,
+                                  FontAwesomeIcons.userGroup,
                                   color: Colors.white,
                                   size: 18,
                                 ),
@@ -203,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 NavigationDestination(
                   icon: FaIcon(
-                    FontAwesomeIcons.starOfDavid,
+                    FontAwesomeIcons.hourglassStart,
                     color: _selectedIndex == 3
                         ? Colors.purple.withOpacity(0.8)
                         : Colors.white.withOpacity(0.3),
@@ -212,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 NavigationDestination(
                   icon: FaIcon(
-                    FontAwesomeIcons.user,
+                    FontAwesomeIcons.gear,
                     color: _selectedIndex == 4
                         ? Colors.purple.withOpacity(0.8)
                         : Colors.white.withOpacity(0.3),

@@ -22,6 +22,13 @@ class _RealtimePairPageState extends State<RealtimePairPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+
+    // cancel pair ?
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(

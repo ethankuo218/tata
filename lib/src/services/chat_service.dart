@@ -61,13 +61,13 @@ class ChatService extends ChangeNotifier {
   }
 
   // Create a new chat room
-  Future<String> createChatRoom(
-    String title,
-    String description,
-    String category,
-    TarotCard backgroundImage,
-    int limit,
-  ) async {
+  Future<String> createChatRoom({
+    required String title,
+    required String description,
+    required String category,
+    required TarotCard backgroundImage,
+    required int limit,
+  }) async {
     final DocumentReference newChatRoomDoc =
         _fireStore.collection('chat_rooms').doc();
 
@@ -90,11 +90,21 @@ class ChatService extends ChangeNotifier {
   }
 
   // Join a chat room
-  Future<void> joinChatRoom(String chatRoomId) async {
+  Future<void> joinChatRoom(ChatRoom chatRoomInfo) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
+    if (chatRoomInfo.members.length == chatRoomInfo.limit) {
+      print('Chat room is full');
+      throw Exception('Chat room is full');
+    }
+
+    if (chatRoomInfo.members.contains(currentUserId)) {
+      print('Already joined the chat room');
+      throw Exception('Already joined the chat room');
+    }
+
     // add current user to chat room members
-    await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
+    await _fireStore.collection('chat_rooms').doc(chatRoomInfo.id).update({
       'members': FieldValue.arrayUnion([currentUserId])
     });
 
