@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tata/src/chat-room/chat_room_page.dart';
 import 'package:tata/src/models/chat_room.dart';
 import 'package:tata/src/my-chat-room/components/my_chat_room_tile.dart';
-import 'package:tata/src/services/chat_service.dart';
+import 'package:tata/src/services/chat.service.dart';
 
 class MyChatRoomPage extends StatefulWidget {
   const MyChatRoomPage({super.key});

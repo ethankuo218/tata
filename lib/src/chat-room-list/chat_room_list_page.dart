@@ -7,7 +7,7 @@ import 'package:tata/src/chat-room-list/components/chat_room_tile.dart';
 import 'package:tata/src/core/tarot.dart';
 import 'package:tata/src/create-chat-room/create_chat_room_bottom_sheet.dart';
 import 'package:tata/src/models/chat_room.dart';
-import 'package:tata/src/services/chat_service.dart';
+import 'package:tata/src/services/chat.service.dart';
 import 'package:tata/src/services/snackbar.service.dart';
 
 class ChatRoomListPage extends StatefulWidget {

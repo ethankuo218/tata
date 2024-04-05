@@ -1,6 +1,6 @@
 import 'package:tata/src/chat-room/components/chat_message_bubble.dart';
 import 'package:tata/src/models/chat_room.dart';
-import 'package:tata/src/services/chat_service.dart';
+import 'package:tata/src/services/chat.service.dart';
 import 'package:flutter/material.dart';
 import '../models/message.dart';
 

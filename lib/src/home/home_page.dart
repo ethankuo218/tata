@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tata/src/activity-list/activity_list_page.dart';
 import 'package:tata/src/chat-room-list/chat_room_list_page.dart';
 import 'package:tata/src/chat-room-list/components/chat_room_category_tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -22,21 +23,9 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     ChatRoomListPage(),
     MyChatRoomPage(),
-    Text(
-      'Index 2: Add Chat Room',
-      style: TextStyle(
-          color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
-    ),
-    Text(
-      'Index 3: Activity',
-      style: TextStyle(
-          color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
-    ),
-    Text(
-      'Index 4: User',
-      style: TextStyle(
-          color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
-    ),
+    Text('Realtime Chat Button'),
+    ActivityListPage(),
+    Text('Settings Button'),
   ];
 
   static const categoryList = [
