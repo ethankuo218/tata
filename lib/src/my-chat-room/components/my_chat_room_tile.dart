@@ -65,8 +65,7 @@ class _MyChatRoomTileState extends State<MyChatRoomTile> {
                             ),
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: Image.asset(
-                              'assets/avatars/the_magician_avatar.png',
+                          child: Image.asset('assets/avatars/the_magician.png',
                               fit: BoxFit.cover),
                         )
                       : Stack(
@@ -87,7 +86,7 @@ class _MyChatRoomTileState extends State<MyChatRoomTile> {
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                   child: Image.asset(
-                                      'assets/avatars/the_magician_avatar.png',
+                                      'assets/avatars/the_magician.png',
                                       fit: BoxFit.cover),
                                 ),
                               ),
@@ -108,7 +107,7 @@ class _MyChatRoomTileState extends State<MyChatRoomTile> {
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                   child: Image.asset(
-                                      'assets/avatars/the_magician_avatar.png',
+                                      'assets/avatars/the_magician.png',
                                       fit: BoxFit.cover),
                                 ),
                               ),
