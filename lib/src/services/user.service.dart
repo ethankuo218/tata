@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tata/src/core/avatar.dart';
 import 'package:tata/src/models/app_user_info.dart';
 
 class UserService {
@@ -14,5 +15,18 @@ class UserService {
     }
 
     return AppUserInfo.fromMap(user.data()!);
+  }
+
+  // Edit User Info
+  Future<void> editUserInfo(
+      {required String uid, String? name, AvatarKey? avatar}) async {
+    if (name == null && avatar == null) {
+      throw Exception('Need to provide one of the value you want to edit');
+    }
+
+    await _fireStore.collection('users').doc(uid).update({
+      ...name != null ? {'name': name} : {},
+      ...avatar != null ? {'avatar': avatar} : {},
+    });
   }
 }

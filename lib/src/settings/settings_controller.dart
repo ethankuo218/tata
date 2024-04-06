@@ -1,5 +1,9 @@
+import 'package:share_plus/share_plus.dart';
+import 'package:tata/src/models/app_user_info.dart';
 import 'package:tata/src/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:tata/src/services/user.service.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../services/auth/auth_gate.dart';
 import 'settings_service.dart';
@@ -14,6 +18,10 @@ class SettingsController with ChangeNotifier {
 
   // Make SettingsService a private variable so it is not used directly.
   final SettingsService _settingsService;
+
+  late AppUserInfo _userInfo;
+
+  AppUserInfo get userInfo => _userInfo;
 
   // Make ThemeMode a private variable so it is not updated directly without
   // also persisting the changes with the SettingsService.
@@ -50,9 +58,41 @@ class SettingsController with ChangeNotifier {
     await _settingsService.updateThemeMode(newThemeMode);
   }
 
+  Future<void> loadUserInfo(String uid) async {
+    _userInfo = await UserService().getUserInfo(uid);
+    notifyListeners();
+  }
+
+  Future<void> editName(String uid, String name) async {
+    try {
+      await UserService().editUserInfo(uid: uid, name: name);
+      await loadUserInfo(uid);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void openHelpCenter() {
+    launchUrlString('mailto:support@tatrot.app');
+  }
+
+  void openInviteFriends() {
+    Share.share(
+        'Hi! Join TATA to enjoy the most incredible anonymous chat activity: MIDNIGHT TAROT !');
+  }
+
+  void openTermsAndConditions() {
+    launchUrlString('Terms & Conditions');
+  }
+
+  void openPrivacyPolicy() {
+    launchUrlString('Privacy Policy');
+  }
+
   void signOut(BuildContext context) {
-    AuthService().signOut();
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const AuthGate()));
+    AuthService().signOut().then((_) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const AuthGate()));
+    });
   }
 }

@@ -124,7 +124,7 @@ class AuthService {
     );
   }
 
-  void signOut() {
-    FirebaseAuth.instance.signOut();
+  Future<void> signOut() {
+    return FirebaseAuth.instance.signOut();
   }
 }
