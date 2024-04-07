@@ -4,9 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tata/src/chat-room-list/chat_room_detail_dialog.dart';
 import 'package:tata/src/chat-room-list/components/chat_room_list_shimmer.dart';
 import 'package:tata/src/chat-room-list/components/chat_room_tile.dart';
+import 'package:tata/src/chat-room/chat_room_page.dart';
 import 'package:tata/src/core/tarot.dart';
 import 'package:tata/src/create-chat-room/create_chat_room_bottom_sheet.dart';
 import 'package:tata/src/models/chat_room.dart';
+import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/services/chat.service.dart';
 import 'package:tata/src/services/snackbar.service.dart';
 
@@ -91,8 +93,9 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
                                         .joinChatRoom(chatRoomInfo)
                                         .then((value) {
                                       Navigator.of(context).pushNamed(
-                                          '/chat-room',
-                                          arguments: chatRoomInfo);
+                                          ChatRoomPage.routeName,
+                                          arguments: ChatRoomArgument(
+                                              chatRoomInfo: chatRoomInfo));
                                     }).onError<Exception>((error, stackTrace) {
                                       SnackbarService().showSnackBar(
                                           context: context,

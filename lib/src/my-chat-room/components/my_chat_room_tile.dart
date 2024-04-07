@@ -43,7 +43,7 @@ class _MyChatRoomTileState extends State<MyChatRoomTile> {
         widget.chatRoomInfo.type == ChatRoomType.realtime;
 
     return GestureDetector(
-        onTap: () => widget.onTap(),
+        onTap: () => widget.onTap(otherUserInfo),
         child: Container(
             height: 80,
             decoration: BoxDecoration(
@@ -196,6 +196,12 @@ class _MyChatRoomTileState extends State<MyChatRoomTile> {
 
     final Timestamp today = Timestamp.now();
     final bool isToday = timestamp.toDate().day == today.toDate().day;
+    final bool isYesterday = timestamp.toDate().day == today.toDate().day - 1;
+
+    if (isYesterday) {
+      return 'Yesterday';
+    }
+
     return isToday
         ? '${timestamp.toDate().hour.toString().padLeft(2, '0')}:${timestamp.toDate().minute.toString().padLeft(2, '0')}'
         : '${timestamp.toDate().month.toString().padLeft(2, '0')}/${timestamp.toDate().day.toString().padLeft(2, '0')}';

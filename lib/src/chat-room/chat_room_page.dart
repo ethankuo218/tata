@@ -1,13 +1,17 @@
+import 'package:tata/src/chat-room/components/chat_menu_entry.dart';
 import 'package:tata/src/chat-room/components/chat_message_bubble.dart';
+import 'package:tata/src/core/avatar.dart';
+import 'package:tata/src/models/app_user_info.dart';
 import 'package:tata/src/models/chat_room.dart';
+import 'package:tata/src/models/message.dart';
+import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/services/chat.service.dart';
 import 'package:flutter/material.dart';
-import '../models/message.dart';
 
 class ChatRoomPage extends StatefulWidget {
-  final ChatRoom chatRoomInfo;
+  final ChatRoomArgument args;
 
-  const ChatRoomPage({super.key, required this.chatRoomInfo});
+  const ChatRoomPage({super.key, required this.args});
 
   static const routeName = '/chat-room';
 
@@ -17,10 +21,21 @@ class ChatRoomPage extends StatefulWidget {
 
 class _ChatRoomPageState extends State<ChatRoomPage> {
   bool isExpanded = false;
+  late ChatRoom chatRoomInfo;
+  late AppUserInfo? otherUserInfo;
+
+  @override
+  void initState() {
+    super.initState();
+
+    chatRoomInfo = widget.args.chatRoomInfo;
+    otherUserInfo = widget.args.otherUserInfo;
+  }
 
   @override
   Widget build(BuildContext context) {
     final scrollController = ScrollController();
+    final isRealtimeChat = chatRoomInfo.type == ChatRoomType.realtime;
 
     return GestureDetector(
         onTap: () {
@@ -28,22 +43,95 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              widget.chatRoomInfo.title,
-              style: const TextStyle(color: Colors.white),
+            title: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                isRealtimeChat
+                    ? Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(width: 1, color: Colors.white)),
+                        child: Image.asset(
+                          Avatar.getAvatarImage(Avatar.getRandomAvatar()),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Stack(
+                        children: [
+                          SizedBox(
+                            width: 44,
+                            height: 44,
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                width: 36,
+                                height: 36,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.white.withOpacity(0.8),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Image.asset(
+                                    'assets/avatars/the_magician.png',
+                                    fit: BoxFit.cover),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 44,
+                            height: 44,
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                width: 36,
+                                height: 36,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.white.withOpacity(0.8),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Image.asset(
+                                    'assets/avatars/the_magician.png',
+                                    fit: BoxFit.cover),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                const SizedBox(width: 15),
+                Text(isRealtimeChat ? otherUserInfo!.name : chatRoomInfo.title),
+              ],
             ),
-            backgroundColor: const Color.fromARGB(255, 41, 41, 41),
+            actions: [
+              MenuBar(
+                  style: const MenuStyle(
+                      padding: MaterialStatePropertyAll(EdgeInsets.zero),
+                      backgroundColor: MaterialStatePropertyAll(Colors.black)),
+                  children: ChatMenuEntry.build(_getMenus(chatRoomInfo.type)))
+            ],
+            centerTitle: false,
+            titleSpacing: 0,
           ),
           body: Column(
             children: [
-              _buildMessageList(scrollController),
+              _buildMessageList(
+                chatRoomInfo.type,
+                scrollController,
+              ),
               _buildChatRoomInputBar(scrollController),
             ],
           ),
         ));
   }
 
-  Widget _buildMessageList(ScrollController scrollController) {
+  Widget _buildMessageList(
+      ChatRoomType type, ScrollController scrollController) {
     return Expanded(
         child: Stack(
       children: [
@@ -66,46 +154,47 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
               },
               itemCount: snapshot.data?.length,
             ),
-            stream: ChatService().getMessages(widget.chatRoomInfo.id),
+            stream: ChatService().getMessages(chatRoomInfo.id),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            height: isExpanded ? null : 50,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 41, 41, 41),
-              borderRadius: BorderRadius.circular(8),
+        if (type == ChatRoomType.normal)
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              height: isExpanded ? null : 50,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 41, 41, 41),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.campaign, color: Colors.white),
+                  const SizedBox(width: 10),
+                  Expanded(
+                      child: Text(
+                    chatRoomInfo.description,
+                    style: const TextStyle(fontSize: 14, color: Colors.white),
+                    maxLines: isExpanded ? null : 1,
+                  )),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isExpanded = !isExpanded;
+                        });
+                      },
+                      icon: isExpanded
+                          ? const Icon(
+                              Icons.expand_less,
+                              color: Colors.white,
+                              size: 20,
+                            )
+                          : const Icon(Icons.expand_more,
+                              color: Colors.white, size: 20))
+                ],
+              ),
             ),
-            child: Row(
-              children: [
-                const Icon(Icons.campaign, color: Colors.white),
-                const SizedBox(width: 10),
-                Expanded(
-                    child: Text(
-                  '', // TODO: change to actual message
-                  style: const TextStyle(fontSize: 14, color: Colors.white),
-                  maxLines: isExpanded ? null : 1,
-                )),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isExpanded = !isExpanded;
-                      });
-                    },
-                    icon: isExpanded
-                        ? const Icon(
-                            Icons.expand_less,
-                            color: Colors.white,
-                            size: 20,
-                          )
-                        : const Icon(Icons.expand_more,
-                            color: Colors.white, size: 20))
-              ],
-            ),
-          ),
-        )
+          )
       ],
     ));
   }
@@ -118,11 +207,10 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         children: [
           Expanded(
             child: Container(
-              color: const Color.fromARGB(255, 41, 41, 41),
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: Container(
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(179, 0, 0, 0),
+                    color: Color.fromARGB(179, 41, 41, 41),
                     borderRadius: BorderRadius.horizontal(
                         left: Radius.elliptical(23, 23),
                         right: Radius.elliptical(23, 23)),
@@ -165,7 +253,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                             }
 
                             await ChatService().sendMessage(
-                              widget.chatRoomInfo.id,
+                              chatRoomInfo.id,
                               textEditingController.text,
                             );
 
@@ -188,5 +276,51 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         ],
       ),
     );
+  }
+
+  List<ChatMenuEntry> _getMenus(ChatRoomType type) {
+    final List<ChatMenuEntry> result = <ChatMenuEntry>[
+      ChatMenuEntry(
+        label: const Icon(
+          Icons.more_vert,
+          color: Colors.white,
+        ),
+        menuChildren: <ChatMenuEntry>[
+          if (type == ChatRoomType.normal)
+            ChatMenuEntry(
+              label: const Text(
+                'Room Info',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed('/room-info', arguments: chatRoomInfo);
+              },
+            ),
+          if (type == ChatRoomType.normal)
+            ChatMenuEntry(
+              label: const Text(
+                'Members',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed('/members', arguments: chatRoomInfo);
+              },
+            ),
+          ChatMenuEntry(
+            label: const Text(
+              'Leave Chat',
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamed('/leave-chat', arguments: chatRoomInfo.id);
+            },
+          ),
+        ],
+      ),
+    ];
+    return result;
   }
 }

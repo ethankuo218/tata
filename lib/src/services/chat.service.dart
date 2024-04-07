@@ -126,6 +126,16 @@ class ChatService extends ChangeNotifier {
     // navigate to chat room list in controller
   }
 
+  // Remove a member from a chat room
+  Future<void> removeMember(String chatRoomId, String memberId) async {
+    // remove member from chat room members
+    await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
+      'members': FieldValue.arrayRemove([memberId])
+    });
+
+    // navigate to chat room list in controller
+  }
+
   // Realtime Pair
   Future<ChatRoom?> realtimePair() async {
     print("Start pairing");

@@ -17,6 +17,16 @@ class UserService {
     return AppUserInfo.fromMap(user.data()!);
   }
 
+  // Get User Info List
+  Future<List<AppUserInfo>> getUserInfoList(List<String> uidList) async {
+    QuerySnapshot<Map<String, dynamic>> userList = await _fireStore
+        .collection('users')
+        .where('uid', whereIn: uidList)
+        .get();
+
+    return userList.docs.map((e) => AppUserInfo.fromMap(e.data())).toList();
+  }
+
   // Edit User Info
   Future<void> editUserInfo(
       {required String uid, String? name, AvatarKey? avatar}) async {

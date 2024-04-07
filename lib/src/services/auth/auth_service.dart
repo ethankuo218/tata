@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:tata/src/core/avatar.dart';
-import 'package:tata/src/models/phone_verify_argument.dart';
+import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/phone-verify/phone_verify_otp_page.dart';
 
 class AuthService {

@@ -43,19 +43,7 @@ class _SettingsViewState extends State<SettingsView> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings',
-            style: TextStyle(color: Colors.white, fontSize: 18)),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            size: 20,
-          ),
-          color: Colors.white,
-          onPressed: () => Navigator.pop(context),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white, size: 18),
-      ),
+      appBar: AppBar(title: const Text('Settings')),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
         child: Column(

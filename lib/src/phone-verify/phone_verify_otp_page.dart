@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:pinput/pinput.dart';
-import 'package:tata/src/models/phone_verify_argument.dart';
+import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/services/auth/auth_gate.dart';
 import 'package:tata/src/services/auth/auth_service.dart';
 

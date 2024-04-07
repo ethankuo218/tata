@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tata/src/chat-room/chat_room_page.dart';
 import 'package:tata/src/models/chat_room.dart';
+import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/my-chat-room/components/my_chat_room_tile.dart';
 import 'package:tata/src/services/chat.service.dart';
 
@@ -44,9 +45,11 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
                 return MyChatRoomTile(
                     userUid: user.uid,
                     chatRoomInfo: chatRoomInfo,
-                    onTap: () {
+                    onTap: (otherUserInfo) {
                       Navigator.pushNamed(context, ChatRoomPage.routeName,
-                          arguments: chatRoomInfo);
+                          arguments: ChatRoomArgument(
+                              chatRoomInfo: chatRoomInfo,
+                              otherUserInfo: otherUserInfo));
                     });
               },
               itemCount: snapshot.data != null ? snapshot.data.docs.length : 0,
