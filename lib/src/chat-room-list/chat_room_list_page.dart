@@ -75,11 +75,10 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
                   ? const ChatRoomListShimmer()
                   : StreamBuilder(
                       builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) =>
+                              AsyncSnapshot<List<ChatRoom>> chatRoomList) =>
                           ListView.separated(
                         itemBuilder: (context, index) {
-                          var chatRoomInfo = ChatRoom.fromMap(
-                              snapshot.data?.docs[index].data());
+                          var chatRoomInfo = chatRoomList.data![index];
                           return ChatRoomTile(
                               chatRoomInfo: chatRoomInfo,
                               onTap: () => showChatRoomDetailDialog(context,
@@ -108,8 +107,8 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
                                     });
                                   }));
                         },
-                        itemCount: snapshot.data != null
-                            ? snapshot.data.docs.length
+                        itemCount: chatRoomList.data != null
+                            ? chatRoomList.data!.length
                             : 0,
                         separatorBuilder: (BuildContext context, int index) =>
                             const SizedBox(height: 20),

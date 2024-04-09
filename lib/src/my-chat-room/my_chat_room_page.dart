@@ -37,11 +37,11 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
         children: [
           Expanded(
               child: StreamBuilder(
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) =>
+            builder: (BuildContext context,
+                    AsyncSnapshot<List<ChatRoom>> chatRoomList) =>
                 ListView.separated(
               itemBuilder: (context, index) {
-                var chatRoomInfo =
-                    ChatRoom.fromMap(snapshot.data?.docs[index].data());
+                var chatRoomInfo = chatRoomList.data![index];
                 return MyChatRoomTile(
                     userUid: user.uid,
                     chatRoomInfo: chatRoomInfo,
@@ -52,7 +52,8 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
                               otherUserInfo: otherUserInfo));
                     });
               },
-              itemCount: snapshot.data != null ? snapshot.data.docs.length : 0,
+              itemCount:
+                  chatRoomList.data != null ? chatRoomList.data!.length : 0,
               separatorBuilder: (BuildContext context, int index) =>
                   const SizedBox(height: 15),
             ),

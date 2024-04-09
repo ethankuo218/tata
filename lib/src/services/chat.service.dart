@@ -12,22 +12,28 @@ class ChatService extends ChangeNotifier {
 
   // Get Lobby Chat Room List
   // TODO: pagination
-  Stream<QuerySnapshot> getLobbyChatRoomList() {
+  Stream<List<ChatRoom>> getLobbyChatRoomList() {
     return _fireStore
         .collection('chat_rooms')
         .where('type', isEqualTo: ChatRoomType.normal.value)
-        .snapshots();
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((chatRoom) => ChatRoom.fromMap(chatRoom.data()))
+            .toList());
   }
 
   // Get User Chat Room List
   // TODO: pagination
-  Stream<QuerySnapshot> getUserChatRoomList() {
+  Stream<List<ChatRoom>> getUserChatRoomList() {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
     return _fireStore
         .collection('chat_rooms')
         .where('members', arrayContains: currentUserId)
-        .snapshots();
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((chatRoom) => ChatRoom.fromMap(chatRoom.data()))
+            .toList());
   }
 
   // Send Message
