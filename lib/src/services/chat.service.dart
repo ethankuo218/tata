@@ -102,14 +102,14 @@ class ChatService extends ChangeNotifier {
   Future<void> joinChatRoom(ChatRoom chatRoomInfo) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
+    if (chatRoomInfo.members.contains(currentUserId)) {
+      print('Already joined the chat room');
+      return;
+    }
+
     if (chatRoomInfo.members.length == chatRoomInfo.limit) {
       print('Chat room is full');
       throw Exception('Chat room is full');
-    }
-
-    if (chatRoomInfo.members.contains(currentUserId)) {
-      print('Already joined the chat room');
-      throw Exception('Already joined the chat room');
     }
 
     // add current user to chat room members
