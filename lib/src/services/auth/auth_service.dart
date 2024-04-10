@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:phone_form_field/phone_form_field.dart';
@@ -16,20 +15,13 @@ class AuthService {
   // Apple Sign In
   Future<void> signInWithApple() async {
     final appleProvider = AppleAuthProvider();
-    late UserCredential userCredential;
+    final UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithProvider(appleProvider);
 
-    if (kIsWeb) {
-      userCredential =
-          await FirebaseAuth.instance.signInWithPopup(appleProvider);
-    } else {
-      userCredential =
-          await FirebaseAuth.instance.signInWithProvider(appleProvider);
-    }
-
-    _fireStore.collection('users').doc(userCredential.user!.uid).set({
+    await _fireStore.collection('users').doc(userCredential.user!.uid).set({
       'uid': userCredential.user!.uid,
       'name': userCredential.user!.displayName,
-      'avatar': Avatar.getRandomAvatar()
+      'avatar': Avatar.getRandomAvatar().value
     }, SetOptions(merge: true));
   }
 
