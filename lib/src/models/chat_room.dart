@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tata/src/core/tarot.dart';
 import 'package:tata/src/models/message.dart';
 
@@ -13,20 +14,21 @@ class ChatRoom {
   late List<Message>? messages = [];
   late Message? latestMessage;
   late List<String> members = [];
+  late Timestamp createTime;
 
-  ChatRoom({
-    required this.id,
-    required this.type,
-    required this.title,
-    required this.description,
-    required this.limit,
-    required this.category,
-    this.backgroundImage,
-    this.messages,
-    this.latestMessage,
-    this.hostId,
-    required this.members,
-  });
+  ChatRoom(
+      {required this.id,
+      required this.type,
+      required this.title,
+      required this.description,
+      required this.limit,
+      required this.category,
+      this.backgroundImage,
+      this.messages,
+      this.latestMessage,
+      this.hostId,
+      required this.members,
+      required this.createTime});
 
   factory ChatRoom.fromMap(Map<String, dynamic> map) {
     return ChatRoom(
@@ -46,6 +48,7 @@ class ChatRoom {
           : Message.fromMap(map['latest_message']),
       hostId: map['host_id'],
       members: List<String>.from(map['members']),
+      createTime: map['create_time'],
     );
   }
 
@@ -64,6 +67,7 @@ class ChatRoom {
       'latest_message': latestMessage?.toMap(),
       'host_id': hostId,
       'members': members,
+      'create_time': createTime
     };
   }
 }

@@ -52,7 +52,7 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
                     title: _["title"],
                     description: _["description"],
                     backgroundImage: Tarot.getRandomCard(),
-                    limit: _["limit"]);
+                    limit: _["limit"] ?? 2);
               });
             },
             child: Container(

@@ -16,10 +16,16 @@ class ChatService extends ChangeNotifier {
     return _fireStore
         .collection('chat_rooms')
         .where('type', isEqualTo: ChatRoomType.normal.value)
+        // .orderBy('create_time', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((chatRoom) => ChatRoom.fromMap(chatRoom.data()))
-            .toList());
+        .map((snapshot) {
+      List<ChatRoom> chatRoomList = snapshot.docs
+          .map((chatRoom) => ChatRoom.fromMap(chatRoom.data()))
+          .toList();
+
+      chatRoomList.sort((a, b) => b.createTime.compareTo(a.createTime));
+      return chatRoomList;
+    });
   }
 
   // Get User Chat Room List
@@ -89,7 +95,8 @@ class ChatService extends ChangeNotifier {
         backgroundImage: backgroundImage,
         limit: limit,
         hostId: _firebaseAuth.currentUser!.uid,
-        members: [_firebaseAuth.currentUser!.uid]);
+        members: [_firebaseAuth.currentUser!.uid],
+        createTime: Timestamp.now());
 
     // create chat room
     newChatRoomDoc.set(newChatRoom.toMap());
@@ -181,15 +188,15 @@ class ChatService extends ChangeNotifier {
         _fireStore.collection('chat_rooms').doc();
 
     final ChatRoom newChatRoom = ChatRoom(
-      id: newChatRoomDoc.id,
-      type: ChatRoomType.realtime,
-      title: '',
-      description: '',
-      category: '',
-      backgroundImage: TarotCard.fool,
-      limit: 2,
-      members: [currentUserId],
-    );
+        id: newChatRoomDoc.id,
+        type: ChatRoomType.realtime,
+        title: '',
+        description: '',
+        category: '',
+        backgroundImage: TarotCard.fool,
+        limit: 2,
+        members: [currentUserId],
+        createTime: Timestamp.now());
     print("Create a new chat room: ${newChatRoom.id}");
     newChatRoomDoc.set(newChatRoom.toMap());
     // check every 3 secs for 10 times
