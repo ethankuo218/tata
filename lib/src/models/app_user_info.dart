@@ -9,7 +9,7 @@ class AppUserInfo {
 
   factory AppUserInfo.fromMap(Map<String, dynamic> map) {
     return AppUserInfo(
-      name: map['name'],
+      name: map['name'] ?? 'Unknown',
       uid: map['uid'],
     );
   }
