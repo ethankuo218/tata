@@ -67,17 +67,15 @@ class _LoginPageState extends State<LoginPage> {
                 ? AnimatedButton(
                     brand: Brand.apple,
                     btnAnimationController: _btnAnimationController,
-                    onPress: () {
-                      AuthService().signInWithApple();
-                    },
+                    onPress: () => AuthService()
+                        .signInWithApple()
+                        .then((_) => Navigator.of(context).pushNamed('/auth')),
                   )
                 : const SizedBox(),
             AnimatedButton(
               brand: Brand.google,
               btnAnimationController: _btnAnimationController,
-              onPress: () {
-                AuthService().signInWithGoogle();
-              },
+              onPress: () => AuthService().signInWithGoogle(),
             ),
             AnimatedButton(
               brand: Brand.phone,
