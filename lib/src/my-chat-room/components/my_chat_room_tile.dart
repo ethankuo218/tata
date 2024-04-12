@@ -39,6 +39,7 @@ class _MyChatRoomTileState extends State<MyChatRoomTile> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
     final bool isRealtimeChat =
         widget.chatRoomInfo.type == ChatRoomType.realtime;
 
@@ -130,14 +131,18 @@ class _MyChatRoomTileState extends State<MyChatRoomTile> {
                             fontWeight: FontWeight.w400),
                       ),
                       const SizedBox(height: 5),
-                      Text(
-                        widget.chatRoomInfo.latestMessage?.message ??
-                            'Break the ice!',
-                        style: TextStyle(
-                            overflow: TextOverflow.ellipsis,
-                            color: Colors.white.withOpacity(0.6),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
+                      SizedBox(
+                        width: screenWidth * 0.5,
+                        height: 20,
+                        child: Text(
+                          widget.chatRoomInfo.latestMessage?.message ??
+                              'Break the ice!',
+                          style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                        ),
                       ),
                     ],
                   ),
