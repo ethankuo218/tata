@@ -95,7 +95,7 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
               ),
               SizedBox(height: screenHeight * 0.1),
               Container(
-                height: 65,
+                height: 82,
                 alignment: Alignment.center,
                 child: Form(
                     key: formKey,
@@ -144,9 +144,9 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
                         //     border: Border.all(color: focusedBorderColor),
                         //   ),
                         // ),
-                        errorPinTheme: defaultPinTheme.copyBorderWith(
-                          border: Border.all(color: Colors.redAccent),
-                        ),
+                        errorPinTheme: defaultPinTheme.copyWith(
+                            decoration: defaultPinTheme.decoration!.copyWith(
+                                border: Border.all(color: Colors.redAccent))),
                       ),
                     )),
               ),
