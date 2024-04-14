@@ -1,5 +1,6 @@
 import 'package:tata/src/chat-room/components/chat_menu_entry.dart';
 import 'package:tata/src/chat-room/components/chat_message_bubble.dart';
+import 'package:tata/src/chat-room/components/chat_room_announcement.dart';
 import 'package:tata/src/core/avatar.dart';
 import 'package:tata/src/models/app_user_info.dart';
 import 'package:tata/src/models/chat_room.dart';
@@ -8,7 +9,7 @@ import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/services/chat.service.dart';
 import 'package:flutter/material.dart';
 
-class ChatRoomPage extends StatefulWidget {
+class ChatRoomPage extends StatelessWidget {
   final ChatRoomArgument args;
 
   const ChatRoomPage({super.key, required this.args});
@@ -16,24 +17,9 @@ class ChatRoomPage extends StatefulWidget {
   static const routeName = '/chat-room';
 
   @override
-  State<ChatRoomPage> createState() => _ChatRoomPageState();
-}
-
-class _ChatRoomPageState extends State<ChatRoomPage> {
-  bool isExpanded = false;
-  late ChatRoom chatRoomInfo;
-  late AppUserInfo? otherUserInfo;
-
-  @override
-  void initState() {
-    super.initState();
-
-    chatRoomInfo = widget.args.chatRoomInfo;
-    otherUserInfo = widget.args.otherUserInfo;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final ChatRoom chatRoomInfo = args.chatRoomInfo;
+    final AppUserInfo? otherUserInfo = args.otherUserInfo;
     final scrollController = ScrollController();
     final isRealtimeChat = chatRoomInfo.type == ChatRoomType.realtime;
 
@@ -113,25 +99,23 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                   style: const MenuStyle(
                       padding: MaterialStatePropertyAll(EdgeInsets.zero),
                       backgroundColor: MaterialStatePropertyAll(Colors.black)),
-                  children: ChatMenuEntry.build(_getMenus(chatRoomInfo.type)))
+                  children:
+                      ChatMenuEntry.build(_getMenus(context, chatRoomInfo)))
             ],
             centerTitle: false,
             titleSpacing: 0,
           ),
           body: Column(
             children: [
-              _buildMessageList(
-                chatRoomInfo.type,
-                scrollController,
-              ),
-              _buildChatRoomInputBar(scrollController),
+              _buildMessageList(scrollController, chatRoomInfo),
+              _buildChatRoomInputBar(scrollController, chatRoomInfo),
             ],
           ),
         ));
   }
 
   Widget _buildMessageList(
-      ChatRoomType type, ScrollController scrollController) {
+      ScrollController scrollController, ChatRoom chatRoomInfo) {
     return Expanded(
         child: Stack(
       children: [
@@ -157,49 +141,14 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
             stream: ChatService().getMessages(chatRoomInfo.id),
           ),
         ),
-        if (type == ChatRoomType.normal)
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              height: isExpanded ? null : 50,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 41, 41, 41),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.campaign, color: Colors.white),
-                  const SizedBox(width: 10),
-                  Expanded(
-                      child: Text(
-                    chatRoomInfo.description,
-                    style: const TextStyle(fontSize: 14, color: Colors.white),
-                    maxLines: isExpanded ? null : 1,
-                  )),
-                  IconButton(
-                      onPressed: () {
-                        setState(() {
-                          isExpanded = !isExpanded;
-                        });
-                      },
-                      icon: isExpanded
-                          ? const Icon(
-                              Icons.expand_less,
-                              color: Colors.white,
-                              size: 20,
-                            )
-                          : const Icon(Icons.expand_more,
-                              color: Colors.white, size: 20))
-                ],
-              ),
-            ),
-          )
+        if (chatRoomInfo.type == ChatRoomType.normal)
+          ChatRoomAnnouncement(announcement: chatRoomInfo.description)
       ],
     ));
   }
 
-  Widget _buildChatRoomInputBar(ScrollController scrollController) {
+  Widget _buildChatRoomInputBar(
+      ScrollController scrollController, ChatRoom chatRoomInfo) {
     final textEditingController = TextEditingController();
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 35.0),
@@ -278,7 +227,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     );
   }
 
-  List<ChatMenuEntry> _getMenus(ChatRoomType type) {
+  List<ChatMenuEntry> _getMenus(BuildContext context, ChatRoom chatRoomInfo) {
     final List<ChatMenuEntry> result = <ChatMenuEntry>[
       ChatMenuEntry(
         label: const Icon(
@@ -286,7 +235,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           color: Colors.white,
         ),
         menuChildren: <ChatMenuEntry>[
-          if (type == ChatRoomType.normal)
+          if (chatRoomInfo.type == ChatRoomType.normal)
             ChatMenuEntry(
               label: const Text(
                 'Room Info',
@@ -297,7 +246,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                     .pushNamed('/room-info', arguments: chatRoomInfo);
               },
             ),
-          if (type == ChatRoomType.normal)
+          if (chatRoomInfo.type == ChatRoomType.normal)
             ChatMenuEntry(
               label: const Text(
                 'Members',
