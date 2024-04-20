@@ -1,18 +1,21 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:tata/src/activity-list/activity_list_controller.dart';
 import 'package:tata/src/activity-list/components/activity_list_tile.dart';
 import 'package:tata/src/models/activity.dart';
 import 'package:tata/src/services/activity.service.dart';
 
-class ActivityListPage extends StatefulWidget {
-  const ActivityListPage({super.key});
+class ActivityListView extends StatefulWidget {
+  const ActivityListView({super.key, required this.controller});
+
+  final ActivityListController controller;
 
   @override
-  State<ActivityListPage> createState() => _ActivityListPageState();
+  State<ActivityListView> createState() => _ActivityListViewState();
 }
 
-class _ActivityListPageState extends State<ActivityListPage> {
+class _ActivityListViewState extends State<ActivityListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

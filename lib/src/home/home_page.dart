@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tata/src/activity-list/activity_list_page.dart';
+import 'package:tata/src/activity-list/activity_list_controller.dart';
+import 'package:tata/src/activity-list/activity_list_view.dart';
 import 'package:tata/src/chat-room-list/chat_room_list_page.dart';
 import 'package:tata/src/chat-room-list/components/chat_room_category_tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,12 +21,12 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   int _selectedCategoryIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
     ChatRoomListPage(),
     MyChatRoomPage(),
-    Text('Realtime Chat Button'),
-    ActivityListPage(),
-    Text('Settings Button'),
+    const Text('Realtime Chat Button'),
+    ActivityListView(controller: ActivityListController()),
+    const Text('Settings Button'),
   ];
 
   static const categoryList = [
