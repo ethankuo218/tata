@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
-import 'src/settings/settings_service.dart';
+import 'src/services/settings_service.dart';
 
 void main() async {
   final settingsController = SettingsController(SettingsService());

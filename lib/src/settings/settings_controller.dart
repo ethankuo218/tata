@@ -6,7 +6,7 @@ import 'package:tata/src/services/user.service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../services/auth/auth_gate.dart';
-import 'settings_service.dart';
+import '../services/settings_service.dart';
 
 /// A class that many Widgets can interact with to read user settings, update
 /// user settings, or listen to user settings changes.
