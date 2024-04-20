@@ -77,7 +77,6 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                                 children: [
                                   GestureDetector(
                                       onTap: () {
-                                        print('close dialog');
                                         Navigator.of(context,
                                                 rootNavigator: true)
                                             .pop();
