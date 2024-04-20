@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tata/src/chat-room/chat_room_page.dart';
+import 'package:tata/src/chat-room/chat_room_controller.dart';
+import 'package:tata/src/chat-room/chat_room_view.dart';
 import 'package:tata/src/chat-room/components/leave_chat_page.dart';
 import 'package:tata/src/chat-room/components/members_page.dart';
 import 'package:tata/src/chat-room/components/room_info_page.dart';
@@ -18,10 +19,12 @@ class AppRouter {
     switch (settings.name) {
       case HomePage.routeName:
         return MaterialPageRoute(builder: (_) => const HomePage());
-      case ChatRoomPage.routeName:
+      case ChatRoomView.routeName:
         return MaterialPageRoute(
-            builder: (_) =>
-                ChatRoomPage(args: settings.arguments as ChatRoomArgument));
+            builder: (_) => ChatRoomView(
+                  args: settings.arguments as ChatRoomArgument,
+                  controller: ChatRoomController(),
+                ));
       case RoomInfoPage.routeName:
         return MaterialPageRoute(
             builder: (_) =>

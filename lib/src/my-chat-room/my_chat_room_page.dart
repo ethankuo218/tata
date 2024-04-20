@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tata/src/chat-room/chat_room_page.dart';
+import 'package:tata/src/chat-room/chat_room_view.dart';
 import 'package:tata/src/models/chat_room.dart';
 import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/my-chat-room/components/my_chat_room_tile.dart';
@@ -46,7 +46,7 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
                     userUid: user.uid,
                     chatRoomInfo: chatRoomInfo,
                     onTap: (otherUserInfo) {
-                      Navigator.pushNamed(context, ChatRoomPage.routeName,
+                      Navigator.pushNamed(context, ChatRoomView.routeName,
                           arguments: ChatRoomArgument(
                               chatRoomInfo: chatRoomInfo,
                               otherUserInfo: otherUserInfo));

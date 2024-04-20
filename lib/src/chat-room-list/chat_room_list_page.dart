@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tata/src/chat-room-list/chat_room_detail_dialog.dart';
 import 'package:tata/src/chat-room-list/components/chat_room_list_shimmer.dart';
 import 'package:tata/src/chat-room-list/components/chat_room_tile.dart';
-import 'package:tata/src/chat-room/chat_room_page.dart';
+import 'package:tata/src/chat-room/chat_room_view.dart';
 import 'package:tata/src/core/tarot.dart';
 import 'package:tata/src/create-chat-room/create_chat_room_bottom_sheet.dart';
 import 'package:tata/src/models/chat_room.dart';
@@ -92,7 +92,7 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
                                         .joinChatRoom(chatRoomInfo)
                                         .then((value) {
                                       Navigator.of(context).pushNamed(
-                                          ChatRoomPage.routeName,
+                                          ChatRoomView.routeName,
                                           arguments: ChatRoomArgument(
                                               chatRoomInfo: chatRoomInfo));
                                     }).onError<Exception>((error, stackTrace) {
