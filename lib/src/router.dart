@@ -13,6 +13,7 @@ import 'package:tata/src/models/chat_room.dart';
 import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/phone-verify/phone_verify_input_page.dart';
 import 'package:tata/src/phone-verify/phone_verify_otp_page.dart';
+import 'package:tata/src/realtime_pair/realtime_pair_page.dart';
 import 'package:tata/src/settings/settings_controller.dart';
 import 'package:tata/src/settings/settings_view.dart';
 
@@ -35,6 +36,11 @@ final routerProvider = Provider<GoRouter>((ref) {
           path: SettingsView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
               SettingsView(controller: SettingsController())),
+      GoRoute(
+          path: RealtimePairPage.routeName,
+          builder: (context, state) {
+            return const RealtimePairPage();
+          }),
       GoRoute(
           path: ChatRoomView.routeName,
           builder: (BuildContext context, GoRouterState state) => ChatRoomView(
@@ -71,6 +77,11 @@ final routerProvider = Provider<GoRouter>((ref) {
               PhoneVerifyOtpPage(args: state.extra as PhoneVerifyArgument))
     ],
     redirect: (context, state) {
+      if (state.fullPath == PhoneVerifyInputPage.routeName ||
+          state.fullPath == PhoneVerifyOtpPage.routeName) {
+        return null;
+      }
+
       return authState.isAuthenticated ? null : LoginView.routeName;
     },
   );
