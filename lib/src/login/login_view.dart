@@ -2,18 +2,24 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart';
+import 'package:tata/src/auth/providers/auth_state_provider.dart';
+import 'package:tata/src/phone-verify/phone_verify_input_page.dart';
 import 'package:tata/src/services/auth/auth_service.dart';
 import 'components/animated_button.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginView extends ConsumerStatefulWidget {
+  const LoginView({super.key});
+
+  static const routeName = '/login';
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginViewState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginViewState extends ConsumerState<LoginView> {
   bool isSignInDialogShown = false;
   late RiveAnimationController _btnAnimationController;
 
@@ -67,10 +73,8 @@ class _LoginPageState extends State<LoginPage> {
                 ? AnimatedButton(
                     brand: Brand.apple,
                     btnAnimationController: _btnAnimationController,
-                    onPress: () => AuthService()
-                        .signInWithApple()
-                        .then((_) => Navigator.of(context).pushNamed('/auth')),
-                  )
+                    onPress: () =>
+                        ref.read(authStateProvider.notifier).signInWithApple())
                 : const SizedBox(),
             AnimatedButton(
               brand: Brand.google,
@@ -80,17 +84,13 @@ class _LoginPageState extends State<LoginPage> {
             AnimatedButton(
               brand: Brand.phone,
               btnAnimationController: _btnAnimationController,
-              onPress: () {
-                Navigator.pushNamed(context, '/phone-verify/phone-input');
-              },
+              onPress: () => context.push(PhoneVerifyInputPage.routeName),
             ),
             SizedBox(
               height: screenHeight * 0.09,
             ),
           ]),
         ),
-        // ),
-        // )
       ],
     ));
   }

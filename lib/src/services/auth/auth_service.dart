@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:tata/src/core/avatar.dart';
@@ -20,7 +21,7 @@ class AuthService {
 
     await _fireStore.collection('users').doc(userCredential.user!.uid).set({
       'uid': userCredential.user!.uid,
-      'name': userCredential.user!.displayName,
+      'name': '',
       'avatar': Avatar.getRandomAvatar().value
     }, SetOptions(merge: true));
   }
@@ -50,6 +51,7 @@ class AuthService {
     _fireStore.collection('users').doc(userCredential.user!.uid).set({
       'uid': userCredential.user!.uid,
       'name': userCredential.user!.displayName,
+      'avatar': Avatar.getRandomAvatar().value
     }, SetOptions(merge: true));
   }
 
@@ -70,13 +72,12 @@ class AuthService {
             break;
         }
       },
-      codeSent: (String verificationId, int? resendToken) {
-        Navigator.pushNamed(context, PhoneVerifyOtpPage.routeName,
-            arguments: PhoneVerifyArgument(
-              verificationId: verificationId,
-              phoneNumber: phoneNumber,
-            ));
-      },
+      codeSent: (String verificationId, int? resendToken) =>
+          context.push(PhoneVerifyOtpPage.routeName,
+              extra: PhoneVerifyArgument(
+                verificationId: verificationId,
+                phoneNumber: phoneNumber,
+              )),
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
@@ -91,7 +92,8 @@ class AuthService {
 
     _fireStore.collection('users').doc(userCredential.user!.uid).set({
       'uid': userCredential.user!.uid,
-      'name': userCredential.user!.displayName,
+      'name': '',
+      'avatar': Avatar.getRandomAvatar().value
     }, SetOptions(merge: true));
   }
 

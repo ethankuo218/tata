@@ -6,7 +6,7 @@ class RoomInfoPage extends StatelessWidget {
   final ChatRoom chatRoomInfo;
   const RoomInfoPage({super.key, required this.chatRoomInfo});
 
-  static const String routeName = '/room-info';
+  static const String routeName = 'room-info';
 
   @override
   Widget build(BuildContext context) {

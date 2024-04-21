@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tata/src/models/route_argument.dart';
-import 'package:tata/src/services/auth/auth_gate.dart';
 import 'package:tata/src/services/auth/auth_service.dart';
 
 class PhoneVerifyOtpPage extends StatefulWidget {
   const PhoneVerifyOtpPage({super.key, required this.args});
 
-  static const String routeName = '/phone-verify-otp';
+  static const String routeName = '/phone-verify/otp';
 
   final PhoneVerifyArgument args;
 
@@ -114,11 +113,7 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
                             value!.length == 6 ? null : 'Invalid OTP',
                         hapticFeedbackType: HapticFeedbackType.lightImpact,
                         onCompleted: (pin) {
-                          AuthService().verifyOtp(verificationId, pin).then(
-                              (value) => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const AuthGate())));
+                          AuthService().verifyOtp(verificationId, pin);
                         },
                         cursor: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -199,14 +194,8 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
                             onPressed: () {
                               focusNode.unfocus();
                               if (formKey.currentState!.validate()) {
-                                AuthService()
-                                    .verifyOtp(
-                                        verificationId, pinController.text)
-                                    .then((value) => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const AuthGate())));
+                                AuthService().verifyOtp(
+                                    verificationId, pinController.text);
                               }
                             },
                             child: const Text(

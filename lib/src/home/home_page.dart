@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tata/src/activity-list/activity_list_controller.dart';
 import 'package:tata/src/activity-list/activity_list_view.dart';
 import 'package:tata/src/chat-room-list/chat_room_list_controller.dart';
@@ -49,10 +50,10 @@ class _HomePageState extends State<HomePage> {
           _selectedIndex = index;
           break;
         case 2:
-          Navigator.pushNamed(context, RealtimePairPage.routeName);
+          context.push(RealtimePairPage.routeName);
           break;
         case 4:
-          Navigator.pushNamed(context, SettingsView.routeName);
+          context.push(SettingsView.routeName);
           break;
       }
     });

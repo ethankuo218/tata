@@ -1,15 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tata/src/core/avatar.dart';
 import 'package:tata/src/models/app_user_info.dart';
 import 'settings_controller.dart';
 
-/// Displays the various settings that can be customized by the user.
-///
-/// When a user changes a setting, the SettingsController is updated and
-/// Widgets that listen to the SettingsController are rebuilt.
-class SettingsView extends StatefulWidget {
+class SettingsView extends ConsumerStatefulWidget {
   const SettingsView({super.key, required this.controller});
 
   static const routeName = '/settings';
@@ -17,10 +14,10 @@ class SettingsView extends StatefulWidget {
   final SettingsController controller;
 
   @override
-  State<SettingsView> createState() => _SettingsViewState();
+  ConsumerState<SettingsView> createState() => _SettingsViewState();
 }
 
-class _SettingsViewState extends State<SettingsView> {
+class _SettingsViewState extends ConsumerState<SettingsView> {
   AppUserInfo? userInfo;
   late bool enableEdit = false;
   final TextEditingController nameEditingController = TextEditingController();
@@ -277,7 +274,7 @@ class _SettingsViewState extends State<SettingsView> {
                         )),
                   ),
                   GestureDetector(
-                    onTap: () => widget.controller.signOut(context),
+                    onTap: () => widget.controller.signOut(ref),
                     child: const SizedBox(
                         height: 60,
                         child: Row(

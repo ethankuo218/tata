@@ -1,21 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'firebase_options.dart';
 import 'src/app.dart';
-import 'src/settings/settings_controller.dart';
-import 'src/services/settings_service.dart';
 
 void main() async {
-  final settingsController = SettingsController(SettingsService());
-
-  await settingsController.loadSettings();
-
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(App(settingsController: settingsController));
+  runApp(const ProviderScope(child: App()));
 }

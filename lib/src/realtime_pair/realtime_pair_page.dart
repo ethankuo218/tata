@@ -1,3 +1,5 @@
+import 'package:go_router/go_router.dart';
+import 'package:tata/src/chat-room/chat_room_view.dart';
 import 'package:tata/src/models/chat_room.dart';
 import 'package:tata/src/services/chat.service.dart';
 import 'package:flutter/material.dart';
@@ -40,19 +42,19 @@ class _RealtimePairPageState extends State<RealtimePairPage> {
     );
   }
 
-  Future<void> _pair() async {
+  void _pair() {
     setState(() {
       isPairing = true;
     });
 
-    ChatRoom? chatRoomInfo = await ChatService().realtimePair();
+    ChatService().realtimePair().then((chatRoomInfo) {
+      setState(() {
+        isPairing = false;
+      });
 
-    setState(() {
-      isPairing = false;
+      if (chatRoomInfo != null) {
+        context.push(ChatRoomView.routeName, extra: chatRoomInfo);
+      }
     });
-
-    if (chatRoomInfo != null) {
-      Navigator.pushNamed(context, '/chat-room', arguments: chatRoomInfo);
-    }
   }
 }

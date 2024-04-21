@@ -1,7 +1,11 @@
+import 'package:go_router/go_router.dart';
 import 'package:tata/src/chat-room/chat_room_controller.dart';
 import 'package:tata/src/chat-room/components/chat_menu_entry.dart';
 import 'package:tata/src/chat-room/components/chat_message_bubble.dart';
 import 'package:tata/src/chat-room/components/chat_room_announcement.dart';
+import 'package:tata/src/chat-room/components/leave_chat_page.dart';
+import 'package:tata/src/chat-room/components/members_page.dart';
+import 'package:tata/src/chat-room/components/room_info_page.dart';
 import 'package:tata/src/core/avatar.dart';
 import 'package:tata/src/models/app_user_info.dart';
 import 'package:tata/src/models/chat_room.dart';
@@ -25,7 +29,6 @@ class _ChatRoomViewState extends State<ChatRoomView> {
   @override
   void initState() {
     super.initState();
-    widget.controller.init(chatRoom: widget.args.chatRoomInfo);
   }
 
   @override
@@ -250,8 +253,9 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                Navigator.of(context)
-                    .pushNamed('/room-info', arguments: chatRoomInfo);
+                context.push(
+                    '${ChatRoomView.routeName}/${RoomInfoPage.routeName}',
+                    extra: chatRoomInfo);
               },
             ),
           if (chatRoomInfo.type == ChatRoomType.normal)
@@ -261,8 +265,9 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                Navigator.of(context)
-                    .pushNamed('/members', arguments: chatRoomInfo);
+                context.push(
+                    '${ChatRoomView.routeName}/${MembersPage.routeName}',
+                    extra: chatRoomInfo);
               },
             ),
           ChatMenuEntry(
@@ -271,8 +276,9 @@ class _ChatRoomViewState extends State<ChatRoomView> {
               style: TextStyle(color: Colors.red),
             ),
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamed('/leave-chat', arguments: chatRoomInfo.id);
+              context.push(
+                  '${ChatRoomView.routeName}/${LeaveChatPage.routeName}',
+                  extra: chatRoomInfo.id);
             },
           ),
         ],

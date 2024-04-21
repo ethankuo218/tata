@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 class PhoneVerifyInputPage extends StatefulWidget {
   const PhoneVerifyInputPage({super.key});
 
-  static const routeName = '/phone-verify/phone-input';
+  static const routeName = '/phone-verify/input';
 
   @override
   State<PhoneVerifyInputPage> createState() => _PhoneVerifyInputPageState();

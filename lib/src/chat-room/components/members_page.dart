@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tata/src/core/avatar.dart';
@@ -12,7 +11,7 @@ class MembersPage extends StatefulWidget {
   final ChatRoom chatRoomInfo;
   const MembersPage({super.key, required this.chatRoomInfo});
 
-  static const routeName = '/members';
+  static const routeName = 'members';
 
   @override
   State<MembersPage> createState() => _MembersPageState();

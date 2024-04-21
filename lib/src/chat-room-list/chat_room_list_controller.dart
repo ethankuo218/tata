@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tata/src/chat-room-list/dialogs/chat_room_detail_dialog.dart';
 import 'package:tata/src/chat-room/chat_room_view.dart';
 import 'package:tata/src/core/tarot.dart';
@@ -39,8 +40,8 @@ class ChatRoomListController {
       }
 
       ChatService().joinChatRoom(chatRoomInfo).then((value) {
-        Navigator.of(context).pushNamed(ChatRoomView.routeName,
-            arguments: ChatRoomArgument(chatRoomInfo: chatRoomInfo));
+        context.push(ChatRoomView.routeName,
+            extra: ChatRoomArgument(chatRoomInfo: chatRoomInfo));
       }).onError<Exception>((error, stackTrace) {
         SnackbarService()
             .showSnackBar(context: context, message: error.toString());

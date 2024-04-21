@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tata/src/home/home_page.dart';
 import 'package:tata/src/services/chat.service.dart';
 
@@ -6,7 +7,7 @@ class LeaveChatPage extends StatelessWidget {
   final String chatRoomId;
   const LeaveChatPage({super.key, required this.chatRoomId});
 
-  static const routeName = '/leave-chat';
+  static const routeName = 'leave-chat';
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,7 @@ class LeaveChatPage extends StatelessWidget {
                   ),
                   onPressed: () {
                     ChatService().leaveChatRoom(chatRoomId).then((_) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          HomePage.routeName, (Route<dynamic> route) => false);
+                      context.pushReplacement(HomePage.routeName);
                     });
                   },
                   child: const Text('Confirm',

@@ -1,17 +1,16 @@
-import 'package:tata/src/models/chat_room.dart';
 import 'package:tata/src/models/message.dart';
+import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/services/chat.service.dart';
 
 class ChatRoomController {
-  late ChatRoom chatRoomInfo;
-  late Stream<List<Message>> messagesStream;
+  ChatRoomController(this._chatRoomArgument);
+  final ChatRoomArgument _chatRoomArgument;
 
-  void init({required ChatRoom chatRoom}) {
-    chatRoomInfo = chatRoom;
-    messagesStream = ChatService().getMessages(chatRoomInfo.id);
-  }
+  late Stream<List<Message>> messagesStream =
+      ChatService().getMessages(_chatRoomArgument.chatRoomInfo.id);
 
   Future<void> sendMessage(String message) {
-    return ChatService().sendMessage(chatRoomInfo.id, message);
+    return ChatService()
+        .sendMessage(_chatRoomArgument.chatRoomInfo.id, message);
   }
 }
