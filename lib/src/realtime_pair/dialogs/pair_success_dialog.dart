@@ -27,9 +27,12 @@ Future<Object?> showPairSuccessDialog(BuildContext context,
                   color: Color.fromARGB(255, 30, 30, 30),
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text('PAIRED', style: TextStyle(fontSize: 20)),
+                  SizedBox(height: screenHeight * 0.2),
+                  const Text('Paired !',
+                      style: TextStyle(color: Colors.white, fontSize: 50)),
+                  const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -38,6 +41,7 @@ Future<Object?> showPairSuccessDialog(BuildContext context,
                           child: const Text('Start Chat')),
                     ],
                   ),
+                  SizedBox(height: screenHeight * 0.1)
                 ],
               ),
             ),

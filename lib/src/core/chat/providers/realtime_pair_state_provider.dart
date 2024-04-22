@@ -14,20 +14,23 @@ class PairStateNotifier extends StateNotifier<PairState> {
   final FirebaseFirestore _fireStore;
   String? createdChatRoomId;
 
+  //Reset State
+  void reset() {
+    state = const PairState.initial();
+  }
+
   // Start Pairing
   Future<void> startPairing() async {
     state = const PairState.loading();
 
     try {
-      await Future.delayed(const Duration(seconds: 5));
-
       final String currentUserId = _firebaseAuth.currentUser!.uid;
 
       // find a realtime chat room with members less than 2
       final QuerySnapshot<Map<String, dynamic>> chatRoomSnapshot =
           await _fireStore
               .collection('chat_rooms')
-              .where('type', isEqualTo: ChatRoomType.realtime.toString())
+              .where('type', isEqualTo: ChatRoomType.realtime.value)
               .get();
 
       for (var element in chatRoomSnapshot.docs) {
@@ -39,6 +42,7 @@ class PairStateNotifier extends StateNotifier<PairState> {
           });
 
           state = PairState.success(chatRoomInfo: chatRoom);
+          return;
         }
       }
 
@@ -96,7 +100,10 @@ class PairStateNotifier extends StateNotifier<PairState> {
       state = const PairState.failed(error: 'Unknown error');
     }
 
-    cancelPairing();
+    if (state == const PairState.loading()) {
+      print('Pairing Failed!');
+      cancelPairing();
+    }
   }
 
   // Cancel Pairing

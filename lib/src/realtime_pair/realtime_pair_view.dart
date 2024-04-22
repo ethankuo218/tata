@@ -33,12 +33,12 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
     super.initState();
 
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      setState(() {
-        if (isPairing == true) {
+      if (isPairing == true) {
+        setState(() {
           timerText =
               '${(timeCounter / 60).floor().toString().padLeft(2, '0')} : ${(timeCounter % 60).toString().padLeft(2, '0')}';
-        }
-      });
+        });
+      }
     });
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -54,39 +54,34 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(realtimePairStateProvider).maybeWhen(
-        initial: () => setState(() {
-              timerText = '00 : 00';
-              timeCounter = 0;
-              isPairing = false;
-            }),
-        loading: () {
-          timeCounter++;
-          isPairing = true;
-        },
-        success: (ChatRoom chatRoomInfo) {
-          String otherUserUid = chatRoomInfo.members[0] ==
-                  ref.read(firebaseAuthProvider).currentUser!.uid
-              ? chatRoomInfo.members[1]
-              : chatRoomInfo.members[0];
-          UserService().getUserInfo(otherUserUid).then((value) {
-            setState(() {
-              isPairing = false;
-            });
+    ref.watch(realtimePairStateProvider).maybeWhen(initial: () {
+      timerText = '00 : 00';
+      timeCounter = 0;
+      isPairing = false;
+    }, loading: () {
+      timeCounter++;
+      isPairing = true;
+    }, success: (ChatRoom chatRoomInfo) {
+      isPairing = false;
 
-            showPairSuccessDialog(context, onClosed: (_) {
-              context.push('/chat-room',
-                  extra: ChatRoomArgument(
-                      chatRoomInfo: chatRoomInfo, otherUserInfo: value));
-            });
-          });
-        },
-        failed: (String error) => setState(() {
-              isPairing = false;
-            }),
-        orElse: () {
-          isPairing = false;
+      String otherUserUid = chatRoomInfo.members[0] ==
+              ref.read(firebaseAuthProvider).currentUser!.uid
+          ? chatRoomInfo.members[1]
+          : chatRoomInfo.members[0];
+
+      UserService().getUserInfo(otherUserUid).then((value) {
+        showPairSuccessDialog(context, onClosed: (_) {
+          ref.read(realtimePairStateProvider.notifier).reset();
+          context.pushReplacement('/chat-room',
+              extra: ChatRoomArgument(
+                  chatRoomInfo: chatRoomInfo, otherUserInfo: value));
         });
+      });
+    }, failed: (String error) {
+      isPairing = false;
+    }, orElse: () {
+      isPairing = false;
+    });
 
     return Scaffold(
       body: Center(
