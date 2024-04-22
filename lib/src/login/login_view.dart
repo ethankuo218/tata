@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart';
-import 'package:tata/src/auth/providers/auth_state_provider.dart';
+import 'package:tata/src/core/auth/providers/auth_state_provider.dart';
 import 'package:tata/src/phone-verify/phone_verify_input_page.dart';
-import 'package:tata/src/services/auth/auth_service.dart';
 import 'components/animated_button.dart';
 
 class LoginView extends ConsumerStatefulWidget {
@@ -77,10 +76,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         ref.read(authStateProvider.notifier).signInWithApple())
                 : const SizedBox(),
             AnimatedButton(
-              brand: Brand.google,
-              btnAnimationController: _btnAnimationController,
-              onPress: () => AuthService().signInWithGoogle(),
-            ),
+                brand: Brand.google,
+                btnAnimationController: _btnAnimationController,
+                onPress: () =>
+                    ref.read(authStateProvider.notifier).signInWithGoogle()),
             AnimatedButton(
               brand: Brand.phone,
               btnAnimationController: _btnAnimationController,

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tata/src/core/providers/firebase_provider.dart';
+import 'package:tata/src/core/firebase/firebase_provider.dart';
 
 class AuthenticationNotifier extends ChangeNotifier {
   AuthenticationNotifier(this._firebaseAuth) {

@@ -1,19 +1,21 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phone_form_field/phone_form_field.dart';
-import 'package:tata/src/services/auth/auth_service.dart';
+import 'package:tata/src/core/auth/data_source/auth_data_source.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class PhoneVerifyInputPage extends StatefulWidget {
+class PhoneVerifyInputPage extends ConsumerStatefulWidget {
   const PhoneVerifyInputPage({super.key});
 
   static const routeName = '/phone-verify/input';
 
   @override
-  State<PhoneVerifyInputPage> createState() => _PhoneVerifyInputPageState();
+  ConsumerState<PhoneVerifyInputPage> createState() =>
+      _PhoneVerifyInputPageState();
 }
 
-class _PhoneVerifyInputPageState extends State<PhoneVerifyInputPage> {
+class _PhoneVerifyInputPageState extends ConsumerState<PhoneVerifyInputPage> {
   final GlobalKey<FormFieldState<PhoneNumber>> phoneNumberInputKey =
       GlobalKey<FormFieldState<PhoneNumber>>();
 
@@ -108,7 +110,8 @@ class _PhoneVerifyInputPageState extends State<PhoneVerifyInputPage> {
                               if (phoneNumberInputKey.currentState!
                                       .validate() &&
                                   phoneNumber != null) {
-                                await AuthService()
+                                await ref
+                                    .read(authDataSourceProvider)
                                     .sendOtp(context, phoneNumber);
                               }
                             },

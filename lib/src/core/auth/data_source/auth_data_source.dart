@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:tata/src/core/avatar.dart';
-import 'package:tata/src/core/providers/firebase_provider.dart';
+import 'package:tata/src/core/firebase/firebase_provider.dart';
 import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/phone-verify/phone_verify_otp_page.dart';
 
@@ -68,7 +68,7 @@ class AuthDataSource {
     }
   }
 
-// Phone NUmber Sign In
+// Phone Number Sign In
   Future<Either<Unit, String>> sendOtp(
       BuildContext context, PhoneNumber phoneNumber) async {
     try {
@@ -121,6 +121,33 @@ class AuthDataSource {
       }, SetOptions(merge: true));
 
       return left(userCredential.user!);
+    } on FirebaseAuthException catch (e) {
+      return right(e.message ?? 'Unknown Error');
+    }
+  }
+
+  Future<Either<Unit, String>> resendOtp(PhoneNumber phoneNumber) async {
+    try {
+      await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: '+${phoneNumber.countryCode}${phoneNumber.nsn}',
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await _firebaseAuth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          switch (e.code) {
+            case 'invalid-phone-number':
+              print('The provided phone number is not valid.');
+              break;
+            default:
+              print('An error occurred while verifying the phone number.');
+              break;
+          }
+        },
+        codeSent: (String verificationId, int? resendToken) {},
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      );
+
+      return left(unit);
     } on FirebaseAuthException catch (e) {
       return right(e.message ?? 'Unknown Error');
     }

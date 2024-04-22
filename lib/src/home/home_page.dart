@@ -7,7 +7,7 @@ import 'package:tata/src/chat-room-list/chat_room_list_view.dart';
 import 'package:tata/src/chat-room-list/components/chat_room_category_tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tata/src/my-chat-room/my_chat_room_page.dart';
-import 'package:tata/src/realtime_pair/realtime_pair_page.dart';
+import 'package:tata/src/realtime_pair/realtime_pair_view.dart';
 import 'package:tata/src/settings/settings_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -50,7 +50,8 @@ class _HomePageState extends State<HomePage> {
           _selectedIndex = index;
           break;
         case 2:
-          context.push(RealtimePairPage.routeName);
+          print('Realtime Chat Button');
+          context.push(RealtimePairView.routeName);
           break;
         case 4:
           context.push(SettingsView.routeName);
@@ -145,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // navigate to create chat room page
+                    context.push(RealtimePairView.routeName);
                   },
                   child: Stack(children: [
                     Positioned.fill(

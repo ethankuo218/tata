@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tata/src/auth/data_source/auth_data_source.dart';
-import 'package:tata/src/auth/providers/state/authentication_state.dart';
+import 'package:tata/src/core/auth/data_source/auth_data_source.dart';
+import 'package:tata/src/core/auth/providers/state/authentication_state.dart';
 
 class AuthStateNotifier extends StateNotifier<AuthenticationState> {
   AuthStateNotifier(this._dataSource)

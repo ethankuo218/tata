@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:tata/src/auth/providers/auth_state_provider.dart';
+import 'package:tata/src/core/auth/providers/auth_state_provider.dart';
 import 'package:tata/src/models/app_user_info.dart';
 import 'package:tata/src/services/user.service.dart';
 import 'package:url_launcher/url_launcher_string.dart';

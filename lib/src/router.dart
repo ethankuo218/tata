@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tata/src/auth/providers/authentication_provider.dart';
+import 'package:tata/src/core/auth/providers/authentication_provider.dart';
 import 'package:tata/src/chat-room/chat_room_controller.dart';
 import 'package:tata/src/chat-room/chat_room_view.dart';
 import 'package:tata/src/chat-room/components/leave_chat_page.dart';
@@ -13,7 +13,7 @@ import 'package:tata/src/models/chat_room.dart';
 import 'package:tata/src/models/route_argument.dart';
 import 'package:tata/src/phone-verify/phone_verify_input_page.dart';
 import 'package:tata/src/phone-verify/phone_verify_otp_page.dart';
-import 'package:tata/src/realtime_pair/realtime_pair_page.dart';
+import 'package:tata/src/realtime_pair/realtime_pair_view.dart';
 import 'package:tata/src/settings/settings_controller.dart';
 import 'package:tata/src/settings/settings_view.dart';
 
@@ -37,10 +37,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           builder: (BuildContext context, GoRouterState state) =>
               SettingsView(controller: SettingsController())),
       GoRoute(
-          path: RealtimePairPage.routeName,
-          builder: (context, state) {
-            return const RealtimePairPage();
-          }),
+          path: RealtimePairView.routeName,
+          builder: (context, state) => const RealtimePairView()),
       GoRoute(
           path: ChatRoomView.routeName,
           builder: (BuildContext context, GoRouterState state) => ChatRoomView(

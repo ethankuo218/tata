@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:pinput/pinput.dart';
+import 'package:tata/src/core/auth/data_source/auth_data_source.dart';
 import 'package:tata/src/models/route_argument.dart';
-import 'package:tata/src/services/auth/auth_service.dart';
 
-class PhoneVerifyOtpPage extends StatefulWidget {
+class PhoneVerifyOtpPage extends ConsumerStatefulWidget {
   const PhoneVerifyOtpPage({super.key, required this.args});
 
   static const String routeName = '/phone-verify/otp';
@@ -15,10 +16,10 @@ class PhoneVerifyOtpPage extends StatefulWidget {
   final PhoneVerifyArgument args;
 
   @override
-  State<PhoneVerifyOtpPage> createState() => _PhoneVerifyOtpPageState();
+  ConsumerState<PhoneVerifyOtpPage> createState() => _PhoneVerifyOtpPageState();
 }
 
-class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
+class _PhoneVerifyOtpPageState extends ConsumerState<PhoneVerifyOtpPage> {
   final TextEditingController pinController = TextEditingController();
   final FocusNode focusNode = FocusNode();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -112,9 +113,9 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
                         validator: (value) =>
                             value!.length == 6 ? null : 'Invalid OTP',
                         hapticFeedbackType: HapticFeedbackType.lightImpact,
-                        onCompleted: (pin) {
-                          AuthService().verifyOtp(verificationId, pin);
-                        },
+                        onCompleted: (pin) => ref
+                            .read(authDataSourceProvider)
+                            .signInWithPhoneNumber(verificationId, pin),
                         cursor: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -179,7 +180,7 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
                           }
                         });
 
-                        AuthService().resendOtp(phoneNumber);
+                        ref.read(authDataSourceProvider).resendOtp(phoneNumber);
                       })
               ])),
               SizedBox(height: screenHeight * 0.1),
@@ -194,8 +195,10 @@ class _PhoneVerifyOtpPageState extends State<PhoneVerifyOtpPage> {
                             onPressed: () {
                               focusNode.unfocus();
                               if (formKey.currentState!.validate()) {
-                                AuthService().verifyOtp(
-                                    verificationId, pinController.text);
+                                ref
+                                    .read(authDataSourceProvider)
+                                    .signInWithPhoneNumber(
+                                        verificationId, pinController.text);
                               }
                             },
                             child: const Text(
