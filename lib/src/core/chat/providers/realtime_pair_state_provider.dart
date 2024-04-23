@@ -14,6 +14,12 @@ class PairStateNotifier extends StateNotifier<PairState> {
   final FirebaseFirestore _fireStore;
   String? createdChatRoomId;
 
+  @override
+  void dispose() {
+    super.dispose();
+    cancelPairing();
+  }
+
   //Reset State
   void reset() {
     state = const PairState.initial();
@@ -96,13 +102,13 @@ class PairStateNotifier extends StateNotifier<PairState> {
           return;
         }
       }
-    } catch (e) {
-      state = const PairState.failed(error: 'Unknown error');
-    }
 
-    if (state == const PairState.loading()) {
-      print('Pairing Failed!');
-      cancelPairing();
+      if (state == const PairState.loading()) {
+        print('Pairing Failed!');
+        cancelPairing();
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -120,13 +126,13 @@ class PairStateNotifier extends StateNotifier<PairState> {
         state = const PairState.initial();
       }
     } catch (e) {
-      state = const PairState.failed(error: 'Unknown error');
+      print(e);
     }
   }
 }
 
 final realtimePairStateProvider =
-    StateNotifierProvider<PairStateNotifier, PairState>((ref) =>
+    StateNotifierProvider.autoDispose<PairStateNotifier, PairState>((ref) =>
         PairStateNotifier(ref.read(firebaseAuthProvider),
             ref.read(firebaseFirestoreProvider)));
 

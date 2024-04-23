@@ -41,7 +41,7 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
       }
     });
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
       ref.read(realtimePairStateProvider.notifier).startPairing();
     });
   }
@@ -83,49 +83,55 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
       isPairing = false;
     });
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            isPairing == true
-                ? Column(
-                    children: [
-                      const AspectRatio(
-                        aspectRatio: 1,
-                        child: RiveAnimation.asset(
-                          'assets/rive-assets/hourglass.riv',
-                          fit: BoxFit.cover,
-                          animations: ['loading'],
-                        ),
-                      ),
-                      Text(timerText,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 40)),
-                    ],
-                  )
-                : const Text('Pairing Failed',
-                    style: TextStyle(color: Colors.white, fontSize: 40)),
-            const SizedBox(height: 20),
-            isPairing == true
-                ? ElevatedButton(
-                    onPressed: () {
-                      ref
-                          .read(realtimePairStateProvider.notifier)
-                          .cancelPairing();
-                    },
-                    child: const Text('Cancel Pairing'))
-                : ElevatedButton(
-                    onPressed: () {
-                      ref
-                          .read(realtimePairStateProvider.notifier)
-                          .startPairing();
-                    },
-                    child: const Text('Retry Pairing'))
-          ],
-        ),
-      ),
-    );
+    return PopScope(
+        onPopInvoked: (didPop) {
+          if (didPop) {
+            ref.read(realtimePairStateProvider.notifier).reset();
+          }
+        },
+        child: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                isPairing == true
+                    ? Column(
+                        children: [
+                          const AspectRatio(
+                            aspectRatio: 1,
+                            child: RiveAnimation.asset(
+                              'assets/rive-assets/hourglass.riv',
+                              fit: BoxFit.cover,
+                              animations: ['loading'],
+                            ),
+                          ),
+                          Text(timerText,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 40)),
+                        ],
+                      )
+                    : const Text('Pairing Failed',
+                        style: TextStyle(color: Colors.white, fontSize: 40)),
+                const SizedBox(height: 20),
+                isPairing == true
+                    ? ElevatedButton(
+                        onPressed: () {
+                          ref
+                              .read(realtimePairStateProvider.notifier)
+                              .cancelPairing();
+                        },
+                        child: const Text('Cancel Pairing'))
+                    : ElevatedButton(
+                        onPressed: () {
+                          ref
+                              .read(realtimePairStateProvider.notifier)
+                              .startPairing();
+                        },
+                        child: const Text('Retry Pairing'))
+              ],
+            ),
+          ),
+        ));
   }
 }
