@@ -22,24 +22,7 @@ class _ActivityListViewState extends State<ActivityListView> {
         body: Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
             child: Column(children: [
-              Container(
-                  height: 150,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 137, 118, 82)
-                          .withOpacity(0.2),
-                      border: Border.all(
-                          color: const Color.fromARGB(255, 137, 118, 82)
-                              .withOpacity(0.6),
-                          width: 2),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: BackdropFilter(
-                      blendMode: BlendMode.overlay,
-                      filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                      child: Container(
-                        decoration:
-                            BoxDecoration(color: Colors.white.withOpacity(0.0)),
-                      ))),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               Expanded(
                   child: StreamBuilder(
                       builder: (BuildContext context,

@@ -19,6 +19,7 @@ class ActivityListTile extends StatelessWidget {
           Container(
             height: 150,
             width: double.infinity,
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 137, 118, 82).withOpacity(0.2),
                 border: Border.all(
@@ -33,53 +34,52 @@ class ActivityListTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 30, 0, 0),
-                    child: Text(
-                      activityInfo.name.toUpperCase(),
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 133, 114, 82),
-                          fontFamily: 'MedievalSharp',
-                          fontSize: 22,
-                          fontWeight: FontWeight.w500),
+                  SizedBox(
+                    width: screenWidth * 0.75,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          activityInfo.name.toUpperCase(),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              // color: Color.fromARGB(255, 133, 114, 82),
+                              color: Colors.white.withOpacity(0.8),
+                              fontFamily: 'MedievalSharp',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(activityInfo.description,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.white.withOpacity(0.7),
+                                fontFamily: 'MedievalSharp',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500)),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  const Spacer(),
                   Row(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 1.5,
-                          width: 20,
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 137, 118, 82)
-                                  .withOpacity(0.5)),
+                        Text(
+                          activityInfo.timeDescription,
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.8),
+                              fontSize: 13,
+                              fontFamily: 'MedievalSharp'),
                         ),
-                        TextButton(
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              backgroundColor: MaterialStateColor.resolveWith(
-                                  (states) =>
-                                      const Color.fromARGB(255, 152, 129, 88)
-                                          .withOpacity(0.8)),
-                            ),
-                            onPressed: () {},
-                            child: Text(
-                              'View Details',
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(0.5),
-                                fontFamily: 'MedievalSharp',
-                              ),
-                            )),
-                        Container(
-                          width: screenWidth * 0.25,
-                          height: 1.5,
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 137, 118, 82)
-                                  .withOpacity(0.5)),
+                        const Spacer(),
+                        Text(
+                          '>>> View Details >>>',
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.8),
+                            fontSize: 18,
+                            fontFamily: 'MedievalSharp',
+                          ),
                         )
                       ])
                 ],
@@ -93,9 +93,11 @@ class ActivityListTile extends StatelessWidget {
                 height: 200,
                 width: 200,
                 decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        opacity: 0.85,
-                        image: ExactAssetImage('assets/images/star.png'))),
+                    // image: DecorationImage(
+                    //     opacity: 0.85,
+                    //     image: ExactAssetImage('assets/images/star.png')
+                    //     )
+                    ),
                 child: BackdropFilter(
                     blendMode: BlendMode.overlay,
                     filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
