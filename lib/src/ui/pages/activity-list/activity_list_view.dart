@@ -33,7 +33,7 @@ class _ActivityListViewState extends ConsumerState<ActivityListView> {
                             itemCount: activityList.length,
                             separatorBuilder:
                                 (BuildContext context, int index) =>
-                                    const SizedBox(height: 10)))
+                                    const SizedBox(height: 24)))
                   ])))),
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stackTrace) => Center(child: Text('Error: $error')),

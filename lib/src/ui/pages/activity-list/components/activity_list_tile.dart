@@ -13,7 +13,6 @@ class ActivityListTile extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return SizedBox(
-      height: 175,
       child: Stack(
         children: [
           Container(

@@ -55,6 +55,7 @@ class ChatRoomRepository {
     return _fireStore
         .collection('chat_rooms')
         .where('members', arrayContains: currentUserId)
+        .orderBy('latest_message.timestamp', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((chatRoom) => ChatRoom.fromMap(chatRoom.data()))
