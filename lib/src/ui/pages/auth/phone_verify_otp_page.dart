@@ -8,18 +8,18 @@ import 'package:pinput/pinput.dart';
 import 'package:tata/src/core/providers/auth_provider.dart';
 import 'package:tata/src/core/models/route_argument.dart';
 
-class PhoneVerifyOtpPage extends ConsumerStatefulWidget {
-  const PhoneVerifyOtpPage({super.key, required this.args});
+class PhoneVerifyOtpView extends ConsumerStatefulWidget {
+  const PhoneVerifyOtpView({super.key, required this.args});
 
   static const String routeName = '/phone-verify/otp';
 
   final PhoneVerifyArgument args;
 
   @override
-  ConsumerState<PhoneVerifyOtpPage> createState() => _PhoneVerifyOtpPageState();
+  ConsumerState<PhoneVerifyOtpView> createState() => _PhoneVerifyOtpViewState();
 }
 
-class _PhoneVerifyOtpPageState extends ConsumerState<PhoneVerifyOtpPage> {
+class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
   final TextEditingController pinController = TextEditingController();
   final FocusNode focusNode = FocusNode();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

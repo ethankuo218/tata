@@ -4,12 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/providers/authentication_provider.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/chat_room_controller.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/chat_room_view.dart';
-import 'package:tata/src/ui/shared/pages/chat-room/components/leave_chat_page.dart';
+import 'package:tata/src/ui/shared/pages/chat-room/components/leave_chat_view.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/components/members_view.dart';
-import 'package:tata/src/ui/shared/pages/chat-room/components/room_info_page.dart';
+import 'package:tata/src/ui/shared/pages/chat-room/components/room_info_view.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/models/route_argument.dart';
-import 'package:tata/src/ui/pages/home/home_page.dart';
+import 'package:tata/src/ui/pages/home/home_view.dart';
 import 'package:tata/src/ui/pages/auth/login_view.dart';
 import 'package:tata/src/ui/pages/auth/phone_verify_input_page.dart';
 import 'package:tata/src/ui/pages/auth/phone_verify_otp_page.dart';
@@ -28,9 +28,9 @@ final routerProvider = Provider<GoRouter>((ref) {
     refreshListenable: authState,
     routes: <RouteBase>[
       GoRoute(
-          path: HomePage.routeName,
+          path: HomeView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
-              const HomePage()),
+              const HomeView()),
       GoRoute(
           path: SettingsView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
@@ -46,9 +46,9 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
           routes: [
             GoRoute(
-              path: RoomInfoPage.routeName,
+              path: RoomInfoView.routeName,
               builder: (BuildContext context, GoRouterState state) =>
-                  RoomInfoPage(chatRoomInfo: state.extra as ChatRoom),
+                  RoomInfoView(chatRoomInfo: state.extra as ChatRoom),
             ),
             GoRoute(
               path: MembersView.routeName,
@@ -56,26 +56,26 @@ final routerProvider = Provider<GoRouter>((ref) {
                   MembersView(chatRoomInfo: state.extra as ChatRoom),
             ),
             GoRoute(
-              path: LeaveChatPage.routeName,
+              path: LeaveChatView.routeName,
               builder: (BuildContext context, GoRouterState state) =>
-                  LeaveChatPage(chatRoomId: state.extra as String),
+                  LeaveChatView(chatRoomId: state.extra as String),
             ),
           ]),
       GoRoute(
           path: LoginView.routeName,
           builder: (context, state) => const LoginView()),
       GoRoute(
-          path: PhoneVerifyInputPage.routeName,
+          path: PhoneVerifyInputView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
-              const PhoneVerifyInputPage()),
+              const PhoneVerifyInputView()),
       GoRoute(
-          path: PhoneVerifyOtpPage.routeName,
+          path: PhoneVerifyOtpView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
-              PhoneVerifyOtpPage(args: state.extra as PhoneVerifyArgument))
+              PhoneVerifyOtpView(args: state.extra as PhoneVerifyArgument))
     ],
     redirect: (context, state) {
-      if (state.fullPath == PhoneVerifyInputPage.routeName ||
-          state.fullPath == PhoneVerifyOtpPage.routeName) {
+      if (state.fullPath == PhoneVerifyInputView.routeName ||
+          state.fullPath == PhoneVerifyOtpView.routeName) {
         return null;
       }
 

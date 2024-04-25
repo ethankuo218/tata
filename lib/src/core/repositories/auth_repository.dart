@@ -87,7 +87,7 @@ class AuthRepository {
           }
         },
         codeSent: (String verificationId, int? resendToken) {
-          context.push(PhoneVerifyOtpPage.routeName,
+          context.push(PhoneVerifyOtpView.routeName,
               extra: PhoneVerifyArgument(
                 verificationId: verificationId,
                 phoneNumber: phoneNumber,

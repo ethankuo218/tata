@@ -83,7 +83,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
             AnimatedButton(
               brand: Brand.phone,
               btnAnimationController: _btnAnimationController,
-              onPress: () => context.push(PhoneVerifyInputPage.routeName),
+              onPress: () => context.push(PhoneVerifyInputView.routeName),
             ),
             SizedBox(
               height: screenHeight * 0.09,

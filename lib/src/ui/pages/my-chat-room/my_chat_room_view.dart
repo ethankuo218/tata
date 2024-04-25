@@ -7,18 +7,18 @@ import 'package:tata/src/ui/shared/pages/chat-room/chat_room_view.dart';
 import 'package:tata/src/core/models/route_argument.dart';
 import 'package:tata/src/ui/pages/my-chat-room/components/my_chat_room_tile.dart';
 
-class MyChatRoomPage extends ConsumerStatefulWidget {
-  const MyChatRoomPage({super.key});
+class MyChatRoomView extends ConsumerStatefulWidget {
+  const MyChatRoomView({super.key});
 
   static const routeName = '/my-chat-room';
 
   @override
-  ConsumerState<MyChatRoomPage> createState() {
-    return _MyChatRoomPageState();
+  ConsumerState<MyChatRoomView> createState() {
+    return _MyChatRoomViewState();
   }
 }
 
-class _MyChatRoomPageState extends ConsumerState<MyChatRoomPage> {
+class _MyChatRoomViewState extends ConsumerState<MyChatRoomView> {
   late User user;
   late bool isLoading = false;
 

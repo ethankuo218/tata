@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/ui/pages/activity-list/activity_list_view.dart';
 import 'package:tata/src/ui/pages/chat-room-list/chat_room_list_view.dart';
 import 'package:tata/src/ui/pages/chat-room-list/components/chat_room_category_tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tata/src/ui/pages/my-chat-room/my_chat_room_page.dart';
+import 'package:tata/src/ui/pages/my-chat-room/my_chat_room_view.dart';
 import 'package:tata/src/ui/pages/realtime_pair/realtime_pair_view.dart';
 import 'package:tata/src/ui/pages/settings/settings_view.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeView extends ConsumerStatefulWidget {
+  const HomeView({super.key});
 
   static const String routeName = '/home';
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomeView> createState() => _HomeViewState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeViewState extends ConsumerState<HomeView> {
   int _selectedIndex = 0;
   int _selectedCategoryIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
     ChatRoomListView(),
-    const MyChatRoomPage(),
+    const MyChatRoomView(),
     const Text('Realtime Chat Button'),
     const ActivityListView(),
     const Text('Settings Button'),

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/ui/tarot.dart';
 
-class RoomInfoPage extends StatelessWidget {
+class RoomInfoView extends StatelessWidget {
   final ChatRoom chatRoomInfo;
-  const RoomInfoPage({super.key, required this.chatRoomInfo});
+  const RoomInfoView({super.key, required this.chatRoomInfo});
 
   static const String routeName = 'room-info';
 

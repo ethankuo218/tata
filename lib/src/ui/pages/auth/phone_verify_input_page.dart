@@ -5,17 +5,17 @@ import 'package:phone_form_field/phone_form_field.dart';
 import 'package:tata/src/core/providers/auth_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class PhoneVerifyInputPage extends ConsumerStatefulWidget {
-  const PhoneVerifyInputPage({super.key});
+class PhoneVerifyInputView extends ConsumerStatefulWidget {
+  const PhoneVerifyInputView({super.key});
 
   static const routeName = '/phone-verify/input';
 
   @override
-  ConsumerState<PhoneVerifyInputPage> createState() =>
-      _PhoneVerifyInputPageState();
+  ConsumerState<PhoneVerifyInputView> createState() =>
+      _PhoneVerifyInputViewState();
 }
 
-class _PhoneVerifyInputPageState extends ConsumerState<PhoneVerifyInputPage> {
+class _PhoneVerifyInputViewState extends ConsumerState<PhoneVerifyInputView> {
   final GlobalKey<FormFieldState<PhoneNumber>> phoneNumberInputKey =
       GlobalKey<FormFieldState<PhoneNumber>>();
 

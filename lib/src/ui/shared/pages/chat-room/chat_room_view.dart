@@ -5,9 +5,9 @@ import 'package:tata/src/ui/shared/pages/chat-room/chat_room_controller.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/components/chat_menu_entry.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/components/chat_message_bubble.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/components/chat_room_announcement.dart';
-import 'package:tata/src/ui/shared/pages/chat-room/components/leave_chat_page.dart';
+import 'package:tata/src/ui/shared/pages/chat-room/components/leave_chat_view.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/components/members_view.dart';
-import 'package:tata/src/ui/shared/pages/chat-room/components/room_info_page.dart';
+import 'package:tata/src/ui/shared/pages/chat-room/components/room_info_view.dart';
 import 'package:tata/src/ui/avatar.dart';
 import 'package:tata/src/core/models/app_user_info.dart';
 import 'package:tata/src/core/models/chat_room.dart';
@@ -256,7 +256,7 @@ class ChatRoomView extends ConsumerWidget {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                context.push('$routeName/${RoomInfoPage.routeName}',
+                context.push('$routeName/${RoomInfoView.routeName}',
                     extra: chatRoomInfo);
               },
             ),
@@ -277,7 +277,7 @@ class ChatRoomView extends ConsumerWidget {
               style: TextStyle(color: Colors.red),
             ),
             onPressed: () {
-              context.push('$routeName/${LeaveChatPage.routeName}',
+              context.push('$routeName/${LeaveChatView.routeName}',
                   extra: chatRoomInfo.id);
             },
           ),
