@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tata/src/core/auth/providers/authentication_provider.dart';
-import 'package:tata/src/chat-room/chat_room_controller.dart';
-import 'package:tata/src/chat-room/chat_room_view.dart';
-import 'package:tata/src/chat-room/components/leave_chat_page.dart';
-import 'package:tata/src/chat-room/components/members_page.dart';
-import 'package:tata/src/chat-room/components/room_info_page.dart';
-import 'package:tata/src/home/home_page.dart';
-import 'package:tata/src/login/login_view.dart';
-import 'package:tata/src/models/chat_room.dart';
-import 'package:tata/src/models/route_argument.dart';
-import 'package:tata/src/phone-verify/phone_verify_input_page.dart';
-import 'package:tata/src/phone-verify/phone_verify_otp_page.dart';
-import 'package:tata/src/realtime_pair/realtime_pair_view.dart';
-import 'package:tata/src/settings/settings_controller.dart';
-import 'package:tata/src/settings/settings_view.dart';
+import 'package:tata/src/core/providers/authentication_provider.dart';
+import 'package:tata/src/ui/shared/pages/chat-room/chat_room_controller.dart';
+import 'package:tata/src/ui/shared/pages/chat-room/chat_room_view.dart';
+import 'package:tata/src/ui/shared/pages/chat-room/components/leave_chat_page.dart';
+import 'package:tata/src/ui/shared/pages/chat-room/components/members_view.dart';
+import 'package:tata/src/ui/shared/pages/chat-room/components/room_info_page.dart';
+import 'package:tata/src/core/models/chat_room.dart';
+import 'package:tata/src/core/models/route_argument.dart';
+import 'package:tata/src/ui/pages/home/home_page.dart';
+import 'package:tata/src/ui/pages/auth/login_view.dart';
+import 'package:tata/src/ui/pages/auth/phone_verify_input_page.dart';
+import 'package:tata/src/ui/pages/auth/phone_verify_otp_page.dart';
+import 'package:tata/src/ui/pages/realtime_pair/realtime_pair_view.dart';
+import 'package:tata/src/ui/pages/settings/settings_view.dart';
 
 final _key = GlobalKey<NavigatorState>();
 
@@ -35,7 +34,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: SettingsView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
-              SettingsView(controller: SettingsController())),
+              const SettingsView()),
       GoRoute(
           path: RealtimePairView.routeName,
           builder: (context, state) => const RealtimePairView()),
@@ -52,9 +51,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                   RoomInfoPage(chatRoomInfo: state.extra as ChatRoom),
             ),
             GoRoute(
-              path: MembersPage.routeName,
+              path: MembersView.routeName,
               builder: (BuildContext context, GoRouterState state) =>
-                  MembersPage(chatRoomInfo: state.extra as ChatRoom),
+                  MembersView(chatRoomInfo: state.extra as ChatRoom),
             ),
             GoRoute(
               path: LeaveChatPage.routeName,
