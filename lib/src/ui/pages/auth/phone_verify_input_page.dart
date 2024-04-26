@@ -112,7 +112,7 @@ class _PhoneVerifyInputViewState extends ConsumerState<PhoneVerifyInputView> {
                                   phoneNumber != null) {
                                 await ref
                                     .read(authProvider.notifier)
-                                    .sendOtp(context, phoneNumber);
+                                    .sendOtp(phoneNumber);
                               }
                             },
                             child: const Text(

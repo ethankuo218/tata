@@ -1,14 +1,12 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/ui/avatar.dart';
-import 'package:tata/src/core/models/route_argument.dart';
-import 'package:tata/src/ui/pages/auth/phone_verify_otp_page.dart';
 
 part 'auth_repository.g.dart';
 
@@ -68,38 +66,31 @@ class AuthRepository {
   }
 
 // Phone Number Sign In
-  Future<Either<Unit, String>> sendOtp(
-      BuildContext context, PhoneNumber phoneNumber) async {
-    try {
-      await _firebaseAuth.verifyPhoneNumber(
-        phoneNumber: '+${phoneNumber.countryCode}${phoneNumber.nsn}',
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await _firebaseAuth.signInWithCredential(credential);
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          switch (e.code) {
-            case 'invalid-phone-number':
-              print('The provided phone number is not valid.');
-              break;
-            default:
-              print('An error occurred while verifying the phone number.');
-              break;
-          }
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          context.push(PhoneVerifyOtpView.routeName,
-              extra: PhoneVerifyArgument(
-                verificationId: verificationId,
-                phoneNumber: phoneNumber,
-              ));
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {},
-      );
+  Future<Either<String, String>> sendOtp(PhoneNumber phoneNumber) async {
+    Completer<Either<String, String>> completer = Completer();
 
-      return left(unit);
-    } on FirebaseAuthException catch (e) {
-      return right(e.message ?? 'Unknown Error');
-    }
+    _firebaseAuth.verifyPhoneNumber(
+      phoneNumber: '+${phoneNumber.countryCode}${phoneNumber.nsn}',
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        try {
+          await _firebaseAuth.signInWithCredential(credential);
+          completer.complete(right("Auto-retrieval success: User signed in"));
+        } catch (e) {
+          completer.complete(left("Auto-retrieval failed: ${e.toString()}"));
+        }
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        completer.complete(left("Failed: ${e.code} - ${e.message}"));
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        completer.complete(right(verificationId));
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        // Optionally handle timeout
+      },
+    );
+
+    return completer.future;
   }
 
   Future<Either<User, String>> signInWithPhoneNumber(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tata/src/core/providers/authentication_provider.dart';
+import 'package:tata/src/core/providers/router_notifier.dart';
+import 'package:tata/src/core/state/authentication_state.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/chat_room_controller.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/chat_room_view.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/components/leave_chat_view.dart';
@@ -19,13 +20,13 @@ import 'package:tata/src/ui/pages/settings/settings_view.dart';
 final _key = GlobalKey<NavigatorState>();
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authenticationProvider);
+  final routerListenable = ref.watch(routerNotifierProvider);
 
   return GoRouter(
     navigatorKey: _key,
     debugLogDiagnostics: true,
     initialLocation: '/home',
-    refreshListenable: authState,
+    refreshListenable: routerListenable,
     routes: <RouteBase>[
       GoRoute(
           path: HomeView.routeName,
@@ -71,15 +72,23 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: PhoneVerifyOtpView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
-              PhoneVerifyOtpView(args: state.extra as PhoneVerifyArgument))
+              const PhoneVerifyOtpView())
     ],
     redirect: (context, state) {
-      if (state.fullPath == PhoneVerifyInputView.routeName ||
-          state.fullPath == PhoneVerifyOtpView.routeName) {
-        return null;
+      switch (routerListenable.authState) {
+        case const AuthenticationState.authenticated():
+          return null;
+        case const AuthenticationState.unauthenticated():
+          if (state.fullPath == PhoneVerifyInputView.routeName ||
+              state.fullPath == PhoneVerifyOtpView.routeName) {
+            return null;
+          } else {
+            return LoginView.routeName;
+          }
+        case const AuthenticationState.otpSent():
+          return PhoneVerifyOtpView.routeName;
       }
-
-      return authState.isAuthenticated ? null : LoginView.routeName;
+      return null;
     },
   );
 });

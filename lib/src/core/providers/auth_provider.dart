@@ -1,75 +1,78 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/repositories/auth_repository.dart';
 import 'package:tata/src/core/state/authentication_state.dart';
 
-class AuthStateNotifier extends StateNotifier<AuthenticationState> {
-  AuthStateNotifier(this._authRepository)
-      : super(const AuthenticationState.initial());
+part 'auth_provider.g.dart';
 
-  final AuthRepository _authRepository;
+@Riverpod(keepAlive: true)
+class Auth extends _$Auth {
+  String? _verificationId;
+  PhoneNumber? _phoneNumber;
+
+  PhoneNumber? get phoneNumber => _phoneNumber;
+
+  Auth() {
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      print(user);
+      if (user != null) {
+        state = const AuthenticationState.authenticated();
+      } else {
+        state = const AuthenticationState.unauthenticated();
+      }
+    });
+  }
+
+  @override
+  AuthenticationState build() {
+    state = const AuthenticationState.initial();
+    return state;
+  }
 
   // Sign in with Apple
   Future<void> signInWithApple() async {
-    state = const AuthenticationState.loading();
-    final response = await _authRepository.signInWithApple();
-    state = response.fold(
-      (response) => AuthenticationState.authenticated(user: response),
-      (error) => AuthenticationState.unauthenticated(message: error),
-    );
+    await ref.read(authRepositoryProvider).signInWithApple();
   }
 
   // Sign in with Google
   Future<void> signInWithGoogle() async {
-    state = const AuthenticationState.loading();
-    final response = await _authRepository.signInWithGoogle();
-    state = response.fold(
-      (response) => AuthenticationState.authenticated(user: response),
-      (error) => AuthenticationState.unauthenticated(message: error),
-    );
+    await ref.read(authRepositoryProvider).signInWithGoogle();
   }
 
   // Sign in with Phone Number
-  Future<void> sendOtp(BuildContext context, PhoneNumber phoneNumber) async {
-    state = const AuthenticationState.loading();
-    final response = await _authRepository.sendOtp(context, phoneNumber);
-    state = response.fold(
-      (response) => const AuthenticationState.otpSent(),
-      (error) => AuthenticationState.unauthenticated(message: error),
-    );
+  Future<void> sendOtp(PhoneNumber phoneNumber) async {
+    ref.read(authRepositoryProvider).sendOtp(phoneNumber).then((value) {
+      _verificationId = value.fold((l) => l, (r) => r);
+      _phoneNumber = phoneNumber;
+
+      if (_verificationId == 'Unknown Error') {
+        state = const AuthenticationState.unauthenticated();
+        return;
+      }
+
+      state = const AuthenticationState.otpSent();
+    });
   }
 
-  Future<void> signInWithPhoneNumber(
-      String verificationId, String smsCode) async {
-    state = const AuthenticationState.loading();
-    final response =
-        await _authRepository.signInWithPhoneNumber(verificationId, smsCode);
-    state = response.fold(
-      (response) => AuthenticationState.authenticated(user: response),
-      (error) => AuthenticationState.unauthenticated(message: error),
-    );
+  void signInWithPhoneNumber(String smsCode) {
+    ref
+        .read(authRepositoryProvider)
+        .signInWithPhoneNumber(_verificationId!, smsCode);
   }
 
   // Resend Otp
-  Future<void> resendOtp(PhoneNumber phoneNumber) async {
-    state = const AuthenticationState.loading();
-    final response = await _authRepository.resendOtp(phoneNumber);
+  Future<void> resendOtp() async {
+    final response =
+        await ref.read(authRepositoryProvider).resendOtp(_phoneNumber!);
     state = response.fold(
       (response) => const AuthenticationState.otpSent(),
-      (error) => AuthenticationState.unauthenticated(message: error),
+      (error) => const AuthenticationState.unauthenticated(),
     );
   }
 
   // Sign out
   Future<void> signOut() async {
-    state = const AuthenticationState.loading();
-    await _authRepository.signOut();
-    state = const AuthenticationState.initial();
+    await ref.read(authRepositoryProvider).signOut();
   }
 }
-
-final authProvider =
-    StateNotifierProvider<AuthStateNotifier, AuthenticationState>(
-  (ref) => AuthStateNotifier(ref.read(authRepositoryProvider)),
-);

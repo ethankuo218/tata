@@ -6,14 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tata/src/core/providers/auth_provider.dart';
-import 'package:tata/src/core/models/route_argument.dart';
 
 class PhoneVerifyOtpView extends ConsumerStatefulWidget {
-  const PhoneVerifyOtpView({super.key, required this.args});
+  const PhoneVerifyOtpView({super.key});
 
   static const String routeName = '/phone-verify/otp';
-
-  final PhoneVerifyArgument args;
 
   @override
   ConsumerState<PhoneVerifyOtpView> createState() => _PhoneVerifyOtpViewState();
@@ -48,8 +45,8 @@ class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
-    final String verificationId = widget.args.verificationId;
-    final PhoneNumber phoneNumber = widget.args.phoneNumber;
+    final PhoneNumber phoneNumber =
+        ref.read(authProvider.notifier).phoneNumber!;
 
     final displayPhoneNumber =
         '+${phoneNumber.countryCode} ${'*' * (phoneNumber.nsn.length - 2)}${phoneNumber.nsn.substring(phoneNumber.nsn.length - 2)}';
@@ -114,7 +111,7 @@ class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
                         hapticFeedbackType: HapticFeedbackType.lightImpact,
                         onCompleted: (pin) => ref
                             .read(authProvider.notifier)
-                            .signInWithPhoneNumber(verificationId, pin),
+                            .signInWithPhoneNumber(pin),
                         cursor: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -179,7 +176,7 @@ class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
                           }
                         });
 
-                        ref.read(authProvider.notifier).resendOtp(phoneNumber);
+                        ref.read(authProvider.notifier).resendOtp();
                       })
               ])),
               SizedBox(height: screenHeight * 0.1),
@@ -196,8 +193,7 @@ class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
                               if (formKey.currentState!.validate()) {
                                 ref
                                     .read(authProvider.notifier)
-                                    .signInWithPhoneNumber(
-                                        verificationId, pinController.text);
+                                    .signInWithPhoneNumber(pinController.text);
                               }
                             },
                             child: const Text(
