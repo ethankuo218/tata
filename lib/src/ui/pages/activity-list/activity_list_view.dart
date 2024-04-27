@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/activity_info.dart';
 import 'package:tata/src/core/providers/activity_provider.dart';
-import 'package:tata/src/ui/pages/activity-list/components/activity_list_tile.dart';
+import 'package:tata/src/ui/pages/activity-list/widgets/activity_list_tile.dart';
+import 'package:tata/src/ui/pages/tarot-night/lobby_view.dart';
 
 class ActivityListView extends ConsumerStatefulWidget {
   const ActivityListView({super.key});
@@ -28,8 +30,12 @@ class _ActivityListViewState extends ConsumerState<ActivityListView> {
                     const SizedBox(height: 10),
                     Expanded(
                         child: ListView.separated(
-                            itemBuilder: (context, index) => ActivityListTile(
-                                activityInfo: activityList[index]),
+                            itemBuilder: (context, index) => GestureDetector(
+                                onTap: () {
+                                  context.push(LobbyView.routeName);
+                                },
+                                child: ActivityListTile(
+                                    activityInfo: activityList[index])),
                             itemCount: activityList.length,
                             separatorBuilder:
                                 (BuildContext context, int index) =>

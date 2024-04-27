@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/route_argument.dart';
 import 'package:tata/src/core/providers/chat_room_list_provider.dart';
 import 'package:tata/src/core/services/snackbar_service.dart';
-import 'package:tata/src/ui/pages/chat-room-list/components/chat_room_tile.dart';
+import 'package:tata/src/ui/pages/chat-room-list/widgets/chat_room_tile.dart';
 import 'package:tata/src/ui/pages/chat-room-list/dialogs/chat_room_detail_dialog.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/chat_room_view.dart';
 import 'package:tata/src/ui/shared/pages/create-chat-room/create_chat_room_bottom_sheet.dart';

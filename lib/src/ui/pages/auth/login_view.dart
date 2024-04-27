@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart';
 import 'package:tata/src/core/providers/auth_provider.dart';
 import 'package:tata/src/ui/pages/auth/phone_verify_input_page.dart';
-import 'components/animated_button.dart';
+import 'widgets/animated_button.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});

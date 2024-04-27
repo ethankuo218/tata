@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/ui/pages/activity-list/activity_list_view.dart';
 import 'package:tata/src/ui/pages/chat-room-list/chat_room_list_view.dart';
-import 'package:tata/src/ui/pages/chat-room-list/components/chat_room_category_tile.dart';
+import 'package:tata/src/ui/pages/chat-room-list/widgets/chat_room_category_tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tata/src/ui/pages/my-chat-room/my_chat_room_view.dart';
 import 'package:tata/src/ui/pages/realtime_pair/realtime_pair_view.dart';
