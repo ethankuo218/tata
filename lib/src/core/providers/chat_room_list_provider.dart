@@ -46,22 +46,26 @@ class ChatRoomList extends _$ChatRoomList {
   }
 
   // Create Chat Room
-  Future<void> createChatRoom({
+  Future<ChatRoom> createChatRoom({
     required String title,
     required String description,
     required String category,
     required TarotCard backgroundImage,
     required int limit,
   }) async {
-    await ref.read(chatRoomRepositoryProvider).createChatRoom(
+    return ref
+        .read(chatRoomRepositoryProvider)
+        .createChatRoom(
           title: title,
           description: description,
           category: category,
           backgroundImage: backgroundImage,
           limit: limit,
-        );
-
-    await fetchFirstList();
+        )
+        .then((value) {
+      fetchFirstList();
+      return value;
+    }).catchError((e) => throw e);
   }
 
   // Join Chat Room

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tata/src/ui/tarot.dart';
 
 Future<void> showCreateChatRoomBottomSheet(BuildContext context,
     {required ValueChanged onClosed}) async {
@@ -254,6 +255,7 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                         "description":
                                             descriptionController.text,
                                         "limit": maxParticipants,
+                                        "backgroundImage": Tarot.getRandomCard()
                                       });
                                     },
                                     child: const Text(

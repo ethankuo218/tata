@@ -55,12 +55,22 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView> {
                         if (_ == null) {
                           return;
                         }
-                        ref.read(provider.notifier).createChatRoom(
-                            title: _["title"],
-                            description: _["description"],
-                            category: _["category"],
-                            backgroundImage: _["backgroundImage"],
-                            limit: _["limit"] ?? 2);
+
+                        ref
+                            .read(provider.notifier)
+                            .createChatRoom(
+                                title: _["title"],
+                                description: _["description"],
+                                category: _["category"],
+                                backgroundImage: _["backgroundImage"],
+                                limit: _["limit"] ?? 2)
+                            .then((value) {
+                          context.push(ChatRoomView.routeName,
+                              extra: ChatRoomArgument(chatRoomInfo: value));
+                        }).catchError((e) {
+                          SnackbarService().showSnackBar(
+                              context: context, message: e.toString());
+                        });
                       });
                     },
                     child: Container(

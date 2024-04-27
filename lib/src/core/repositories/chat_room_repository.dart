@@ -96,7 +96,7 @@ class ChatRoomRepository {
   }
 
   // Create a new chat room
-  Future<String> createChatRoom({
+  Future<ChatRoom> createChatRoom({
     required String title,
     required String description,
     required String category,
@@ -118,11 +118,9 @@ class ChatRoomRepository {
         members: [_firebaseAuth.currentUser!.uid],
         createTime: Timestamp.now());
 
-    // create chat room
-    newChatRoomDoc.set(newChatRoom.toMap());
-
-    // return chat room id
-    return newChatRoomDoc.id;
+    return newChatRoomDoc.set(newChatRoom.toMap()).then((_) {
+      return newChatRoom;
+    }).catchError((e) => throw Exception('Firebase Error: $e'));
   }
 
   // Join a chat room
