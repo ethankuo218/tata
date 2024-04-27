@@ -95,18 +95,14 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView> {
                               ref
                                   .read(provider.notifier)
                                   .joinChatRoom(chatRoomInfo)
-                                  .onError<Exception>((error, stackTrace) =>
-                                      SnackbarService().showSnackBar(
-                                          context: context,
-                                          message: error.toString()))
-                                  .catchError((e) => SnackbarService().showSnackBar(
-                                      context: context,
-                                      message:
-                                          'Unknown error: Please contact the support team'))
-                                  .then((value) => context.push(
-                                      ChatRoomView.routeName,
-                                      extra: ChatRoomArgument(
-                                          chatRoomInfo: chatRoomInfo)));
+                                  .then((value) {
+                                context.push(ChatRoomView.routeName,
+                                    extra: ChatRoomArgument(
+                                        chatRoomInfo: chatRoomInfo));
+                              }).catchError((e) {
+                                SnackbarService().showSnackBar(
+                                    context: context, message: e.toString());
+                              });
                             });
                           });
                     },

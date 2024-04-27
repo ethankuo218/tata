@@ -66,7 +66,12 @@ class ChatRoomList extends _$ChatRoomList {
 
   // Join Chat Room
   Future<void> joinChatRoom(ChatRoom chatRoomInfo) async {
-    await ref.read(chatRoomRepositoryProvider).joinChatRoom(chatRoomInfo);
-    await fetchFirstList();
+    return ref
+        .read(chatRoomRepositoryProvider)
+        .joinChatRoom(chatRoomInfo)
+        .then((value) => fetchFirstList())
+        .catchError((e) {
+      throw e;
+    });
   }
 }

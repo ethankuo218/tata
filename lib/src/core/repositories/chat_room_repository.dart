@@ -130,21 +130,19 @@ class ChatRoomRepository {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
     if (chatRoomInfo.members.contains(currentUserId)) {
-      print('Already joined the chat room');
       return;
     }
 
     if (chatRoomInfo.members.length == chatRoomInfo.limit) {
-      print('Chat room is full');
       throw Exception('Chat room is full');
     }
 
     // add current user to chat room members
     await _fireStore.collection('chat_rooms').doc(chatRoomInfo.id).update({
       'members': FieldValue.arrayUnion([currentUserId])
+    }).catchError((e) {
+      throw Exception('Firebase Error: $e');
     });
-
-    // navigate to chat room in controller
   }
 
   // Leave a chat room
