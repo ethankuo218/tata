@@ -30,7 +30,6 @@ class ChatRoomList extends _$ChatRoomList {
 
   // Fetch next page
   Future<void> fetchNextList() async {
-    print('fetchNextList');
     if (!_hasMore) return;
 
     final List<ChatRoom> list =

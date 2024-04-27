@@ -15,7 +15,6 @@ class Auth extends _$Auth {
 
   Auth() {
     FirebaseAuth.instance.authStateChanges().listen((user) {
-      print(user);
       if (user != null) {
         state = const AuthenticationState.authenticated();
       } else {
