@@ -4,6 +4,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tata/src/core/providers/tarot_night_lobby_provider.dart';
+import 'package:tata/src/core/services/snackbar_service.dart';
+import 'package:tata/src/ui/pages/tarot-night/widgets/create_room_bottom_sheet.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_walkthrough_dialog.dart';
 import 'package:tata/src/ui/shared/widgets/app_bar.dart';
 
@@ -99,67 +101,93 @@ class _LobbyViewState extends ConsumerState<LobbyView> {
                   SizedBox(height: screenHeight * 0.06),
                   Row(
                     children: [
-                      // TODO: Show the create room bottom sheet
-                      Stack(
-                        children: [
-                          Container(
-                            height: screenHeight * 0.25,
-                            width: screenWidth * 0.42,
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 137, 118, 82)
-                                    .withOpacity(0.3),
-                                border: Border.all(
+                      GestureDetector(
+                          onTap: () {
+                            showCreateTarotNightRoomBottomSheet(context,
+                                onClosed: (_) {
+                              if (_ == null) {
+                                return;
+                              }
+
+                              ref
+                                  .read(tarotNightLobbyProvider.notifier)
+                                  .createTarotNightRoom(
+                                      title: _["title"],
+                                      description: _["description"],
+                                      theme: _["theme"])
+                                  .then((value) {
+                                // navigate to tarot night chat room
+                              }).catchError((e) {
+                                SnackbarService().showSnackBar(
+                                    context: context, message: e.toString());
+                              });
+                            });
+                          },
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: screenHeight * 0.25,
+                                width: screenWidth * 0.42,
+                                decoration: BoxDecoration(
                                     color:
                                         const Color.fromARGB(255, 137, 118, 82)
+                                            .withOpacity(0.3),
+                                    border: Border.all(
+                                        color: const Color.fromARGB(
+                                                255, 137, 118, 82)
                                             .withOpacity(0.6),
-                                    width: 2),
-                                borderRadius: BorderRadius.circular(20)),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Image.asset(
-                              'assets/images/star.png',
-                              height: screenHeight * 0.25,
-                              width: screenWidth * 0.42,
-                            ),
-                          ),
-                          Container(
-                              height: screenHeight * 0.25,
-                              width: screenWidth * 0.42,
-                              padding: const EdgeInsets.all(10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
+                                        width: 2),
+                                    borderRadius: BorderRadius.circular(20)),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Image.asset(
+                                  'assets/images/star.png',
+                                  height: screenHeight * 0.25,
+                                  width: screenWidth * 0.42,
+                                ),
+                              ),
+                              Container(
+                                  height: screenHeight * 0.25,
+                                  width: screenWidth * 0.42,
+                                  padding: const EdgeInsets.all(10),
+                                  child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Spacer(),
-                                      TextButton(
-                                        onPressed: () {},
-                                        style: ButtonStyle(
-                                            minimumSize:
-                                                MaterialStateProperty.all(
-                                                    Size.zero),
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    const Color.fromARGB(
-                                                        255, 137, 118, 82)),
-                                            padding: MaterialStateProperty.all(
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 5))),
-                                        child: const Text('分享你的深夜故事',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontFamily: 'MedievalSharp')),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Spacer(),
+                                          TextButton(
+                                            onPressed: () {},
+                                            style: ButtonStyle(
+                                                minimumSize:
+                                                    MaterialStateProperty.all(
+                                                        Size.zero),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        const Color.fromARGB(
+                                                            255, 137, 118, 82)),
+                                                padding:
+                                                    MaterialStateProperty.all(
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 5))),
+                                            child: const Text('分享你的深夜故事',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily:
+                                                        'MedievalSharp')),
+                                          )
+                                        ],
                                       )
                                     ],
-                                  )
-                                ],
-                              )),
-                        ],
-                      ),
+                                  )),
+                            ],
+                          )),
                       const Spacer(),
                       // TODO: Navigate to the room list page
                       Stack(

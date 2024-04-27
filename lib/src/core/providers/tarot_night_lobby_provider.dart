@@ -28,7 +28,7 @@ class TarotNightLobby extends _$TarotNightLobby {
   }
 
   // Create Room
-  Future<TarotNightRoom> createRoom({
+  Future<TarotNightRoom> createTarotNightRoom({
     required String title,
     required String description,
     required TarotNightRoomTheme theme,
