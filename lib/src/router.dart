@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/providers/router_notifier.dart';
 import 'package:tata/src/core/state/authentication_state.dart';
+import 'package:tata/src/ui/pages/tarot-night/lobby_view.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/chat_room_controller.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/chat_room_view.dart';
 import 'package:tata/src/ui/shared/pages/chat-room/components/leave_chat_view.dart';
@@ -72,7 +73,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: PhoneVerifyOtpView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
-              const PhoneVerifyOtpView())
+              const PhoneVerifyOtpView()),
+      GoRoute(
+          path: LobbyView.routeName,
+          builder: (BuildContext context, GoRouterState state) =>
+              const LobbyView()),
     ],
     redirect: (context, state) {
       switch (routerListenable.authState) {
