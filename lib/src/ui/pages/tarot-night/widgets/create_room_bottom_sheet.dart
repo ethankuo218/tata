@@ -150,42 +150,37 @@ class _CreateTarotNightRoomBottomSheetState
                                   fontWeight: FontWeight.w500),
                             ),
                             const SizedBox(height: 10),
-                            Stack(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 137, 118, 82)
+                                      .withOpacity(0.3),
+                                  border: Border.all(
                                       color: const Color.fromARGB(
                                               255, 137, 118, 82)
-                                          .withOpacity(0.3),
-                                      border: Border.all(
-                                          color: const Color.fromARGB(
-                                                  255, 137, 118, 82)
-                                              .withOpacity(0.6),
-                                          width: 2),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: TextFormField(
-                                    style: const TextStyle(color: Colors.white),
-                                    onTapOutside: (event) => FocusManager
-                                        .instance.primaryFocus
-                                        ?.unfocus(),
-                                    minLines: 2,
-                                    maxLines: 2,
-                                    controller: titleController,
-                                    validator: (value) =>
-                                        value == null || value.isEmpty
-                                            ? 'Please enter the title'
-                                            : null,
-                                    decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        hintText: "Enter the title",
-                                        hintStyle: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 160, 160, 160))),
-                                  ),
-                                ),
-                              ],
+                                          .withOpacity(0.6),
+                                      width: 2),
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: TextFormField(
+                                style: const TextStyle(color: Colors.white),
+                                onTapOutside: (event) => FocusManager
+                                    .instance.primaryFocus
+                                    ?.unfocus(),
+                                minLines: 3,
+                                maxLines: 3,
+                                controller: titleController,
+                                validator: (value) =>
+                                    value == null || value.isEmpty
+                                        ? 'Please enter the title'
+                                        : null,
+                                decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 15),
+                                    hintText: "Enter the title",
+                                    hintStyle: TextStyle(
+                                        color: Color.fromARGB(
+                                            255, 160, 160, 160))),
+                              ),
                             ),
                             SizedBox(height: screenHeight * 0.04),
                             const SizedBox(

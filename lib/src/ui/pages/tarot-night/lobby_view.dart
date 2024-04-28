@@ -45,85 +45,160 @@ class _LobbyViewState extends ConsumerState<LobbyView> {
           return Scaffold(
             appBar: const AppBarWidget(),
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  const Center(
-                    child: Text(
-                      'Astrological Tarot Night',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontFamily: 'MedievalSharp'),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Stack(children: [
-                    CarouselSlider(
-                        items: introductionSliders,
-                        carouselController: controller,
-                        options: CarouselOptions(
-                            height: screenHeight * 0.35,
-                            autoPlay: false,
-                            enlargeCenterPage: false,
-                            aspectRatio: 2.0,
-                            viewportFraction: 1.0,
-                            padEnds: true,
-                            enableInfiniteScroll: false,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                current = index;
-                              });
-                            })),
-                    Container(
-                      height: screenHeight * 0.35,
-                      alignment: Alignment.bottomCenter,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: introduction.asMap().entries.map((entry) {
-                          return GestureDetector(
-                            onTap: () => controller.animateToPage(entry.key),
-                            child: Container(
-                              width: 8.0,
-                              height: 8.0,
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 8.0, horizontal: 4.0),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white.withOpacity(
-                                      current == entry.key ? 0.9 : 0.4)),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    )
-                  ]),
-                  SizedBox(height: screenHeight * 0.06),
-                  Row(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      GestureDetector(
-                          onTap: () {
-                            showCreateTarotNightRoomBottomSheet(context,
-                                onClosed: (_) {
-                              if (_ == null) {
-                                return;
-                              }
+                      const Center(
+                        child: Text(
+                          'Astrological Tarot Night',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontFamily: 'MedievalSharp'),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Stack(children: [
+                        CarouselSlider(
+                            items: introductionSliders,
+                            carouselController: controller,
+                            options: CarouselOptions(
+                                height: screenHeight * 0.35,
+                                autoPlay: false,
+                                enlargeCenterPage: false,
+                                aspectRatio: 2.0,
+                                viewportFraction: 1.0,
+                                padEnds: true,
+                                enableInfiniteScroll: false,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    current = index;
+                                  });
+                                })),
+                        Container(
+                          height: screenHeight * 0.35,
+                          alignment: Alignment.bottomCenter,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: introduction.asMap().entries.map((entry) {
+                              return GestureDetector(
+                                onTap: () =>
+                                    controller.animateToPage(entry.key),
+                                child: Container(
+                                  width: 8.0,
+                                  height: 8.0,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 8.0, horizontal: 4.0),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white.withOpacity(
+                                          current == entry.key ? 0.9 : 0.4)),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        )
+                      ]),
+                      SizedBox(height: screenHeight * 0.05),
+                      Row(
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                showCreateTarotNightRoomBottomSheet(context,
+                                    onClosed: (_) {
+                                  if (_ == null) {
+                                    return;
+                                  }
 
-                              ref
-                                  .read(tarotNightLobbyProvider.notifier)
-                                  .createTarotNightRoom(
-                                      title: _["title"],
-                                      description: _["description"],
-                                      theme: _["theme"])
-                                  .then((value) {
-                                // navigate to tarot night chat room
-                              }).catchError((e) {
-                                SnackbarService().showSnackBar(
-                                    context: context, message: e.toString());
-                              });
-                            });
-                          },
-                          child: Stack(
+                                  ref
+                                      .read(tarotNightLobbyProvider.notifier)
+                                      .createTarotNightRoom(
+                                          title: _["title"],
+                                          description: _["description"],
+                                          theme: _["theme"])
+                                      .then((value) {
+                                    // navigate to tarot night chat room
+                                  }).catchError((e) {
+                                    SnackbarService().showSnackBar(
+                                        context: context,
+                                        message: e.toString());
+                                  });
+                                });
+                              },
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: screenHeight * 0.25,
+                                    width: screenWidth * 0.42,
+                                    decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                                255, 137, 118, 82)
+                                            .withOpacity(0.3),
+                                        border: Border.all(
+                                            color: const Color.fromARGB(
+                                                    255, 137, 118, 82)
+                                                .withOpacity(0.6),
+                                            width: 2),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Image.asset(
+                                      'assets/images/star.png',
+                                      height: screenHeight * 0.25,
+                                      width: screenWidth * 0.42,
+                                    ),
+                                  ),
+                                  Container(
+                                      height: screenHeight * 0.25,
+                                      width: screenWidth * 0.42,
+                                      padding: const EdgeInsets.all(10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            children: [
+                                              const Spacer(),
+                                              TextButton(
+                                                onPressed: () {},
+                                                style: ButtonStyle(
+                                                    minimumSize:
+                                                        MaterialStateProperty
+                                                            .all(Size.zero),
+                                                    backgroundColor:
+                                                        MaterialStateProperty.all(
+                                                            const Color.fromARGB(
+                                                                255,
+                                                                137,
+                                                                118,
+                                                                82)),
+                                                    padding:
+                                                        MaterialStateProperty.all(
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 10,
+                                                                vertical: 5))),
+                                                child: const Text('分享你的深夜故事',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontFamily:
+                                                            'MedievalSharp')),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      )),
+                                ],
+                              )),
+                          const Spacer(),
+                          // TODO: Navigate to the room list page
+                          Stack(
                             children: [
                               Container(
                                 height: screenHeight * 0.25,
@@ -156,8 +231,6 @@ class _LobbyViewState extends ConsumerState<LobbyView> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
                                         children: [
                                           const Spacer(),
                                           TextButton(
@@ -176,7 +249,7 @@ class _LobbyViewState extends ConsumerState<LobbyView> {
                                                             .symmetric(
                                                             horizontal: 10,
                                                             vertical: 5))),
-                                            child: const Text('分享你的深夜故事',
+                                            child: const Text('給予回應',
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontFamily:
@@ -186,84 +259,21 @@ class _LobbyViewState extends ConsumerState<LobbyView> {
                                       )
                                     ],
                                   )),
+                              BackdropFilter(
+                                  blendMode: BlendMode.overlay,
+                                  filter:
+                                      ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.0)),
+                                  ))
                             ],
-                          )),
-                      const Spacer(),
-                      // TODO: Navigate to the room list page
-                      Stack(
-                        children: [
-                          Container(
-                            height: screenHeight * 0.25,
-                            width: screenWidth * 0.42,
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 137, 118, 82)
-                                    .withOpacity(0.3),
-                                border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 137, 118, 82)
-                                            .withOpacity(0.6),
-                                    width: 2),
-                                borderRadius: BorderRadius.circular(20)),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Image.asset(
-                              'assets/images/star.png',
-                              height: screenHeight * 0.25,
-                              width: screenWidth * 0.42,
-                            ),
-                          ),
-                          Container(
-                              height: screenHeight * 0.25,
-                              width: screenWidth * 0.42,
-                              padding: const EdgeInsets.all(10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Spacer(),
-                                      TextButton(
-                                        onPressed: () {},
-                                        style: ButtonStyle(
-                                            minimumSize:
-                                                MaterialStateProperty.all(
-                                                    Size.zero),
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    const Color.fromARGB(
-                                                        255, 137, 118, 82)),
-                                            padding: MaterialStateProperty.all(
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 5))),
-                                        child: const Text('給予回應',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontFamily: 'MedievalSharp')),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              )),
-                          BackdropFilter(
-                              blendMode: BlendMode.overlay,
-                              filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                              child: Container(
-                                height: screenHeight * 0.25,
-                                width: screenWidth * 0.42,
-                                decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.0)),
-                              ))
                         ],
-                      ),
+                      )
                     ],
-                  )
-                ],
-              ),
-            ),
+                  ),
+                )),
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),

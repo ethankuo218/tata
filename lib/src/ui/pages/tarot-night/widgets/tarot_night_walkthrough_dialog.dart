@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -97,7 +99,7 @@ Future<Object?> showTarotNightWalkthroughDialog(BuildContext context,
                 child: IconButton(
                     icon: const Icon(Icons.close, color: Colors.white),
                     onPressed: () {
-                      context.pop(true);
+                      context.pop(isChecked);
                     }),
               )
             ]),
@@ -136,7 +138,14 @@ final List<Widget> walkthroughSliders = walkthrough
                       width: 2),
                   borderRadius: BorderRadius.circular(20)),
               child: Image.asset("assets/images/star.png", fit: BoxFit.contain),
-            )
+            ),
+            BackdropFilter(
+                blendMode: BlendMode.overlay,
+                filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                child: Container(
+                  decoration:
+                      BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                ))
           ],
         ))
     .toList();
