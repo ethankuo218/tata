@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tata/src/core/models/tarot_night_room.dart';
 
 Future<void> showCreateTarotNightRoomBottomSheet(BuildContext context,
     {required ValueChanged onClosed}) async {
@@ -23,14 +24,14 @@ class CreateTarotNightRoomBottomSheet extends StatefulWidget {
 
 class _CreateTarotNightRoomBottomSheetState
     extends State<CreateTarotNightRoomBottomSheet> {
-  static const themeList = [
-    '工作',
-    '愛情',
-    '家人',
-    '友情',
+  static const themeList = <TarotNightRoomTheme>[
+    TarotNightRoomTheme.work,
+    TarotNightRoomTheme.relation,
+    TarotNightRoomTheme.family,
+    TarotNightRoomTheme.friend,
   ];
 
-  final _formKey = GlobalKey<FormState>();
+  static final _formKey = GlobalKey<FormState>();
   int? _selectedTheme;
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -121,7 +122,8 @@ class _CreateTarotNightRoomBottomSheetState
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(25)),
-                                    label: Text(themeList[index]),
+                                    label: Text(TarotNightRoomTheme.toText(
+                                        themeList[index])),
                                     selected: _selectedTheme == index,
                                     onSelected: (bool selected) {
                                       setState(() {

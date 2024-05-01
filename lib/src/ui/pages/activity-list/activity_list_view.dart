@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/activity_info.dart';
 import 'package:tata/src/core/providers/activity_provider.dart';
 import 'package:tata/src/ui/pages/activity-list/widgets/activity_list_tile.dart';
-import 'package:tata/src/ui/pages/tarot-night/lobby_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
 
 class ActivityListView extends ConsumerStatefulWidget {
   const ActivityListView({super.key});

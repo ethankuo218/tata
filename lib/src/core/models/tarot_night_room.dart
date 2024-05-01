@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tata/src/core/models/message.dart';
+import 'package:tata/src/core/models/tarot_night_result.dart';
 
 class TarotNightRoom {
   final String id;
@@ -7,21 +8,21 @@ class TarotNightRoom {
   final String title;
   final String description;
   final String? hostId;
-  late List<Message>? messages = [];
   late Message? latestMessage;
-  late List<String> members = [];
+  late int memberCount;
   late Timestamp createTime;
+  late TarotNightResult? result;
 
   TarotNightRoom(
       {required this.id,
       required this.theme,
       required this.title,
       required this.description,
-      this.messages,
       this.latestMessage,
       this.hostId,
-      required this.members,
-      required this.createTime});
+      required this.memberCount,
+      required this.createTime,
+      this.result});
 
   factory TarotNightRoom.fromMap(Map<String, dynamic> map) {
     return TarotNightRoom(
@@ -29,29 +30,29 @@ class TarotNightRoom {
       theme: TarotNightRoomTheme.toEnum(map['theme']),
       title: map['title'] ?? '',
       description: map['description'] ?? '',
-      messages:
-          List<Message>.from(map['messages'].map((e) => Message.fromMap(e))),
       latestMessage: map['latest_message'] == null
           ? null
           : Message.fromMap(map['latest_message']),
       hostId: map['host_id'],
-      members: List<String>.from(map['members']),
+      memberCount: map['member_count'],
       createTime: map['create_time'],
+      result: map['result'] == null
+          ? null
+          : TarotNightResult.fromMap(map['result']),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'type': theme.value,
+      'theme': theme.value,
       'title': title,
       'description': description,
-      'messages':
-          messages == null ? [] : messages?.map((e) => e.toMap()).toList(),
       'latest_message': latestMessage?.toMap(),
       'host_id': hostId,
-      'members': members,
-      'create_time': createTime
+      'member_count': memberCount,
+      'create_time': createTime,
+      'result': result?.toMap(),
     };
   }
 }
@@ -77,15 +78,15 @@ enum TarotNightRoomTheme {
     return filter.first;
   }
 
-  static String toText(int x) {
+  static String toText(TarotNightRoomTheme x) {
     switch (x) {
-      case 1:
+      case TarotNightRoomTheme.work:
         return 'Work';
-      case 2:
+      case TarotNightRoomTheme.relation:
         return 'Relation';
-      case 3:
+      case TarotNightRoomTheme.family:
         return 'Family';
-      case 4:
+      case TarotNightRoomTheme.friend:
         return 'Friend';
       default:
         return 'NULL';

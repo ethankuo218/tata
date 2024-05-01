@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tata/src/core/models/app_user_info.dart';
 import 'package:tata/src/core/models/message.dart';
+import 'package:tata/src/core/models/tarot_night_member.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 
 part 'tarot_night_repository.g.dart';
@@ -91,8 +93,13 @@ class TarotNightChatRoomRepository {
     await _fireStore
         .collection('tarot_night_chat_rooms')
         .doc(chatRoomId)
+        .collection('messages')
+        .add(newMessage.toMap());
+
+    await _fireStore
+        .collection('tarot_night_chat_rooms')
+        .doc(chatRoomId)
         .update({
-      'messages': FieldValue.arrayUnion([newMessage.toMap()]),
       'latest_message': newMessage.toMap(),
     });
   }
@@ -102,15 +109,12 @@ class TarotNightChatRoomRepository {
     return _fireStore
         .collection('tarot_night_chat_rooms')
         .doc(roomId)
+        .collection('messages')
+        .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((event) {
-      final List<Message> messages = List<Message>.from(
-          event.data()?['messages'].map((e) => Message.fromMap(e)));
-
-      messages.sort((a, b) => a.timestamp.compareTo(b.timestamp));
-
-      return messages.reversed.toList();
-    });
+        .map((querySnapshot) => querySnapshot.docs
+            .map((message) => Message.fromMap(message.data()))
+            .toList());
   }
 
   // Create a new room
@@ -128,62 +132,93 @@ class TarotNightChatRoomRepository {
         title: title,
         description: description,
         hostId: _firebaseAuth.currentUser!.uid,
-        members: [_firebaseAuth.currentUser!.uid],
+        memberCount: 1,
         createTime: Timestamp.now());
 
-    return newRoomDoc.set(newRoom.toMap()).then((_) {
-      _markAsHost();
-      return newRoom;
-    }).catchError((e) => throw Exception('Firebase Error: $e'));
+    final AppUserInfo userInfo = await _fireStore
+        .collection('users')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .get()
+        .then((value) => AppUserInfo.fromMap(value.data()!));
+
+    await newRoomDoc
+        .set(newRoom.toMap())
+        .then((value) => TarotNightRoom.fromMap(newRoom.toMap()));
+
+    await newRoomDoc
+        .collection('members')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .set(userInfo.toMap())
+        .then((value) => _markAsHost());
+
+    return newRoom;
+  }
+
+  // Get Room Info
+  Future<TarotNightRoom> getRoomInfo(String roomId) async {
+    final DocumentSnapshot<Map<String, dynamic>> roomDoc =
+        await _fireStore.collection('tarot_night_chat_rooms').doc(roomId).get();
+
+    return TarotNightRoom.fromMap(roomDoc.data()!);
   }
 
   // Join a room
-  Future<void> joinChatRoom(TarotNightRoom roomInfo) async {
+  Future<void> joinChatRoom(String roomId) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
-    if (roomInfo.members.contains(currentUserId)) {
+    final List<TarotNightMember> members = await _fireStore
+        .collection('tarot_night_chat_rooms')
+        .doc(roomId)
+        .collection('members')
+        .get()
+        .then((value) => value.docs
+            .map((member) => TarotNightMember.fromMap(member.data()))
+            .toList());
+
+    if (members.any((member) => member.uid == currentUserId)) {
       return;
     }
 
-    if (roomInfo.members.length == 5) {
+    if (members.length == 5) {
       throw Exception('Room is full');
     }
+
+    final AppUserInfo userInfo = await _fireStore
+        .collection('users')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .get()
+        .then((value) => AppUserInfo.fromMap(value.data()!));
 
     // add current user to chat room members
     await _fireStore
         .collection('tarot_night_chat_rooms')
-        .doc(roomInfo.id)
-        .update({
-      'members': FieldValue.arrayUnion([currentUserId])
-    }).catchError((e) {
-      throw Exception('Firebase Error: $e');
-    });
+        .doc(roomId)
+        .collection('members')
+        .doc(currentUserId)
+        .set(userInfo.toMap());
   }
 
   // Leave a chat room
   Future<void> leaveChatRoom(String roomId) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
-    // remove current user from chat room members
-    await _fireStore.collection('tarot_night_chat_rooms').doc(roomId).update({
-      'members': FieldValue.arrayRemove([currentUserId])
-    });
-
-    // navigate to chat room list in controller
+    await _fireStore
+        .collection('tarot_night_chat_rooms')
+        .doc(roomId)
+        .collection('members')
+        .doc(currentUserId)
+        .delete();
   }
 
   // Remove a member from a chat room
   Future<void> removeMember(
       {required String chatRoomId, required String memberId}) async {
-    // remove member from chat room members
     await _fireStore
         .collection('tarot_night_chat_rooms')
         .doc(chatRoomId)
-        .update({
-      'members': FieldValue.arrayRemove([memberId])
-    });
-
-    // navigate to chat room list in controller
+        .collection('members')
+        .doc(memberId)
+        .delete();
   }
 
   // Get Host List
@@ -192,7 +227,7 @@ class TarotNightChatRoomRepository {
       final DateTime today = DateTime.now();
       final bool isCrossedMidnight = today.hour < 1;
       final DateTime sessionDate =
-          isCrossedMidnight ? today.subtract(Duration(days: 1)) : today;
+          isCrossedMidnight ? today.subtract(const Duration(days: 1)) : today;
       final String dateQuery =
           '${sessionDate.year}-${sessionDate.month.toString().padLeft(2, '0')}-${sessionDate.day.toString().padLeft(2, '0')}';
 
@@ -206,9 +241,8 @@ class TarotNightChatRoomRepository {
       }
 
       // Ensure all elements are treated as strings.
-      List<dynamic> dynamicHostList = querySnapshot.docs.first.data()['hosts'];
       List<String> hostList =
-          dynamicHostList.map((host) => host.toString()).toList();
+          querySnapshot.docs.first.data()['hosts'].toList().cast<String>();
 
       return hostList;
     } catch (e) {
@@ -223,9 +257,7 @@ class TarotNightChatRoomRepository {
     final DateTime today = DateTime.now();
     final bool isCrossedMidnight = today.hour < 1;
     final String dateQuery =
-        '${today.year}-${today.month.toString().padLeft(2, '0')}-${{
-      isCrossedMidnight ? today.day - 1 : today.day
-    }.toString().padLeft(2, '0')}';
+        '${today.year}-${today.month.toString().padLeft(2, '0')}-${(isCrossedMidnight ? today.day - 1 : today.day).toString().padLeft(2, '0')}';
 
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
@@ -245,7 +277,8 @@ class TarotNightChatRoomRepository {
       // update existing record
       final DocumentSnapshot<Map<String, dynamic>> record =
           querySnapshot.docs.first;
-      final List<String> hostList = record.data()!['hosts'].toList();
+      final List<String> hostList =
+          record.data()!['hosts'].toList().cast<String>();
 
       if (hostList.contains(currentUserId)) {
         return;

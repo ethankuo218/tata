@@ -6,9 +6,6 @@ import 'package:go_router/go_router.dart';
 
 Future<Object?> showTarotNightWalkthroughDialog(BuildContext context,
     {required ValueChanged onClosed}) {
-  final screenHeight = MediaQuery.of(context).size.height;
-  final screenWidth = MediaQuery.of(context).size.width;
-
   return showGeneralDialog(
     context: context,
     pageBuilder: (context, _, __) {
@@ -20,15 +17,14 @@ Future<Object?> showTarotNightWalkthroughDialog(BuildContext context,
           builder: (BuildContext context, StateSetter setState) {
         return Center(
           child: Container(
-            height: screenHeight * 0.45,
-            width: screenWidth * 0.9,
-            margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+            height: 350,
+            margin: const EdgeInsets.symmetric(horizontal: 15),
             child: Stack(children: [
               CarouselSlider(
                   items: walkthroughSliders,
                   carouselController: controller,
                   options: CarouselOptions(
-                      height: screenHeight * 0.45,
+                      height: 350,
                       autoPlay: false,
                       enlargeCenterPage: false,
                       aspectRatio: 2.0,
@@ -41,8 +37,7 @@ Future<Object?> showTarotNightWalkthroughDialog(BuildContext context,
                         });
                       })),
               Container(
-                height: screenHeight * 0.45,
-                width: screenWidth * 0.9,
+                height: 350,
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -92,8 +87,7 @@ Future<Object?> showTarotNightWalkthroughDialog(BuildContext context,
                 ),
               ),
               Container(
-                height: screenHeight * 0.45,
-                width: screenWidth * 0.9,
+                height: 350,
                 alignment: Alignment.topRight,
                 padding: const EdgeInsets.only(top: 10, right: 10),
                 child: IconButton(
@@ -110,7 +104,7 @@ Future<Object?> showTarotNightWalkthroughDialog(BuildContext context,
     barrierDismissible: false,
     barrierLabel: "Tarot Night Walkthrough",
     barrierColor: Colors.black.withOpacity(0.5),
-    transitionDuration: const Duration(milliseconds: 400),
+    transitionDuration: const Duration(milliseconds: 350),
     transitionBuilder: (context, animation, secondaryAnimation, child) {
       Tween<Offset> tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
       return SlideTransition(

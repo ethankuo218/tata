@@ -3,12 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/providers/router_notifier.dart';
 import 'package:tata/src/core/state/authentication_state.dart';
-import 'package:tata/src/ui/pages/tarot-night/lobby_view.dart';
-import 'package:tata/src/ui/shared/pages/chat-room/chat_room_controller.dart';
-import 'package:tata/src/ui/shared/pages/chat-room/chat_room_view.dart';
-import 'package:tata/src/ui/shared/pages/chat-room/components/leave_chat_view.dart';
-import 'package:tata/src/ui/shared/pages/chat-room/components/members_view.dart';
-import 'package:tata/src/ui/shared/pages/chat-room/components/room_info_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/tarot_night_room_view.dart';
+import 'package:tata/src/ui/shared/pages/chat_room_controller.dart';
+import 'package:tata/src/ui/shared/pages/chat_room_view.dart';
+import 'package:tata/src/ui/shared/pages/leave_chat_view.dart';
+import 'package:tata/src/ui/shared/pages/members_view.dart';
+import 'package:tata/src/ui/shared/pages/room_info_view.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/models/route_argument.dart';
 import 'package:tata/src/ui/pages/home/home_view.dart';
@@ -78,6 +79,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           path: LobbyView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
               const LobbyView()),
+      GoRoute(
+          path: TarotNightRoomView.routeName,
+          builder: (BuildContext context, GoRouterState state) =>
+              TarotNightRoomView(roomId: state.extra as String)),
     ],
     redirect: (context, state) {
       switch (routerListenable.authState) {
