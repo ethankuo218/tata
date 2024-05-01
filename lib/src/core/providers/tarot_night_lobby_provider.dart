@@ -10,6 +10,7 @@ part 'tarot_night_lobby_provider.g.dart';
 class TarotNightLobby extends _$TarotNightLobby {
   late bool _markedAsNotShowAgain = false;
   late ParticipantStatus _participantStatus = ParticipantStatus.notStarted;
+  late String? _tarotNightRoomId;
 
   @override
   Future<TarotNightLobbyInfo> build() async {
@@ -18,7 +19,8 @@ class TarotNightLobby extends _$TarotNightLobby {
 
     return TarotNightLobbyInfo(
         markedAsNotShowAgain: _markedAsNotShowAgain,
-        participantStatus: _participantStatus);
+        participantStatus: _participantStatus,
+        tarotNightRoomId: _tarotNightRoomId);
   }
 
   // Mark as not show again
@@ -58,11 +60,12 @@ class TarotNightLobby extends _$TarotNightLobby {
         await ref.read(tarotNightChatRoomRepositoryProvider).getHostList();
 
     if (hostList.contains(currentUserId)) {
+      _tarotNightRoomId = joinedRooms.first.id;
       return ParticipantStatus.host;
     }
 
     if (joinedRooms.isNotEmpty) {
-      return ParticipantStatus.member;
+      return ParticipantStatus.participant;
     }
 
     return ParticipantStatus.notStarted;
@@ -72,6 +75,7 @@ class TarotNightLobby extends _$TarotNightLobby {
   void _updateState() {
     state = AsyncData(TarotNightLobbyInfo(
         markedAsNotShowAgain: _markedAsNotShowAgain,
-        participantStatus: _participantStatus));
+        participantStatus: _participantStatus,
+        tarotNightRoomId: _tarotNightRoomId));
   }
 }

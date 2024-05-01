@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tata/src/core/models/tarot_night_lobby_info.dart';
 import 'package:tata/src/core/providers/tarot_night_lobby_provider.dart';
 import 'package:tata/src/core/services/snackbar_service.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/tarot_night_room_view.dart';
@@ -110,29 +110,40 @@ class _LobbyViewState extends ConsumerState<LobbyView> {
                                 flex: 1,
                                 child: GestureDetector(
                                   onTap: () {
-                                    showCreateTarotNightRoomBottomSheet(context,
-                                        onClosed: (_) {
-                                      if (_ == null) {
-                                        return;
-                                      }
-
-                                      ref
-                                          .read(
-                                              tarotNightLobbyProvider.notifier)
-                                          .createTarotNightRoom(
-                                              title: _["title"],
-                                              description: _["description"],
-                                              theme: _["theme"])
-                                          .then((value) {
+                                    switch (lobbyInfo.participantStatus) {
+                                      case ParticipantStatus.host:
                                         context.push(
                                             TarotNightRoomView.routeName,
-                                            extra: value.id);
-                                      }).catchError((e) {
-                                        SnackbarService().showSnackBar(
-                                            context: context,
-                                            message: e.toString());
-                                      });
-                                    });
+                                            extra: lobbyInfo.tarotNightRoomId);
+                                        break;
+                                      case ParticipantStatus.participant:
+                                        break;
+                                      case ParticipantStatus.notStarted:
+                                        showCreateTarotNightRoomBottomSheet(
+                                            context, onClosed: (_) {
+                                          if (_ == null) {
+                                            return;
+                                          }
+
+                                          ref
+                                              .read(tarotNightLobbyProvider
+                                                  .notifier)
+                                              .createTarotNightRoom(
+                                                  title: _["title"],
+                                                  description: _["description"],
+                                                  theme: _["theme"])
+                                              .then((value) {
+                                            context.push(
+                                                TarotNightRoomView.routeName,
+                                                extra: value.id);
+                                          }).catchError((e) {
+                                            SnackbarService().showSnackBar(
+                                                context: context,
+                                                message: e.toString());
+                                          });
+                                        });
+                                        break;
+                                    }
                                   },
                                   child: Stack(
                                     children: [
@@ -184,9 +195,13 @@ class _LobbyViewState extends ConsumerState<LobbyView> {
                                                                 .symmetric(
                                                                 horizontal: 10,
                                                                 vertical: 5))),
-                                                    child: const Text(
-                                                        '分享你的深夜故事',
-                                                        style: TextStyle(
+                                                    child: Text(
+                                                        lobbyInfo.participantStatus ==
+                                                                ParticipantStatus
+                                                                    .host
+                                                            ? '回到聊天室'
+                                                            : '分享你的深夜故事',
+                                                        style: const TextStyle(
                                                             color: Colors.white,
                                                             fontFamily:
                                                                 'MedievalSharp')),

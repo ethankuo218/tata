@@ -1,16 +1,17 @@
 class TarotNightLobbyInfo {
   final bool markedAsNotShowAgain;
   final ParticipantStatus participantStatus;
+  final String? tarotNightRoomId;
 
-  TarotNightLobbyInfo({
-    required this.markedAsNotShowAgain,
-    required this.participantStatus,
-  });
+  TarotNightLobbyInfo(
+      {required this.markedAsNotShowAgain,
+      required this.participantStatus,
+      this.tarotNightRoomId});
 }
 
 enum ParticipantStatus {
   host('host'),
-  member('member'),
+  participant('participant'),
   notStarted('not_started'),
   ;
 

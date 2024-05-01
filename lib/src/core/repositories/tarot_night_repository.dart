@@ -51,32 +51,51 @@ class TarotNightChatRoomRepository {
 
   // Get Joined Rooms
   Future<List<TarotNightRoom>> getJoinedRooms() async {
-    final String currentUserId = _firebaseAuth.currentUser!.uid;
+    // Ensure there is a currently authenticated user
+    final currentUser = _firebaseAuth.currentUser;
+    if (currentUser == null) {
+      return []; // Return an empty list if there is no user logged in
+    }
+    final String currentUserId = currentUser.uid;
 
     // Get the current date and time
-    DateTime now = DateTime.now();
+    final DateTime now = DateTime.now();
 
     // Calculate the start time (today at 11 PM)
-    DateTime startTime = DateTime(now.year, now.month, now.day, 23);
+    final DateTime startTime = DateTime(now.year, now.month, now.day, 23);
 
     // Calculate the end time (tomorrow at 1 AM)
-    DateTime endTime =
+    final DateTime endTime =
         DateTime(now.year, now.month, now.day, 1).add(const Duration(days: 1));
 
-    // Perform the query with the calculated time boundaries
-    QuerySnapshot<Map<String, dynamic>> querySnapshot = await _fireStore
-        .collection('tarot_night_chat_rooms')
-        .where('create_time',
-            isGreaterThan: Timestamp.fromDate(startTime),
-            isLessThan: Timestamp.fromDate(endTime))
-        .where('members', arrayContains: currentUserId)
-        .get();
+    try {
+      // Start a collection group query on 'members' subcollection across all 'tarot_night_chat_rooms'
+      final QuerySnapshot<Map<String, dynamic>> memberDocs = await _fireStore
+          .collectionGroup('members')
+          .where('uid', isEqualTo: currentUserId)
+          .get();
 
-    List<TarotNightRoom> joinedRooms = querySnapshot.docs
-        .map((chatRoom) => TarotNightRoom.fromMap(chatRoom.data()))
-        .toList();
+      // Filter the chat rooms based on the create_time constraints
+      List<TarotNightRoom> joinedRooms = [];
+      for (var memberDoc in memberDocs.docs) {
+        // Reference to the parent chat room document
+        DocumentReference<Map<String, dynamic>> roomRef =
+            memberDoc.reference.parent.parent!;
+        DocumentSnapshot<Map<String, dynamic>> roomDoc = await roomRef.get();
 
-    return joinedRooms;
+        Timestamp createTime = roomDoc.data()!['create_time'] as Timestamp;
+        if (createTime.toDate().isAfter(startTime) &&
+            createTime.toDate().isBefore(endTime)) {
+          joinedRooms.add(TarotNightRoom.fromMap(roomDoc.data()!));
+        }
+      }
+
+      return joinedRooms;
+    } catch (e) {
+      // Handle errors or exceptions by logging or other means
+      print('Error fetching joined rooms: $e');
+      return []; // Return an empty list in case of error
+    }
   }
 
   // Send Message
@@ -112,9 +131,13 @@ class TarotNightChatRoomRepository {
         .collection('messages')
         .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((querySnapshot) => querySnapshot.docs
-            .map((message) => Message.fromMap(message.data()))
-            .toList());
+        .map((querySnapshot) {
+      List<Message> messages = querySnapshot.docs
+          .map((message) => Message.fromMap(message.data()))
+          .toList();
+
+      return messages.isEmpty ? <Message>[] : messages;
+    });
   }
 
   // Create a new room
