@@ -11,12 +11,14 @@ class Members extends _$Members {
   late List<Member> _members;
 
   // Remove Member
-  Future<void> removeMember(String roomId, String memberId) async {
-    await ref
+  void removeMember(String roomId, String memberId) async {
+    ref
         .read(chatRoomRepositoryProvider)
-        .removeMember(chatRoomId: _roomId, memberId: memberId);
-    _members.removeWhere((element) => element.uid == memberId);
-    state = AsyncData(_members);
+        .removeMember(chatRoomId: _roomId, memberId: memberId)
+        .then((_) {
+      _members.removeWhere((element) => element.uid == memberId);
+      state = AsyncData(_members);
+    });
   }
 
   @override
@@ -33,6 +35,8 @@ class Members extends _$Members {
             .getMembers(roomId);
         break;
     }
+
+    _roomId = roomId;
     state = AsyncData(_members);
     return _members;
   }

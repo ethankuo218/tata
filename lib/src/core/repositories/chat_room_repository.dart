@@ -285,6 +285,10 @@ class ChatRoomRepository {
         .collection('members')
         .doc(currentUserId)
         .set({...userInfo.data()!.cast<String, dynamic>(), 'role': 'member'});
+
+    await _fireStore.collection('chat_rooms').doc(roomId).update({
+      'member_count': FieldValue.increment(1),
+    });
   }
 
   // Leave a chat room
@@ -316,6 +320,10 @@ class ChatRoomRepository {
         .collection('members')
         .doc(memberId)
         .delete();
+
+    await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
+      'member_count': FieldValue.increment(-1),
+    });
   }
 
   // Delete a chat room
