@@ -80,7 +80,26 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: TarotNightRoomView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
-              TarotNightRoomView(roomId: state.extra as String)),
+              TarotNightRoomView(roomId: state.extra as String),
+          routes: [
+            GoRoute(
+              path: RoomInfoView.routeName,
+              builder: (BuildContext context, GoRouterState state) =>
+                  RoomInfoView(chatRoomInfo: state.extra as ChatRoom),
+            ),
+            GoRoute(
+              path: MembersView.routeName,
+              builder: (BuildContext context, GoRouterState state) =>
+                  MembersView(
+                      repository: 'tarot_night_rooms',
+                      roomId: state.extra as String),
+            ),
+            GoRoute(
+              path: LeaveChatView.routeName,
+              builder: (BuildContext context, GoRouterState state) =>
+                  LeaveChatView(chatRoomId: state.extra as String),
+            ),
+          ]),
     ],
     redirect: (context, state) {
       switch (routerListenable.authState) {

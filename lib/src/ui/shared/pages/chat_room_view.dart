@@ -277,7 +277,8 @@ class ChatRoomView extends ConsumerWidget {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                context.push(RoomInfoView.routeName, extra: chatRoomInfo);
+                context.push('$routeName/${RoomInfoView.routeName}',
+                    extra: chatRoomInfo);
               },
             ),
           if (chatRoomInfo.type == ChatRoomType.normal)
@@ -287,7 +288,8 @@ class ChatRoomView extends ConsumerWidget {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                context.push(MembersView.routeName, extra: chatRoomInfo);
+                context.push('$routeName/${MembersView.routeName}',
+                    extra: chatRoomInfo.id);
               },
             ),
           ChatMenuEntry(

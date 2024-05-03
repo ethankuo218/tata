@@ -23,11 +23,11 @@ class Members extends _$Members {
   Future<List<Member>> build(
       {required String repository, required String roomId}) async {
     switch (repository) {
-      case 'chatRoom':
+      case 'chat_rooms':
         _members =
             await ref.read(chatRoomRepositoryProvider).getMembers(roomId);
         break;
-      case 'tarotNightRoom':
+      case 'tarot_night_rooms':
         _members = await ref
             .read(tarotNightChatRoomRepositoryProvider)
             .getMembers(roomId);
