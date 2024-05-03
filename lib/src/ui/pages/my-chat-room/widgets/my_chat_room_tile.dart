@@ -1,34 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tata/src/core/models/app_user_info.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:flutter/material.dart';
-import 'package:tata/src/core/providers/user_provider.dart';
+import 'package:tata/src/core/providers/my_chat_room_tile_provider.dart';
 
 class MyChatRoomTile extends ConsumerWidget {
   final String userUid;
   final ChatRoom chatRoomInfo;
   final Function onTap;
 
-  const MyChatRoomTile(
-      {super.key,
-      required this.userUid,
-      required this.chatRoomInfo,
-      required this.onTap});
+  const MyChatRoomTile({
+    super.key,
+    required this.userUid,
+    required this.chatRoomInfo,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final double screenWidth = MediaQuery.of(context).size.width;
     final bool isRealtimeChat = chatRoomInfo.type == ChatRoomType.realtime;
-    final String? otherUserUid = isRealtimeChat
-        ? chatRoomInfo.members.firstWhere((element) => element != userUid)
-        : null;
-    final AsyncValue<AppUserInfo?> otherUserInfo =
-        ref.watch(userProvider(otherUserUid));
+    final provider = myChatRoomTileProvider(chatRoomId: chatRoomInfo.id);
 
-    return otherUserInfo.when(
+    return ref.watch(provider).when(
         data: (otherUserInfo) => GestureDetector(
-              onTap: () => onTap(otherUserInfo?.uid),
+              onTap: () => onTap(),
               child: Container(
                   height: 80,
                   decoration: BoxDecoration(
@@ -106,13 +101,14 @@ class MyChatRoomTile extends ConsumerWidget {
                                 ],
                               ),
                         const SizedBox(width: 15),
-                        Column(
+                        Expanded(
+                            child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               isRealtimeChat
-                                  ? otherUserInfo!.name
+                                  ? otherUserInfo?.name ?? 'Unknown'
                                   : chatRoomInfo.title,
                               style: const TextStyle(
                                   overflow: TextOverflow.ellipsis,
@@ -122,7 +118,6 @@ class MyChatRoomTile extends ConsumerWidget {
                             ),
                             const SizedBox(height: 5),
                             SizedBox(
-                              width: screenWidth * 0.5,
                               height: 20,
                               child: Text(
                                 chatRoomInfo.latestMessage?.message ??
@@ -135,49 +130,42 @@ class MyChatRoomTile extends ConsumerWidget {
                               ),
                             ),
                           ],
-                        ),
+                        )),
                         chatRoomInfo.latestMessage != null
-                            ? Expanded(
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                            ? SizedBox(
+                                width: 60,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          getDisplayTime(chatRoomInfo
-                                              .latestMessage?.timestamp),
+                                    Text(
+                                      getDisplayTime(chatRoomInfo
+                                          .latestMessage?.timestamp),
+                                      style: TextStyle(
+                                          color: Colors.white.withOpacity(0.6),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    // if (chatRoomInfo.unreadCount > 0)
+                                    Container(
+                                      width: 20,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                        color: Colors.purple,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          '1',
                                           style: TextStyle(
-                                              color:
-                                                  Colors.white.withOpacity(0.6),
+                                              color: Colors.white,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400),
                                         ),
-                                        const SizedBox(height: 15),
-                                        // if (chatRoomInfo.unreadCount > 0)
-                                        Container(
-                                          width: 20,
-                                          height: 20,
-                                          decoration: BoxDecoration(
-                                            color: Colors.purple,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: const Center(
-                                            child: Text(
-                                              '1',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w400),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                    )
                                   ],
                                 ),
                               )

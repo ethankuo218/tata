@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tata/src/core/models/route_argument.dart';
 import 'package:tata/src/core/providers/chat_room_list_provider.dart';
 import 'package:tata/src/core/services/snackbar_service.dart';
 import 'package:tata/src/ui/pages/chat-room-list/widgets/chat_room_tile.dart';
@@ -65,8 +64,7 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView> {
                                 backgroundImage: _["backgroundImage"],
                                 limit: _["limit"] ?? 2)
                             .then((value) {
-                          context.push(ChatRoomView.routeName,
-                              extra: ChatRoomArgument(chatRoomInfo: value));
+                          context.push(ChatRoomView.routeName, extra: value);
                         }).catchError((e) {
                           SnackbarService().showSnackBar(
                               context: context, message: e.toString());
@@ -104,11 +102,10 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView> {
 
                               ref
                                   .read(provider.notifier)
-                                  .joinChatRoom(chatRoomInfo)
+                                  .joinChatRoom(chatRoomInfo.id)
                                   .then((value) {
                                 context.push(ChatRoomView.routeName,
-                                    extra: ChatRoomArgument(
-                                        chatRoomInfo: chatRoomInfo));
+                                    extra: chatRoomInfo.id);
                               }).catchError((e) {
                                 SnackbarService().showSnackBar(
                                     context: context, message: e.toString());

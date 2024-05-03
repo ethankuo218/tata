@@ -1,34 +1,27 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tata/src/core/models/message.dart';
+import 'package:tata/src/core/models/room.dart';
 import 'package:tata/src/ui/tarot.dart';
 
-class ChatRoom {
-  final String id;
+class ChatRoom extends Room {
   final ChatRoomType type;
-  final String title;
-  final String description;
   final int limit;
   final String category;
   final TarotCard? backgroundImage;
-  final String? hostId;
   late List<Message>? messages = [];
-  late Message? latestMessage;
-  late List<String> members = [];
-  late Timestamp createTime;
 
   ChatRoom(
-      {required this.id,
+      {required super.id,
       required this.type,
-      required this.title,
-      required this.description,
+      required super.title,
+      required super.description,
       required this.limit,
       required this.category,
       this.backgroundImage,
       this.messages,
-      this.latestMessage,
-      this.hostId,
-      required this.members,
-      required this.createTime});
+      super.latestMessage,
+      required super.hostId,
+      required super.createTime,
+      required super.memberCount});
 
   factory ChatRoom.fromMap(Map<String, dynamic> map) {
     return ChatRoom(
@@ -41,17 +34,16 @@ class ChatRoom {
       backgroundImage: map['background_image'] != null
           ? TarotCard.toEnum(map['background_image'])
           : null,
-      messages:
-          List<Message>.from(map['messages'].map((e) => Message.fromMap(e))),
       latestMessage: map['latest_message'] == null
           ? null
           : Message.fromMap(map['latest_message']),
       hostId: map['host_id'],
-      members: List<String>.from(map['members']),
       createTime: map['create_time'],
+      memberCount: map['member_count'],
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -62,11 +54,9 @@ class ChatRoom {
       'category': category,
       'background_image':
           backgroundImage == null ? null : TarotCard.toValue(backgroundImage!),
-      'messages':
-          messages == null ? [] : messages?.map((e) => e.toMap()).toList(),
       'latest_message': latestMessage?.toMap(),
       'host_id': hostId,
-      'members': members,
+      'member_count': memberCount,
       'create_time': createTime
     };
   }

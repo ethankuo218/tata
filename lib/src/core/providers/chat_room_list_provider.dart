@@ -45,7 +45,7 @@ class ChatRoomList extends _$ChatRoomList {
   }
 
   // Create Chat Room
-  Future<ChatRoom> createChatRoom({
+  Future<String> createChatRoom({
     required String title,
     required String description,
     required String category,
@@ -68,10 +68,10 @@ class ChatRoomList extends _$ChatRoomList {
   }
 
   // Join Chat Room
-  Future<void> joinChatRoom(ChatRoom chatRoomInfo) async {
+  Future<void> joinChatRoom(String chatRoomId) async {
     return ref
         .read(chatRoomRepositoryProvider)
-        .joinChatRoom(chatRoomInfo)
+        .joinChatRoom(chatRoomId)
         .then((value) => fetchFirstList())
         .catchError((e) {
       throw e;

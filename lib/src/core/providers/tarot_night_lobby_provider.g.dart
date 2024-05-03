@@ -6,7 +6,7 @@ part of 'tarot_night_lobby_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tarotNightLobbyHash() => r'ec58b9c2f676651cdf402fa30a533779145dac00';
+String _$tarotNightLobbyHash() => r'223090d888f546a5fcc48780eaef4610d1643aec';
 
 /// See also [TarotNightLobby].
 @ProviderFor(TarotNightLobby)

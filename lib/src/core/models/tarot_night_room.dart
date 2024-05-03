@@ -1,28 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tata/src/core/models/message.dart';
+import 'package:tata/src/core/models/room.dart';
 import 'package:tata/src/core/models/tarot_night_result.dart';
 
-class TarotNightRoom {
-  final String id;
+class TarotNightRoom extends Room {
   final TarotNightRoomTheme theme;
-  final String title;
-  final String description;
-  final String? hostId;
-  late Message? latestMessage;
-  late int memberCount;
-  late Timestamp createTime;
   late TarotNightResult? result;
 
-  TarotNightRoom(
-      {required this.id,
-      required this.theme,
-      required this.title,
-      required this.description,
-      this.latestMessage,
-      this.hostId,
-      required this.memberCount,
-      required this.createTime,
-      this.result});
+  TarotNightRoom({
+    required this.theme,
+    this.result,
+    required super.id,
+    required super.title,
+    required super.description,
+    required super.memberCount,
+    required super.createTime,
+    required super.hostId,
+    super.latestMessage,
+  });
 
   factory TarotNightRoom.fromMap(Map<String, dynamic> map) {
     return TarotNightRoom(
@@ -42,6 +36,7 @@ class TarotNightRoom {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,

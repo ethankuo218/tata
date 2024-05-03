@@ -9,28 +9,33 @@ class ChatMessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late final bool isSentByMe =
+    final bool isSystemMessage = chatMessage.senderId == 'system';
+    final bool isSentByMe =
         chatMessage.senderId == FirebaseAuth.instance.currentUser!.uid;
     final dateTime = chatMessage.timestamp.toDate();
     final time =
         '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 5.0, 10.0, 5.0),
+      padding: const EdgeInsets.all(5.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment:
-            isSentByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isSystemMessage
+            ? MainAxisAlignment.center
+            : isSentByMe
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
         children: [
           Column(
             children: [
-              Text(
-                time,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 10,
+              if (!isSystemMessage)
+                Text(
+                  time,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 10,
+                  ),
                 ),
-              ),
               const SizedBox(height: 5),
             ],
           ),
@@ -41,20 +46,24 @@ class ChatMessageBubble extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
             decoration: BoxDecoration(
-              color: isSentByMe
-                  ? Colors.purple
-                  : const Color.fromARGB(179, 45, 45, 45),
-              borderRadius: isSentByMe
-                  ? const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                      bottomLeft: Radius.circular(15),
-                    )
-                  : const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                    ),
+              color: isSystemMessage
+                  ? Colors.grey.withOpacity(0.3)
+                  : isSentByMe
+                      ? Colors.purple
+                      : const Color.fromARGB(179, 45, 45, 45),
+              borderRadius: isSystemMessage
+                  ? const BorderRadius.all(Radius.circular(15))
+                  : isSentByMe
+                      ? const BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                        )
+                      : const BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
             ),
             child: Text(
               chatMessage.message,

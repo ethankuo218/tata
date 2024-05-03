@@ -20,7 +20,7 @@ mixin _$PairState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ChatRoom chatRoomInfo) success,
+    required TResult Function(String chatRoomId) success,
     required TResult Function(String error) failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$PairState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ChatRoom chatRoomInfo)? success,
+    TResult? Function(String chatRoomId)? success,
     TResult? Function(String error)? failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$PairState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ChatRoom chatRoomInfo)? success,
+    TResult Function(String chatRoomId)? success,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) =>
@@ -125,7 +125,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ChatRoom chatRoomInfo) success,
+    required TResult Function(String chatRoomId) success,
     required TResult Function(String error) failed,
   }) {
     return initial();
@@ -136,7 +136,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ChatRoom chatRoomInfo)? success,
+    TResult? Function(String chatRoomId)? success,
     TResult? Function(String error)? failed,
   }) {
     return initial?.call();
@@ -147,7 +147,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ChatRoom chatRoomInfo)? success,
+    TResult Function(String chatRoomId)? success,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {
@@ -239,7 +239,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ChatRoom chatRoomInfo) success,
+    required TResult Function(String chatRoomId) success,
     required TResult Function(String error) failed,
   }) {
     return loading();
@@ -250,7 +250,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ChatRoom chatRoomInfo)? success,
+    TResult? Function(String chatRoomId)? success,
     TResult? Function(String error)? failed,
   }) {
     return loading?.call();
@@ -261,7 +261,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ChatRoom chatRoomInfo)? success,
+    TResult Function(String chatRoomId)? success,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {
@@ -319,7 +319,7 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({ChatRoom chatRoomInfo});
+  $Res call({String chatRoomId});
 }
 
 /// @nodoc
@@ -333,13 +333,13 @@ class __$$SuccessImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? chatRoomInfo = null,
+    Object? chatRoomId = null,
   }) {
     return _then(_$SuccessImpl(
-      chatRoomInfo: null == chatRoomInfo
-          ? _value.chatRoomInfo
-          : chatRoomInfo // ignore: cast_nullable_to_non_nullable
-              as ChatRoom,
+      chatRoomId: null == chatRoomId
+          ? _value.chatRoomId
+          : chatRoomId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -347,14 +347,14 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl({required this.chatRoomInfo});
+  const _$SuccessImpl({required this.chatRoomId});
 
   @override
-  final ChatRoom chatRoomInfo;
+  final String chatRoomId;
 
   @override
   String toString() {
-    return 'PairState.success(chatRoomInfo: $chatRoomInfo)';
+    return 'PairState.success(chatRoomId: $chatRoomId)';
   }
 
   @override
@@ -362,12 +362,12 @@ class _$SuccessImpl implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
-            (identical(other.chatRoomInfo, chatRoomInfo) ||
-                other.chatRoomInfo == chatRoomInfo));
+            (identical(other.chatRoomId, chatRoomId) ||
+                other.chatRoomId == chatRoomId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, chatRoomInfo);
+  int get hashCode => Object.hash(runtimeType, chatRoomId);
 
   @JsonKey(ignore: true)
   @override
@@ -380,10 +380,10 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ChatRoom chatRoomInfo) success,
+    required TResult Function(String chatRoomId) success,
     required TResult Function(String error) failed,
   }) {
-    return success(chatRoomInfo);
+    return success(chatRoomId);
   }
 
   @override
@@ -391,10 +391,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ChatRoom chatRoomInfo)? success,
+    TResult? Function(String chatRoomId)? success,
     TResult? Function(String error)? failed,
   }) {
-    return success?.call(chatRoomInfo);
+    return success?.call(chatRoomId);
   }
 
   @override
@@ -402,12 +402,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ChatRoom chatRoomInfo)? success,
+    TResult Function(String chatRoomId)? success,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(chatRoomInfo);
+      return success(chatRoomId);
     }
     return orElse();
   }
@@ -451,10 +451,9 @@ class _$SuccessImpl implements _Success {
 }
 
 abstract class _Success implements PairState {
-  const factory _Success({required final ChatRoom chatRoomInfo}) =
-      _$SuccessImpl;
+  const factory _Success({required final String chatRoomId}) = _$SuccessImpl;
 
-  ChatRoom get chatRoomInfo;
+  String get chatRoomId;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -526,7 +525,7 @@ class _$FailedImpl implements _Failed {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ChatRoom chatRoomInfo) success,
+    required TResult Function(String chatRoomId) success,
     required TResult Function(String error) failed,
   }) {
     return failed(error);
@@ -537,7 +536,7 @@ class _$FailedImpl implements _Failed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ChatRoom chatRoomInfo)? success,
+    TResult? Function(String chatRoomId)? success,
     TResult? Function(String error)? failed,
   }) {
     return failed?.call(error);
@@ -548,7 +547,7 @@ class _$FailedImpl implements _Failed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ChatRoom chatRoomInfo)? success,
+    TResult Function(String chatRoomId)? success,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {

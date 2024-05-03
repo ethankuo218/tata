@@ -128,7 +128,7 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                               color: Colors.white.withOpacity(0.4)),
                           const SizedBox(width: 5),
                           Text(
-                              '${chatRoomInfo.members.length.toString()}/${chatRoomInfo.limit}',
+                              '${chatRoomInfo.memberCount.toString()}/${chatRoomInfo.limit}',
                               style: TextStyle(
                                   color: Colors.white.withOpacity(0.4),
                                   fontSize: 16)),

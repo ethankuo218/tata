@@ -10,7 +10,8 @@ part 'tarot_night_lobby_provider.g.dart';
 class TarotNightLobby extends _$TarotNightLobby {
   late bool _markedAsNotShowAgain = false;
   late ParticipantStatus _participantStatus = ParticipantStatus.notStarted;
-  late String? _tarotNightRoomId;
+  // ignore: avoid_init_to_null
+  late String? _tarotNightRoomId = null;
 
   @override
   Future<TarotNightLobbyInfo> build() async {

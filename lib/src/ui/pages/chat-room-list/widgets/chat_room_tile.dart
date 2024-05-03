@@ -76,7 +76,7 @@ class ChatRoomTile extends StatelessWidget {
                                     Icon(Icons.person,
                                         color: Colors.white.withOpacity(0.8)),
                                     Text(
-                                      ' ${chatRoomInfo.members.length}/${chatRoomInfo.limit}',
+                                      ' ${chatRoomInfo.memberCount}/${chatRoomInfo.limit}',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,

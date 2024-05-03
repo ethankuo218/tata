@@ -2,20 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/models/chat_room.dart';
+import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/ui/tarot.dart';
 
 part 'chat_room_repository.g.dart';
 
 class ChatRoomRepository {
-  static final ChatRoomRepository _instance = ChatRoomRepository._internal();
-
-  factory ChatRoomRepository() {
-    return _instance;
-  }
-
-  ChatRoomRepository._internal();
-
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
   DocumentSnapshot? _lastDocument;
@@ -48,18 +41,55 @@ class ChatRoomRepository {
     return chatRoomList;
   }
 
+  // Get Realtime Chat Room List
+  Future<List<ChatRoom>> getRealtimeChatRoomList() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await _fireStore
+        .collection('chat_rooms')
+        .where('type', isEqualTo: ChatRoomType.realtime.value)
+        .get();
+
+    List<ChatRoom> chatRoomList = querySnapshot.docs
+        .map((chatRoom) => ChatRoom.fromMap(chatRoom.data()))
+        .toList();
+
+    return chatRoomList;
+  }
+
   // Get User Chat Room List
   Stream<List<ChatRoom>> getUserChatRoomList() {
-    final String currentUserId = _firebaseAuth.currentUser!.uid;
+    final String currentUserId = _firebaseAuth.currentUser?.uid ?? '';
+    if (currentUserId.isEmpty) {
+      return Stream.value([]);
+    }
 
     return _fireStore
-        .collection('chat_rooms')
-        .where('members', arrayContains: currentUserId)
-        .orderBy('latest_message.timestamp', descending: true)
+        .collectionGroup('members')
+        .where('uid', isEqualTo: currentUserId)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((chatRoom) => ChatRoom.fromMap(chatRoom.data()))
-            .toList());
+        .asyncMap((querySnapshot) async {
+      var roomIds = querySnapshot.docs
+          .map((doc) => doc.reference.parent.parent!.id)
+          .toSet();
+
+      if (roomIds.isNotEmpty) {
+        List<Future<DocumentSnapshot<Map<String, dynamic>>>> roomFutures =
+            roomIds
+                .map((id) => _fireStore.collection('chat_rooms').doc(id).get())
+                .toList();
+
+        List<ChatRoom> chatRooms = roomFutures.isNotEmpty
+            ? (await Future.wait(roomFutures))
+                .map((snapshot) => ChatRoom.fromMap(snapshot.data()!))
+                .toList()
+            : [];
+
+        chatRooms.sort((a, b) =>
+            b.latestMessage!.timestamp.compareTo(a.latestMessage!.timestamp));
+        return chatRooms;
+      } else {
+        return <ChatRoom>[];
+      }
+    });
   }
 
   // Send Message
@@ -73,8 +103,13 @@ class ChatRoomRepository {
       timestamp: timestamp,
     );
 
+    await _fireStore
+        .collection('chat_rooms')
+        .doc(chatRoomId)
+        .collection('messages')
+        .add(newMessage.toMap());
+
     await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
-      'messages': FieldValue.arrayUnion([newMessage.toMap()]),
       'latest_message': newMessage.toMap(),
     });
   }
@@ -84,19 +119,20 @@ class ChatRoomRepository {
     return _fireStore
         .collection('chat_rooms')
         .doc(chatRoomId)
+        .collection('messages')
+        .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((event) {
-      final List<Message> messages = List<Message>.from(
-          event.data()?['messages'].map((e) => Message.fromMap(e)));
+        .map((querySnapshot) {
+      List<Message> messages = querySnapshot.docs
+          .map((message) => Message.fromMap(message.data()))
+          .toList();
 
-      messages.sort((a, b) => a.timestamp.compareTo(b.timestamp));
-
-      return messages.reversed.toList();
+      return messages.isEmpty ? <Message>[] : messages;
     });
   }
 
   // Create a new chat room
-  Future<ChatRoom> createChatRoom({
+  Future<String> createChatRoom({
     required String title,
     required String description,
     required String category,
@@ -115,58 +151,199 @@ class ChatRoomRepository {
         backgroundImage: backgroundImage,
         limit: limit,
         hostId: _firebaseAuth.currentUser!.uid,
-        members: [_firebaseAuth.currentUser!.uid],
-        createTime: Timestamp.now());
+        memberCount: 1,
+        createTime: Timestamp.now(),
+        latestMessage: Message(
+          senderId: 'system',
+          message: 'Welcome to the chat room!',
+          timestamp: Timestamp.now(),
+        ));
 
-    return newChatRoomDoc.set(newChatRoom.toMap()).then((_) {
-      return newChatRoom;
-    }).catchError((e) => throw Exception('Firebase Error: $e'));
+    final userInfo = await _fireStore
+        .collection('users')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .get();
+
+    await newChatRoomDoc.set(newChatRoom.toMap());
+    await _fireStore
+        .collection('chat_rooms')
+        .doc(newChatRoom.id)
+        .collection('members')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .set({
+      ...userInfo.data()!.cast<String, dynamic>(),
+      'role': 'host',
+    });
+
+    await _fireStore
+        .collection('chat_rooms')
+        .doc(newChatRoom.id)
+        .collection('messages')
+        .add(Message(
+          senderId: 'system',
+          message: 'Welcome to the chat room!',
+          timestamp: Timestamp.now(),
+        ).toMap());
+
+    return newChatRoom.id;
+  }
+
+  // Create a new realtime chat room
+  Future<String> createRealtimeChatRoom() async {
+    final DocumentReference newChatRoomDoc =
+        _fireStore.collection('chat_rooms').doc();
+
+    final ChatRoom newChatRoom = ChatRoom(
+        id: newChatRoomDoc.id,
+        type: ChatRoomType.realtime,
+        title: '',
+        description: '',
+        category: '',
+        backgroundImage: TarotCard.fool,
+        limit: 2,
+        memberCount: 1,
+        hostId: _firebaseAuth.currentUser!.uid,
+        createTime: Timestamp.now(),
+        latestMessage: Message(
+          senderId: 'system',
+          message: 'Welcome to the chat room!',
+          timestamp: Timestamp.now(),
+        ));
+
+    final userInfo = await _fireStore
+        .collection('users')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .get();
+
+    await newChatRoomDoc.set(newChatRoom.toMap());
+    await _fireStore
+        .collection('chat_rooms')
+        .doc(newChatRoom.id)
+        .collection('members')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .set({
+      ...userInfo.data()!.cast<String, dynamic>(),
+      'role': 'host',
+    });
+
+    await _fireStore
+        .collection('chat_rooms')
+        .doc(newChatRoom.id)
+        .collection('messages')
+        .add(Message(
+          senderId: 'system',
+          message: 'Welcome to the chat room!',
+          timestamp: Timestamp.now(),
+        ).toMap());
+
+    return newChatRoom.id;
+  }
+
+  // Get Room Info
+  Future<ChatRoom> getChatRoomInfo(String roomId) async {
+    final ChatRoom chatRoom = await _fireStore
+        .collection('chat_rooms')
+        .doc(roomId)
+        .get()
+        .then((value) => ChatRoom.fromMap(value.data()!));
+
+    return chatRoom;
   }
 
   // Join a chat room
-  Future<void> joinChatRoom(ChatRoom chatRoomInfo) async {
+  Future<void> joinChatRoom(String roomId) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
+    final ChatRoom chatRoom = await _fireStore
+        .collection('chat_rooms')
+        .doc(roomId)
+        .get()
+        .then((value) => ChatRoom.fromMap(value.data()!));
+    final List<Member> members = await _fireStore
+        .collection('chat_rooms')
+        .doc(roomId)
+        .collection('members')
+        .get()
+        .then((value) =>
+            value.docs.map((member) => Member.fromMap(member.data())).toList());
 
-    if (chatRoomInfo.members.contains(currentUserId)) {
+    if (members.any((member) => member.uid == currentUserId)) {
       return;
     }
 
-    if (chatRoomInfo.members.length == chatRoomInfo.limit) {
-      throw Exception('Chat room is full');
+    if (members.length == chatRoom.limit) {
+      throw Exception('Room is full');
     }
 
-    // add current user to chat room members
-    await _fireStore.collection('chat_rooms').doc(chatRoomInfo.id).update({
-      'members': FieldValue.arrayUnion([currentUserId])
-    }).catchError((e) {
-      throw Exception('Firebase Error: $e');
-    });
+    final userInfo = await _fireStore
+        .collection('users')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .get();
+
+    await _fireStore
+        .collection('chat_rooms')
+        .doc(roomId)
+        .collection('members')
+        .doc(currentUserId)
+        .set({...userInfo.data()!.cast<String, dynamic>(), 'role': 'member'});
   }
 
   // Leave a chat room
   Future<void> leaveChatRoom(String chatRoomId) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
-    // remove current user from chat room members
-    await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
-      'members': FieldValue.arrayRemove([currentUserId])
-    });
+    await removeMember(chatRoomId: chatRoomId, memberId: currentUserId);
+  }
 
-    // navigate to chat room list in controller
+  // Get members of a chat room
+  Future<List<Member>> getMembers(String chatRoomId) async {
+    final List<Member> members = await _fireStore
+        .collection('chat_rooms')
+        .doc(chatRoomId)
+        .collection('members')
+        .get()
+        .then((value) =>
+            value.docs.map((member) => Member.fromMap(member.data())).toList());
+
+    return members;
   }
 
   // Remove a member from a chat room
   Future<void> removeMember(
       {required String chatRoomId, required String memberId}) async {
-    // remove member from chat room members
-    await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
-      'members': FieldValue.arrayRemove([memberId])
-    });
+    await _fireStore
+        .collection('chat_rooms')
+        .doc(chatRoomId)
+        .collection('members')
+        .doc(memberId)
+        .delete();
+  }
 
-    // navigate to chat room list in controller
+  // Delete a chat room
+  Future<void> deleteChatRoom(String chatRoomId) async {
+    var chatRoomRef = _fireStore.collection('chat_rooms').doc(chatRoomId);
+
+    // Example subcollections
+    List<String> subcollections = ['messages', 'members'];
+
+    // Iterate through each known subcollection
+    for (var subcollectionName in subcollections) {
+      // Reference to the subcollection
+      var subcollectionRef = chatRoomRef.collection(subcollectionName);
+
+      // Get all documents in the subcollection
+      var documents = await subcollectionRef.get();
+
+      // Iterate through each document and delete it
+      for (var doc in documents.docs) {
+        await doc.reference.delete();
+      }
+    }
+
+    // After all subcollections have been handled, delete the chat room document
+    await chatRoomRef.delete();
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 ChatRoomRepository chatRoomRepository(ChatRoomRepositoryRef ref) =>
     ChatRoomRepository();

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'members_provider.dart';
+part of 'chat_room_view_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$membersHash() => r'323b0634f2af39c7b4de8c36ceda6ad0abedac3f';
+String _$chatRoomViewHash() => r'7c5e448e10b1e3dd45b38caea7c2ef403c3eb3b6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,43 +29,38 @@ class _SystemHash {
   }
 }
 
-abstract class _$Members
-    extends BuildlessAutoDisposeAsyncNotifier<List<Member>> {
-  late final String repository;
+abstract class _$ChatRoomView
+    extends BuildlessAutoDisposeAsyncNotifier<ChatRoomInfo> {
   late final String roomId;
 
-  FutureOr<List<Member>> build({
-    required String repository,
+  FutureOr<ChatRoomInfo> build({
     required String roomId,
   });
 }
 
-/// See also [Members].
-@ProviderFor(Members)
-const membersProvider = MembersFamily();
+/// See also [ChatRoomView].
+@ProviderFor(ChatRoomView)
+const chatRoomViewProvider = ChatRoomViewFamily();
 
-/// See also [Members].
-class MembersFamily extends Family<AsyncValue<List<Member>>> {
-  /// See also [Members].
-  const MembersFamily();
+/// See also [ChatRoomView].
+class ChatRoomViewFamily extends Family<AsyncValue<ChatRoomInfo>> {
+  /// See also [ChatRoomView].
+  const ChatRoomViewFamily();
 
-  /// See also [Members].
-  MembersProvider call({
-    required String repository,
+  /// See also [ChatRoomView].
+  ChatRoomViewProvider call({
     required String roomId,
   }) {
-    return MembersProvider(
-      repository: repository,
+    return ChatRoomViewProvider(
       roomId: roomId,
     );
   }
 
   @override
-  MembersProvider getProviderOverride(
-    covariant MembersProvider provider,
+  ChatRoomViewProvider getProviderOverride(
+    covariant ChatRoomViewProvider provider,
   ) {
     return call(
-      repository: provider.repository,
       roomId: provider.roomId,
     );
   }
@@ -82,115 +77,98 @@ class MembersFamily extends Family<AsyncValue<List<Member>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'membersProvider';
+  String? get name => r'chatRoomViewProvider';
 }
 
-/// See also [Members].
-class MembersProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<Members, List<Member>> {
-  /// See also [Members].
-  MembersProvider({
-    required String repository,
+/// See also [ChatRoomView].
+class ChatRoomViewProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<ChatRoomView, ChatRoomInfo> {
+  /// See also [ChatRoomView].
+  ChatRoomViewProvider({
     required String roomId,
   }) : this._internal(
-          () => Members()
-            ..repository = repository
-            ..roomId = roomId,
-          from: membersProvider,
-          name: r'membersProvider',
+          () => ChatRoomView()..roomId = roomId,
+          from: chatRoomViewProvider,
+          name: r'chatRoomViewProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$membersHash,
-          dependencies: MembersFamily._dependencies,
-          allTransitiveDependencies: MembersFamily._allTransitiveDependencies,
-          repository: repository,
+                  : _$chatRoomViewHash,
+          dependencies: ChatRoomViewFamily._dependencies,
+          allTransitiveDependencies:
+              ChatRoomViewFamily._allTransitiveDependencies,
           roomId: roomId,
         );
 
-  MembersProvider._internal(
+  ChatRoomViewProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.repository,
     required this.roomId,
   }) : super.internal();
 
-  final String repository;
   final String roomId;
 
   @override
-  FutureOr<List<Member>> runNotifierBuild(
-    covariant Members notifier,
+  FutureOr<ChatRoomInfo> runNotifierBuild(
+    covariant ChatRoomView notifier,
   ) {
     return notifier.build(
-      repository: repository,
       roomId: roomId,
     );
   }
 
   @override
-  Override overrideWith(Members Function() create) {
+  Override overrideWith(ChatRoomView Function() create) {
     return ProviderOverride(
       origin: this,
-      override: MembersProvider._internal(
-        () => create()
-          ..repository = repository
-          ..roomId = roomId,
+      override: ChatRoomViewProvider._internal(
+        () => create()..roomId = roomId,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        repository: repository,
         roomId: roomId,
       ),
     );
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<Members, List<Member>>
+  AutoDisposeAsyncNotifierProviderElement<ChatRoomView, ChatRoomInfo>
       createElement() {
-    return _MembersProviderElement(this);
+    return _ChatRoomViewProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is MembersProvider &&
-        other.repository == repository &&
-        other.roomId == roomId;
+    return other is ChatRoomViewProvider && other.roomId == roomId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, repository.hashCode);
     hash = _SystemHash.combine(hash, roomId.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin MembersRef on AutoDisposeAsyncNotifierProviderRef<List<Member>> {
-  /// The parameter `repository` of this provider.
-  String get repository;
-
+mixin ChatRoomViewRef on AutoDisposeAsyncNotifierProviderRef<ChatRoomInfo> {
   /// The parameter `roomId` of this provider.
   String get roomId;
 }
 
-class _MembersProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<Members, List<Member>>
-    with MembersRef {
-  _MembersProviderElement(super.provider);
+class _ChatRoomViewProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<ChatRoomView, ChatRoomInfo>
+    with ChatRoomViewRef {
+  _ChatRoomViewProviderElement(super.provider);
 
   @override
-  String get repository => (origin as MembersProvider).repository;
-  @override
-  String get roomId => (origin as MembersProvider).roomId;
+  String get roomId => (origin as ChatRoomViewProvider).roomId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -1,14 +1,11 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart';
-import 'package:tata/src/core/providers/realtime_pair_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:tata/src/core/models/chat_room.dart';
-import 'package:tata/src/core/models/route_argument.dart';
+import 'package:tata/src/core/providers/realtime_pair_provider.dart';
 import 'package:tata/src/ui/pages/realtime_pair/dialogs/pair_success_dialog.dart';
 
 class RealtimePairView extends ConsumerStatefulWidget {
@@ -41,7 +38,7 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
     });
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      ref.read(realtimePairStateProvider.notifier).startPairing();
+      ref.read(realtimePairProvider.notifier).startPairing();
     });
   }
 
@@ -53,26 +50,19 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(realtimePairStateProvider).maybeWhen(initial: () {
+    ref.watch(realtimePairProvider).maybeWhen(initial: () {
       timerText = '00 : 00';
       timeCounter = 0;
       isPairing = false;
     }, loading: () {
       timeCounter++;
       isPairing = true;
-    }, success: (ChatRoom chatRoomInfo) {
+    }, success: (String chatRoomId) {
       isPairing = false;
 
-      String userUid = FirebaseAuth.instance.currentUser!.uid;
-      String otherUserUid = chatRoomInfo.members[0] == userUid
-          ? chatRoomInfo.members[1]
-          : chatRoomInfo.members[0];
-
       showPairSuccessDialog(context, onClosed: (_) {
-        ref.read(realtimePairStateProvider.notifier).reset();
-        context.pushReplacement('/chat-room',
-            extra: ChatRoomArgument(
-                chatRoomInfo: chatRoomInfo, otherUserUid: otherUserUid));
+        ref.read(realtimePairProvider.notifier).reset();
+        context.pushReplacement('/chat-room', extra: chatRoomId);
       });
     }, failed: (String error) {
       isPairing = false;
@@ -108,16 +98,12 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
             isPairing == true
                 ? ElevatedButton(
                     onPressed: () {
-                      ref
-                          .read(realtimePairStateProvider.notifier)
-                          .cancelPairing();
+                      ref.read(realtimePairProvider.notifier).cancelPairing();
                     },
                     child: const Text('Cancel Pairing'))
                 : ElevatedButton(
                     onPressed: () {
-                      ref
-                          .read(realtimePairStateProvider.notifier)
-                          .startPairing();
+                      ref.read(realtimePairProvider.notifier).startPairing();
                     },
                     child: const Text('Retry Pairing'))
           ],

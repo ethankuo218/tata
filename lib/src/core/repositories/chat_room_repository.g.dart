@@ -7,12 +7,11 @@ part of 'chat_room_repository.dart';
 // **************************************************************************
 
 String _$chatRoomRepositoryHash() =>
-    r'753517123e76b58a45df38b7208aceb95229de06';
+    r'6aa25f74695b869015526c8c4f49f3eee5f6f011';
 
 /// See also [chatRoomRepository].
 @ProviderFor(chatRoomRepository)
-final chatRoomRepositoryProvider =
-    AutoDisposeProvider<ChatRoomRepository>.internal(
+final chatRoomRepositoryProvider = Provider<ChatRoomRepository>.internal(
   chatRoomRepository,
   name: r'chatRoomRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +21,6 @@ final chatRoomRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
-typedef ChatRoomRepositoryRef = AutoDisposeProviderRef<ChatRoomRepository>;
+typedef ChatRoomRepositoryRef = ProviderRef<ChatRoomRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

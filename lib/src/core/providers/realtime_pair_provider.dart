@@ -1,22 +1,26 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tata/src/core/repositories/chat_room_repository.dart';
 import 'package:tata/src/core/state/pair_state.dart';
 import 'package:tata/src/core/models/chat_room.dart';
-import 'package:tata/src/ui/tarot.dart';
 
-class PairStateNotifier extends StateNotifier<PairState> {
-  PairStateNotifier(this._firebaseAuth, this._fireStore)
-      : super(const PairState.initial());
+part 'realtime_pair_provider.g.dart';
 
-  final FirebaseAuth _firebaseAuth;
-  final FirebaseFirestore _fireStore;
-  String? createdChatRoomId;
+@riverpod
+class RealtimePair extends _$RealtimePair {
+  String? _createdChatRoomId;
 
   @override
-  void dispose() {
-    super.dispose();
-    cancelPairing();
+  PairState build() {
+    state = const PairState.initial();
+    _dispose();
+    return const PairState.initial();
+  }
+
+  void _dispose() {
+    ref.onDispose(() async {
+      await cancelPairing();
+    });
   }
 
   //Reset State
@@ -29,24 +33,16 @@ class PairStateNotifier extends StateNotifier<PairState> {
     state = const PairState.loading();
 
     try {
-      final String currentUserId = _firebaseAuth.currentUser!.uid;
-
       // find a realtime chat room with members less than 2
-      final QuerySnapshot<Map<String, dynamic>> chatRoomSnapshot =
-          await _fireStore
-              .collection('chat_rooms')
-              .where('type', isEqualTo: ChatRoomType.realtime.value)
-              .get();
+      final List<ChatRoom> chatRoomList =
+          await ref.read(chatRoomRepositoryProvider).getRealtimeChatRoomList();
 
-      for (var element in chatRoomSnapshot.docs) {
-        final ChatRoom chatRoom = ChatRoom.fromMap(element.data());
+      for (var chatRoom in chatRoomList) {
+        if (chatRoom.memberCount < 2 &&
+            chatRoom.hostId != FirebaseAuth.instance.currentUser!.uid) {
+          ref.read(chatRoomRepositoryProvider).joinChatRoom(chatRoom.id);
 
-        if (chatRoom.members.length < 2) {
-          await _fireStore.collection('chat_rooms').doc(chatRoom.id).update({
-            'members': FieldValue.arrayUnion([currentUserId])
-          });
-
-          state = PairState.success(chatRoomInfo: chatRoom);
+          state = PairState.success(chatRoomId: _createdChatRoomId!);
           return;
         }
       }
@@ -58,46 +54,28 @@ class PairStateNotifier extends StateNotifier<PairState> {
   }
 
   Future<void> waitForPaired() async {
-    final String currentUserId = _firebaseAuth.currentUser!.uid;
-
     try {
-      // create a new realtime chat room and wait for the other user
-      final DocumentReference newChatRoomDoc =
-          _fireStore.collection('chat_rooms').doc();
-
-      final ChatRoom newChatRoom = ChatRoom(
-          id: newChatRoomDoc.id,
-          type: ChatRoomType.realtime,
-          title: '',
-          description: '',
-          category: '',
-          backgroundImage: TarotCard.fool,
-          limit: 2,
-          members: [currentUserId],
-          createTime: Timestamp.now());
-
-      newChatRoomDoc.set(newChatRoom.toMap());
-
-      createdChatRoomId = newChatRoomDoc.id;
+      // create a new realtime chat room and wait for the other user to join
+      _createdChatRoomId =
+          await ref.read(chatRoomRepositoryProvider).createRealtimeChatRoom();
 
       // check every 3 secs for 10 times
       for (var i = 0; i < 10; i++) {
         await Future.delayed(const Duration(seconds: 3));
 
-        final QuerySnapshot<Map<String, dynamic>> chatRoomSnapshot =
-            await _fireStore
-                .collection('chat_rooms')
-                .where('id', isEqualTo: newChatRoomDoc.id)
-                .get();
+        if (state != const PairState.loading()) {
+          break;
+        }
 
-        final ChatRoom chatRoomInfo =
-            ChatRoom.fromMap(chatRoomSnapshot.docs[0].data());
+        final ChatRoom chatRoomInfo = await ref
+            .read(chatRoomRepositoryProvider)
+            .getChatRoomInfo(_createdChatRoomId!);
 
-        final bool isPaired = chatRoomInfo.members.length > 1;
+        final bool isPaired = chatRoomInfo.memberCount > 1;
 
         if (isPaired) {
-          state = PairState.success(chatRoomInfo: chatRoomInfo);
-          createdChatRoomId = null;
+          state = PairState.success(chatRoomId: _createdChatRoomId!);
+          _createdChatRoomId = null;
           return;
         }
       }
@@ -112,13 +90,12 @@ class PairStateNotifier extends StateNotifier<PairState> {
   Future<void> cancelPairing() async {
     // If success, remove the chat room
     try {
-      if (createdChatRoomId != null) {
-        await _fireStore
-            .collection('chat_rooms')
-            .doc(createdChatRoomId)
-            .delete();
+      if (_createdChatRoomId != null) {
+        await ref
+            .read(chatRoomRepositoryProvider)
+            .deleteChatRoom(_createdChatRoomId!);
 
-        createdChatRoomId = null;
+        _createdChatRoomId = null;
         state = const PairState.initial();
       }
     } catch (e) {
@@ -126,10 +103,6 @@ class PairStateNotifier extends StateNotifier<PairState> {
     }
   }
 }
-
-final realtimePairStateProvider =
-    StateNotifierProvider.autoDispose<PairStateNotifier, PairState>((ref) =>
-        PairStateNotifier(FirebaseAuth.instance, FirebaseFirestore.instance));
 
 // Join A Chat Room: 
 // Get Chat Room List (Select Id) 

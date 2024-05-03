@@ -9,18 +9,6 @@ part 'user_provider.g.dart';
 class User extends _$User {
   late AppUserInfo? _currentUserInfo;
 
-  // Edit User Name
-  Future<void> editUserName(String name) async {
-    final UserRepository userRepository = ref.read(userRepositoryProvider);
-
-    await userRepository.editUserInfo(uid: _currentUserInfo!.uid, name: name);
-
-    final AppUserInfo updatedUserInfo =
-        await userRepository.getUserInfo(_currentUserInfo!.uid);
-
-    state = AsyncData(updatedUserInfo);
-  }
-
   @override
   Future<AppUserInfo?> build(String? uid) async {
     final UserRepository userRepository = ref.read(userRepositoryProvider);
@@ -32,5 +20,17 @@ class User extends _$User {
     state = AsyncData(userInfo);
 
     return userInfo;
+  }
+
+  // Edit User Name
+  Future<void> editUserName(String name) async {
+    final UserRepository userRepository = ref.read(userRepositoryProvider);
+
+    await userRepository.editUserInfo(uid: _currentUserInfo!.uid, name: name);
+
+    final AppUserInfo updatedUserInfo =
+        await userRepository.getUserInfo(_currentUserInfo!.uid);
+
+    state = AsyncData(updatedUserInfo);
   }
 }
