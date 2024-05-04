@@ -45,6 +45,7 @@ class TarotNightLobby extends _$TarotNightLobby {
         )
         .then((value) {
       _participantStatus = ParticipantStatus.host;
+      _tarotNightRoomId = value.id;
       _updateState();
       return value;
     }).catchError((e) => throw e);
