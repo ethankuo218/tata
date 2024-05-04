@@ -1,25 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:flutter/material.dart';
+import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/my_chat_room_tile_provider.dart';
 
 class MyChatRoomTile extends ConsumerWidget {
   final String userUid;
-  final ChatRoom chatRoomInfo;
+  final Either<ChatRoom, TarotNightRoom> roomInfo;
   final Function onTap;
 
   const MyChatRoomTile({
     super.key,
     required this.userUid,
-    required this.chatRoomInfo,
+    required this.roomInfo,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isRealtimeChat = chatRoomInfo.type == ChatRoomType.realtime;
-    final provider = myChatRoomTileProvider(chatRoomId: chatRoomInfo.id);
+    final bool isRealtimeChat =
+        roomInfo.fold((l) => l.type == ChatRoomType.realtime, (r) => false);
+    final provider = myChatRoomTileProvider(
+        chatRoomId: roomInfo.fold((l) => l.id, (r) => r.id));
 
     return ref.watch(provider).when(
         data: (otherUserInfo) => GestureDetector(
@@ -109,7 +113,8 @@ class MyChatRoomTile extends ConsumerWidget {
                             Text(
                               isRealtimeChat
                                   ? otherUserInfo?.name ?? 'Unknown'
-                                  : chatRoomInfo.title,
+                                  : roomInfo.fold(
+                                      (l) => l.title, (r) => r.title),
                               style: const TextStyle(
                                   overflow: TextOverflow.ellipsis,
                                   color: Colors.white,
@@ -120,7 +125,8 @@ class MyChatRoomTile extends ConsumerWidget {
                             SizedBox(
                               height: 20,
                               child: Text(
-                                chatRoomInfo.latestMessage?.message ??
+                                roomInfo.fold((l) => l.latestMessage?.message,
+                                        (r) => r.latestMessage?.message) ??
                                     'Break the ice!',
                                 style: TextStyle(
                                     overflow: TextOverflow.ellipsis,
@@ -131,7 +137,9 @@ class MyChatRoomTile extends ConsumerWidget {
                             ),
                           ],
                         )),
-                        chatRoomInfo.latestMessage != null
+                        roomInfo.fold((l) => l.latestMessage,
+                                    (r) => r.latestMessage) !=
+                                null
                             ? SizedBox(
                                 width: 60,
                                 child: Column(
@@ -140,8 +148,9 @@ class MyChatRoomTile extends ConsumerWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      getDisplayTime(chatRoomInfo
-                                          .latestMessage?.timestamp),
+                                      getDisplayTime(roomInfo.fold(
+                                          (l) => l.latestMessage?.timestamp,
+                                          (r) => r.latestMessage?.timestamp)),
                                       style: TextStyle(
                                           color: Colors.white.withOpacity(0.6),
                                           fontSize: 12,

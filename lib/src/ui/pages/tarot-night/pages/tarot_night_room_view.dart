@@ -252,7 +252,7 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
             onPressed: () {
               context.push(
                   '${TarotNightRoomView.routeName}/${MembersView.routeName}',
-                  extra: chatRoomInfo);
+                  extra: chatRoomInfo.id);
             },
           ),
         ],

@@ -6,7 +6,7 @@ part of 'realtime_pair_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$realtimePairHash() => r'616bd5596d3e802cac2828bfe7ab782c179431bd';
+String _$realtimePairHash() => r'1d07eb7530b92815091413873f0654d6fcc1a24a';
 
 /// See also [RealtimePair].
 @ProviderFor(RealtimePair)

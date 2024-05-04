@@ -6,12 +6,12 @@ part of 'my_chat_room_view_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$myChatRoomViewHash() => r'216262dd0d310b87b188be9e025aae78a737c466';
+String _$myChatRoomViewHash() => r'b5dcbc539c9e17d1be65d8f85e4840773049dc28';
 
 /// See also [MyChatRoomView].
 @ProviderFor(MyChatRoomView)
-final myChatRoomViewProvider =
-    AutoDisposeStreamNotifierProvider<MyChatRoomView, List<ChatRoom>>.internal(
+final myChatRoomViewProvider = AutoDisposeStreamNotifierProvider<MyChatRoomView,
+    List<Either<ChatRoom, TarotNightRoom>>>.internal(
   MyChatRoomView.new,
   name: r'myChatRoomViewProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,7 @@ final myChatRoomViewProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$MyChatRoomView = AutoDisposeStreamNotifier<List<ChatRoom>>;
+typedef _$MyChatRoomView
+    = AutoDisposeStreamNotifier<List<Either<ChatRoom, TarotNightRoom>>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

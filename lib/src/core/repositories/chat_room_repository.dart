@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/models/message.dart';
+import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/ui/tarot.dart';
 
 part 'chat_room_repository.g.dart';
@@ -56,7 +58,7 @@ class ChatRoomRepository {
   }
 
   // Get User Chat Room List
-  Stream<List<ChatRoom>> getUserChatRoomList() {
+  Stream<List<Either<ChatRoom, TarotNightRoom>>> getUserChatRoomList() {
     final String currentUserId = _firebaseAuth.currentUser?.uid ?? '';
     if (currentUserId.isEmpty) {
       return Stream.value([]);
@@ -72,22 +74,43 @@ class ChatRoomRepository {
           .toSet();
 
       if (roomIds.isNotEmpty) {
-        List<Future<DocumentSnapshot<Map<String, dynamic>>>> roomFutures =
-            roomIds
-                .map((id) => _fireStore.collection('chat_rooms').doc(id).get())
-                .toList();
+        List<ChatRoom> chatRooms = await Future.wait(roomIds
+            .map((roomId) => _fireStore
+                .collection('chat_rooms')
+                .doc(roomId)
+                .get()
+                .then((value) => ChatRoom.fromMap(value.data()!)))
+            .toList());
 
-        List<ChatRoom> chatRooms = roomFutures.isNotEmpty
-            ? (await Future.wait(roomFutures))
-                .map((snapshot) => ChatRoom.fromMap(snapshot.data()!))
-                .toList()
-            : [];
+        List<TarotNightRoom> tarotNightRooms = await Future.wait(roomIds
+            .map((roomId) => _fireStore
+                .collection('tarot_night_rooms')
+                .doc(roomId)
+                .get()
+                .then((value) => TarotNightRoom.fromMap(value.data()!)))
+            .toList());
 
-        chatRooms.sort((a, b) =>
-            b.latestMessage!.timestamp.compareTo(a.latestMessage!.timestamp));
-        return chatRooms;
+        List<Either<ChatRoom, TarotNightRoom>> rooms = [];
+        for (var chatRoom in chatRooms) {
+          rooms.add(left(chatRoom));
+        }
+        for (var tarotNightRoom in tarotNightRooms) {
+          rooms.add(right(tarotNightRoom));
+        }
+
+        rooms.sort((a, b) {
+          final aTimestamp = a.fold(
+              (chatRoom) => chatRoom.latestMessage!.timestamp,
+              (tarotNightRoom) => tarotNightRoom.latestMessage!.timestamp);
+          final bTimestamp = b.fold(
+              (chatRoom) => chatRoom.latestMessage!.timestamp,
+              (tarotNightRoom) => tarotNightRoom.latestMessage!.timestamp);
+          return bTimestamp.compareTo(aTimestamp);
+        });
+
+        return rooms;
       } else {
-        return <ChatRoom>[];
+        return <Either<ChatRoom, TarotNightRoom>>[];
       }
     });
   }
