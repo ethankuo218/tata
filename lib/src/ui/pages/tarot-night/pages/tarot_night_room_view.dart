@@ -4,11 +4,11 @@ import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/tarot_night_room_view_provider.dart';
 import 'package:tata/src/ui/shared/widgets/chat_menu_entry.dart';
 import 'package:tata/src/ui/shared/widgets/chat_message_bubble.dart';
-import 'package:tata/src/ui/shared/widgets/chat_room_announcement.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
 import 'package:tata/src/ui/shared/pages/room_info_view.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:flutter/material.dart';
+import 'package:tata/src/ui/shared/widgets/tarot_night_announcement.dart';
 
 class TarotNightRoomView extends ConsumerStatefulWidget {
   const TarotNightRoomView({super.key, required this.roomId});
@@ -116,7 +116,8 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                               itemBuilder: (context, index) {
                                 if (snapshot.connectionState !=
                                     ConnectionState.active) {
-                                  return const CircularProgressIndicator();
+                                  return const Center(
+                                      child: CircularProgressIndicator());
                                 } else {
                                   return snapshot.data != null
                                       ? ChatMessageBubble(
@@ -129,8 +130,8 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                             stream: data.messageStream,
                           ),
                         ),
-                        ChatRoomAnnouncement(
-                            announcement: data.roomInfo.description)
+                        TarotNightAnnouncement(
+                            createTime: data.roomInfo.createTime)
                       ],
                     )),
                     Padding(
