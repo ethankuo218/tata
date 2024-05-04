@@ -12,22 +12,17 @@ import 'package:tata/src/ui/pages/tarot-night/widgets/lobby_introduction_slider.
 import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_walkthrough_dialog.dart';
 import 'package:tata/src/ui/shared/widgets/app_bar.dart';
 
-class LobbyView extends ConsumerStatefulWidget {
+class LobbyView extends ConsumerWidget {
   const LobbyView({super.key});
 
   static const routeName = '/tarot-night/lobby';
 
   @override
-  ConsumerState<LobbyView> createState() => _LobbyViewState();
-}
-
-class _LobbyViewState extends ConsumerState<LobbyView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(tarotNightLobbyProvider).when(
         data: (lobbyInfo) {
-          print('Build LobbyView');
           WidgetsBinding.instance.addPostFrameCallback((_) {
+            return;
             if (lobbyInfo.markedAsNotShowAgain == false) {
               showTarotNightWalkthroughDialog(context,
                   onClosed: (markAsNotShowAgain) {
@@ -123,47 +118,50 @@ class _LobbyViewState extends ConsumerState<LobbyView> {
                                                 BorderRadius.circular(20)),
                                         child: Image.asset(
                                           'assets/images/star.png',
+                                          opacity:
+                                              const AlwaysStoppedAnimation(0.5),
                                         ),
                                       ),
                                       Container(
                                           padding: const EdgeInsets.all(10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                          child: Column(
                                             children: [
-                                              Column(
-                                                children: [
-                                                  const Spacer(),
-                                                  TextButton(
-                                                    onPressed: () {},
-                                                    style: ButtonStyle(
-                                                        minimumSize:
-                                                            MaterialStateProperty
-                                                                .all(Size.zero),
-                                                        backgroundColor:
-                                                            MaterialStateProperty.all(
-                                                                const Color.fromARGB(
-                                                                    255,
-                                                                    137,
-                                                                    118,
-                                                                    82)),
-                                                        padding: MaterialStateProperty.all(
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 5))),
-                                                    child: Text(
-                                                        lobbyInfo.participantStatus ==
-                                                                ParticipantStatus
-                                                                    .host
-                                                            ? '回到聊天室'
-                                                            : '分享你的深夜故事',
-                                                        style: const TextStyle(
-                                                            color: Colors.white,
-                                                            fontFamily:
-                                                                'MedievalSharp')),
-                                                  )
-                                                ],
+                                              const SizedBox(height: 30),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8),
+                                                child: Text(
+                                                    '創建一個聊天室，並描述你的心理困擾，尋求建議 !',
+                                                    style: TextStyle(
+                                                        color: Colors.white
+                                                            .withOpacity(0.8),
+                                                        fontFamily:
+                                                            'MedievalSharp',
+                                                        fontSize: 16)),
+                                              ),
+                                              const Spacer(),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5),
+                                                decoration: BoxDecoration(
+                                                    color: const Color.fromARGB(
+                                                        255, 137, 118, 82),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: Text(
+                                                    lobbyInfo.participantStatus ==
+                                                            ParticipantStatus
+                                                                .host
+                                                        ? '回到聊天室'
+                                                        : '分享故事',
+                                                    style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontFamily:
+                                                            'MedievalSharp')),
                                               )
                                             ],
                                           )),
@@ -198,44 +196,49 @@ class _LobbyViewState extends ConsumerState<LobbyView> {
                                                   BorderRadius.circular(20)),
                                           child: Image.asset(
                                             'assets/images/star.png',
+                                            opacity:
+                                                const AlwaysStoppedAnimation(
+                                                    0.5),
                                           ),
                                         ),
                                         Container(
                                             padding: const EdgeInsets.all(10),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                            child: Column(
                                               children: [
-                                                Column(
-                                                  children: [
-                                                    const Spacer(),
-                                                    TextButton(
-                                                      onPressed: () {},
-                                                      style: ButtonStyle(
-                                                          minimumSize:
-                                                              MaterialStateProperty.all(
-                                                                  Size.zero),
-                                                          backgroundColor:
-                                                              MaterialStateProperty.all(
-                                                                  const Color.fromARGB(
-                                                                      255,
-                                                                      137,
-                                                                      118,
-                                                                      82)),
-                                                          padding: MaterialStateProperty.all(
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      10,
-                                                                  vertical: 5))),
-                                                      child: const Text('給予回應',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontFamily:
-                                                                  'MedievalSharp')),
-                                                    )
-                                                  ],
+                                                const SizedBox(height: 30),
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(horizontal: 8),
+                                                  child: Text(
+                                                      '選擇要解決的問題，進入聊天室幫助房主釐清困惑！',
+                                                      style: TextStyle(
+                                                          color: Colors.white
+                                                              .withOpacity(0.8),
+                                                          fontFamily:
+                                                              'MedievalSharp',
+                                                          fontSize: 16)),
+                                                ),
+                                                const Spacer(),
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 5),
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              137,
+                                                              118,
+                                                              82),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                  child: const Text('解答疑惑',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontFamily:
+                                                              'MedievalSharp')),
                                                 )
                                               ],
                                             )),
