@@ -22,7 +22,6 @@ class LobbyView extends ConsumerWidget {
     return ref.watch(tarotNightLobbyProvider).when(
         data: (lobbyInfo) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            return;
             if (lobbyInfo.markedAsNotShowAgain == false) {
               showTarotNightWalkthroughDialog(context,
                   onClosed: (markAsNotShowAgain) {
@@ -126,21 +125,24 @@ class LobbyView extends ConsumerWidget {
                                           padding: const EdgeInsets.all(10),
                                           child: Column(
                                             children: [
-                                              const SizedBox(height: 30),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8),
-                                                child: Text(
-                                                    '創建一個聊天室，並描述你的心理困擾，尋求建議 !',
-                                                    style: TextStyle(
-                                                        color: Colors.white
-                                                            .withOpacity(0.8),
-                                                        fontFamily:
-                                                            'MedievalSharp',
-                                                        fontSize: 16)),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(horizontal: 8),
+                                                  child: Center(
+                                                    child: Text(
+                                                        '創建一個聊天室，並描述你的心理困擾，尋求建議 !',
+                                                        style: TextStyle(
+                                                            color: Colors.white
+                                                                .withOpacity(
+                                                                    0.8),
+                                                            fontFamily:
+                                                                'MedievalSharp',
+                                                            fontSize: 16)),
+                                                  ),
+                                                ),
                                               ),
-                                              const Spacer(),
+                                              const SizedBox(height: 20),
                                               Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
@@ -205,20 +207,23 @@ class LobbyView extends ConsumerWidget {
                                             padding: const EdgeInsets.all(10),
                                             child: Column(
                                               children: [
-                                                const SizedBox(height: 30),
-                                                Padding(
+                                                Expanded(
+                                                    child: Padding(
                                                   padding: const EdgeInsets
                                                       .symmetric(horizontal: 8),
-                                                  child: Text(
-                                                      '選擇要解決的問題，進入聊天室幫助房主釐清困惑！',
-                                                      style: TextStyle(
-                                                          color: Colors.white
-                                                              .withOpacity(0.8),
-                                                          fontFamily:
-                                                              'MedievalSharp',
-                                                          fontSize: 16)),
-                                                ),
-                                                const Spacer(),
+                                                  child: Center(
+                                                    child: Text(
+                                                        '選擇要解決的問題，進入聊天室幫助房主釐清困惑！',
+                                                        style: TextStyle(
+                                                            color: Colors.white
+                                                                .withOpacity(
+                                                                    0.8),
+                                                            fontFamily:
+                                                                'MedievalSharp',
+                                                            fontSize: 16)),
+                                                  ),
+                                                )),
+                                                const SizedBox(height: 20),
                                                 Container(
                                                   padding: const EdgeInsets
                                                       .symmetric(
