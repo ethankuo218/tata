@@ -5,7 +5,6 @@ import 'package:tata/src/core/providers/tarot_night_room_view_provider.dart';
 import 'package:tata/src/ui/shared/widgets/chat_menu_entry.dart';
 import 'package:tata/src/ui/shared/widgets/chat_message_bubble.dart';
 import 'package:tata/src/ui/shared/widgets/chat_room_announcement.dart';
-import 'package:tata/src/ui/shared/pages/leave_chat_view.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
 import 'package:tata/src/ui/shared/pages/room_info_view.dart';
 import 'package:tata/src/core/models/message.dart';
@@ -253,17 +252,6 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
               context.push(
                   '${TarotNightRoomView.routeName}/${MembersView.routeName}',
                   extra: chatRoomInfo);
-            },
-          ),
-          ChatMenuEntry(
-            label: const Text(
-              'Leave Chat',
-              style: TextStyle(color: Colors.red),
-            ),
-            onPressed: () {
-              context.push(
-                  '${TarotNightRoomView.routeName}/${LeaveChatView.routeName}',
-                  extra: chatRoomInfo.id);
             },
           ),
         ],
