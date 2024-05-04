@@ -43,84 +43,67 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView> {
     return ref.watch(provider).when(
           data: (chatRoomList) => Scaffold(
               body: RefreshIndicator(
-            onRefresh: () => ref.read(provider.notifier).fetchFirstList(),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      showCreateChatRoomBottomSheet(context, onClosed: (_) {
-                        if (_ == null) {
-                          return;
-                        }
+                  onRefresh: () => ref.read(provider.notifier).fetchFirstList(),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                    child: ListView.separated(
+                      controller: widget._scrollController,
+                      itemBuilder: (context, index) {
+                        var chatRoomInfo = chatRoomList[index];
+                        return ChatRoomTile(
+                            chatRoomInfo: chatRoomInfo,
+                            onTap: () {
+                              showChatRoomDetailDialog(context,
+                                  chatRoomInfo: chatRoomInfo, onClosed: (_) {
+                                if (_ == null) {
+                                  return;
+                                }
 
-                        ref
-                            .read(provider.notifier)
-                            .createChatRoom(
-                                title: _["title"],
-                                description: _["description"],
-                                category: _["category"],
-                                backgroundImage: _["backgroundImage"],
-                                limit: _["limit"] ?? 2)
-                            .then((value) {
-                          context.push(ChatRoomView.routeName, extra: value);
-                        }).catchError((e) {
-                          SnackbarService().showSnackBar(
-                              context: context, message: e.toString());
-                        });
-                      });
-                    },
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.purple, width: 1),
-                          borderRadius: BorderRadius.circular(18)),
-                      child: const Center(
-                        child: FaIcon(
-                          FontAwesomeIcons.plus,
-                          color: Colors.white,
-                          size: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                      child: ListView.separated(
-                    controller: widget._scrollController,
-                    itemBuilder: (context, index) {
-                      var chatRoomInfo = chatRoomList[index];
-                      return ChatRoomTile(
-                          chatRoomInfo: chatRoomInfo,
-                          onTap: () {
-                            showChatRoomDetailDialog(context,
-                                chatRoomInfo: chatRoomInfo, onClosed: (_) {
-                              if (_ == null) {
-                                return;
-                              }
-
-                              ref
-                                  .read(provider.notifier)
-                                  .joinChatRoom(chatRoomInfo.id)
-                                  .then((value) {
-                                context.push(ChatRoomView.routeName,
-                                    extra: chatRoomInfo.id);
-                              }).catchError((e) {
-                                SnackbarService().showSnackBar(
-                                    context: context, message: e.toString());
+                                ref
+                                    .read(provider.notifier)
+                                    .joinChatRoom(chatRoomInfo.id)
+                                    .then((value) {
+                                  context.push(ChatRoomView.routeName,
+                                      extra: chatRoomInfo.id);
+                                }).catchError((e) {
+                                  SnackbarService().showSnackBar(
+                                      context: context, message: e.toString());
+                                });
                               });
                             });
-                          });
-                    },
-                    itemCount: chatRoomList.length,
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(height: 20),
-                  ))
-                ],
-              ),
-            ),
-          )),
+                      },
+                      itemCount: chatRoomList.length,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const SizedBox(height: 20),
+                    ),
+                  )),
+              floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    showCreateChatRoomBottomSheet(context, onClosed: (_) {
+                      if (_ == null) {
+                        return;
+                      }
+
+                      ref
+                          .read(provider.notifier)
+                          .createChatRoom(
+                              title: _["title"],
+                              description: _["description"],
+                              category: _["category"],
+                              backgroundImage: _["backgroundImage"],
+                              limit: _["limit"] ?? 2)
+                          .then((value) {
+                        context.push(ChatRoomView.routeName, extra: value);
+                      }).catchError((e) {
+                        SnackbarService().showSnackBar(
+                            context: context, message: e.toString());
+                      });
+                    });
+                  },
+                  backgroundColor: Colors.white,
+                  shape: const CircleBorder(),
+                  child: const FaIcon(FontAwesomeIcons.plus,
+                      color: Colors.purple))),
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stackTrace) => Center(
               child: Text(error.toString(),

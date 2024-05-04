@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/ui/pages/activity-list/activity_list_view.dart';
 import 'package:tata/src/ui/pages/chat-room-list/chat_room_list_view.dart';
-import 'package:tata/src/ui/pages/chat-room-list/widgets/chat_room_category_tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tata/src/ui/pages/my-chat-room/my_chat_room_view.dart';
 import 'package:tata/src/ui/pages/realtime_pair/realtime_pair_view.dart';
 import 'package:tata/src/ui/pages/settings/settings_view.dart';
+import 'package:tata/src/ui/shared/widgets/app_bar.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -20,7 +20,6 @@ class HomeView extends ConsumerStatefulWidget {
 
 class _HomeViewState extends ConsumerState<HomeView> {
   int _selectedIndex = 0;
-  int _selectedCategoryIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
     ChatRoomListView(),
@@ -28,16 +27,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
     const Text('Realtime Chat Button'),
     const ActivityListView(),
     const Text('Settings Button'),
-  ];
-
-  static const categoryList = [
-    'All',
-    'Relation',
-    'Work',
-    'Interest',
-    'Sport',
-    'Chat',
-    'School'
   ];
 
   void _onItemTapped(int index) {
@@ -61,43 +50,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            automaticallyImplyLeading: false,
-            toolbarHeight: 33,
-            title: const Text('TATA',
-                style: TextStyle(
-                  color: Colors.purple,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'MedievalSharp',
-                )),
-            titleSpacing: 20,
-            centerTitle: false,
-            bottom: _selectedIndex == 0
-                ? PreferredSize(
-                    preferredSize: const Size.fromHeight(45),
-                    child: SizedBox(
-                      height: 40,
-                      child: ListView.separated(
-                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedCategoryIndex = index;
-                            });
-                          },
-                          child: ChatRoomCategoryTile(
-                              title: categoryList[index],
-                              isSelected: _selectedCategoryIndex == index),
-                        ),
-                        itemCount: categoryList.length,
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const SizedBox(width: 10),
-                      ),
-                    ),
-                  )
-                : null),
+        appBar: const AppBarWidget(),
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
