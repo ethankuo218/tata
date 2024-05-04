@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_night_lobby_info.dart';
-import 'package:tata/src/core/providers/tarot_night_lobby_provider.dart';
+import 'package:tata/src/core/providers/tarot_night_lobby_view_provider.dart';
 import 'package:tata/src/core/services/snackbar_service.dart';
-import 'package:tata/src/ui/pages/tarot-night/pages/tarot_night_room_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/create_room_bottom_sheet.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/lobby_introduction_slider.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_walkthrough_dialog.dart';
 import 'package:tata/src/ui/shared/widgets/app_bar.dart';
 
-class LobbyView extends ConsumerWidget {
-  const LobbyView({super.key});
+class TarotNightLobbyView extends ConsumerWidget {
+  const TarotNightLobbyView({super.key});
 
   static const routeName = '/tarot-night/lobby';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(tarotNightLobbyProvider).when(
+    return ref.watch(tarotNightLobbyViewProvider).when(
         data: (lobbyInfo) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (lobbyInfo.markedAsNotShowAgain == false) {
@@ -27,7 +27,7 @@ class LobbyView extends ConsumerWidget {
                   onClosed: (markAsNotShowAgain) {
                 if (markAsNotShowAgain == true) {
                   ref
-                      .read(tarotNightLobbyProvider.notifier)
+                      .read(tarotNightLobbyViewProvider.notifier)
                       .markAsNotShowAgain();
                 }
               });
@@ -77,7 +77,7 @@ class LobbyView extends ConsumerWidget {
                                           }
 
                                           ref
-                                              .read(tarotNightLobbyProvider
+                                              .read(tarotNightLobbyViewProvider
                                                   .notifier)
                                               .createTarotNightRoom(
                                                   title: _["title"],

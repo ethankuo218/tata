@@ -4,10 +4,10 @@ import 'package:tata/src/core/repositories/chat_room_repository.dart';
 import 'package:tata/src/core/state/pair_state.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 
-part 'realtime_pair_provider.g.dart';
+part 'realtime_pair_view_provider.g.dart';
 
 @riverpod
-class RealtimePair extends _$RealtimePair {
+class RealtimePairView extends _$RealtimePairView {
   String? _createdChatRoomId;
 
   @override

@@ -15,7 +15,7 @@ class TarotNightRoomView extends ConsumerStatefulWidget {
 
   final String roomId;
 
-  static const routeName = '/tarot-night-room';
+  static const routeName = '/tarot-night/room';
 
   @override
   ConsumerState<TarotNightRoomView> createState() => _TarotNightRoomViewState();

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'members_provider.dart';
+part of 'members_view_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$membersHash() => r'0b639cf83412a740d7e8046cdb03449862f8fba3';
+String _$membersViewHash() => r'913e6c8f34cc7693199ef5b45e184354d873359c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-abstract class _$Members
+abstract class _$MembersView
     extends BuildlessAutoDisposeAsyncNotifier<List<Member>> {
   late final String repository;
   late final String roomId;
@@ -40,29 +40,29 @@ abstract class _$Members
   });
 }
 
-/// See also [Members].
-@ProviderFor(Members)
-const membersProvider = MembersFamily();
+/// See also [MembersView].
+@ProviderFor(MembersView)
+const membersViewProvider = MembersViewFamily();
 
-/// See also [Members].
-class MembersFamily extends Family<AsyncValue<List<Member>>> {
-  /// See also [Members].
-  const MembersFamily();
+/// See also [MembersView].
+class MembersViewFamily extends Family<AsyncValue<List<Member>>> {
+  /// See also [MembersView].
+  const MembersViewFamily();
 
-  /// See also [Members].
-  MembersProvider call({
+  /// See also [MembersView].
+  MembersViewProvider call({
     required String repository,
     required String roomId,
   }) {
-    return MembersProvider(
+    return MembersViewProvider(
       repository: repository,
       roomId: roomId,
     );
   }
 
   @override
-  MembersProvider getProviderOverride(
-    covariant MembersProvider provider,
+  MembersViewProvider getProviderOverride(
+    covariant MembersViewProvider provider,
   ) {
     return call(
       repository: provider.repository,
@@ -82,33 +82,34 @@ class MembersFamily extends Family<AsyncValue<List<Member>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'membersProvider';
+  String? get name => r'membersViewProvider';
 }
 
-/// See also [Members].
-class MembersProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<Members, List<Member>> {
-  /// See also [Members].
-  MembersProvider({
+/// See also [MembersView].
+class MembersViewProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<MembersView, List<Member>> {
+  /// See also [MembersView].
+  MembersViewProvider({
     required String repository,
     required String roomId,
   }) : this._internal(
-          () => Members()
+          () => MembersView()
             ..repository = repository
             ..roomId = roomId,
-          from: membersProvider,
-          name: r'membersProvider',
+          from: membersViewProvider,
+          name: r'membersViewProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$membersHash,
-          dependencies: MembersFamily._dependencies,
-          allTransitiveDependencies: MembersFamily._allTransitiveDependencies,
+                  : _$membersViewHash,
+          dependencies: MembersViewFamily._dependencies,
+          allTransitiveDependencies:
+              MembersViewFamily._allTransitiveDependencies,
           repository: repository,
           roomId: roomId,
         );
 
-  MembersProvider._internal(
+  MembersViewProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -124,7 +125,7 @@ class MembersProvider
 
   @override
   FutureOr<List<Member>> runNotifierBuild(
-    covariant Members notifier,
+    covariant MembersView notifier,
   ) {
     return notifier.build(
       repository: repository,
@@ -133,10 +134,10 @@ class MembersProvider
   }
 
   @override
-  Override overrideWith(Members Function() create) {
+  Override overrideWith(MembersView Function() create) {
     return ProviderOverride(
       origin: this,
-      override: MembersProvider._internal(
+      override: MembersViewProvider._internal(
         () => create()
           ..repository = repository
           ..roomId = roomId,
@@ -152,14 +153,14 @@ class MembersProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<Members, List<Member>>
+  AutoDisposeAsyncNotifierProviderElement<MembersView, List<Member>>
       createElement() {
-    return _MembersProviderElement(this);
+    return _MembersViewProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is MembersProvider &&
+    return other is MembersViewProvider &&
         other.repository == repository &&
         other.roomId == roomId;
   }
@@ -174,7 +175,7 @@ class MembersProvider
   }
 }
 
-mixin MembersRef on AutoDisposeAsyncNotifierProviderRef<List<Member>> {
+mixin MembersViewRef on AutoDisposeAsyncNotifierProviderRef<List<Member>> {
   /// The parameter `repository` of this provider.
   String get repository;
 
@@ -182,15 +183,15 @@ mixin MembersRef on AutoDisposeAsyncNotifierProviderRef<List<Member>> {
   String get roomId;
 }
 
-class _MembersProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<Members, List<Member>>
-    with MembersRef {
-  _MembersProviderElement(super.provider);
+class _MembersViewProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<MembersView, List<Member>>
+    with MembersViewRef {
+  _MembersViewProviderElement(super.provider);
 
   @override
-  String get repository => (origin as MembersProvider).repository;
+  String get repository => (origin as MembersViewProvider).repository;
   @override
-  String get roomId => (origin as MembersProvider).roomId;
+  String get roomId => (origin as MembersViewProvider).roomId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

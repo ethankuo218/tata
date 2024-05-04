@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tata/src/core/providers/chat_room_list_provider.dart';
+import 'package:tata/src/core/providers/chat_room_list_view_provider.dart';
 import 'package:tata/src/core/services/snackbar_service.dart';
 import 'package:tata/src/ui/pages/chat-room-list/widgets/chat_room_tile.dart';
 import 'package:tata/src/ui/pages/chat-room-list/dialogs/chat_room_detail_dialog.dart';
@@ -26,7 +26,7 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView> {
       if (mounted &&
           widget._scrollController.position.pixels ==
               widget._scrollController.position.maxScrollExtent) {
-        ref.read(chatRoomListProvider.notifier).fetchNextList();
+        ref.read(chatRoomListViewProvider.notifier).fetchNextList();
       }
     });
   }
@@ -38,7 +38,7 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = chatRoomListProvider;
+    final provider = chatRoomListViewProvider;
 
     return ref.watch(provider).when(
           data: (chatRoomList) => Scaffold(

@@ -3,10 +3,10 @@ import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/repositories/chat_room_repository.dart';
 import 'package:tata/src/core/repositories/tarot_night_repository.dart';
 
-part 'members_provider.g.dart';
+part 'members_view_provider.g.dart';
 
 @riverpod
-class Members extends _$Members {
+class MembersView extends _$MembersView {
   late String _roomId;
   late List<Member> _members;
 

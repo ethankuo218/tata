@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter/material.dart';
-import 'package:tata/src/core/providers/realtime_pair_provider.dart';
+import 'package:tata/src/core/providers/realtime_pair_view_provider.dart';
 import 'package:tata/src/ui/pages/realtime_pair/dialogs/pair_success_dialog.dart';
 
 class RealtimePairView extends ConsumerStatefulWidget {
@@ -38,7 +38,7 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
     });
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      ref.read(realtimePairProvider.notifier).startPairing();
+      ref.read(realtimePairViewProvider.notifier).startPairing();
     });
   }
 
@@ -50,7 +50,7 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(realtimePairProvider).maybeWhen(initial: () {
+    ref.watch(realtimePairViewProvider).maybeWhen(initial: () {
       timerText = '00 : 00';
       timeCounter = 0;
       isPairing = false;
@@ -61,7 +61,7 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
       isPairing = false;
 
       showPairSuccessDialog(context, onClosed: (_) {
-        ref.read(realtimePairProvider.notifier).reset();
+        ref.read(realtimePairViewProvider.notifier).reset();
         context.pushReplacement('/chat-room', extra: chatRoomId);
       });
     }, failed: (String error) {
@@ -98,12 +98,16 @@ class _RealtimePairPageState extends ConsumerState<RealtimePairView> {
             isPairing == true
                 ? ElevatedButton(
                     onPressed: () {
-                      ref.read(realtimePairProvider.notifier).cancelPairing();
+                      ref
+                          .read(realtimePairViewProvider.notifier)
+                          .cancelPairing();
                     },
                     child: const Text('Cancel Pairing'))
                 : ElevatedButton(
                     onPressed: () {
-                      ref.read(realtimePairProvider.notifier).startPairing();
+                      ref
+                          .read(realtimePairViewProvider.notifier)
+                          .startPairing();
                     },
                     child: const Text('Retry Pairing'))
           ],

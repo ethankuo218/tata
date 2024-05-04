@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/providers/router_notifier.dart';
 import 'package:tata/src/core/state/authentication_state.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
-import 'package:tata/src/ui/pages/tarot-night/pages/tarot_night_room_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/room_list_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:tata/src/ui/shared/pages/chat_room_view.dart';
 import 'package:tata/src/ui/shared/pages/leave_chat_view.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
@@ -74,9 +75,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           builder: (BuildContext context, GoRouterState state) =>
               const PhoneVerifyOtpView()),
       GoRoute(
-          path: LobbyView.routeName,
+          path: TarotNightLobbyView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
-              const LobbyView()),
+              const TarotNightLobbyView()),
+      GoRoute(
+          path: TarotNightRoomListView.routeName,
+          builder: (BuildContext context, GoRouterState state) {
+            return const TarotNightRoomListView();
+          }),
       GoRoute(
           path: TarotNightRoomView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
@@ -93,11 +99,6 @@ final routerProvider = Provider<GoRouter>((ref) {
                   MembersView(
                       repository: 'tarot_night_rooms',
                       roomId: state.extra as String),
-            ),
-            GoRoute(
-              path: LeaveChatView.routeName,
-              builder: (BuildContext context, GoRouterState state) =>
-                  LeaveChatView(chatRoomId: state.extra as String),
             ),
           ]),
     ],

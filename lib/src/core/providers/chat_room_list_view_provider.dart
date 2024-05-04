@@ -3,10 +3,10 @@ import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/repositories/chat_room_repository.dart';
 import 'package:tata/src/ui/tarot.dart';
 
-part 'chat_room_list_provider.g.dart';
+part 'chat_room_list_view_provider.g.dart';
 
 @riverpod
-class ChatRoomList extends _$ChatRoomList {
+class ChatRoomListView extends _$ChatRoomListView {
   final List<ChatRoom> _chatRoomList = [];
   bool _hasMore = true;
 
