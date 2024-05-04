@@ -64,7 +64,7 @@ class _CreateTarotNightRoomBottomSheetState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              '詳述困擾你的事，讓心事獲得共鳴',
+                              '什麼事情讓您感到不安或迷惘呢？',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -98,7 +98,7 @@ class _CreateTarotNightRoomBottomSheetState
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 5, horizontal: 15),
                                     hintText:
-                                        "在這個安全的空間，可以放心訴說您的情緒。描述一下，最近有什麼事情讓你感到掛慮或困惑？請盡可能提供細節才能獲得解答",
+                                        "在這個安全的空間，您的心事將被傾聽與尊重，詳細描述每一個感受，更能探討藏在內心的秘密。",
                                     hintStyle: TextStyle(
                                         color: Color.fromARGB(
                                             255, 160, 160, 160))),
