@@ -21,11 +21,16 @@ class AuthRepository {
       final UserCredential userCredential =
           await _firebaseAuth.signInWithProvider(appleProvider);
 
-      await _fireStore.collection('users').doc(userCredential.user!.uid).set({
-        'uid': userCredential.user!.uid,
-        'name': '',
-        'avatar': Avatar.getRandomAvatar().value
-      }, SetOptions(merge: true));
+      DocumentReference<Map<String, dynamic>> doc =
+          _fireStore.collection('users').doc(userCredential.user!.uid);
+
+      if ((await doc.get()).data() == null) {
+        await doc.set({
+          'uid': userCredential.user!.uid,
+          'name': null,
+          'avatar': Avatar.getRandomAvatar().value
+        }, SetOptions(merge: true));
+      }
 
       return left(userCredential.user!);
     } on FirebaseAuthException catch (e) {
@@ -53,11 +58,16 @@ class AuthRepository {
       final UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
 
-      _fireStore.collection('users').doc(userCredential.user!.uid).set({
-        'uid': userCredential.user!.uid,
-        'name': userCredential.user!.displayName,
-        'avatar': Avatar.getRandomAvatar().value
-      }, SetOptions(merge: true));
+      DocumentReference<Map<String, dynamic>> doc =
+          _fireStore.collection('users').doc(userCredential.user!.uid);
+
+      if ((await doc.get()).data() == null) {
+        await doc.set({
+          'uid': userCredential.user!.uid,
+          'name': null,
+          'avatar': Avatar.getRandomAvatar().value
+        }, SetOptions(merge: true));
+      }
 
       return left(userCredential.user!);
     } on FirebaseAuthException catch (e) {
@@ -104,11 +114,16 @@ class AuthRepository {
       UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
 
-      _fireStore.collection('users').doc(userCredential.user!.uid).set({
-        'uid': userCredential.user!.uid,
-        'name': '',
-        'avatar': Avatar.getRandomAvatar().value
-      }, SetOptions(merge: true));
+      DocumentReference<Map<String, dynamic>> doc =
+          _fireStore.collection('users').doc(userCredential.user!.uid);
+
+      if ((await doc.get()).data() == null) {
+        await doc.set({
+          'uid': userCredential.user!.uid,
+          'name': null,
+          'avatar': Avatar.getRandomAvatar().value
+        }, SetOptions(merge: true));
+      }
 
       return left(userCredential.user!);
     } on FirebaseAuthException catch (e) {
