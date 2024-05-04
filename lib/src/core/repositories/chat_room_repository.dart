@@ -74,28 +74,47 @@ class ChatRoomRepository {
           .toSet();
 
       if (roomIds.isNotEmpty) {
-        List<ChatRoom> chatRooms = await Future.wait(roomIds
+        List<ChatRoom?> chatRooms = await Future.wait(roomIds
             .map((roomId) => _fireStore
-                .collection('chat_rooms')
-                .doc(roomId)
-                .get()
-                .then((value) => ChatRoom.fromMap(value.data()!)))
+                    .collection('chat_rooms')
+                    .doc(roomId)
+                    .get()
+                    .then((value) {
+                  final Map<String, dynamic>? data = value.data();
+
+                  if (data == null) {
+                    return null;
+                  }
+
+                  return ChatRoom.fromMap(data);
+                }))
             .toList());
 
-        List<TarotNightRoom> tarotNightRooms = await Future.wait(roomIds
+        List<TarotNightRoom?> tarotNightRooms = await Future.wait(roomIds
             .map((roomId) => _fireStore
-                .collection('tarot_night_rooms')
-                .doc(roomId)
-                .get()
-                .then((value) => TarotNightRoom.fromMap(value.data()!)))
+                    .collection('tarot_night_rooms')
+                    .doc(roomId)
+                    .get()
+                    .then((value) {
+                  final Map<String, dynamic>? data = value.data();
+                  if (data == null) {
+                    return null;
+                  }
+
+                  TarotNightRoom.fromMap(data);
+                }))
             .toList());
 
         List<Either<ChatRoom, TarotNightRoom>> rooms = [];
         for (var chatRoom in chatRooms) {
-          rooms.add(left(chatRoom));
+          if (chatRoom != null) {
+            rooms.add(left(chatRoom));
+          }
         }
         for (var tarotNightRoom in tarotNightRooms) {
-          rooms.add(right(tarotNightRoom));
+          if (tarotNightRoom != null) {
+            rooms.add(right(tarotNightRoom));
+          }
         }
 
         rooms.sort((a, b) {
