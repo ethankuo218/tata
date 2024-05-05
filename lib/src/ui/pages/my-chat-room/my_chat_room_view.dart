@@ -45,7 +45,8 @@ class _MyChatRoomViewState extends ConsumerState<MyChatRoomView> {
                         userUid: user.uid,
                         roomInfo: chatRoomInfo,
                         onTap: () => context.push(ChatRoomView.routeName,
-                            extra: chatRoomInfo));
+                            extra:
+                                chatRoomInfo.fold((l) => l.id, (r) => r.id)));
                   },
                   itemCount: list.length,
                   separatorBuilder: (BuildContext context, int index) =>
