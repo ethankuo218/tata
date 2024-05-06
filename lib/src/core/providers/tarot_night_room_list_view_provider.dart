@@ -7,12 +7,16 @@ part 'tarot_night_room_list_view_provider.g.dart';
 
 @riverpod
 class TarotNightRoomListView extends _$TarotNightRoomListView {
-  late Map<TarotNightRoomTheme, List<TarotNightRoom>> themeRoomListMap;
+  late Map<TarotNightRoomTheme, List<TarotNightRoom>> _themeRoomListMap;
 
   @override
   Future<Map<TarotNightRoomTheme, List<TarotNightRoom>>> build() async {
     await _updateThemeRoomListMap();
-    return themeRoomListMap;
+    return _themeRoomListMap;
+  }
+
+  Future<void> reload() {
+    return _updateThemeRoomListMap();
   }
 
   Future<void> _updateThemeRoomListMap() {
@@ -20,7 +24,7 @@ class TarotNightRoomListView extends _$TarotNightRoomListView {
         .read(tarotNightChatRoomRepositoryProvider)
         .getLobbyRoomList()
         .then((list) {
-      themeRoomListMap = {
+      _themeRoomListMap = {
         TarotNightRoomTheme.myRoom: list
             .where(
                 (room) => room.hostId == FirebaseAuth.instance.currentUser?.uid)
@@ -39,7 +43,7 @@ class TarotNightRoomListView extends _$TarotNightRoomListView {
             .where((room) => room.theme == TarotNightRoomTheme.friend)
             .toList(),
       };
-      state = AsyncData(themeRoomListMap);
+      state = AsyncData(_themeRoomListMap);
     });
   }
 }

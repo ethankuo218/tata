@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -79,75 +77,78 @@ class _TarotNightRoomListViewState
   }
 
   Widget _buildListView(List<TarotNightRoom>? rooms) {
-    return GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 30,
-        childAspectRatio: 0.85,
-        padding: const EdgeInsets.all(15),
-        children: rooms != null
-            ? rooms
-                .map((room) => GestureDetector(
-                    onTap: () {
-                      context.push(TarotNightRoomView.routeName,
-                          extra: room.id);
-                    },
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:
-                                      const Color.fromARGB(116, 232, 167, 72),
-                                  width: 1),
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            opacity: const AlwaysStoppedAnimation(0.3),
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Text(room.title,
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 16)),
+    return RefreshIndicator(
+        onRefresh: ref.read(tarotNightRoomListViewProvider.notifier).reload,
+        child: GridView.count(
+            crossAxisCount: 2,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 30,
+            childAspectRatio: 0.85,
+            padding: const EdgeInsets.all(15),
+            children: rooms != null
+                ? rooms
+                    .map((room) => GestureDetector(
+                        onTap: () {
+                          context.push(TarotNightRoomView.routeName,
+                              extra: room.id);
+                        },
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: const Color.fromARGB(
+                                          116, 232, 167, 72),
+                                      width: 1),
+                                  borderRadius: BorderRadius.circular(20)),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Image.asset(
+                                'assets/images/star.png',
+                                opacity: const AlwaysStoppedAnimation(0.3),
                               ),
-                              const Spacer(),
-                              Center(
-                                child: Container(
-                                  width: 100,
-                                  height: 30,
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(25)),
-                                  child: const Center(
-                                    child: Text('查看問題',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 137, 118, 82),
-                                            fontSize: 16)),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: Text(room.title,
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 16)),
                                   ),
-                                ),
+                                  const Spacer(),
+                                  Center(
+                                    child: Container(
+                                      width: 100,
+                                      height: 30,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(25)),
+                                      child: const Center(
+                                        child: Text('查看問題',
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 137, 118, 82),
+                                                fontSize: 16)),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        )
-                      ],
-                    )))
-                .toList()
-            : []);
+                            )
+                          ],
+                        )))
+                    .toList()
+                : []));
   }
 }
