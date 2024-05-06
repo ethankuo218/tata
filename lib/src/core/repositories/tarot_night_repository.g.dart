@@ -7,12 +7,12 @@ part of 'tarot_night_repository.dart';
 // **************************************************************************
 
 String _$tarotNightChatRoomRepositoryHash() =>
-    r'0367ce81e978860b58d9c9229b2f703ea713c119';
+    r'8f05f1bd3147875c8e024823a9ed2d57b716a0ab';
 
 /// See also [tarotNightChatRoomRepository].
 @ProviderFor(tarotNightChatRoomRepository)
 final tarotNightChatRoomRepositoryProvider =
-    AutoDisposeProvider<TarotNightChatRoomRepository>.internal(
+    Provider<TarotNightChatRoomRepository>.internal(
   tarotNightChatRoomRepository,
   name: r'tarotNightChatRoomRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -23,6 +23,6 @@ final tarotNightChatRoomRepositoryProvider =
 );
 
 typedef TarotNightChatRoomRepositoryRef
-    = AutoDisposeProviderRef<TarotNightChatRoomRepository>;
+    = ProviderRef<TarotNightChatRoomRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

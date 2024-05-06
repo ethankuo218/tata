@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_night_lobby_info.dart';
 import 'package:tata/src/core/providers/tarot_night_lobby_view_provider.dart';
 import 'package:tata/src/core/services/snackbar_service.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/room_list_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/create_room_bottom_sheet.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/lobby_introduction_slider.dart';
@@ -175,7 +176,8 @@ class TarotNightLobbyView extends ConsumerWidget {
                                 flex: 1,
                                 child: GestureDetector(
                                     onTap: () {
-                                      // navigate to chat room list
+                                      context.push(
+                                          TarotNightRoomListView.routeName);
                                     },
                                     child: Stack(
                                       children: [

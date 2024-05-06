@@ -8,32 +8,22 @@ import 'package:tata/src/core/models/tarot_night_room.dart';
 part 'tarot_night_repository.g.dart';
 
 class TarotNightChatRoomRepository {
-  static final TarotNightChatRoomRepository _instance =
-      TarotNightChatRoomRepository._internal();
-
-  factory TarotNightChatRoomRepository() {
-    return _instance;
-  }
-
-  TarotNightChatRoomRepository._internal();
-
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
-  DocumentSnapshot? _lastDocument;
 
   // Get Tarot Night Room List
-  Future<List<TarotNightRoom>> getLobbyChatRoomList(bool isInitFetch) async {
-    if (isInitFetch) {
-      _lastDocument = null;
-    }
+  Future<List<TarotNightRoom>> getLobbyRoomList() async {
+    final DateTime now = DateTime.now();
+    final DateTime startTime = DateTime(now.year, now.month, now.day, 23);
+    final DateTime endTime =
+        DateTime(now.year, now.month, now.day, 1).add(const Duration(days: 1));
 
-    Query<Map<String, dynamic>> collection = _fireStore
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await _fireStore
         .collection('tarot_night_chat_rooms')
-        .orderBy('create_time', descending: true);
-
-    QuerySnapshot<Map<String, dynamic>> querySnapshot = isInitFetch
-        ? await collection.limit(10).get()
-        : await collection.startAfterDocument(_lastDocument!).limit(10).get();
+        .where('create_time', isGreaterThan: startTime)
+        .where('create_time', isLessThan: endTime)
+        .orderBy('create_time')
+        .get();
 
     if (querySnapshot.docs.isEmpty) {
       return [];
@@ -42,8 +32,6 @@ class TarotNightChatRoomRepository {
     List<TarotNightRoom> roomList = querySnapshot.docs
         .map((chatRoom) => TarotNightRoom.fromMap(chatRoom.data()))
         .toList();
-
-    _lastDocument = querySnapshot.docs.last;
 
     return roomList;
   }
@@ -328,7 +316,7 @@ class TarotNightChatRoomRepository {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 TarotNightChatRoomRepository tarotNightChatRoomRepository(
         TarotNightChatRoomRepositoryRef ref) =>
     TarotNightChatRoomRepository();

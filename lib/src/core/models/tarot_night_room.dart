@@ -53,10 +53,12 @@ class TarotNightRoom extends Room {
 }
 
 enum TarotNightRoomTheme {
-  work(1),
-  relation(2),
-  family(3),
-  friend(4);
+  myRoom(0),
+  all(1),
+  work(2),
+  relation(3),
+  family(4),
+  friend(5);
 
   const TarotNightRoomTheme(this.value);
 
@@ -75,6 +77,10 @@ enum TarotNightRoomTheme {
 
   static String toText(TarotNightRoomTheme x) {
     switch (x) {
+      case TarotNightRoomTheme.myRoom:
+        return 'My Room';
+      case TarotNightRoomTheme.all:
+        return 'All';
       case TarotNightRoomTheme.work:
         return 'Work';
       case TarotNightRoomTheme.relation:

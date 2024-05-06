@@ -85,7 +85,7 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                         ],
                       ),
                       const SizedBox(width: 15),
-                      Text(data.roomInfo.title),
+                      Expanded(child: Text(data.roomInfo.title))
                     ],
                   ),
                   actions: [
