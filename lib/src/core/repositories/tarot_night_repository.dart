@@ -58,8 +58,9 @@ class TarotNightChatRoomRepository {
     try {
       // Start a collection group query on 'members' subcollection across all 'tarot_night_chat_rooms'
       final QuerySnapshot<Map<String, dynamic>> memberDocs = await _fireStore
-          .collectionGroup('members')
+          .collectionGroup('participants')
           .where('uid', isEqualTo: currentUserId)
+          .where('role', isNotEqualTo: 'host')
           .get();
 
       // Filter the chat rooms based on the create_time constraints
@@ -155,7 +156,7 @@ class TarotNightChatRoomRepository {
         .then((value) => TarotNightRoom.fromMap(newRoom.toMap()));
 
     await newRoomDoc
-        .collection('members')
+        .collection('participants')
         .doc(_firebaseAuth.currentUser!.uid)
         .set({
       ...userInfo.data()!.cast<String, dynamic>(),
@@ -180,7 +181,7 @@ class TarotNightChatRoomRepository {
     final List<Member> members = await _fireStore
         .collection('tarot_night_chat_rooms')
         .doc(roomId)
-        .collection('members')
+        .collection('participants')
         .get()
         .then((value) =>
             value.docs.map((member) => Member.fromMap(member.data())).toList());
@@ -202,7 +203,7 @@ class TarotNightChatRoomRepository {
     await _fireStore
         .collection('tarot_night_chat_rooms')
         .doc(roomId)
-        .collection('members')
+        .collection('participants')
         .doc(currentUserId)
         .set({
       ...userInfo.data()!.cast<String, dynamic>(),
@@ -217,7 +218,7 @@ class TarotNightChatRoomRepository {
     await _fireStore
         .collection('tarot_night_chat_rooms')
         .doc(roomId)
-        .collection('members')
+        .collection('participants')
         .doc(currentUserId)
         .delete();
   }
@@ -227,7 +228,7 @@ class TarotNightChatRoomRepository {
     final List<Member> members = await _fireStore
         .collection('tarot_night_chat_rooms')
         .doc(roomId)
-        .collection('members')
+        .collection('participants')
         .get()
         .then((value) =>
             value.docs.map((member) => Member.fromMap(member.data())).toList());
@@ -237,11 +238,11 @@ class TarotNightChatRoomRepository {
 
   // Remove a member from a chat room
   Future<void> removeMember(
-      {required String chatRoomId, required String memberId}) async {
+      {required String roomId, required String memberId}) async {
     await _fireStore
         .collection('tarot_night_chat_rooms')
-        .doc(chatRoomId)
-        .collection('members')
+        .doc(roomId)
+        .collection('participants')
         .doc(memberId)
         .delete();
   }

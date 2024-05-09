@@ -62,6 +62,8 @@ class TarotNightLobbyView extends ConsumerWidget {
                                 flex: 1,
                                 child: GestureDetector(
                                   onTap: () {
+                                    print('create');
+                                    print(lobbyInfo.participantStatus);
                                     switch (lobbyInfo.participantStatus) {
                                       case ParticipantStatus.host:
                                         context.push(
@@ -71,6 +73,7 @@ class TarotNightLobbyView extends ConsumerWidget {
                                       case ParticipantStatus.participant:
                                         break;
                                       case ParticipantStatus.notStarted:
+                                        print('not started');
                                         showCreateTarotNightRoomBottomSheet(
                                             context, onClosed: (_) {
                                           if (_ == null) {

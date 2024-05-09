@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/providers/router_notifier.dart';
 import 'package:tata/src/core/state/authentication_state.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_list_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
@@ -101,6 +102,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                       roomId: state.extra as String),
             ),
           ]),
+      GoRoute(
+          path: TarotNightDrawCardView.routeName,
+          builder: (BuildContext context, GoRouterState state) {
+            return const TarotNightDrawCardView();
+          }),
     ],
     redirect: (context, state) {
       switch (routerListenable.authState) {

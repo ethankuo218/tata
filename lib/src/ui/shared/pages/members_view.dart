@@ -23,8 +23,12 @@ class MembersView extends ConsumerWidget {
     return ref.watch(provider).when(
           data: (memberList) {
             final bool isHost = memberList
-                    .firstWhere((element) =>
-                        element.uid == FirebaseAuth.instance.currentUser!.uid)
+                    .firstWhere(
+                      (element) =>
+                          element.uid == FirebaseAuth.instance.currentUser!.uid,
+                      orElse: () =>
+                          Member(uid: '', name: '', role: '', avatar: ''),
+                    )
                     .role ==
                 'host';
             return Scaffold(
@@ -46,8 +50,7 @@ class MembersView extends ConsumerWidget {
                                 SlidableAction(
                                   onPressed: (_) => ref
                                       .read(provider.notifier)
-                                      .removeMember(
-                                          roomId, memberList[index].uid),
+                                      .removeMember(memberList[index].uid),
                                   backgroundColor: const Color(0xFFFE4A49),
                                   foregroundColor: Colors.white,
                                   icon: Icons.delete,

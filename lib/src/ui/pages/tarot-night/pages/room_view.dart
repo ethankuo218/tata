@@ -8,7 +8,7 @@ import 'package:tata/src/ui/shared/pages/members_view.dart';
 import 'package:tata/src/ui/shared/pages/room_info_view.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:flutter/material.dart';
-import 'package:tata/src/ui/shared/widgets/tarot_night_announcement.dart';
+import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_announcement.dart';
 
 class TarotNightRoomView extends ConsumerStatefulWidget {
   const TarotNightRoomView({super.key, required this.roomId});

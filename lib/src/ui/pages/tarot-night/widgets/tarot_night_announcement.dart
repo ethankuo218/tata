@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/widgets/start_tarot_test_dialog.dart';
 
 class TarotNightAnnouncement extends StatefulWidget {
   const TarotNightAnnouncement({super.key, required this.createTime});
@@ -80,10 +83,18 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
             const Spacer(),
             TextButton(
                 onPressed: () {
-                  if (!isTestButtonEnabled) {
-                    return;
-                  }
-                  // navigate to the test screen;
+                  // if (!isTestButtonEnabled) {
+                  //   return;
+                  // }
+                  showStartTarotTestDialog(context, onClosed: (_) {
+                    if (_ == null) {
+                      return;
+                    }
+
+                    // save question to firestore
+                    // navigate to tarot test page
+                    context.push(TarotNightDrawCardView.routeName);
+                  });
                 },
                 style: ButtonStyle(
                     minimumSize: MaterialStateProperty.all(Size.zero),
