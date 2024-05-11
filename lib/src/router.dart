@@ -7,6 +7,7 @@ import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_list_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
 import 'package:tata/src/ui/shared/pages/chat_room_view.dart';
 import 'package:tata/src/ui/shared/pages/leave_chat_view.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
@@ -106,6 +107,11 @@ final routerProvider = Provider<GoRouter>((ref) {
           path: TarotNightDrawCardView.routeName,
           builder: (BuildContext context, GoRouterState state) {
             return const TarotNightDrawCardView();
+          }),
+      GoRoute(
+          path: TarotNightTestResultView.routeName,
+          builder: (BuildContext context, GoRouterState state) {
+            return const TarotNightTestResultView();
           }),
     ],
     redirect: (context, state) {

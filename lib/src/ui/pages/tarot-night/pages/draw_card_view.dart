@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
 
 class TarotNightDrawCardView extends ConsumerWidget {
   const TarotNightDrawCardView({super.key});
@@ -68,6 +70,7 @@ class TarotNightDrawCardView extends ConsumerWidget {
             ElevatedButton(
               onPressed: () {
                 // TODO: Draw card
+                context.push(TarotNightTestResultView.routeName);
               },
               child: const Text('選中此牌'),
             ),
