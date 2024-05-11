@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/providers/router_notifier.dart';
 import 'package:tata/src/core/state/authentication_state.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/draw_role_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_list_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
@@ -107,6 +108,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           path: TarotNightDrawCardView.routeName,
           builder: (BuildContext context, GoRouterState state) {
             return const TarotNightDrawCardView();
+          }),
+      GoRoute(
+          path: TarotNightDrawRoleView.routeName,
+          builder: (BuildContext context, GoRouterState state) {
+            return TarotNightDrawRoleView(
+              roomId: state.extra as String,
+            );
           }),
       GoRoute(
           path: TarotNightTestResultView.routeName,

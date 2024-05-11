@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/tarot_night_room_list_view_provider.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/draw_role_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 
 class TarotNightRoomListView extends ConsumerStatefulWidget {
@@ -88,9 +89,21 @@ class _TarotNightRoomListViewState
             children: rooms != null
                 ? rooms
                     .map((room) => GestureDetector(
-                        onTap: () {
-                          context.push(TarotNightRoomView.routeName,
-                              extra: room.id);
+                        onTap: () async {
+                          final bool isJoined = ref
+                              .read(tarotNightRoomListViewProvider.notifier)
+                              .isJoinedRoom(room.id);
+
+                          if (!isJoined) {
+                            // TODO: if not, show the detail dialog
+                            // navigate to draw role view after confirm to join the room
+                            context.push(TarotNightDrawRoleView.routeName,
+                                extra: room.id);
+                            return;
+                          } else {
+                            context.push(TarotNightRoomView.routeName,
+                                extra: room.id);
+                          }
                         },
                         child: Stack(
                           children: [
