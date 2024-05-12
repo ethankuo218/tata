@@ -18,13 +18,17 @@ class TarotNightDrawRoleView extends StatefulWidget {
 class _TarotNightDrawRoleViewState extends State<TarotNightDrawRoleView> {
   late bool isDrew = false;
   late Role role = Role(
-    id: '1',
-    name: '愚者',
-    description:
-        '愚者是一個樂觀、勇敢的人，面對未知的領域，總會對未來保持開放的態度，遵循自己的直覺，一路向前。\n\n 現在，以一顆樂觀開朗的心，為房主帶來希望的曙光！',
-    tags: ['樂觀', '勇敢'],
-    image: 'assets/avatars/the_fool.png',
-  );
+      id: '1',
+      name: '愚者',
+      description:
+          '愚者是一個樂觀、勇敢的人，面對未知的領域，總會對未來保持開放的態度，遵循自己的直覺，一路向前。\n\n 現在，以一顆樂觀開朗的心，為房主帶來希望的曙光！',
+      tags: ['樂觀', '勇敢'],
+      image: 'assets/avatars/the_fool.png',
+      tasks: [
+        '聆聽房主的困擾給出一個創新的建議，讓他可以短暫脫離煩惱',
+        '提供一段話鼓勵房主從這次的低潮中看到學習和成長的機會',
+        '分享一個自己跟隨直覺成功戰勝低潮的小故事'
+      ]);
 
   @override
   Widget build(BuildContext context) {

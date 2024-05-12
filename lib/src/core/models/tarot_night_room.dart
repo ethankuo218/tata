@@ -1,15 +1,18 @@
 import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/core/models/room.dart';
-import 'package:tata/src/core/models/tarot_night_result.dart';
 
 class TarotNightRoom extends Room {
   final TarotNightRoomTheme theme;
-  late TarotNightResult? result;
+  late String? card;
+  late String? question;
+  late List<TarotNightAnswer>? answers;
 
   TarotNightRoom({
-    required this.theme,
-    this.result,
     required super.id,
+    required this.theme,
+    this.card,
+    this.question,
+    this.answers,
     required super.title,
     required super.description,
     required super.memberCount,
@@ -22,17 +25,20 @@ class TarotNightRoom extends Room {
     return TarotNightRoom(
       id: map['id'],
       theme: TarotNightRoomTheme.toEnum(map['theme']),
+      card: map['card'],
+      question: map['question'],
+      answers: map['answers'] == null
+          ? null
+          : List<TarotNightAnswer>.from(
+              map['answers'].map((x) => TarotNightAnswer.fromMap(x))),
       title: map['title'] ?? '',
       description: map['description'] ?? '',
+      memberCount: map['member_count'],
+      createTime: map['create_time'],
+      hostId: map['host_id'],
       latestMessage: map['latest_message'] == null
           ? null
           : Message.fromMap(map['latest_message']),
-      hostId: map['host_id'],
-      memberCount: map['member_count'],
-      createTime: map['create_time'],
-      result: map['result'] == null
-          ? null
-          : TarotNightResult.fromMap(map['result']),
     );
   }
 
@@ -41,13 +47,15 @@ class TarotNightRoom extends Room {
     return {
       'id': id,
       'theme': theme.value,
+      'card': card,
+      'question': question,
+      'answers': answers?.map((x) => x.toMap()).toList(),
       'title': title,
       'description': description,
-      'latest_message': latestMessage?.toMap(),
-      'host_id': hostId,
       'member_count': memberCount,
       'create_time': createTime,
-      'result': result?.toMap(),
+      'host_id': hostId,
+      'latest_message': latestMessage?.toMap(),
     };
   }
 }
@@ -95,4 +103,25 @@ enum TarotNightRoomTheme {
   }
 
   final int value;
+}
+
+class TarotNightAnswer {
+  final String uid;
+  final String answer;
+
+  TarotNightAnswer({required this.uid, required this.answer});
+
+  factory TarotNightAnswer.fromMap(Map<String, dynamic> map) {
+    return TarotNightAnswer(
+      uid: map['uid'],
+      answer: map['answer'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'answer': answer,
+    };
+  }
 }

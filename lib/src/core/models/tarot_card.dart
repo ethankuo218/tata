@@ -1,4 +1,5 @@
 class TarotCard {
+  final String id;
   final String name;
   final String image;
   final String description;
@@ -8,6 +9,7 @@ class TarotCard {
   final String familyDescription;
 
   TarotCard({
+    required this.id,
     required this.name,
     required this.image,
     required this.description,
@@ -19,25 +21,14 @@ class TarotCard {
 
   factory TarotCard.fromJson(Map<String, dynamic> json) {
     return TarotCard(
+      id: json['id'],
       name: json['name'],
       image: json['image'],
       description: json['description'],
-      workDescription: json['workDescription'],
-      relationDescription: json['relationDescription'],
-      friendDescription: json['friendDescription'],
-      familyDescription: json['familyDescription'],
+      workDescription: json['work_description'],
+      relationDescription: json['relation_description'],
+      friendDescription: json['friend_description'],
+      familyDescription: json['family_description'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'image': image,
-      'description': description,
-      'workDescription': workDescription,
-      'relationDescription': relationDescription,
-      'friendDescription': friendDescription,
-      'familyDescription': familyDescription,
-    };
   }
 }

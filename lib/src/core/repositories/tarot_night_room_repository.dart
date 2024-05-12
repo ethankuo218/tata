@@ -7,7 +7,7 @@ import 'package:tata/src/core/models/tarot_night_room.dart';
 
 part 'tarot_night_room_repository.g.dart';
 
-class TarotNightChatRoomRepository {
+class TarotNightRoomRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
@@ -318,6 +318,6 @@ class TarotNightChatRoomRepository {
 }
 
 @Riverpod(keepAlive: true)
-TarotNightChatRoomRepository tarotNightChatRoomRepository(
+TarotNightRoomRepository tarotNightChatRoomRepository(
         TarotNightChatRoomRepositoryRef ref) =>
-    TarotNightChatRoomRepository();
+    TarotNightRoomRepository();
