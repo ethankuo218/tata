@@ -5,7 +5,7 @@ import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 
-part 'tarot_night_repository.g.dart';
+part 'tarot_night_room_repository.g.dart';
 
 class TarotNightChatRoomRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

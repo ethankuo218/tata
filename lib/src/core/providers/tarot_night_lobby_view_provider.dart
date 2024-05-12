@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/models/tarot_night_lobby_info.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
-import 'package:tata/src/core/repositories/tarot_night_repository.dart';
+import 'package:tata/src/core/repositories/tarot_night_room_repository.dart';
 
 part 'tarot_night_lobby_view_provider.g.dart';
 

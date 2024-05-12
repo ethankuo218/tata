@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tarot_night_repository.dart';
+part of 'tarot_night_room_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator

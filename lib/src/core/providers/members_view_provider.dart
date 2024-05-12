@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/repositories/chat_room_repository.dart';
-import 'package:tata/src/core/repositories/tarot_night_repository.dart';
+import 'package:tata/src/core/repositories/tarot_night_room_repository.dart';
 
 part 'members_view_provider.g.dart';
 
