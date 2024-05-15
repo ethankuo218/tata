@@ -21,7 +21,7 @@ class TarotNightRoom extends Room {
     super.latestMessage,
   });
 
-  factory TarotNightRoom.fromMap(Map<String, dynamic> map) {
+  factory TarotNightRoom.fromJson(Map<String, dynamic> map) {
     return TarotNightRoom(
       id: map['id'],
       theme: TarotNightRoomTheme.toEnum(map['theme']),
@@ -30,7 +30,7 @@ class TarotNightRoom extends Room {
       answers: map['answers'] == null
           ? null
           : List<TarotNightAnswer>.from(
-              map['answers'].map((x) => TarotNightAnswer.fromMap(x))),
+              map['answers'].map((x) => TarotNightAnswer.fromJson(x))),
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       memberCount: map['member_count'],
@@ -38,24 +38,24 @@ class TarotNightRoom extends Room {
       hostId: map['host_id'],
       latestMessage: map['latest_message'] == null
           ? null
-          : Message.fromMap(map['latest_message']),
+          : Message.fromJson(map['latest_message']),
     );
   }
 
   @override
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'theme': theme.value,
       'card': card,
       'question': question,
-      'answers': answers?.map((x) => x.toMap()).toList(),
+      'answers': answers?.map((x) => x.toJson()).toList(),
       'title': title,
       'description': description,
       'member_count': memberCount,
       'create_time': createTime,
       'host_id': hostId,
-      'latest_message': latestMessage?.toMap(),
+      'latest_message': latestMessage?.toJson(),
     };
   }
 }
@@ -111,14 +111,14 @@ class TarotNightAnswer {
 
   TarotNightAnswer({required this.uid, required this.answer});
 
-  factory TarotNightAnswer.fromMap(Map<String, dynamic> map) {
+  factory TarotNightAnswer.fromJson(Map<String, dynamic> map) {
     return TarotNightAnswer(
       uid: map['uid'],
       answer: map['answer'],
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'uid': uid,
       'answer': answer,

@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/repositories/tarot_night_room_repository.dart';
 
-part 'tarot_night_room_list_view_provider.g.dart';
+part 'room_list_view_provider.g.dart';
 
 @riverpod
 class TarotNightRoomListView extends _$TarotNightRoomListView {
@@ -20,10 +20,10 @@ class TarotNightRoomListView extends _$TarotNightRoomListView {
 
   Future<void> _updateThemeRoomListMap() async {
     List<TarotNightRoom> joinedRooms =
-        await ref.read(tarotNightChatRoomRepositoryProvider).getJoinedRooms();
+        await ref.read(tarotNightRoomRepositoryProvider).getJoinedRooms();
 
     return ref
-        .read(tarotNightChatRoomRepositoryProvider)
+        .read(tarotNightRoomRepositoryProvider)
         .getLobbyRoomList()
         .then((list) {
       _themeRoomListMap = {

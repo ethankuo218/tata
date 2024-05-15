@@ -17,7 +17,7 @@ class UserRepository {
       throw Exception('User not found');
     }
 
-    return AppUserInfo.fromMap(user.data()!);
+    return AppUserInfo.fromJson(user.data()!);
   }
 
   // Get User Info List
@@ -27,7 +27,7 @@ class UserRepository {
         .where('uid', whereIn: uidList)
         .get();
 
-    return userList.docs.map((e) => AppUserInfo.fromMap(e.data())).toList();
+    return userList.docs.map((e) => AppUserInfo.fromJson(e.data())).toList();
   }
 
   // Edit User Info

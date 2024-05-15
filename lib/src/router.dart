@@ -107,7 +107,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: TarotNightDrawCardView.routeName,
           builder: (BuildContext context, GoRouterState state) {
-            return const TarotNightDrawCardView();
+            return TarotNightDrawCardView(
+              roomId: (state.extra as dynamic)['roomId'] as String,
+              question: (state.extra as dynamic)['question'] as String,
+            );
           }),
       GoRoute(
           path: TarotNightDrawRoleView.routeName,
@@ -119,7 +122,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: TarotNightTestResultView.routeName,
           builder: (BuildContext context, GoRouterState state) {
-            return const TarotNightTestResultView();
+            return TarotNightTestResultView(
+              roomId: state.extra as String,
+            );
           }),
     ],
     redirect: (context, state) {

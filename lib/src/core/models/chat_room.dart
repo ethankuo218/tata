@@ -6,7 +6,7 @@ class ChatRoom extends Room {
   final ChatRoomType type;
   final int limit;
   final String category;
-  final TarotCard? backgroundImage;
+  final TarotCardKey? backgroundImage;
   late List<Message>? messages = [];
 
   ChatRoom(
@@ -23,7 +23,7 @@ class ChatRoom extends Room {
       required super.createTime,
       required super.memberCount});
 
-  factory ChatRoom.fromMap(Map<String, dynamic> map) {
+  factory ChatRoom.fromJson(Map<String, dynamic> map) {
     return ChatRoom(
       id: map['id'],
       type: ChatRoomType.toEnum(map['type']),
@@ -32,11 +32,11 @@ class ChatRoom extends Room {
       limit: map['limit'],
       category: map['category'] ?? '',
       backgroundImage: map['background_image'] != null
-          ? TarotCard.toEnum(map['background_image'])
+          ? TarotCardKey.toEnum(map['background_image'])
           : null,
       latestMessage: map['latest_message'] == null
           ? null
-          : Message.fromMap(map['latest_message']),
+          : Message.fromJson(map['latest_message']),
       hostId: map['host_id'],
       createTime: map['create_time'],
       memberCount: map['member_count'],
@@ -44,7 +44,7 @@ class ChatRoom extends Room {
   }
 
   @override
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'type': type.value,
@@ -52,9 +52,10 @@ class ChatRoom extends Room {
       'description': description,
       'limit': limit,
       'category': category,
-      'background_image':
-          backgroundImage == null ? null : TarotCard.toValue(backgroundImage!),
-      'latest_message': latestMessage?.toMap(),
+      'background_image': backgroundImage == null
+          ? null
+          : TarotCardKey.toValue(backgroundImage!),
+      'latest_message': latestMessage?.toJson(),
       'host_id': hostId,
       'member_count': memberCount,
       'create_time': createTime

@@ -23,12 +23,8 @@ class MembersView extends ConsumerWidget {
     return ref.watch(provider).when(
           data: (memberList) {
             final bool isHost = memberList
-                    .firstWhere(
-                      (element) =>
-                          element.uid == FirebaseAuth.instance.currentUser!.uid,
-                      orElse: () =>
-                          Member(uid: '', name: '', role: '', avatar: ''),
-                    )
+                    .firstWhere((element) =>
+                        element.uid == FirebaseAuth.instance.currentUser!.uid)
                     .role ==
                 'host';
             return Scaffold(

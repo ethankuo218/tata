@@ -15,14 +15,14 @@ class RealtimeChatRoom extends Room {
     this.joinerId,
   });
 
-  factory RealtimeChatRoom.fromMap(Map<String, dynamic> map) {
+  factory RealtimeChatRoom.fromJson(Map<String, dynamic> map) {
     return RealtimeChatRoom(
       id: map['id'],
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       latestMessage: map['latest_message'] == null
           ? null
-          : Message.fromMap(map['latest_message']),
+          : Message.fromJson(map['latest_message']),
       memberCount: map['member_count'],
       createTime: map['create_time'],
       hostId: map['host_id'],
@@ -31,12 +31,12 @@ class RealtimeChatRoom extends Room {
   }
 
   @override
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'title': title,
       'description': description,
-      'latest_message': latestMessage?.toMap(),
+      'latest_message': latestMessage?.toJson(),
       'member_count': memberCount,
       'create_time': createTime,
       'host_id': hostId,

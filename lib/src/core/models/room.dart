@@ -19,26 +19,26 @@ class Room {
       required this.memberCount,
       required this.createTime});
 
-  factory Room.fromMap(Map<String, dynamic> map) {
+  factory Room.fromJson(Map<String, dynamic> map) {
     return Room(
       id: map['id'],
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       latestMessage: map['latest_message'] == null
           ? null
-          : Message.fromMap(map['latest_message']),
+          : Message.fromJson(map['latest_message']),
       hostId: map['host_id'],
       memberCount: map['member_count'],
       createTime: map['create_time'],
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'title': title,
       'description': description,
-      'latest_message': latestMessage?.toMap(),
+      'latest_message': latestMessage?.toJson(),
       'host_id': hostId,
       'member_count': memberCount,
       'create_time': createTime

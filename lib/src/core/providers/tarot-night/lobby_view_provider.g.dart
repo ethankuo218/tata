@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'chat_room_list_view_provider.dart';
+part of 'lobby_view_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$chatRoomListViewHash() => r'1bf7d81a32c5fa53e2c3bf0008ab3fee60b7c30a';
+String _$tarotNightLobbyViewHash() =>
+    r'089786cc3cfec10cc37679c4d86f0342f0813b4b';
 
-/// See also [ChatRoomListView].
-@ProviderFor(ChatRoomListView)
-final chatRoomListViewProvider =
-    AutoDisposeAsyncNotifierProvider<ChatRoomListView, List<ChatRoom>>.internal(
-  ChatRoomListView.new,
-  name: r'chatRoomListViewProvider',
+/// See also [TarotNightLobbyView].
+@ProviderFor(TarotNightLobbyView)
+final tarotNightLobbyViewProvider =
+    AsyncNotifierProvider<TarotNightLobbyView, TarotNightLobbyInfo>.internal(
+  TarotNightLobbyView.new,
+  name: r'tarotNightLobbyViewProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$chatRoomListViewHash,
+      : _$tarotNightLobbyViewHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$ChatRoomListView = AutoDisposeAsyncNotifier<List<ChatRoom>>;
+typedef _$TarotNightLobbyView = AsyncNotifier<TarotNightLobbyInfo>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

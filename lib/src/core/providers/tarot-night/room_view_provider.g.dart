@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tarot_night_room_view_provider.dart';
+part of 'room_view_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$tarotNightRoomViewHash() =>
-    r'6f1fa1988895c1db4768650104af00290bd3cd80';
+    r'f77616940eb885453a4941af05724ecb24199416';
 
 /// Copied from Dart SDK
 class _SystemHash {

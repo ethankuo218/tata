@@ -47,7 +47,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                         borderRadius: BorderRadius.circular(100),
                       ),
                       child: Image.asset(
-                          Avatar.getAvatarImage(Avatar.getRandomAvatar()),
+                          Avatar.getAvatarImage(userInfo!.avatar),
                           fit: BoxFit.cover),
                     ),
                   ),
@@ -98,7 +98,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20),
                               child: Text(
-                                userInfo!.name,
+                                userInfo.name,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,

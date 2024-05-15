@@ -35,7 +35,7 @@ class ChatRoomRepository {
     }
 
     List<ChatRoom> chatRoomList = querySnapshot.docs
-        .map((chatRoom) => ChatRoom.fromMap(chatRoom.data()))
+        .map((chatRoom) => ChatRoom.fromJson(chatRoom.data()))
         .toList();
 
     _lastDocument = querySnapshot.docs.last;
@@ -51,7 +51,7 @@ class ChatRoomRepository {
         .get();
 
     List<ChatRoom> chatRoomList = querySnapshot.docs
-        .map((chatRoom) => ChatRoom.fromMap(chatRoom.data()))
+        .map((chatRoom) => ChatRoom.fromJson(chatRoom.data()))
         .toList();
 
     return chatRoomList;
@@ -86,7 +86,7 @@ class ChatRoomRepository {
                     return null;
                   }
 
-                  return ChatRoom.fromMap(data);
+                  return ChatRoom.fromJson(data);
                 }))
             .toList());
 
@@ -101,7 +101,7 @@ class ChatRoomRepository {
                     return null;
                   }
 
-                  TarotNightRoom.fromMap(data);
+                  TarotNightRoom.fromJson(data);
                 }))
             .toList());
 
@@ -149,10 +149,10 @@ class ChatRoomRepository {
         .collection('chat_rooms')
         .doc(chatRoomId)
         .collection('messages')
-        .add(newMessage.toMap());
+        .add(newMessage.toJson());
 
     await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
-      'latest_message': newMessage.toMap(),
+      'latest_message': newMessage.toJson(),
     });
   }
 
@@ -166,7 +166,7 @@ class ChatRoomRepository {
         .snapshots()
         .map((querySnapshot) {
       List<Message> messages = querySnapshot.docs
-          .map((message) => Message.fromMap(message.data()))
+          .map((message) => Message.fromJson(message.data()))
           .toList();
 
       return messages.isEmpty ? <Message>[] : messages;
@@ -178,7 +178,7 @@ class ChatRoomRepository {
     required String title,
     required String description,
     required String category,
-    required TarotCard backgroundImage,
+    required TarotCardKey backgroundImage,
     required int limit,
   }) async {
     final DocumentReference newChatRoomDoc =
@@ -206,7 +206,7 @@ class ChatRoomRepository {
         .doc(_firebaseAuth.currentUser!.uid)
         .get();
 
-    await newChatRoomDoc.set(newChatRoom.toMap());
+    await newChatRoomDoc.set(newChatRoom.toJson());
     await _fireStore
         .collection('chat_rooms')
         .doc(newChatRoom.id)
@@ -225,7 +225,7 @@ class ChatRoomRepository {
           senderId: 'system',
           message: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
-        ).toMap());
+        ).toJson());
 
     return newChatRoom.id;
   }
@@ -241,7 +241,7 @@ class ChatRoomRepository {
         title: '',
         description: '',
         category: '',
-        backgroundImage: TarotCard.fool,
+        backgroundImage: TarotCardKey.fool,
         limit: 2,
         memberCount: 1,
         hostId: _firebaseAuth.currentUser!.uid,
@@ -257,7 +257,7 @@ class ChatRoomRepository {
         .doc(_firebaseAuth.currentUser!.uid)
         .get();
 
-    await newChatRoomDoc.set(newChatRoom.toMap());
+    await newChatRoomDoc.set(newChatRoom.toJson());
     await _fireStore
         .collection('chat_rooms')
         .doc(newChatRoom.id)
@@ -276,7 +276,7 @@ class ChatRoomRepository {
           senderId: 'system',
           message: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
-        ).toMap());
+        ).toJson());
 
     return newChatRoom.id;
   }
@@ -287,7 +287,7 @@ class ChatRoomRepository {
         .collection('chat_rooms')
         .doc(roomId)
         .get()
-        .then((value) => ChatRoom.fromMap(value.data()!));
+        .then((value) => ChatRoom.fromJson(value.data()!));
 
     return chatRoom;
   }
@@ -299,14 +299,15 @@ class ChatRoomRepository {
         .collection('chat_rooms')
         .doc(roomId)
         .get()
-        .then((value) => ChatRoom.fromMap(value.data()!));
+        .then((value) => ChatRoom.fromJson(value.data()!));
     final List<Member> members = await _fireStore
         .collection('chat_rooms')
         .doc(roomId)
         .collection('members')
         .get()
-        .then((value) =>
-            value.docs.map((member) => Member.fromMap(member.data())).toList());
+        .then((value) => value.docs
+            .map((member) => Member.fromJson(member.data()))
+            .toList());
 
     if (members.any((member) => member.uid == currentUserId)) {
       return;
@@ -347,8 +348,9 @@ class ChatRoomRepository {
         .doc(chatRoomId)
         .collection('members')
         .get()
-        .then((value) =>
-            value.docs.map((member) => Member.fromMap(member.data())).toList());
+        .then((value) => value.docs
+            .map((member) => Member.fromJson(member.data()))
+            .toList());
 
     return members;
   }

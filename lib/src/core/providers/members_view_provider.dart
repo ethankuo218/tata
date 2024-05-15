@@ -25,7 +25,7 @@ class MembersView extends _$MembersView {
         break;
       case 'tarot_night_rooms':
         await ref
-            .read(tarotNightChatRoomRepositoryProvider)
+            .read(tarotNightRoomRepositoryProvider)
             .removeMember(roomId: _roomId, memberId: memberId)
             .then((_) {
           _members.removeWhere((element) => element.uid == memberId);
@@ -47,9 +47,8 @@ class MembersView extends _$MembersView {
             await ref.read(chatRoomRepositoryProvider).getMembers(roomId);
         break;
       case 'tarot_night_rooms':
-        _members = await ref
-            .read(tarotNightChatRoomRepositoryProvider)
-            .getMembers(roomId);
+        _members =
+            await ref.read(tarotNightRoomRepositoryProvider).getMembers(roomId);
         break;
     }
 

@@ -11,7 +11,7 @@ class ActivityRepository {
   Future<List<ActivityInfo>> getActivityList() async {
     final snapshot = await _fireStore.collection('activities').get();
     return snapshot.docs
-        .map((activity) => ActivityInfo.fromMap(activity.data()))
+        .map((activity) => ActivityInfo.fromJson(activity.data()))
         .toList();
   }
 }

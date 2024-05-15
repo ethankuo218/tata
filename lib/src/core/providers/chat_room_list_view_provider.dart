@@ -49,7 +49,7 @@ class ChatRoomListView extends _$ChatRoomListView {
     required String title,
     required String description,
     required String category,
-    required TarotCard backgroundImage,
+    required TarotCardKey backgroundImage,
     required int limit,
   }) async {
     return ref

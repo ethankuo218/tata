@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'members_view_provider.dart';
+part of 'test_result_view_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$membersViewHash() => r'74289d71291c65680104623008a7e87fd16ec4f9';
+String _$tarotNightTestResultViewHash() =>
+    r'84df1ba18989ecf759cf92d7d8cd3bb74deefde6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,43 +30,39 @@ class _SystemHash {
   }
 }
 
-abstract class _$MembersView
-    extends BuildlessAutoDisposeAsyncNotifier<List<Member>> {
-  late final String repository;
+abstract class _$TarotNightTestResultView
+    extends BuildlessAutoDisposeAsyncNotifier<TarotNightRoom> {
   late final String roomId;
 
-  FutureOr<List<Member>> build({
-    required String repository,
+  FutureOr<TarotNightRoom> build({
     required String roomId,
   });
 }
 
-/// See also [MembersView].
-@ProviderFor(MembersView)
-const membersViewProvider = MembersViewFamily();
+/// See also [TarotNightTestResultView].
+@ProviderFor(TarotNightTestResultView)
+const tarotNightTestResultViewProvider = TarotNightTestResultViewFamily();
 
-/// See also [MembersView].
-class MembersViewFamily extends Family<AsyncValue<List<Member>>> {
-  /// See also [MembersView].
-  const MembersViewFamily();
+/// See also [TarotNightTestResultView].
+class TarotNightTestResultViewFamily
+    extends Family<AsyncValue<TarotNightRoom>> {
+  /// See also [TarotNightTestResultView].
+  const TarotNightTestResultViewFamily();
 
-  /// See also [MembersView].
-  MembersViewProvider call({
-    required String repository,
+  /// See also [TarotNightTestResultView].
+  TarotNightTestResultViewProvider call({
     required String roomId,
   }) {
-    return MembersViewProvider(
-      repository: repository,
+    return TarotNightTestResultViewProvider(
       roomId: roomId,
     );
   }
 
   @override
-  MembersViewProvider getProviderOverride(
-    covariant MembersViewProvider provider,
+  TarotNightTestResultViewProvider getProviderOverride(
+    covariant TarotNightTestResultViewProvider provider,
   ) {
     return call(
-      repository: provider.repository,
       roomId: provider.roomId,
     );
   }
@@ -82,116 +79,100 @@ class MembersViewFamily extends Family<AsyncValue<List<Member>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'membersViewProvider';
+  String? get name => r'tarotNightTestResultViewProvider';
 }
 
-/// See also [MembersView].
-class MembersViewProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<MembersView, List<Member>> {
-  /// See also [MembersView].
-  MembersViewProvider({
-    required String repository,
+/// See also [TarotNightTestResultView].
+class TarotNightTestResultViewProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<TarotNightTestResultView,
+        TarotNightRoom> {
+  /// See also [TarotNightTestResultView].
+  TarotNightTestResultViewProvider({
     required String roomId,
   }) : this._internal(
-          () => MembersView()
-            ..repository = repository
-            ..roomId = roomId,
-          from: membersViewProvider,
-          name: r'membersViewProvider',
+          () => TarotNightTestResultView()..roomId = roomId,
+          from: tarotNightTestResultViewProvider,
+          name: r'tarotNightTestResultViewProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$membersViewHash,
-          dependencies: MembersViewFamily._dependencies,
+                  : _$tarotNightTestResultViewHash,
+          dependencies: TarotNightTestResultViewFamily._dependencies,
           allTransitiveDependencies:
-              MembersViewFamily._allTransitiveDependencies,
-          repository: repository,
+              TarotNightTestResultViewFamily._allTransitiveDependencies,
           roomId: roomId,
         );
 
-  MembersViewProvider._internal(
+  TarotNightTestResultViewProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.repository,
     required this.roomId,
   }) : super.internal();
 
-  final String repository;
   final String roomId;
 
   @override
-  FutureOr<List<Member>> runNotifierBuild(
-    covariant MembersView notifier,
+  FutureOr<TarotNightRoom> runNotifierBuild(
+    covariant TarotNightTestResultView notifier,
   ) {
     return notifier.build(
-      repository: repository,
       roomId: roomId,
     );
   }
 
   @override
-  Override overrideWith(MembersView Function() create) {
+  Override overrideWith(TarotNightTestResultView Function() create) {
     return ProviderOverride(
       origin: this,
-      override: MembersViewProvider._internal(
-        () => create()
-          ..repository = repository
-          ..roomId = roomId,
+      override: TarotNightTestResultViewProvider._internal(
+        () => create()..roomId = roomId,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        repository: repository,
         roomId: roomId,
       ),
     );
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<MembersView, List<Member>>
-      createElement() {
-    return _MembersViewProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<TarotNightTestResultView,
+      TarotNightRoom> createElement() {
+    return _TarotNightTestResultViewProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is MembersViewProvider &&
-        other.repository == repository &&
-        other.roomId == roomId;
+    return other is TarotNightTestResultViewProvider && other.roomId == roomId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, repository.hashCode);
     hash = _SystemHash.combine(hash, roomId.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin MembersViewRef on AutoDisposeAsyncNotifierProviderRef<List<Member>> {
-  /// The parameter `repository` of this provider.
-  String get repository;
-
+mixin TarotNightTestResultViewRef
+    on AutoDisposeAsyncNotifierProviderRef<TarotNightRoom> {
   /// The parameter `roomId` of this provider.
   String get roomId;
 }
 
-class _MembersViewProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<MembersView, List<Member>>
-    with MembersViewRef {
-  _MembersViewProviderElement(super.provider);
+class _TarotNightTestResultViewProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<TarotNightTestResultView,
+        TarotNightRoom> with TarotNightTestResultViewRef {
+  _TarotNightTestResultViewProviderElement(super.provider);
 
   @override
-  String get repository => (origin as MembersViewProvider).repository;
-  @override
-  String get roomId => (origin as MembersViewProvider).roomId;
+  String get roomId => (origin as TarotNightTestResultViewProvider).roomId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/models/tarot_night_lobby_info.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/repositories/tarot_night_room_repository.dart';
 
-part 'tarot_night_lobby_view_provider.g.dart';
+part 'lobby_view_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class TarotNightLobbyView extends _$TarotNightLobbyView {
@@ -37,7 +36,7 @@ class TarotNightLobbyView extends _$TarotNightLobbyView {
     required TarotNightRoomTheme theme,
   }) async {
     return ref
-        .read(tarotNightChatRoomRepositoryProvider)
+        .read(tarotNightRoomRepositoryProvider)
         .createRoom(
           title: title,
           description: description,
@@ -53,16 +52,14 @@ class TarotNightLobbyView extends _$TarotNightLobbyView {
 
   // Check participant status
   Future<ParticipantStatus> _getParticipantStatus() async {
-    final String currentUserId = FirebaseAuth.instance.currentUser!.uid;
-
     final List<TarotNightRoom> joinedRooms =
-        await ref.read(tarotNightChatRoomRepositoryProvider).getJoinedRooms();
+        await ref.read(tarotNightRoomRepositoryProvider).getJoinedRooms();
 
-    final List<String> hostList =
-        await ref.read(tarotNightChatRoomRepositoryProvider).getHostList();
+    final TarotNightRoom? hostRoom =
+        await ref.read(tarotNightRoomRepositoryProvider).getHostRoomInfo();
 
-    if (hostList.contains(currentUserId)) {
-      _tarotNightRoomId = joinedRooms.first.id;
+    if (hostRoom != null) {
+      _tarotNightRoomId = hostRoom.id;
       return ParticipantStatus.host;
     }
 

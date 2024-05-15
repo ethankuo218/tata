@@ -1,15 +1,16 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/start_tarot_test_dialog.dart';
 
 class TarotNightAnnouncement extends StatefulWidget {
-  const TarotNightAnnouncement({super.key, required this.createTime});
+  const TarotNightAnnouncement({super.key, required this.roomInfo});
 
-  final Timestamp createTime;
+  final TarotNightRoom roomInfo;
 
   @override
   State<TarotNightAnnouncement> createState() => _TarotNightAnnouncementState();
@@ -17,7 +18,7 @@ class TarotNightAnnouncement extends StatefulWidget {
 
 class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
   late DateTime enableTestButtonTime =
-      widget.createTime.toDate().add(const Duration(minutes: 30));
+      widget.roomInfo.createTime.toDate().add(const Duration(minutes: 30));
   late Timer timer;
   late String timerView = '--:--:--';
   late bool isTestButtonEnabled = false;
@@ -81,39 +82,40 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
             const SizedBox(width: 10),
             Text(timerView, style: const TextStyle(color: Colors.white)),
             const Spacer(),
-            TextButton(
-                onPressed: () {
-                  // if (!isTestButtonEnabled) {
-                  //   return;
-                  // }
-                  showStartTarotTestDialog(context, onClosed: (_) {
-                    if (_ == null) {
-                      return;
-                    }
+            if (widget.roomInfo.hostId ==
+                FirebaseAuth.instance.currentUser?.uid)
+              TextButton(
+                  onPressed: () {
+                    // if (!isTestButtonEnabled) {
+                    //   return;
+                    // }
+                    showStartTarotTestDialog(context, onClosed: (_) {
+                      if (_ == null) {
+                        return;
+                      }
 
-                    // save question to firestore
-                    // navigate to tarot test page
-                    context.push(TarotNightDrawCardView.routeName);
-                  });
-                },
-                style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(Size.zero),
-                    padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 8)),
-                    backgroundColor: isTestButtonEnabled
-                        ? MaterialStateProperty.all(
-                            const Color.fromARGB(255, 137, 118, 82))
-                        : MaterialStateProperty.all(
-                            const Color.fromARGB(255, 137, 118, 82)
-                                .withOpacity(0.5))),
-                child: Text('Start Test',
-                    style: TextStyle(
-                        color: isTestButtonEnabled
-                            ? Colors.white
-                            : Colors.white.withOpacity(0.5),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold)))
+                      context.push(TarotNightDrawCardView.routeName,
+                          extra: {'roomId': widget.roomInfo.id, 'question': _});
+                    });
+                  },
+                  style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(Size.zero),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 8)),
+                      backgroundColor: isTestButtonEnabled
+                          ? MaterialStateProperty.all(
+                              const Color.fromARGB(255, 137, 118, 82))
+                          : MaterialStateProperty.all(
+                              const Color.fromARGB(255, 137, 118, 82)
+                                  .withOpacity(0.5))),
+                  child: Text('Start Test',
+                      style: TextStyle(
+                          color: isTestButtonEnabled
+                              ? Colors.white
+                              : Colors.white.withOpacity(0.5),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold)))
           ],
         ),
       ),

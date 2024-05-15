@@ -19,8 +19,8 @@ class ChatService extends ChangeNotifier {
     );
 
     await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
-      'messages': FieldValue.arrayUnion([newMessage.toMap()]),
-      'latest_message': newMessage.toMap(),
+      'messages': FieldValue.arrayUnion([newMessage.toJson()]),
+      'latest_message': newMessage.toJson(),
     });
   }
 
@@ -32,7 +32,7 @@ class ChatService extends ChangeNotifier {
         .snapshots()
         .map((event) {
       final List<Message> messages = List<Message>.from(
-          event.data()?['messages'].map((e) => Message.fromMap(e)));
+          event.data()?['messages'].map((e) => Message.fromJson(e)));
 
       messages.sort((a, b) => a.timestamp.compareTo(b.timestamp));
 

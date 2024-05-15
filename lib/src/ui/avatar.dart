@@ -2,7 +2,10 @@ import 'dart:math';
 
 class Avatar {
   static const Map<AvatarKey, String> _avatarImages = {
+    AvatarKey.theFool: 'assets/avatars/the_fool.png',
     AvatarKey.theMagician: 'assets/avatars/the_magician.png',
+    AvatarKey.theDeath: 'assets/avatars/the_death.png',
+    AvatarKey.theEmpress: 'assets/avatars/the_empress.png',
   };
 
   static String getAvatarImage(AvatarKey key) {
@@ -16,7 +19,10 @@ class Avatar {
 }
 
 enum AvatarKey {
-  theMagician('the_magician');
+  theFool('the_fool'),
+  theMagician('the_magician'),
+  theDeath('the_death'),
+  theEmpress('the_empress');
 
   const AvatarKey(this.value);
 

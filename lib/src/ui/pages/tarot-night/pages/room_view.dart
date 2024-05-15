@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tata/src/core/models/tarot_night_message.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
-import 'package:tata/src/core/providers/tarot_night_room_view_provider.dart';
+import 'package:tata/src/core/providers/tarot-night/room_view_provider.dart';
 import 'package:tata/src/ui/shared/widgets/chat_menu_entry.dart';
-import 'package:tata/src/ui/shared/widgets/chat_message_bubble.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
 import 'package:tata/src/ui/shared/pages/room_info_view.dart';
-import 'package:tata/src/core/models/message.dart';
 import 'package:flutter/material.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_announcement.dart';
+import 'package:tata/src/ui/shared/widgets/tarot_night_message_bubble.dart';
 
 class TarotNightRoomView extends ConsumerStatefulWidget {
   const TarotNightRoomView({super.key, required this.roomId});
@@ -109,7 +109,8 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                           color: Colors.black,
                           child: StreamBuilder(
                             builder: (BuildContext context,
-                                    AsyncSnapshot<List<Message>> snapshot) =>
+                                    AsyncSnapshot<List<TarotNightMessage>>
+                                        snapshot) =>
                                 ListView.builder(
                               reverse: true,
                               controller: scrollController,
@@ -120,8 +121,9 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                       child: CircularProgressIndicator());
                                 } else {
                                   return snapshot.data != null
-                                      ? ChatMessageBubble(
-                                          chatMessage: snapshot.data![index])
+                                      ? TarotNightMessageBubble(
+                                          roomId: widget.roomId,
+                                          message: snapshot.data![index])
                                       : null;
                                 }
                               },
@@ -130,8 +132,7 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                             stream: data.messageStream,
                           ),
                         ),
-                        TarotNightAnnouncement(
-                            createTime: data.roomInfo.createTime)
+                        TarotNightAnnouncement(roomInfo: data.roomInfo)
                       ],
                     )),
                     Padding(

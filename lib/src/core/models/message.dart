@@ -11,15 +11,15 @@ class Message {
     required this.timestamp,
   });
 
-  factory Message.fromMap(Map<String, dynamic> map) {
+  factory Message.fromJson(Map<String, dynamic> map) {
     return Message(
-      senderId: map['sender_id'],
+      senderId: map['sender_id'] ?? '',
       message: map['message'],
       timestamp: map['timestamp'],
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'sender_id': senderId,
       'message': message,

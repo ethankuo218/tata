@@ -15,7 +15,7 @@ class ActivityInfo {
     required this.active,
   });
 
-  factory ActivityInfo.fromMap(Map<String, dynamic> map) {
+  factory ActivityInfo.fromJson(Map<String, dynamic> map) {
     return ActivityInfo(
       name: map['name'],
       description: map['description'],

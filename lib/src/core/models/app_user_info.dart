@@ -1,7 +1,9 @@
+import 'package:tata/src/ui/avatar.dart';
+
 class AppUserInfo {
   final String name;
   final String uid;
-  final String avatar;
+  final AvatarKey avatar;
 
   AppUserInfo({
     required this.name,
@@ -9,15 +11,15 @@ class AppUserInfo {
     required this.avatar,
   });
 
-  factory AppUserInfo.fromMap(Map<String, dynamic> map) {
+  factory AppUserInfo.fromJson(Map<String, dynamic> map) {
     return AppUserInfo(
       name: map['name'] ?? 'Unknown',
       uid: map['uid'],
-      avatar: map['avatar'],
+      avatar: AvatarKey.toEnum(map['avatar']),
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'name': name,
       'uid': uid,

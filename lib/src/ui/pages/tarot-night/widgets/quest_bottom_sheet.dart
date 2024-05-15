@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Future<void> showTaskBottomSheet(BuildContext context,
-    {required ValueChanged onClosed}) async {
+Future<void> showQuestBottomSheet(BuildContext context,
+    {required String quest, required ValueChanged onClosed}) async {
   await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -9,29 +9,29 @@ Future<void> showTaskBottomSheet(BuildContext context,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40), topRight: Radius.circular(40))),
       builder: (context) {
-        return const CreateTarotNightRoomBottomSheet();
+        return QuestBottomSheet(quest: quest);
       }).then(onClosed);
 }
 
-class CreateTarotNightRoomBottomSheet extends StatefulWidget {
-  const CreateTarotNightRoomBottomSheet({super.key});
+class QuestBottomSheet extends StatefulWidget {
+  const QuestBottomSheet({super.key, required this.quest});
+
+  final String quest;
 
   @override
-  State<CreateTarotNightRoomBottomSheet> createState() =>
-      _CreateTarotNightRoomBottomSheetState();
+  State<QuestBottomSheet> createState() => _QuestBottomSheetState();
 }
 
-class _CreateTarotNightRoomBottomSheetState
-    extends State<CreateTarotNightRoomBottomSheet> {
+class _QuestBottomSheetState extends State<QuestBottomSheet> {
   static final _formKey = GlobalKey<FormState>();
   final answerController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final double screenHeight = MediaQuery.of(context).size.height;
+    final String question = widget.quest;
 
     return Container(
-      height: screenHeight * 0.9,
+      height: 600,
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       decoration: const BoxDecoration(
           color: Color.fromARGB(255, 40, 40, 40),
@@ -50,17 +50,9 @@ class _CreateTarotNightRoomBottomSheetState
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              '做為 『愚者』，代表著希望的曙光！',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            const SizedBox(height: 10),
-                            const Text(
-                              '請提供一段話，鼓勵房主從這次的低潮中，看到學習和成長的機會。',
-                              style: TextStyle(
+                            Text(
+                              question,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500),
@@ -119,8 +111,7 @@ class _CreateTarotNightRoomBottomSheetState
                                     return;
                                   }
 
-                                  Navigator.pop(context,
-                                      {"answer": answerController.text});
+                                  Navigator.pop(context, answerController.text);
                                 },
                                 child: const Text(
                                   "送出回答",

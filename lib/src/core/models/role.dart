@@ -4,7 +4,7 @@ class Role {
   final List<String> tags;
   final String description;
   final String image;
-  final List<String> tasks;
+  final List<String> quest;
 
   Role({
     required this.id,
@@ -12,7 +12,7 @@ class Role {
     required this.tags,
     required this.description,
     required this.image,
-    required this.tasks,
+    required this.quest,
   });
 
   factory Role.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,7 @@ class Role {
       tags: json['tags'] == null ? [] : List<String>.from(json['tags']),
       description: json['description'],
       image: json['image'],
-      tasks: json['tasks'] == null ? [] : List<String>.from(json['tasks']),
+      quest: json['quest'] == null ? [] : List<String>.from(json['quest']),
     );
   }
 }

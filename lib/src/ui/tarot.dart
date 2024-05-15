@@ -1,21 +1,21 @@
 import 'dart:math';
 
 class Tarot {
-  static const Map<TarotCard, String> _tarotCardImages = {
-    TarotCard.fool: 'assets/images/tarot/fool.png',
-    TarotCard.magician: 'assets/images/tarot/magician.png',
+  static const Map<TarotCardKey, String> _tarotCardImages = {
+    TarotCardKey.fool: 'assets/images/tarot/fool.png',
+    TarotCardKey.magician: 'assets/images/tarot/magician.png',
     // TarotCard.highPriestess: 'assets/images/tarot/high_priestess.png',
     // TarotCard.empress: 'assets/images/tarot/empress.png',
     // TarotCard.emperor: 'assets/images/tarot/emperor.png',
     // TarotCard.hierophant: 'assets/images/tarot/hierophant.png',
     // TarotCard.lovers: 'assets/images/tarot/lovers.png',
-    TarotCard.chariot: 'assets/images/tarot/chariot.png',
-    TarotCard.strength: 'assets/images/tarot/strength.png',
+    TarotCardKey.chariot: 'assets/images/tarot/chariot.png',
+    TarotCardKey.strength: 'assets/images/tarot/strength.png',
     // TarotCard.hermit: 'assets/images/tarot/hermit.png',
     // TarotCard.wheelOfFortune: 'assets/images/tarot/wheel_of_fortune.png',
     // TarotCard.justice: 'assets/images/tarot/justice.png',
     // TarotCard.hangedMan: 'assets/images/tarot/hanged_man.png',
-    TarotCard.death: 'assets/images/tarot/death.png',
+    TarotCardKey.death: 'assets/images/tarot/death.png',
     // TarotCard.temperance: 'assets/images/tarot/temperance.png',
     // TarotCard.devil: 'assets/images/tarot/devil.png',
     // TarotCard.tower: 'assets/images/tarot/tower.png',
@@ -26,17 +26,17 @@ class Tarot {
     // TarotCard.world: 'assets/images/tarot/world.png',
   };
 
-  static String getTarotCardImage(TarotCard card) {
+  static String getTarotCardImage(TarotCardKey card) {
     return _tarotCardImages[card]!;
   }
 
-  static TarotCard getRandomCard() {
+  static TarotCardKey getRandomCard() {
     return _tarotCardImages.keys
         .elementAt(Random().nextInt(_tarotCardImages.keys.length));
   }
 }
 
-enum TarotCard {
+enum TarotCardKey {
   fool,
   magician,
   // highPriestess,
@@ -60,8 +60,9 @@ enum TarotCard {
   // judgement,
   // world;
 
-  factory TarotCard.toEnum(String card) {
-    var filter = values.where((element) => TarotCard.toValue(element) == card);
+  factory TarotCardKey.toEnum(String card) {
+    var filter =
+        values.where((element) => TarotCardKey.toValue(element) == card);
 
     if (filter.isEmpty) {
       throw Exception('Invalid card name');
@@ -70,11 +71,11 @@ enum TarotCard {
     return filter.first;
   }
 
-  static String toValue(TarotCard card) {
+  static String toValue(TarotCardKey card) {
     switch (card) {
-      case TarotCard.fool:
+      case TarotCardKey.fool:
         return 'fool';
-      case TarotCard.magician:
+      case TarotCardKey.magician:
         return 'magician';
       // case TarotCard.highPriestess:
       //   return 'high_priestess';
@@ -86,9 +87,9 @@ enum TarotCard {
       //   return 'hierophant';
       // case TarotCard.lovers:
       //   return 'lovers';
-      case TarotCard.chariot:
+      case TarotCardKey.chariot:
         return 'chariot';
-      case TarotCard.strength:
+      case TarotCardKey.strength:
         return 'strength';
       // case TarotCard.hermit:
       //   return 'hermit';
@@ -98,7 +99,7 @@ enum TarotCard {
       //   return 'justice';
       // case TarotCard.hangedMan:
       //   return 'hanged_man';
-      case TarotCard.death:
+      case TarotCardKey.death:
         return 'death';
       // case TarotCard.temperance:
       //   return 'temperance';

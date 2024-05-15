@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tata/src/core/models/app_user_info.dart';
 import 'package:tata/src/core/models/member.dart';
-import 'package:tata/src/core/models/message.dart';
+import 'package:tata/src/core/models/tarot_night_message.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 
 part 'tarot_night_room_repository.g.dart';
@@ -19,7 +22,7 @@ class TarotNightRoomRepository {
         DateTime(now.year, now.month, now.day, 1).add(const Duration(days: 1));
 
     QuerySnapshot<Map<String, dynamic>> querySnapshot = await _fireStore
-        .collection('tarot_night_chat_rooms')
+        .collection('tarot_night_rooms')
         .where('create_time', isGreaterThan: startTime)
         .where('create_time', isLessThan: endTime)
         .orderBy('create_time')
@@ -30,7 +33,7 @@ class TarotNightRoomRepository {
     }
 
     List<TarotNightRoom> roomList = querySnapshot.docs
-        .map((chatRoom) => TarotNightRoom.fromMap(chatRoom.data()))
+        .map((chatRoom) => TarotNightRoom.fromJson(chatRoom.data()))
         .toList();
 
     return roomList;
@@ -56,7 +59,7 @@ class TarotNightRoomRepository {
         DateTime(now.year, now.month, now.day, 1).add(const Duration(days: 1));
 
     try {
-      // Start a collection group query on 'members' subcollection across all 'tarot_night_chat_rooms'
+      // Start a collection group query on 'members' subcollection across all 'tarot_night_rooms'
       final QuerySnapshot<Map<String, dynamic>> memberDocs = await _fireStore
           .collectionGroup('participants')
           .where('uid', isEqualTo: currentUserId)
@@ -74,7 +77,7 @@ class TarotNightRoomRepository {
         Timestamp createTime = roomDoc.data()!['create_time'] as Timestamp;
         if (createTime.toDate().isAfter(startTime) &&
             createTime.toDate().isBefore(endTime)) {
-          joinedRooms.add(TarotNightRoom.fromMap(roomDoc.data()!));
+          joinedRooms.add(TarotNightRoom.fromJson(roomDoc.data()!));
         }
       }
 
@@ -86,45 +89,73 @@ class TarotNightRoomRepository {
     }
   }
 
+  // Get Host Room Info
+  Future<TarotNightRoom?> getHostRoomInfo() async {
+    final DateTime now = DateTime.now();
+    final DateTime startTime = DateTime(now.year, now.month, now.day, 23);
+    final DateTime endTime =
+        DateTime(now.year, now.month, now.day, 1).add(const Duration(days: 1));
+
+    final String currentUserId = _firebaseAuth.currentUser!.uid;
+
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await _fireStore
+        .collection('tarot_night_rooms')
+        .where('host_id', isEqualTo: currentUserId)
+        .where('create_time', isGreaterThan: startTime)
+        .where('create_time', isLessThan: endTime)
+        .get();
+
+    if (querySnapshot.docs.isEmpty) {
+      return null;
+    }
+
+    TarotNightRoom room =
+        TarotNightRoom.fromJson(querySnapshot.docs.first.data());
+
+    return room;
+  }
+
   // Send Message
-  Future<void> sendMessage(String chatRoomId, String message) async {
+  Future<void> sendMessage(
+      {required String chatRoomId,
+      required String message,
+      TarotNightMessageType? type}) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
     final Timestamp timestamp = Timestamp.now();
 
-    Message newMessage = Message(
+    TarotNightMessage newMessage = TarotNightMessage(
       senderId: currentUserId,
       message: message,
       timestamp: timestamp,
+      type: type ?? TarotNightMessageType.normal,
     );
 
     await _fireStore
-        .collection('tarot_night_chat_rooms')
+        .collection('tarot_night_rooms')
         .doc(chatRoomId)
         .collection('messages')
-        .add(newMessage.toMap());
+        .add(newMessage.toJson());
 
-    await _fireStore
-        .collection('tarot_night_chat_rooms')
-        .doc(chatRoomId)
-        .update({
-      'latest_message': newMessage.toMap(),
+    await _fireStore.collection('tarot_night_rooms').doc(chatRoomId).update({
+      'latest_message': newMessage.toJson(),
     });
   }
 
   // Get Messages
-  Stream<List<Message>> getMessages(String roomId) {
+  Stream<List<TarotNightMessage>> getMessages(String roomId) {
+    print(roomId);
     return _fireStore
-        .collection('tarot_night_chat_rooms')
+        .collection('tarot_night_rooms')
         .doc(roomId)
         .collection('messages')
         .orderBy('timestamp', descending: true)
         .snapshots()
         .map((querySnapshot) {
-      List<Message> messages = querySnapshot.docs
-          .map((message) => Message.fromMap(message.data()))
+      List<TarotNightMessage> messages = querySnapshot.docs
+          .map((message) => TarotNightMessage.fromJson(message.data()))
           .toList();
 
-      return messages.isEmpty ? <Message>[] : messages;
+      return messages.isEmpty ? <TarotNightMessage>[] : messages;
     });
   }
 
@@ -135,7 +166,7 @@ class TarotNightRoomRepository {
     required TarotNightRoomTheme theme,
   }) async {
     final DocumentReference newRoomDoc =
-        _fireStore.collection('tarot_night_chat_rooms').doc();
+        _fireStore.collection('tarot_night_rooms').doc();
 
     final TarotNightRoom newRoom = TarotNightRoom(
         id: newRoomDoc.id,
@@ -152,8 +183,8 @@ class TarotNightRoomRepository {
         .get();
 
     await newRoomDoc
-        .set(newRoom.toMap())
-        .then((value) => TarotNightRoom.fromMap(newRoom.toMap()));
+        .set(newRoom.toJson())
+        .then((value) => TarotNightRoom.fromJson(newRoom.toJson()));
 
     await newRoomDoc
         .collection('participants')
@@ -169,24 +200,27 @@ class TarotNightRoomRepository {
   // Get Room Info
   Future<TarotNightRoom> getRoomInfo(String roomId) async {
     final DocumentSnapshot<Map<String, dynamic>> roomDoc =
-        await _fireStore.collection('tarot_night_chat_rooms').doc(roomId).get();
+        await _fireStore.collection('tarot_night_rooms').doc(roomId).get();
 
-    return TarotNightRoom.fromMap(roomDoc.data()!);
+    return TarotNightRoom.fromJson(roomDoc.data()!);
   }
 
   // Join a room
-  Future<void> joinChatRoom(String roomId) async {
+  Future<void> joinRoom(
+      {required String roomId, required String roleId}) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
     final List<Member> members = await _fireStore
-        .collection('tarot_night_chat_rooms')
+        .collection('tarot_night_rooms')
         .doc(roomId)
         .collection('participants')
         .get()
-        .then((value) =>
-            value.docs.map((member) => Member.fromMap(member.data())).toList());
+        .then((value) => value.docs
+            .map((member) => Member.fromJson(member.data()))
+            .toList());
 
     if (members.any((member) => member.uid == currentUserId)) {
+      print('Joined');
       return;
     }
 
@@ -194,21 +228,38 @@ class TarotNightRoomRepository {
       throw Exception('Room is full');
     }
 
-    final userInfo = await _fireStore
-        .collection('users')
-        .doc(_firebaseAuth.currentUser!.uid)
-        .get();
+    final DocumentSnapshot<Map<String, dynamic>> userInfoSnapshot =
+        await _fireStore
+            .collection('users')
+            .doc(_firebaseAuth.currentUser!.uid)
+            .get();
+
+    final AppUserInfo userInfo = AppUserInfo.fromJson(userInfoSnapshot.data()!);
+
+    final role = await _fireStore.collection('roles').doc(roleId).get();
+
+    int randomNumber = Random().nextInt(3);
 
     // add current user to chat room members
     await _fireStore
-        .collection('tarot_night_chat_rooms')
+        .collection('tarot_night_rooms')
         .doc(roomId)
         .collection('participants')
         .doc(currentUserId)
         .set({
-      ...userInfo.data()!.cast<String, dynamic>(),
-      'role': null,
+      ...userInfoSnapshot.data()!.cast<String, dynamic>(),
+      'role': roleId,
+      'quest': role['quest'][randomNumber]
     });
+
+    await _fireStore.collection('tarot_night_rooms').doc(roomId).update({
+      'member_count': FieldValue.increment(1),
+    });
+
+    sendMessage(
+        chatRoomId: roomId,
+        message: '${userInfo.name} 加入了房間',
+        type: TarotNightMessageType.system);
   }
 
   // Leave a chat room
@@ -216,7 +267,7 @@ class TarotNightRoomRepository {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
     await _fireStore
-        .collection('tarot_night_chat_rooms')
+        .collection('tarot_night_rooms')
         .doc(roomId)
         .collection('participants')
         .doc(currentUserId)
@@ -226,12 +277,13 @@ class TarotNightRoomRepository {
   // Get members of a chat room
   Future<List<Member>> getMembers(String roomId) async {
     final List<Member> members = await _fireStore
-        .collection('tarot_night_chat_rooms')
+        .collection('tarot_night_rooms')
         .doc(roomId)
         .collection('participants')
         .get()
-        .then((value) =>
-            value.docs.map((member) => Member.fromMap(member.data())).toList());
+        .then((value) => value.docs
+            .map((member) => Member.fromJson(member.data()))
+            .toList());
 
     return members;
   }
@@ -240,7 +292,7 @@ class TarotNightRoomRepository {
   Future<void> removeMember(
       {required String roomId, required String memberId}) async {
     await _fireStore
-        .collection('tarot_night_chat_rooms')
+        .collection('tarot_night_rooms')
         .doc(roomId)
         .collection('participants')
         .doc(memberId)
@@ -315,9 +367,34 @@ class TarotNightRoomRepository {
       await record.reference.update({'hosts': hostList});
     }
   }
+
+  // Update draw card result
+  Future<void> updateDrawCardResult(
+      String roomId, String question, String card) async {
+    await _fireStore.collection('tarot_night_rooms').doc(roomId).update({
+      'question': question,
+      'card': card,
+    });
+
+    sendMessage(
+        chatRoomId: roomId,
+        message: '測驗結果出來嘍！',
+        type: TarotNightMessageType.testResult);
+  }
+
+  // Update Answer
+  Future<void> updateAnswer(String roomId, String answer) async {
+    await _fireStore.collection('tarot_night_rooms').doc(roomId).update({
+      'answer': FieldValue.arrayUnion([
+        TarotNightAnswer(
+                uid: FirebaseAuth.instance.currentUser!.uid, answer: answer)
+            .toJson()
+      ])
+    });
+  }
 }
 
 @Riverpod(keepAlive: true)
-TarotNightRoomRepository tarotNightChatRoomRepository(
-        TarotNightChatRoomRepositoryRef ref) =>
+TarotNightRoomRepository tarotNightRoomRepository(
+        TarotNightRoomRepositoryRef ref) =>
     TarotNightRoomRepository();

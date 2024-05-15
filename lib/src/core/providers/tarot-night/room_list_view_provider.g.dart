@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tarot_night_room_list_view_provider.dart';
+part of 'room_list_view_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$tarotNightRoomListViewHash() =>
-    r'7707575f13f5fd1e3651fb5529a4579f4a99d067';
+    r'aef281dfb9361aa84a025fb91bdf3a0d7c1f2acc';
 
 /// See also [TarotNightRoomListView].
 @ProviderFor(TarotNightRoomListView)
