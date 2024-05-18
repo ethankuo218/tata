@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_card.dart';
 import 'package:tata/src/core/providers/tarot-night/test_result_view_provider.dart';
-import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/quest_bottom_sheet.dart';
 import 'package:tata/src/ui/shared/widgets/app_bar.dart';
 
@@ -86,8 +85,7 @@ class _TarotNightTestResultViewState
                                           .notifier)
                                       .submitTaskAnswer(answer)
                                       .then((value) {
-                                    context.go(TarotNightRoomView.routeName,
-                                        extra: roomInfo.id);
+                                    context.pop();
                                   });
                                 });
                               });

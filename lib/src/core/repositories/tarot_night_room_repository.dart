@@ -385,7 +385,7 @@ class TarotNightRoomRepository {
   // Update Answer
   Future<void> updateAnswer(String roomId, String answer) async {
     await _fireStore.collection('tarot_night_rooms').doc(roomId).update({
-      'answer': FieldValue.arrayUnion([
+      'answers': FieldValue.arrayUnion([
         TarotNightAnswer(
                 uid: FirebaseAuth.instance.currentUser!.uid, answer: answer)
             .toJson()

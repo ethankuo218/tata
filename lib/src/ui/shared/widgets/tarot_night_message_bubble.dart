@@ -86,25 +86,29 @@ class TarotNightMessageBubble extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                   decoration: BoxDecoration(
-                    color: isSentByMe
-                        ? Colors.purple
-                        : const Color.fromARGB(179, 45, 45, 45),
-                    borderRadius: isSentByMe
-                        ? const BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                            bottomLeft: Radius.circular(15),
-                          )
-                        : const BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                            bottomRight: Radius.circular(15),
-                          ),
+                    color: isSystemMessage
+                        ? Colors.grey.withOpacity(0.3)
+                        : isSentByMe
+                            ? Colors.purple
+                            : const Color.fromARGB(179, 45, 45, 45),
+                    borderRadius: isSystemMessage
+                        ? const BorderRadius.all(Radius.circular(15))
+                        : isSentByMe
+                            ? const BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                                bottomLeft: Radius.circular(15),
+                              )
+                            : const BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                              ),
                   ),
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
                           message.message,
                           style: const TextStyle(
@@ -113,17 +117,19 @@ class TarotNightMessageBubble extends StatelessWidget {
                           ),
                         ),
                       ),
-                      TextButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith((state) =>
-                                      const Color.fromARGB(255, 137, 118, 82))),
-                          onPressed: () {
-                            context.push(TarotNightTestResultView.routeName,
-                                extra: roomId);
-                          },
-                          child: const Text('查看測驗結果',
-                              style: TextStyle(color: Colors.white))),
+                      if (message.type == TarotNightMessageType.testResult)
+                        TextButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.resolveWith((state) =>
+                                        const Color.fromARGB(
+                                            255, 137, 118, 82))),
+                            onPressed: () {
+                              context.push(TarotNightTestResultView.routeName,
+                                  extra: roomId);
+                            },
+                            child: const Text('查看測驗結果',
+                                style: TextStyle(color: Colors.white))),
                     ],
                   ),
                 )
