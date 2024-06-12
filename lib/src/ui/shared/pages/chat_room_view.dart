@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/providers/chat_room_view_provider.dart';
@@ -72,8 +73,8 @@ class ChatRoomView extends ConsumerWidget {
                                         height: 36,
                                         decoration: BoxDecoration(
                                           border: Border.all(
-                                            color:
-                                                Colors.white.withOpacity(0.8),
+                                            color: const Color.fromARGB(
+                                                255, 223, 130, 255),
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -95,8 +96,8 @@ class ChatRoomView extends ConsumerWidget {
                                         height: 36,
                                         decoration: BoxDecoration(
                                           border: Border.all(
-                                            color:
-                                                Colors.white.withOpacity(0.8),
+                                            color: const Color.fromARGB(
+                                                255, 241, 198, 255),
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -116,18 +117,20 @@ class ChatRoomView extends ConsumerWidget {
                           isRealtimeChat
                               ? otherUserInfo!.name
                               : data.roomInfo.title,
-                          style:
-                              const TextStyle(overflow: TextOverflow.ellipsis),
+                          style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis),
                         )),
                       ],
                     ),
                     actions: [
                       MenuBar(
                           style: const MenuStyle(
-                              padding:
-                                  MaterialStatePropertyAll(EdgeInsets.zero),
-                              backgroundColor:
-                                  MaterialStatePropertyAll(Colors.black)),
+                            padding: MaterialStatePropertyAll(EdgeInsets.zero),
+                            backgroundColor:
+                                MaterialStatePropertyAll(Colors.transparent),
+                          ),
                           children: ChatMenuEntry.build(
                               _getMenus(context, data.roomInfo)))
                     ],
@@ -140,7 +143,16 @@ class ChatRoomView extends ConsumerWidget {
                           child: Stack(
                         children: [
                           Container(
-                            color: Colors.black,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color.fromARGB(255, 12, 13, 32),
+                                  Color.fromARGB(255, 26, 0, 58)
+                                ],
+                              ),
+                            ),
                             child: StreamBuilder(
                               builder: (BuildContext context,
                                       AsyncSnapshot<List<Message>> snapshot) =>
@@ -152,9 +164,30 @@ class ChatRoomView extends ConsumerWidget {
                                       ConnectionState.active) {
                                     return const CircularProgressIndicator();
                                   } else {
+                                    Message? nextMessage = index - 1 >= 0
+                                        ? snapshot.data![index - 1]
+                                        : null;
+                                    Message? lastMessage =
+                                        index + 1 <= snapshot.data!.length - 1
+                                            ? snapshot.data![index + 1]
+                                            : null;
+
                                     return snapshot.data != null
                                         ? ChatMessageBubble(
-                                            chatMessage: snapshot.data![index])
+                                            chatMessage: snapshot.data![index],
+                                            isLastMsgSentBySameUser:
+                                                lastMessage == null
+                                                    ? false
+                                                    : lastMessage.senderId ==
+                                                        snapshot.data![index]
+                                                            .senderId,
+                                            isNextMsgSentBySameUser:
+                                                nextMessage == null
+                                                    ? false
+                                                    : nextMessage.senderId ==
+                                                        snapshot.data![index]
+                                                            .senderId,
+                                          )
                                         : null;
                                   }
                                 },
@@ -175,13 +208,16 @@ class ChatRoomView extends ConsumerWidget {
                             Expanded(
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
+                                    vertical: 8, horizontal: 12),
                                 child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromARGB(179, 41, 41, 41),
-                                      borderRadius: BorderRadius.horizontal(
-                                          left: Radius.elliptical(23, 23),
-                                          right: Radius.elliptical(23, 23)),
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                              255, 255, 255, 255)
+                                          .withOpacity(0.15),
+                                      borderRadius:
+                                          const BorderRadius.horizontal(
+                                              left: Radius.elliptical(24, 24),
+                                              right: Radius.elliptical(24, 24)),
                                     ),
                                     child: Row(
                                       crossAxisAlignment:
@@ -200,11 +236,12 @@ class ChatRoomView extends ConsumerWidget {
                                             hintText: 'Message...',
                                             hintStyle: TextStyle(
                                                 color: Color.fromARGB(
-                                                    255, 142, 142, 142),
-                                                fontSize: 13),
+                                                    255, 255, 255, 255),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400),
                                             isDense: true,
                                             contentPadding: EdgeInsets.fromLTRB(
-                                                15, 11.5, 0, 11.5),
+                                                8, 12, 8, 12),
                                             border: OutlineInputBorder(
                                               borderSide: BorderSide.none,
                                             ),
@@ -217,7 +254,8 @@ class ChatRoomView extends ConsumerWidget {
                                           child: IconButton(
                                             padding: const EdgeInsets.all(0.0),
                                             color: Colors.white,
-                                            icon: const Icon(Icons.send),
+                                            icon: const FaIcon(FontAwesomeIcons
+                                                .solidPaperPlane),
                                             onPressed: () {
                                               if (textEditingController
                                                   .text.isEmpty) {

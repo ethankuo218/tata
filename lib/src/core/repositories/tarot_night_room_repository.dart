@@ -7,6 +7,7 @@ import 'package:tata/src/core/models/app_user_info.dart';
 import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/models/tarot_night_message.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
+import 'package:tata/src/ui/avatar.dart';
 
 part 'tarot_night_room_repository.g.dart';
 
@@ -117,7 +118,8 @@ class TarotNightRoomRepository {
 
   // Send Message
   Future<void> sendMessage(
-      {required String chatRoomId,
+      {required AppUserInfo userInfo,
+      required String chatRoomId,
       required String message,
       TarotNightMessageType? type}) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
@@ -125,6 +127,8 @@ class TarotNightRoomRepository {
 
     TarotNightMessage newMessage = TarotNightMessage(
       senderId: currentUserId,
+      name: userInfo.name,
+      avatar: userInfo.avatar,
       message: message,
       timestamp: timestamp,
       type: type ?? TarotNightMessageType.normal,
@@ -257,6 +261,8 @@ class TarotNightRoomRepository {
     });
 
     sendMessage(
+        userInfo: AppUserInfo(
+            name: 'system', uid: 'system', avatar: AvatarKey.theFool),
         chatRoomId: roomId,
         message: '${userInfo.name} 加入了房間',
         type: TarotNightMessageType.system);
@@ -377,6 +383,8 @@ class TarotNightRoomRepository {
     });
 
     sendMessage(
+        userInfo: AppUserInfo(
+            name: 'system', uid: 'system', avatar: AvatarKey.theFool),
         chatRoomId: roomId,
         message: '測驗結果出來嘍！',
         type: TarotNightMessageType.testResult);

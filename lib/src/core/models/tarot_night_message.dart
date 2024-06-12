@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tata/src/core/models/message.dart';
+import 'package:tata/src/ui/avatar.dart';
 
 class TarotNightMessage extends Message {
   final TarotNightMessageType type;
 
   TarotNightMessage({
     required super.senderId,
+    required super.name,
+    required super.avatar,
     required super.message,
     required super.timestamp,
     this.type = TarotNightMessageType.normal,
@@ -14,6 +17,8 @@ class TarotNightMessage extends Message {
   factory TarotNightMessage.fromJson(Map<String, dynamic> json) {
     return TarotNightMessage(
       senderId: json['sender_id'] as String,
+      name: json['name'] as String,
+      avatar: AvatarKey.toEnum(json['avatar']),
       message: json['message'] as String,
       timestamp: json['timestamp'] as Timestamp,
       type: TarotNightMessageType.toEnum(json['type']),
@@ -24,6 +29,8 @@ class TarotNightMessage extends Message {
   Map<String, dynamic> toJson() {
     return {
       'sender_id': senderId,
+      'name': name,
+      'avatar': avatar.value,
       'message': message,
       'timestamp': timestamp,
       'type': type.value,

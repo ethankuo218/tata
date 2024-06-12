@@ -22,6 +22,11 @@ class User extends _$User {
     return userInfo;
   }
 
+  // Get User Info
+  AppUserInfo? getUserInfo() {
+    return _currentUserInfo;
+  }
+
   // Edit User Name
   Future<void> editUserName(String name) async {
     final UserRepository userRepository = ref.read(userRepositoryProvider);

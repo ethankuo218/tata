@@ -20,7 +20,7 @@ class _ChatRoomAnnouncementState extends State<ChatRoomAnnouncement> {
         padding: const EdgeInsets.all(10),
         height: isExpanded ? null : 50,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 41, 41, 41),
+          color: const Color.fromARGB(25, 255, 255, 255),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
@@ -30,7 +30,10 @@ class _ChatRoomAnnouncementState extends State<ChatRoomAnnouncement> {
             Expanded(
                 child: Text(
               widget.announcement,
-              style: const TextStyle(fontSize: 14, color: Colors.white),
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
               maxLines: isExpanded ? null : 1,
             )),
             IconButton(

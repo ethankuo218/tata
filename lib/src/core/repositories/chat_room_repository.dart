@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tata/src/core/models/app_user_info.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
+import 'package:tata/src/ui/avatar.dart';
 import 'package:tata/src/ui/tarot.dart';
 
 part 'chat_room_repository.g.dart';
@@ -135,12 +137,14 @@ class ChatRoomRepository {
   }
 
   // Send Message
-  Future<void> sendMessage(String chatRoomId, String message) async {
-    final String currentUserId = _firebaseAuth.currentUser!.uid;
+  Future<void> sendMessage(
+      AppUserInfo userInfo, String chatRoomId, String message) async {
     final Timestamp timestamp = Timestamp.now();
 
     Message newMessage = Message(
-      senderId: currentUserId,
+      senderId: userInfo.uid,
+      name: userInfo.name,
+      avatar: userInfo.avatar,
       message: message,
       timestamp: timestamp,
     );
@@ -197,6 +201,8 @@ class ChatRoomRepository {
         createTime: Timestamp.now(),
         latestMessage: Message(
           senderId: 'system',
+          name: 'system',
+          avatar: AvatarKey.theFool,
           message: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
         ));
@@ -223,6 +229,8 @@ class ChatRoomRepository {
         .collection('messages')
         .add(Message(
           senderId: 'system',
+          name: 'system',
+          avatar: AvatarKey.theFool,
           message: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
         ).toJson());
@@ -248,6 +256,8 @@ class ChatRoomRepository {
         createTime: Timestamp.now(),
         latestMessage: Message(
           senderId: 'system',
+          name: 'system',
+          avatar: AvatarKey.theFool,
           message: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
         ));
@@ -274,6 +284,8 @@ class ChatRoomRepository {
         .collection('messages')
         .add(Message(
           senderId: 'system',
+          name: 'system',
+          avatar: AvatarKey.theFool,
           message: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
         ).toJson());

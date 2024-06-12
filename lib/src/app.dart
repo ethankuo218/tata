@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tata/src/router.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,7 @@ class App extends ConsumerWidget {
           titleTextStyle: TextStyle(color: Colors.white, fontSize: 18),
           backgroundColor: Colors.black,
         ),
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.transparent,
         bottomSheetTheme: const BottomSheetThemeData(
           surfaceTintColor: Colors.black,
         ),
