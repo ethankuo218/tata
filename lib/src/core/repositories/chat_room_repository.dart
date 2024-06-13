@@ -18,15 +18,24 @@ class ChatRoomRepository {
   DocumentSnapshot? _lastDocument;
 
   // Get Lobby Chat Room List
-  Future<List<ChatRoom>> getLobbyChatRoomList(bool isInitFetch) async {
+  Future<List<ChatRoom>> getLobbyChatRoomList({
+    required bool isInitFetch,
+    required String category,
+  }) async {
     if (isInitFetch) {
       _lastDocument = null;
     }
 
-    Query<Map<String, dynamic>> collection = _fireStore
-        .collection('chat_rooms')
-        .where('type', isEqualTo: ChatRoomType.normal.value)
-        .orderBy('create_time', descending: true);
+    Query<Map<String, dynamic>> collection = category == 'All'
+        ? _fireStore
+            .collection('chat_rooms')
+            .where('type', isEqualTo: ChatRoomType.normal.value)
+            .orderBy('create_time', descending: true)
+        : _fireStore
+            .collection('chat_rooms')
+            .where('type', isEqualTo: ChatRoomType.normal.value)
+            .where('category', isEqualTo: category)
+            .orderBy('create_time', descending: true);
 
     QuerySnapshot<Map<String, dynamic>> querySnapshot = isInitFetch
         ? await collection.limit(10).get()

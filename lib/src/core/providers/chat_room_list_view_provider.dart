@@ -9,6 +9,7 @@ part 'chat_room_list_view_provider.g.dart';
 class ChatRoomListView extends _$ChatRoomListView {
   final List<ChatRoom> _chatRoomList = [];
   bool _hasMore = true;
+  String _category = 'All';
 
   @override
   Future<List<ChatRoom>> build() async {
@@ -20,8 +21,9 @@ class ChatRoomListView extends _$ChatRoomListView {
   Future<void> fetchFirstList() async {
     _chatRoomList.clear();
 
-    final List<ChatRoom> list =
-        await ref.read(chatRoomRepositoryProvider).getLobbyChatRoomList(true);
+    final List<ChatRoom> list = await ref
+        .read(chatRoomRepositoryProvider)
+        .getLobbyChatRoomList(isInitFetch: true, category: _category);
 
     _chatRoomList.addAll(list);
 
@@ -32,8 +34,9 @@ class ChatRoomListView extends _$ChatRoomListView {
   Future<void> fetchNextList() async {
     if (!_hasMore) return;
 
-    final List<ChatRoom> list =
-        await ref.read(chatRoomRepositoryProvider).getLobbyChatRoomList(false);
+    final List<ChatRoom> list = await ref
+        .read(chatRoomRepositoryProvider)
+        .getLobbyChatRoomList(isInitFetch: false, category: _category);
 
     if (list.isEmpty) {
       _hasMore = false;
@@ -42,6 +45,12 @@ class ChatRoomListView extends _$ChatRoomListView {
 
     _chatRoomList.addAll(list);
     state = AsyncData(_chatRoomList);
+  }
+
+  // Set Category
+  void setCategory(String category) {
+    _category = category;
+    fetchFirstList();
   }
 
   // Create Chat Room
