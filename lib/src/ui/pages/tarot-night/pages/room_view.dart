@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/core/models/tarot_night_message.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/tarot-night/room_view_provider.dart';
@@ -50,7 +51,8 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                 height: 36,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.white.withOpacity(0.8),
+                                    color: const Color.fromARGB(
+                                        255, 223, 130, 255),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(30),
@@ -71,7 +73,8 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                 height: 36,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.white.withOpacity(0.8),
+                                    color: const Color.fromARGB(
+                                        255, 241, 198, 255),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(30),
@@ -106,7 +109,16 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                         child: Stack(
                       children: [
                         Container(
-                          color: Colors.black,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color.fromARGB(255, 12, 13, 32),
+                                Color.fromARGB(255, 26, 0, 58)
+                              ],
+                            ),
+                          ),
                           child: StreamBuilder(
                             builder: (BuildContext context,
                                     AsyncSnapshot<List<TarotNightMessage>>
@@ -120,10 +132,31 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                   return const Center(
                                       child: CircularProgressIndicator());
                                 } else {
+                                  Message? nextMessage = index - 1 >= 0
+                                      ? snapshot.data![index - 1]
+                                      : null;
+                                  Message? lastMessage =
+                                      index + 1 <= snapshot.data!.length - 1
+                                          ? snapshot.data![index + 1]
+                                          : null;
+
                                   return snapshot.data != null
                                       ? TarotNightMessageBubble(
+                                          message: snapshot.data![index],
                                           roomId: widget.roomId,
-                                          message: snapshot.data![index])
+                                          isLastMsgSentBySameUser:
+                                              lastMessage == null
+                                                  ? false
+                                                  : lastMessage.senderId ==
+                                                      snapshot.data![index]
+                                                          .senderId,
+                                          isNextMsgSentBySameUser:
+                                              nextMessage == null
+                                                  ? false
+                                                  : nextMessage.senderId ==
+                                                      snapshot.data![index]
+                                                          .senderId,
+                                        )
                                       : null;
                                 }
                               },
