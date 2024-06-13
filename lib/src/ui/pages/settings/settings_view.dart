@@ -161,7 +161,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                             )),
                         GestureDetector(
                             onTap: () =>
-                                launchUrlString('mailto:support@tatrot.app'),
+                                launchUrlString('mailto:support@tatarot.app'),
                             child: const SizedBox(
                                 height: 60,
                                 child: Row(

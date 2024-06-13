@@ -10,6 +10,7 @@ import 'package:tata/src/ui/shared/pages/room_info_view.dart';
 import 'package:flutter/material.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_announcement.dart';
 import 'package:tata/src/ui/shared/widgets/tarot_night_message_bubble.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class TarotNightRoomView extends ConsumerStatefulWidget {
   const TarotNightRoomView({super.key, required this.roomId});
@@ -287,6 +288,57 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
               context.push(
                   '${TarotNightRoomView.routeName}/${MembersView.routeName}',
                   extra: chatRoomInfo.id);
+            },
+          ),
+          ChatMenuEntry(
+            label: const Text(
+              'Report',
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: () {
+              launchUrlString('mailto:support@tatarot.app').then((value) => {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SimpleDialog(
+                            backgroundColor:
+                                const Color.fromARGB(255, 241, 198, 255),
+                            title: const Text(
+                              "Report Mail Sent!",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 12, 13, 32)),
+                            ),
+                            contentPadding: const EdgeInsets.all(15),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            children: <Widget>[
+                              SimpleDialogOption(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 223, 130, 255),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Text(
+                                      'Confirm',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 12, 13, 32),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                    )),
+                              ),
+                            ],
+                          );
+                        })
+                  });
             },
           ),
         ],
