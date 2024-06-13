@@ -301,7 +301,9 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                         SizedBox(
                             height: 60,
                             child: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  launchUrlString('mailto:support@tatarot.app');
+                                },
                                 child: Center(
                                     child: Text('Delete Account',
                                         style: TextStyle(
