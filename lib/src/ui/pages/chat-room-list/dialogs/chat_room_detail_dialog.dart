@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tata/src/core/models/chat_room.dart';
-import 'package:tata/src/ui/tarot.dart';
+import 'package:tata/src/utils/tarot.dart';
 
 Future<Object?> showChatRoomDetailDialog(BuildContext context,
     {required ChatRoom chatRoomInfo, required ValueChanged onClosed}) {

@@ -1,5 +1,5 @@
 import 'package:tata/src/core/models/chat_room.dart';
-import 'package:tata/src/ui/tarot.dart';
+import 'package:tata/src/utils/tarot.dart';
 import 'package:flutter/material.dart';
 
 class ChatRoomTile extends StatelessWidget {

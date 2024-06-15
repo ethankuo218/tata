@@ -12,7 +12,7 @@ import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
 import 'package:tata/src/ui/shared/pages/chat_room_view.dart';
 import 'package:tata/src/ui/shared/pages/leave_chat_view.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
-import 'package:tata/src/ui/shared/pages/room_info_view.dart';
+import 'package:tata/src/ui/pages/chat-room-info/chat_room_info_view.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/ui/pages/home/home_view.dart';
 import 'package:tata/src/ui/pages/auth/login_view.dart';
@@ -50,9 +50,9 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
           routes: [
             GoRoute(
-              path: RoomInfoView.routeName,
+              path: ChatRoomInfoView.routeName,
               builder: (BuildContext context, GoRouterState state) =>
-                  RoomInfoView(chatRoomInfo: state.extra as ChatRoom),
+                  ChatRoomInfoView(chatRoomInfo: state.extra as ChatRoom),
             ),
             GoRoute(
               path: MembersView.routeName,
@@ -92,9 +92,9 @@ final routerProvider = Provider<GoRouter>((ref) {
               TarotNightRoomView(roomId: state.extra as String),
           routes: [
             GoRoute(
-              path: RoomInfoView.routeName,
+              path: ChatRoomInfoView.routeName,
               builder: (BuildContext context, GoRouterState state) =>
-                  RoomInfoView(chatRoomInfo: state.extra as ChatRoom),
+                  ChatRoomInfoView(chatRoomInfo: state.extra as ChatRoom),
             ),
             GoRoute(
               path: MembersView.routeName,

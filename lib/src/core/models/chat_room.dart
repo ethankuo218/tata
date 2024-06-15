@@ -1,6 +1,6 @@
 import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/core/models/room.dart';
-import 'package:tata/src/ui/tarot.dart';
+import 'package:tata/src/utils/tarot.dart';
 
 class ChatRoom extends Room {
   final ChatRoomType type;

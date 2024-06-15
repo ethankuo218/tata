@@ -30,11 +30,11 @@ class _SystemHash {
 }
 
 abstract class _$MembersView
-    extends BuildlessAutoDisposeAsyncNotifier<List<Member>> {
+    extends BuildlessAutoDisposeAsyncNotifier<List<MemberInfo>> {
   late final String repository;
   late final String roomId;
 
-  FutureOr<List<Member>> build({
+  FutureOr<List<MemberInfo>> build({
     required String repository,
     required String roomId,
   });
@@ -45,7 +45,7 @@ abstract class _$MembersView
 const membersViewProvider = MembersViewFamily();
 
 /// See also [MembersView].
-class MembersViewFamily extends Family<AsyncValue<List<Member>>> {
+class MembersViewFamily extends Family<AsyncValue<List<MemberInfo>>> {
   /// See also [MembersView].
   const MembersViewFamily();
 
@@ -86,8 +86,8 @@ class MembersViewFamily extends Family<AsyncValue<List<Member>>> {
 }
 
 /// See also [MembersView].
-class MembersViewProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<MembersView, List<Member>> {
+class MembersViewProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    MembersView, List<MemberInfo>> {
   /// See also [MembersView].
   MembersViewProvider({
     required String repository,
@@ -124,7 +124,7 @@ class MembersViewProvider
   final String roomId;
 
   @override
-  FutureOr<List<Member>> runNotifierBuild(
+  FutureOr<List<MemberInfo>> runNotifierBuild(
     covariant MembersView notifier,
   ) {
     return notifier.build(
@@ -153,7 +153,7 @@ class MembersViewProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<MembersView, List<Member>>
+  AutoDisposeAsyncNotifierProviderElement<MembersView, List<MemberInfo>>
       createElement() {
     return _MembersViewProviderElement(this);
   }
@@ -175,7 +175,7 @@ class MembersViewProvider
   }
 }
 
-mixin MembersViewRef on AutoDisposeAsyncNotifierProviderRef<List<Member>> {
+mixin MembersViewRef on AutoDisposeAsyncNotifierProviderRef<List<MemberInfo>> {
   /// The parameter `repository` of this provider.
   String get repository;
 
@@ -184,8 +184,8 @@ mixin MembersViewRef on AutoDisposeAsyncNotifierProviderRef<List<Member>> {
 }
 
 class _MembersViewProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<MembersView, List<Member>>
-    with MembersViewRef {
+    extends AutoDisposeAsyncNotifierProviderElement<MembersView,
+        List<MemberInfo>> with MembersViewRef {
   _MembersViewProviderElement(super.provider);
 
   @override

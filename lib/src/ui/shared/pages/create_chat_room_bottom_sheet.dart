@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tata/src/ui/tarot.dart';
+import 'package:tata/src/utils/tarot.dart';
 
 Future<void> showCreateChatRoomBottomSheet(BuildContext context,
     {required ValueChanged onClosed}) async {

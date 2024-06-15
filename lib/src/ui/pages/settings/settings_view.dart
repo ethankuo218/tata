@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:tata/src/core/providers/auth_provider.dart';
 import 'package:tata/src/core/providers/user_provider.dart';
-import 'package:tata/src/ui/avatar.dart';
+import 'package:tata/src/utils/avatar.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsView extends ConsumerStatefulWidget {

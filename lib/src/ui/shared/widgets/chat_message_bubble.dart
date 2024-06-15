@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tata/src/core/models/message.dart';
-import 'package:tata/src/ui/avatar.dart';
+import 'package:tata/src/utils/avatar.dart';
 
 class ChatMessageBubble extends StatelessWidget {
   final Message chatMessage;
@@ -51,7 +51,7 @@ class ChatMessageBubble extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
               if (!isSystemMessage && !isSentByMe && !isLastMsgSentBySameUser)
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
               Container(
                 constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.6,
@@ -85,7 +85,7 @@ class ChatMessageBubble extends StatelessWidget {
                             ),
                 ),
                 child: Text(
-                  chatMessage.message,
+                  chatMessage.content,
                   style: TextStyle(
                       color: isSentByMe
                           ? const Color.fromARGB(255, 12, 13, 32)

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tata/src/ui/avatar.dart';
+import 'package:tata/src/utils/avatar.dart';
 import 'package:tata/src/core/models/app_user_info.dart';
 
 part 'user_repository.g.dart';

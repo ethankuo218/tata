@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/providers/members_view_provider.dart';
-import 'package:tata/src/ui/avatar.dart';
+import 'package:tata/src/utils/avatar.dart';
 
 class MembersView extends ConsumerWidget {
   const MembersView(
@@ -67,7 +67,7 @@ class MembersView extends ConsumerWidget {
         );
   }
 
-  Widget _buildMemberItem(Member member) {
+  Widget _buildMemberItem(MemberInfo member) {
     return Container(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -75,8 +75,7 @@ class MembersView extends ConsumerWidget {
           CircleAvatar(
               radius: 30,
               backgroundImage:
-                  Image.asset(Avatar.getAvatarImage(Avatar.getRandomAvatar()))
-                      .image),
+                  Image.asset(Avatar.getAvatarImage(member.avatar)).image),
           const SizedBox(width: 10),
           Text(
             member.name,
@@ -91,12 +90,13 @@ class MembersView extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.purple, width: 2),
+                border: Border.all(
+                    color: const Color.fromARGB(255, 223, 130, 255), width: 2),
                 borderRadius: BorderRadius.circular(25),
               ),
               child: const Text('Host',
                   style: TextStyle(
-                      color: Colors.purple,
+                      color: Color.fromARGB(255, 223, 130, 255),
                       fontSize: 14,
                       fontWeight: FontWeight.bold)),
             )

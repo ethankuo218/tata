@@ -11,25 +11,31 @@ part 'test_result_view_provider.g.dart';
 
 @riverpod
 class TarotNightTestResultView extends _$TarotNightTestResultView {
-  TarotNightRoom? _roomInfo;
-  TarotCard? _card;
+  late TarotNightRoom _roomInfo;
+  late TarotCard _card;
+  late MemberInfo _memberInfo;
 
   @override
   Future<TarotNightRoom> build({required String roomId}) async {
     _roomInfo =
         await ref.read(tarotNightRoomRepositoryProvider).getRoomInfo(roomId);
+
     _card = await ref
         .read(referenceRepositoryProvider)
-        .getTarotCard(_roomInfo!.card!);
+        .getTarotCard(_roomInfo.card!);
 
-    state = AsyncData(_roomInfo!);
-    return Future(() => _roomInfo!);
+    _memberInfo = await ref
+        .read(tarotNightRoomRepositoryProvider)
+        .getMemberInfo(roomId, FirebaseAuth.instance.currentUser!.uid);
+
+    state = AsyncData(_roomInfo);
+    return Future(() => _roomInfo);
   }
 
   Future<Role> getRole() async {
     final String roleId = (await ref
             .read(tarotNightRoomRepositoryProvider)
-            .getMembers(_roomInfo!.id))
+            .getMembers(_roomInfo.id))
         .firstWhere(
             (element) => element.uid == FirebaseAuth.instance.currentUser!.uid)
         .role;
@@ -38,9 +44,9 @@ class TarotNightTestResultView extends _$TarotNightTestResultView {
   }
 
   Future<String> getQuest() async {
-    List<Member> members = await ref
+    List<MemberInfo> members = await ref
         .read(tarotNightRoomRepositoryProvider)
-        .getMembers(_roomInfo!.id);
+        .getMembers(_roomInfo.id);
 
     return members
         .firstWhere(
@@ -49,13 +55,11 @@ class TarotNightTestResultView extends _$TarotNightTestResultView {
   }
 
   Future<void> submitTaskAnswer(String answer) {
-    // send the message to chat room
-    return ref
-        .read(tarotNightRoomRepositoryProvider)
-        .updateAnswer(_roomInfo!.id, answer);
+    return ref.read(tarotNightRoomRepositoryProvider).updateAnswer(
+        memberInfo: _memberInfo, roomId: _roomInfo.id, answer: answer);
   }
 
   TarotCard getCard() {
-    return _card!;
+    return _card;
   }
 }

@@ -15,12 +15,12 @@ class _ChatRoomAnnouncementState extends State<ChatRoomAnnouncement> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         height: isExpanded ? null : 50,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(25, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(

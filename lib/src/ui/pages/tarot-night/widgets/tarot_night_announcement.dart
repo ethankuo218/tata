@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
@@ -68,19 +69,27 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         height: 60,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 41, 41, 41),
+          color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
           children: [
-            const Icon(Icons.timer, color: Colors.white),
-            const SizedBox(width: 10),
-            Text(timerView, style: const TextStyle(color: Colors.white)),
+            const FaIcon(
+              FontAwesomeIcons.clock,
+              color: Colors.white,
+              size: 16,
+            ),
+            const SizedBox(width: 8),
+            Text(timerView,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600)),
             const Spacer(),
             if (widget.roomInfo.hostId ==
                 FirebaseAuth.instance.currentUser?.uid)
@@ -102,18 +111,19 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
                       minimumSize: MaterialStateProperty.all(Size.zero),
                       padding: MaterialStateProperty.all(
                           const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 8)),
+                              horizontal: 16, vertical: 8)),
                       backgroundColor: isTestButtonEnabled
                           ? MaterialStateProperty.all(
-                              const Color.fromARGB(255, 137, 118, 82))
+                              const Color.fromARGB(255, 223, 130, 255))
                           : MaterialStateProperty.all(
-                              const Color.fromARGB(255, 137, 118, 82)
+                              const Color.fromARGB(255, 223, 130, 255)
                                   .withOpacity(0.5))),
-                  child: Text('Start Test',
+                  child: Text('開始測驗',
                       style: TextStyle(
                           color: isTestButtonEnabled
-                              ? Colors.white
-                              : Colors.white.withOpacity(0.5),
+                              ? const Color.fromARGB(255, 12, 13, 32)
+                              : const Color.fromARGB(255, 12, 13, 32)
+                                  .withOpacity(0.5),
                           fontSize: 14,
                           fontWeight: FontWeight.bold)))
           ],

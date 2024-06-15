@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/core/models/tarot_night_message.dart';
@@ -6,7 +7,7 @@ import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/tarot-night/room_view_provider.dart';
 import 'package:tata/src/ui/shared/widgets/chat_menu_entry.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
-import 'package:tata/src/ui/shared/pages/room_info_view.dart';
+import 'package:tata/src/ui/pages/chat-room-info/chat_room_info_view.dart';
 import 'package:flutter/material.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_announcement.dart';
 import 'package:tata/src/ui/shared/widgets/tarot_night_message_bubble.dart';
@@ -37,6 +38,7 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
               },
               child: Scaffold(
                 appBar: AppBar(
+                  backgroundColor: const Color.fromARGB(255, 12, 13, 32),
                   title: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -96,8 +98,8 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                     MenuBar(
                         style: const MenuStyle(
                             padding: MaterialStatePropertyAll(EdgeInsets.zero),
-                            backgroundColor:
-                                MaterialStatePropertyAll(Colors.black)),
+                            backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 12, 13, 32))),
                         children: ChatMenuEntry.build(
                             _getMenus(context, data.roomInfo)))
                   ],
@@ -169,7 +171,10 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                         TarotNightAnnouncement(roomInfo: data.roomInfo)
                       ],
                     )),
-                    Padding(
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 26, 0, 58),
+                      ),
                       padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 35.0),
                       child: Row(
                         children: [
@@ -178,11 +183,12 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 10),
                               child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: Color.fromARGB(179, 41, 41, 41),
-                                    borderRadius: BorderRadius.horizontal(
-                                        left: Radius.elliptical(23, 23),
-                                        right: Radius.elliptical(23, 23)),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromARGB(255, 255, 255, 255)
+                                            .withOpacity(0.15),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(24)),
                                   ),
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -195,16 +201,19 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                         maxLines: 5,
                                         style: const TextStyle(
                                             fontSize: 14, color: Colors.white),
-                                        decoration: const InputDecoration(
-                                          hintText: 'Message...',
+                                        decoration: InputDecoration(
+                                          hintText: '輸入訊息',
                                           hintStyle: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 142, 142, 142),
-                                              fontSize: 13),
+                                              color: const Color.fromARGB(
+                                                      255, 255, 255, 255)
+                                                  .withOpacity(0.5),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
                                           isDense: true,
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              15, 11.5, 0, 11.5),
-                                          border: OutlineInputBorder(
+                                          contentPadding:
+                                              const EdgeInsets.fromLTRB(
+                                                  8, 12, 8, 12),
+                                          border: const OutlineInputBorder(
                                             borderSide: BorderSide.none,
                                           ),
                                         ),
@@ -215,8 +224,9 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                         width: 60,
                                         child: IconButton(
                                           padding: const EdgeInsets.all(0.0),
-                                          color: Colors.white,
-                                          icon: const Icon(Icons.send),
+                                          color: Colors.white.withOpacity(0.5),
+                                          icon: const FaIcon(
+                                              FontAwesomeIcons.solidPaperPlane),
                                           onPressed: () {
                                             if (textEditingController
                                                 .text.isEmpty) {
@@ -266,6 +276,7 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
         label: const Icon(
           Icons.more_vert,
           color: Colors.white,
+          size: 20,
         ),
         menuChildren: <ChatMenuEntry>[
           ChatMenuEntry(
@@ -275,7 +286,7 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
             ),
             onPressed: () {
               context.push(
-                  '${TarotNightRoomView.routeName}/${RoomInfoView.routeName}',
+                  '${TarotNightRoomView.routeName}/${ChatRoomInfoView.routeName}',
                   extra: chatRoomInfo);
             },
           ),

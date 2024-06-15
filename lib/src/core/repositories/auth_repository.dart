@@ -6,7 +6,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tata/src/ui/avatar.dart';
+import 'package:tata/src/utils/avatar.dart';
 
 part 'auth_repository.g.dart';
 

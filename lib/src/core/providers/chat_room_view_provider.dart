@@ -38,7 +38,7 @@ class ChatRoomView extends _$ChatRoomView {
   }
 
   // Get other user info
-  Future<Member> getOtherUserInfo() {
+  Future<MemberInfo> getOtherUserInfo() {
     return ref
         .read(chatRoomRepositoryProvider)
         .getMembers(_roomInfo.id)

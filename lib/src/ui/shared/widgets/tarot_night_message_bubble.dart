@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_night_message.dart';
-import 'package:tata/src/ui/avatar.dart';
+import 'package:tata/src/utils/avatar.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
 
 class TarotNightMessageBubble extends StatelessWidget {
@@ -35,7 +35,8 @@ class TarotNightMessageBubble extends StatelessWidget {
                 ? MainAxisAlignment.end
                 : MainAxisAlignment.start,
         children: [
-          if (isNextMsgSentBySameUser) const SizedBox(width: 28),
+          if (!isSystemMessage && isNextMsgSentBySameUser)
+            const SizedBox(width: 28),
           if (!isSystemMessage && !isSentByMe && !isNextMsgSentBySameUser)
             CircleAvatar(
               radius: 14,
@@ -55,7 +56,7 @@ class TarotNightMessageBubble extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
               if (!isSystemMessage && !isSentByMe && !isLastMsgSentBySameUser)
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
               message.type == TarotNightMessageType.normal
                   ? Container(
                       constraints: BoxConstraints(
@@ -90,11 +91,13 @@ class TarotNightMessageBubble extends StatelessWidget {
                                   ),
                       ),
                       child: Text(
-                        message.message,
+                        message.content,
                         style: TextStyle(
-                            color: isSentByMe
-                                ? const Color.fromARGB(255, 12, 13, 32)
-                                : const Color.fromARGB(255, 255, 255, 255),
+                            color: isSystemMessage
+                                ? const Color.fromARGB(255, 255, 255, 255)
+                                : isSentByMe
+                                    ? const Color.fromARGB(255, 12, 13, 32)
+                                    : const Color.fromARGB(255, 255, 255, 255),
                             fontSize: 14,
                             fontWeight: FontWeight.w400),
                       ),
@@ -109,7 +112,7 @@ class TarotNightMessageBubble extends StatelessWidget {
                         color: isSystemMessage
                             ? Colors.grey.withOpacity(0.3)
                             : isSentByMe
-                                ? const Color(0xfff1c6ff)
+                                ? const Color.fromARGB(255, 241, 198, 255)
                                 : const Color.fromARGB(51, 241, 198, 255),
                         borderRadius: isSystemMessage
                             ? const BorderRadius.all(Radius.circular(16))
@@ -133,16 +136,25 @@ class TarotNightMessageBubble extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 16),
-                            child: Text(
-                              message.message,
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 12, 13, 32),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
+                          if (message.type == TarotNightMessageType.answer)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: Text(
+                                message.role,
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 12, 13, 32),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400),
+                              ),
                             ),
+                          Text(
+                            message.content,
+                            style: TextStyle(
+                                color: isSentByMe
+                                    ? const Color.fromARGB(255, 12, 13, 32)
+                                    : const Color.fromARGB(255, 255, 255, 255),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500),
                           ),
                           if (message.type == TarotNightMessageType.testResult)
                             TextButton(

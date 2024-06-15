@@ -125,8 +125,8 @@ class MyChatRoomTile extends ConsumerWidget {
                             SizedBox(
                               height: 20,
                               child: Text(
-                                roomInfo.fold((l) => l.latestMessage?.message,
-                                        (r) => r.latestMessage?.message) ??
+                                roomInfo.fold((l) => l.latestMessage?.content,
+                                        (r) => r.latestMessage?.content) ??
                                     'Break the ice!',
                                 style: TextStyle(
                                     overflow: TextOverflow.ellipsis,

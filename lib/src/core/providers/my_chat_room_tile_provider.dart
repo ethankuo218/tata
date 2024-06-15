@@ -8,8 +8,8 @@ part 'my_chat_room_tile_provider.g.dart';
 @riverpod
 class MyChatRoomTile extends _$MyChatRoomTile {
   @override
-  Future<Member?> build({required String chatRoomId}) async {
-    List<Member> memberList =
+  Future<MemberInfo?> build({required String chatRoomId}) async {
+    List<MemberInfo> memberList =
         await ref.read(chatRoomRepositoryProvider).getMembers(chatRoomId);
 
     return memberList.length == 1

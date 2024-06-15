@@ -1,4 +1,4 @@
-import 'package:tata/src/ui/avatar.dart';
+import 'package:tata/src/utils/avatar.dart';
 
 class AppUserInfo {
   final String name;

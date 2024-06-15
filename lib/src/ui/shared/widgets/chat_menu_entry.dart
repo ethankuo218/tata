@@ -21,7 +21,8 @@ class ChatMenuEntry {
                   MaterialStatePropertyAll(Color.fromARGB(255, 41, 41, 41))),
           style: const ButtonStyle(
               alignment: Alignment.centerRight,
-              backgroundColor: MaterialStatePropertyAll(Colors.black)),
+              backgroundColor:
+                  MaterialStatePropertyAll(Color.fromARGB(255, 12, 13, 32))),
           child: selection.label,
         );
       }

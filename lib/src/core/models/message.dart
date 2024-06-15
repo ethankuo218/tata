@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:tata/src/ui/avatar.dart';
+import 'package:tata/src/utils/avatar.dart';
 
 class Message {
   final String senderId;
   final String name;
   final AvatarKey avatar;
-  final String message;
+  final String content;
   final Timestamp timestamp;
 
   Message({
     required this.senderId,
     required this.name,
     required this.avatar,
-    required this.message,
+    required this.content,
     required this.timestamp,
   });
 
@@ -21,7 +21,7 @@ class Message {
       senderId: map['sender_id'] ?? '',
       name: map['name'] ?? '',
       avatar: AvatarKey.toEnum(map['avatar']),
-      message: map['message'],
+      content: map['content'],
       timestamp: map['timestamp'],
     );
   }
@@ -31,7 +31,7 @@ class Message {
       'sender_id': senderId,
       'name': name,
       'avatar': avatar.value,
-      'message': message,
+      'content': content,
       'timestamp': timestamp,
     };
   }

@@ -9,7 +9,7 @@ part 'members_view_provider.g.dart';
 class MembersView extends _$MembersView {
   late String _repository;
   late String _roomId;
-  late List<Member> _members;
+  late List<MemberInfo> _members;
 
   // Remove Member
   void removeMember(String memberId) async {
@@ -36,7 +36,7 @@ class MembersView extends _$MembersView {
   }
 
   @override
-  Future<List<Member>> build(
+  Future<List<MemberInfo>> build(
       {required String repository, required String roomId}) async {
     _repository = repository;
     _roomId = roomId;

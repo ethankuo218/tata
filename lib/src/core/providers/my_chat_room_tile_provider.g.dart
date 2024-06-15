@@ -30,10 +30,10 @@ class _SystemHash {
 }
 
 abstract class _$MyChatRoomTile
-    extends BuildlessAutoDisposeAsyncNotifier<Member?> {
+    extends BuildlessAutoDisposeAsyncNotifier<MemberInfo?> {
   late final String chatRoomId;
 
-  FutureOr<Member?> build({
+  FutureOr<MemberInfo?> build({
     required String chatRoomId,
   });
 }
@@ -43,7 +43,7 @@ abstract class _$MyChatRoomTile
 const myChatRoomTileProvider = MyChatRoomTileFamily();
 
 /// See also [MyChatRoomTile].
-class MyChatRoomTileFamily extends Family<AsyncValue<Member?>> {
+class MyChatRoomTileFamily extends Family<AsyncValue<MemberInfo?>> {
   /// See also [MyChatRoomTile].
   const MyChatRoomTileFamily();
 
@@ -82,7 +82,7 @@ class MyChatRoomTileFamily extends Family<AsyncValue<Member?>> {
 
 /// See also [MyChatRoomTile].
 class MyChatRoomTileProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<MyChatRoomTile, Member?> {
+    extends AutoDisposeAsyncNotifierProviderImpl<MyChatRoomTile, MemberInfo?> {
   /// See also [MyChatRoomTile].
   MyChatRoomTileProvider({
     required String chatRoomId,
@@ -113,7 +113,7 @@ class MyChatRoomTileProvider
   final String chatRoomId;
 
   @override
-  FutureOr<Member?> runNotifierBuild(
+  FutureOr<MemberInfo?> runNotifierBuild(
     covariant MyChatRoomTile notifier,
   ) {
     return notifier.build(
@@ -138,7 +138,7 @@ class MyChatRoomTileProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<MyChatRoomTile, Member?>
+  AutoDisposeAsyncNotifierProviderElement<MyChatRoomTile, MemberInfo?>
       createElement() {
     return _MyChatRoomTileProviderElement(this);
   }
@@ -157,13 +157,13 @@ class MyChatRoomTileProvider
   }
 }
 
-mixin MyChatRoomTileRef on AutoDisposeAsyncNotifierProviderRef<Member?> {
+mixin MyChatRoomTileRef on AutoDisposeAsyncNotifierProviderRef<MemberInfo?> {
   /// The parameter `chatRoomId` of this provider.
   String get chatRoomId;
 }
 
 class _MyChatRoomTileProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<MyChatRoomTile, Member?>
+    extends AutoDisposeAsyncNotifierProviderElement<MyChatRoomTile, MemberInfo?>
     with MyChatRoomTileRef {
   _MyChatRoomTileProviderElement(super.provider);
 

@@ -8,8 +8,8 @@ import 'package:tata/src/ui/shared/widgets/chat_message_bubble.dart';
 import 'package:tata/src/ui/shared/widgets/chat_room_announcement.dart';
 import 'package:tata/src/ui/shared/pages/leave_chat_view.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
-import 'package:tata/src/ui/shared/pages/room_info_view.dart';
-import 'package:tata/src/ui/avatar.dart';
+import 'package:tata/src/ui/pages/chat-room-info/chat_room_info_view.dart';
+import 'package:tata/src/utils/avatar.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class ChatRoomView extends ConsumerWidget {
     return ref.watch(provider).when(
           data: (data) {
             bool isRealtimeChat = data.roomInfo.type == ChatRoomType.realtime;
-            late Member? otherUserInfo;
+            late MemberInfo? otherUserInfo;
 
             if (isRealtimeChat) {
               ref.read(provider.notifier).getOtherUserInfo().then((userInfo) {
@@ -316,7 +316,7 @@ class ChatRoomView extends ConsumerWidget {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                context.push('$routeName/${RoomInfoView.routeName}',
+                context.push('$routeName/${ChatRoomInfoView.routeName}',
                     extra: chatRoomInfo);
               },
             ),

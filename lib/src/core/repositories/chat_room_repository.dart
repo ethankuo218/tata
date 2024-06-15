@@ -7,8 +7,8 @@ import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
-import 'package:tata/src/ui/avatar.dart';
-import 'package:tata/src/ui/tarot.dart';
+import 'package:tata/src/utils/avatar.dart';
+import 'package:tata/src/utils/tarot.dart';
 
 part 'chat_room_repository.g.dart';
 
@@ -154,7 +154,7 @@ class ChatRoomRepository {
       senderId: userInfo.uid,
       name: userInfo.name,
       avatar: userInfo.avatar,
-      message: message,
+      content: message,
       timestamp: timestamp,
     );
 
@@ -212,7 +212,7 @@ class ChatRoomRepository {
           senderId: 'system',
           name: 'system',
           avatar: AvatarKey.theFool,
-          message: 'Welcome to the chat room!',
+          content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
         ));
 
@@ -240,7 +240,7 @@ class ChatRoomRepository {
           senderId: 'system',
           name: 'system',
           avatar: AvatarKey.theFool,
-          message: 'Welcome to the chat room!',
+          content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
         ).toJson());
 
@@ -267,7 +267,7 @@ class ChatRoomRepository {
           senderId: 'system',
           name: 'system',
           avatar: AvatarKey.theFool,
-          message: 'Welcome to the chat room!',
+          content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
         ));
 
@@ -295,7 +295,7 @@ class ChatRoomRepository {
           senderId: 'system',
           name: 'system',
           avatar: AvatarKey.theFool,
-          message: 'Welcome to the chat room!',
+          content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
         ).toJson());
 
@@ -321,13 +321,13 @@ class ChatRoomRepository {
         .doc(roomId)
         .get()
         .then((value) => ChatRoom.fromJson(value.data()!));
-    final List<Member> members = await _fireStore
+    final List<MemberInfo> members = await _fireStore
         .collection('chat_rooms')
         .doc(roomId)
         .collection('members')
         .get()
         .then((value) => value.docs
-            .map((member) => Member.fromJson(member.data()))
+            .map((member) => MemberInfo.fromJson(member.data()))
             .toList());
 
     if (members.any((member) => member.uid == currentUserId)) {
@@ -363,14 +363,14 @@ class ChatRoomRepository {
   }
 
   // Get members of a chat room
-  Future<List<Member>> getMembers(String chatRoomId) async {
-    final List<Member> members = await _fireStore
+  Future<List<MemberInfo>> getMembers(String chatRoomId) async {
+    final List<MemberInfo> members = await _fireStore
         .collection('chat_rooms')
         .doc(chatRoomId)
         .collection('members')
         .get()
         .then((value) => value.docs
-            .map((member) => Member.fromJson(member.data()))
+            .map((member) => MemberInfo.fromJson(member.data()))
             .toList());
 
     return members;
