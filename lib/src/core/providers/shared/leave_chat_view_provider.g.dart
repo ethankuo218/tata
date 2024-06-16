@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'room_view_provider.dart';
+part of 'leave_chat_view_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tarotNightRoomViewHash() =>
-    r'f77616940eb885453a4941af05724ecb24199416';
+String _$leaveChatViewHash() => r'5ab22e74eeef9eeb33231777ba688289ced6c605';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,36 +29,35 @@ class _SystemHash {
   }
 }
 
-abstract class _$TarotNightRoomView
-    extends BuildlessAutoDisposeAsyncNotifier<TarotNightRoomInfo> {
+abstract class _$LeaveChatView extends BuildlessAutoDisposeNotifier<void> {
   late final String roomId;
 
-  FutureOr<TarotNightRoomInfo> build({
+  void build({
     required String roomId,
   });
 }
 
-/// See also [TarotNightRoomView].
-@ProviderFor(TarotNightRoomView)
-const tarotNightRoomViewProvider = TarotNightRoomViewFamily();
+/// See also [LeaveChatView].
+@ProviderFor(LeaveChatView)
+const leaveChatViewProvider = LeaveChatViewFamily();
 
-/// See also [TarotNightRoomView].
-class TarotNightRoomViewFamily extends Family<AsyncValue<TarotNightRoomInfo>> {
-  /// See also [TarotNightRoomView].
-  const TarotNightRoomViewFamily();
+/// See also [LeaveChatView].
+class LeaveChatViewFamily extends Family<void> {
+  /// See also [LeaveChatView].
+  const LeaveChatViewFamily();
 
-  /// See also [TarotNightRoomView].
-  TarotNightRoomViewProvider call({
+  /// See also [LeaveChatView].
+  LeaveChatViewProvider call({
     required String roomId,
   }) {
-    return TarotNightRoomViewProvider(
+    return LeaveChatViewProvider(
       roomId: roomId,
     );
   }
 
   @override
-  TarotNightRoomViewProvider getProviderOverride(
-    covariant TarotNightRoomViewProvider provider,
+  LeaveChatViewProvider getProviderOverride(
+    covariant LeaveChatViewProvider provider,
   ) {
     return call(
       roomId: provider.roomId,
@@ -78,30 +76,30 @@ class TarotNightRoomViewFamily extends Family<AsyncValue<TarotNightRoomInfo>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'tarotNightRoomViewProvider';
+  String? get name => r'leaveChatViewProvider';
 }
 
-/// See also [TarotNightRoomView].
-class TarotNightRoomViewProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    TarotNightRoomView, TarotNightRoomInfo> {
-  /// See also [TarotNightRoomView].
-  TarotNightRoomViewProvider({
+/// See also [LeaveChatView].
+class LeaveChatViewProvider
+    extends AutoDisposeNotifierProviderImpl<LeaveChatView, void> {
+  /// See also [LeaveChatView].
+  LeaveChatViewProvider({
     required String roomId,
   }) : this._internal(
-          () => TarotNightRoomView()..roomId = roomId,
-          from: tarotNightRoomViewProvider,
-          name: r'tarotNightRoomViewProvider',
+          () => LeaveChatView()..roomId = roomId,
+          from: leaveChatViewProvider,
+          name: r'leaveChatViewProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$tarotNightRoomViewHash,
-          dependencies: TarotNightRoomViewFamily._dependencies,
+                  : _$leaveChatViewHash,
+          dependencies: LeaveChatViewFamily._dependencies,
           allTransitiveDependencies:
-              TarotNightRoomViewFamily._allTransitiveDependencies,
+              LeaveChatViewFamily._allTransitiveDependencies,
           roomId: roomId,
         );
 
-  TarotNightRoomViewProvider._internal(
+  LeaveChatViewProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -114,8 +112,8 @@ class TarotNightRoomViewProvider extends AutoDisposeAsyncNotifierProviderImpl<
   final String roomId;
 
   @override
-  FutureOr<TarotNightRoomInfo> runNotifierBuild(
-    covariant TarotNightRoomView notifier,
+  void runNotifierBuild(
+    covariant LeaveChatView notifier,
   ) {
     return notifier.build(
       roomId: roomId,
@@ -123,10 +121,10 @@ class TarotNightRoomViewProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(TarotNightRoomView Function() create) {
+  Override overrideWith(LeaveChatView Function() create) {
     return ProviderOverride(
       origin: this,
-      override: TarotNightRoomViewProvider._internal(
+      override: LeaveChatViewProvider._internal(
         () => create()..roomId = roomId,
         from: from,
         name: null,
@@ -139,14 +137,13 @@ class TarotNightRoomViewProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<TarotNightRoomView,
-      TarotNightRoomInfo> createElement() {
-    return _TarotNightRoomViewProviderElement(this);
+  AutoDisposeNotifierProviderElement<LeaveChatView, void> createElement() {
+    return _LeaveChatViewProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is TarotNightRoomViewProvider && other.roomId == roomId;
+    return other is LeaveChatViewProvider && other.roomId == roomId;
   }
 
   @override
@@ -158,19 +155,18 @@ class TarotNightRoomViewProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 }
 
-mixin TarotNightRoomViewRef
-    on AutoDisposeAsyncNotifierProviderRef<TarotNightRoomInfo> {
+mixin LeaveChatViewRef on AutoDisposeNotifierProviderRef<void> {
   /// The parameter `roomId` of this provider.
   String get roomId;
 }
 
-class _TarotNightRoomViewProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<TarotNightRoomView,
-        TarotNightRoomInfo> with TarotNightRoomViewRef {
-  _TarotNightRoomViewProviderElement(super.provider);
+class _LeaveChatViewProviderElement
+    extends AutoDisposeNotifierProviderElement<LeaveChatView, void>
+    with LeaveChatViewRef {
+  _LeaveChatViewProviderElement(super.provider);
 
   @override
-  String get roomId => (origin as TarotNightRoomViewProvider).roomId;
+  String get roomId => (origin as LeaveChatViewProvider).roomId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

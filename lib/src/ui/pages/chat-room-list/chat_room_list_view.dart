@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tata/src/core/providers/chat_room_list_view_provider.dart';
+import 'package:tata/src/core/providers/pages/chat_room_list_view_provider.dart';
 import 'package:tata/src/core/services/snackbar_service.dart';
 import 'package:tata/src/ui/pages/chat-room-list/widgets/chat_room_tile.dart';
 import 'package:tata/src/ui/pages/chat-room-list/dialogs/chat_room_detail_dialog.dart';
-import 'package:tata/src/ui/shared/pages/chat_room_view.dart';
-import 'package:tata/src/ui/shared/pages/create_chat_room_bottom_sheet.dart';
+import 'package:tata/src/ui/pages/chat-room/chat_room_view.dart';
+import 'package:tata/src/ui/pages/home/widgets/create_chat_room_bottom_sheet.dart';
 
 class ChatRoomListView extends ConsumerStatefulWidget {
   ChatRoomListView({super.key});

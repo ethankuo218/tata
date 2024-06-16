@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_card.dart';
-import 'package:tata/src/core/providers/tarot-night/test_result_view_provider.dart';
+import 'package:tata/src/core/providers/pages/tarot-night/test_result_view_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/quest_bottom_sheet.dart';
 import 'package:tata/src/ui/shared/widgets/app_bar.dart';
 

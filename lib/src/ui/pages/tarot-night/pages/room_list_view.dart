@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
-import 'package:tata/src/core/providers/tarot-night/room_list_view_provider.dart';
+import 'package:tata/src/core/providers/pages/tarot-night/room_list_view_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_role_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 

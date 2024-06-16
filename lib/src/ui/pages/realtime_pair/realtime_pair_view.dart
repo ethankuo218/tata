@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter/material.dart';
-import 'package:tata/src/core/providers/realtime_pair_view_provider.dart';
+import 'package:tata/src/core/providers/pages/realtime_pair_view_provider.dart';
 import 'package:tata/src/ui/pages/realtime_pair/dialogs/pair_success_dialog.dart';
 
 class RealtimePairView extends ConsumerStatefulWidget {

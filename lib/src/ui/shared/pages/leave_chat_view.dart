@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tata/src/core/providers/shared/leave_chat_view_provider.dart';
 import 'package:tata/src/ui/pages/home/home_view.dart';
-import 'package:tata/src/core/services/chat_service.dart';
 
-class LeaveChatView extends StatelessWidget {
+class LeaveChatView extends ConsumerWidget {
   final String chatRoomId;
   const LeaveChatView({super.key, required this.chatRoomId});
 
   static const routeName = 'leave-chat';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final double screenHeight = MediaQuery.of(context).size.height;
+    final LeaveChatViewProvider provider =
+        leaveChatViewProvider(roomId: chatRoomId);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,9 +36,8 @@ class LeaveChatView extends StatelessWidget {
                     backgroundColor: MaterialStateProperty.all(Colors.red),
                   ),
                   onPressed: () {
-                    ChatService().leaveChatRoom(chatRoomId).then((_) {
-                      context.pushReplacement(HomeView.routeName);
-                    });
+                    ref.read(provider.notifier).leaveChat().then(
+                        (_) => context.pushReplacement(HomeView.routeName));
                   },
                   child: const Text('Confirm',
                       style: TextStyle(

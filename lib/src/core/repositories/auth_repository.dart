@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:phone_form_field/phone_form_field.dart';
@@ -13,6 +14,7 @@ part 'auth_repository.g.dart';
 class AuthRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
 // Apple Sign In
   Future<Either<User, String>> signInWithApple() async {
@@ -21,16 +23,7 @@ class AuthRepository {
       final UserCredential userCredential =
           await _firebaseAuth.signInWithProvider(appleProvider);
 
-      DocumentReference<Map<String, dynamic>> doc =
-          _fireStore.collection('users').doc(userCredential.user!.uid);
-
-      if ((await doc.get()).data() == null) {
-        await doc.set({
-          'uid': userCredential.user!.uid,
-          'name': null,
-          'avatar': Avatar.getRandomAvatar().value
-        }, SetOptions(merge: true));
-      }
+      await _saveUserInfo(userCredential);
 
       return left(userCredential.user!);
     } on FirebaseAuthException catch (e) {
@@ -58,16 +51,7 @@ class AuthRepository {
       final UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
 
-      DocumentReference<Map<String, dynamic>> doc =
-          _fireStore.collection('users').doc(userCredential.user!.uid);
-
-      if ((await doc.get()).data() == null) {
-        await doc.set({
-          'uid': userCredential.user!.uid,
-          'name': null,
-          'avatar': Avatar.getRandomAvatar().value
-        }, SetOptions(merge: true));
-      }
+      await _saveUserInfo(userCredential);
 
       return left(userCredential.user!);
     } on FirebaseAuthException catch (e) {
@@ -114,16 +98,7 @@ class AuthRepository {
       UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
 
-      DocumentReference<Map<String, dynamic>> doc =
-          _fireStore.collection('users').doc(userCredential.user!.uid);
-
-      if ((await doc.get()).data() == null) {
-        await doc.set({
-          'uid': userCredential.user!.uid,
-          'name': null,
-          'avatar': Avatar.getRandomAvatar().value
-        }, SetOptions(merge: true));
-      }
+      await _saveUserInfo(userCredential);
 
       return left(userCredential.user!);
     } on FirebaseAuthException catch (e) {
@@ -155,6 +130,22 @@ class AuthRepository {
       return left(unit);
     } on FirebaseAuthException catch (e) {
       return right(e.message ?? 'Unknown Error');
+    }
+  }
+
+  Future<void> _saveUserInfo(UserCredential userCredential) async {
+    DocumentReference<Map<String, dynamic>> doc =
+        _fireStore.collection('users').doc(userCredential.user!.uid);
+
+    String fcmToken = await _firebaseMessaging.getToken() ?? '';
+
+    if ((await doc.get()).data() == null) {
+      await doc.set({
+        'uid': userCredential.user!.uid,
+        'name': null,
+        'avatar': Avatar.getRandomAvatar().value,
+        'fcm_token': fcmToken
+      }, SetOptions(merge: true));
     }
   }
 

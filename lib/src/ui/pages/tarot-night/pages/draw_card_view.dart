@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tata/src/core/providers/tarot-night/draw_card_view_provider.dart';
+import 'package:tata/src/core/providers/pages/tarot-night/draw_card_view_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
 
 class TarotNightDrawCardView extends ConsumerWidget {

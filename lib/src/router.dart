@@ -9,7 +9,7 @@ import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_list_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
-import 'package:tata/src/ui/shared/pages/chat_room_view.dart';
+import 'package:tata/src/ui/pages/chat-room/chat_room_view.dart';
 import 'package:tata/src/ui/shared/pages/leave_chat_view.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
 import 'package:tata/src/ui/pages/chat-room-info/chat_room_info_view.dart';

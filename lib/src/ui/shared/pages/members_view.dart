@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tata/src/core/models/member.dart';
-import 'package:tata/src/core/providers/members_view_provider.dart';
+import 'package:tata/src/core/providers/shared/members_view_provider.dart';
 import 'package:tata/src/utils/avatar.dart';
 
 class MembersView extends ConsumerWidget {

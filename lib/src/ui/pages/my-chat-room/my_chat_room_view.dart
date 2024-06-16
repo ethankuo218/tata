@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tata/src/core/providers/my_chat_room_view_provider.dart';
-import 'package:tata/src/ui/shared/pages/chat_room_view.dart';
+import 'package:tata/src/core/providers/pages/my_chat_room_view_provider.dart';
+import 'package:tata/src/ui/pages/chat-room/chat_room_view.dart';
 import 'package:tata/src/ui/pages/my-chat-room/widgets/my_chat_room_tile.dart';
 
 class MyChatRoomView extends ConsumerStatefulWidget {
