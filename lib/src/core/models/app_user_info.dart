@@ -4,11 +4,13 @@ class AppUserInfo {
   final String name;
   final String uid;
   final AvatarKey avatar;
+  final String fcmToken;
 
   AppUserInfo({
     required this.name,
     required this.uid,
     required this.avatar,
+    required this.fcmToken,
   });
 
   factory AppUserInfo.fromJson(Map<String, dynamic> map) {
@@ -16,6 +18,7 @@ class AppUserInfo {
       name: map['name'] ?? 'Unknown',
       uid: map['uid'],
       avatar: AvatarKey.toEnum(map['avatar']),
+      fcmToken: map['fcmToken'],
     );
   }
 
@@ -24,6 +27,7 @@ class AppUserInfo {
       'name': name,
       'uid': uid,
       'avatar': avatar,
+      'fcmToken': fcmToken,
     };
   }
 }

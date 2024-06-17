@@ -267,6 +267,7 @@ class TarotNightRoomRepository {
             name: 'system',
             uid: 'system',
             role: 'system',
+            fcmToken: 'system',
             avatar: AvatarKey.theFool),
         chatRoomId: roomId,
         content: '${userInfo.name} 加入了房間',
@@ -407,7 +408,8 @@ class TarotNightRoomRepository {
             name: userInfo.name,
             uid: userInfo.uid,
             role: 'host',
-            avatar: userInfo.avatar),
+            avatar: userInfo.avatar,
+            fcmToken: userInfo.fcmToken),
         chatRoomId: roomId,
         content: '測驗結果出來嘍！',
         type: TarotNightMessageType.testResult);
