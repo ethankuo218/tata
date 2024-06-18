@@ -1,8 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/tarot_night_lobby_info.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/lobby_view_provider.dart';
 import 'package:tata/src/core/services/snackbar_service.dart';
@@ -11,7 +11,6 @@ import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/create_room_bottom_sheet.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/lobby_introduction_slider.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_walkthrough_dialog.dart';
-import 'package:tata/src/ui/shared/widgets/app_bar.dart';
 
 class TarotNightLobbyView extends ConsumerWidget {
   const TarotNightLobbyView({super.key});
@@ -36,34 +35,79 @@ class TarotNightLobbyView extends ConsumerWidget {
           });
 
           return Scaffold(
-            appBar: const AppBarWidget(),
-            body: Padding(
+            appBar: AppBar(
+              backgroundColor: const Color.fromARGB(255, 12, 13, 32),
+              centerTitle: false,
+              titleSpacing: 0,
+            ),
+            body: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color.fromARGB(255, 12, 13, 32),
+                      Color.fromARGB(255, 26, 0, 58)
+                    ],
+                  ),
+                ),
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const Center(
-                      child: Text(
-                        'Astrological Tarot Night',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: 'MedievalSharp'),
-                      ),
+                    Stack(
+                      children: [
+                        SizedBox(
+                          height: 72,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 48),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset('assets/images/star_2.svg'),
+                                  const SizedBox(width: 16),
+                                  const Text(
+                                    '占星塔羅夜',
+                                    style: TextStyle(
+                                        height: 1.0,
+                                        color:
+                                            Color.fromARGB(255, 223, 130, 255),
+                                        fontSize: 24,
+                                        fontFamily: 'MedievalSharp'),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  SvgPicture.asset('assets/images/star_2.svg'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          left: 85,
+                          top: 8,
+                          child: Opacity(
+                            opacity: 0.5,
+                            child: SvgPicture.asset(
+                              'assets/images/star_1.svg',
+                              width: 42.32,
+                              height: 42.32,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    const SizedBox(height: 20),
-                    const Expanded(flex: 5, child: LobbyIntroductionSlider()),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 32),
+                    const Expanded(flex: 12, child: LobbyIntroductionSlider()),
+                    const SizedBox(height: 28),
                     Expanded(
-                        flex: 3,
+                        flex: 7,
                         child: Row(
                           children: [
                             Expanded(
                                 flex: 1,
                                 child: GestureDetector(
                                   onTap: () {
-                                    print('create');
-                                    print(lobbyInfo.participantStatus);
                                     switch (lobbyInfo.participantStatus) {
                                       case ParticipantStatus.host:
                                         context.push(
@@ -100,81 +144,80 @@ class TarotNightLobbyView extends ConsumerWidget {
                                         break;
                                     }
                                   },
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                    255, 137, 118, 82)
-                                                .withOpacity(0.3),
-                                            border: Border.all(
-                                                color: const Color.fromARGB(
-                                                        255, 137, 118, 82)
-                                                    .withOpacity(0.6),
-                                                width: 2),
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: Image.asset(
-                                          'assets/images/star.png',
-                                          opacity:
-                                              const AlwaysStoppedAnimation(0.5),
-                                        ),
-                                      ),
-                                      Container(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Column(
-                                            children: [
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(horizontal: 8),
-                                                  child: Center(
-                                                    child: Text(
-                                                        '創建一個聊天室，並描述你的心理困擾，尋求建議 !',
-                                                        style: TextStyle(
-                                                            color: Colors.white
-                                                                .withOpacity(
-                                                                    0.8),
-                                                            fontFamily:
-                                                                'MedievalSharp',
-                                                            fontSize: 16)),
-                                                  ),
-                                                ),
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                                  255, 241, 198, 255)
+                                              .withOpacity(0.1),
+                                          border: const GradientBoxBorder(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Color.fromARGB(
+                                                      240, 223, 130, 255),
+                                                  Color.fromARGB(
+                                                      51, 241, 198, 255),
+                                                  Color.fromARGB(
+                                                      240, 223, 130, 255),
+                                                  Color.fromARGB(
+                                                      51, 241, 198, 255),
+                                                ],
                                               ),
-                                              const SizedBox(height: 20),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 5),
-                                                decoration: BoxDecoration(
-                                                    color: const Color.fromARGB(
-                                                        255, 137, 118, 82),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
+                                              width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        children: [
+                                          Opacity(
+                                            opacity: 0.6,
+                                            child: SvgPicture.asset(
+                                                'assets/images/star_2.svg',
+                                                width: 30,
+                                                height: 30),
+                                          ),
+                                          const Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 8),
+                                              child: Center(
                                                 child: Text(
-                                                    lobbyInfo.participantStatus ==
-                                                            ParticipantStatus
-                                                                .host
-                                                        ? '回到聊天室'
-                                                        : '分享故事',
-                                                    style: const TextStyle(
+                                                    '創建一個聊天室，並描述你的心理困擾，尋求建議 !',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
                                                         color: Colors.white,
                                                         fontFamily:
-                                                            'MedievalSharp')),
-                                              )
-                                            ],
-                                          )),
-                                    ],
-                                  ),
+                                                            'MedievalSharp',
+                                                        fontSize: 16)),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 20),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 12),
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    255, 223, 130, 255),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: Text(
+                                                lobbyInfo.participantStatus ==
+                                                        ParticipantStatus.host
+                                                    ? '回到聊天室'
+                                                    : '分享故事',
+                                                style: const TextStyle(
+                                                    height: 1.0,
+                                                    color: Color.fromARGB(
+                                                        255, 12, 13, 32),
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily:
+                                                        'MedievalSharp')),
+                                          )
+                                        ],
+                                      )),
                                 )),
-                            const SizedBox(width: 20),
+                            const SizedBox(width: 16),
                             Expanded(
                                 flex: 1,
                                 child: GestureDetector(
@@ -182,90 +225,80 @@ class TarotNightLobbyView extends ConsumerWidget {
                                       context.push(
                                           TarotNightRoomListView.routeName);
                                     },
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: const Color.fromARGB(
-                                                      255, 137, 118, 82)
-                                                  .withOpacity(0.3),
-                                              border: Border.all(
-                                                  color: const Color.fromARGB(
-                                                          255, 137, 118, 82)
-                                                      .withOpacity(0.6),
-                                                  width: 2),
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: Image.asset(
-                                            'assets/images/star.png',
-                                            opacity:
-                                                const AlwaysStoppedAnimation(
-                                                    0.5),
-                                          ),
-                                        ),
-                                        Container(
-                                            padding: const EdgeInsets.all(10),
-                                            child: Column(
-                                              children: [
-                                                Expanded(
-                                                    child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(horizontal: 8),
-                                                  child: Center(
-                                                    child: Text(
-                                                        '選擇要解決的問題，進入聊天室幫助房主釐清困惑！',
-                                                        style: TextStyle(
-                                                            color: Colors.white
-                                                                .withOpacity(
-                                                                    0.8),
-                                                            fontFamily:
-                                                                'MedievalSharp',
-                                                            fontSize: 16)),
-                                                  ),
-                                                )),
-                                                const SizedBox(height: 20),
-                                                Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 5),
-                                                  decoration: BoxDecoration(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              137,
-                                                              118,
-                                                              82),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20)),
-                                                  child: const Text('解答疑惑',
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontFamily:
-                                                              'MedievalSharp')),
-                                                )
-                                              ],
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                    255, 241, 198, 255)
+                                                .withOpacity(0.1),
+                                            border: const GradientBoxBorder(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Color.fromARGB(
+                                                        240, 223, 130, 255),
+                                                    Color.fromARGB(
+                                                        51, 241, 198, 255),
+                                                    Color.fromARGB(
+                                                        240, 223, 130, 255),
+                                                    Color.fromARGB(
+                                                        51, 241, 198, 255),
+                                                  ],
+                                                ),
+                                                width: 2),
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        padding: const EdgeInsets.all(16),
+                                        child: Column(
+                                          children: [
+                                            Opacity(
+                                              opacity: 0.6,
+                                              child: SvgPicture.asset(
+                                                  'assets/images/star_2.svg',
+                                                  width: 30,
+                                                  height: 30),
+                                            ),
+                                            const Expanded(
+                                                child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 8),
+                                              child: Center(
+                                                child: Text(
+                                                    '選擇要解決的問題，進入聊天室幫助房主釐清困惑！',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontFamily:
+                                                            'MedievalSharp',
+                                                        fontSize: 16)),
+                                              ),
                                             )),
-                                        BackdropFilter(
-                                            blendMode: BlendMode.overlay,
-                                            filter: ImageFilter.blur(
-                                                sigmaX: 1, sigmaY: 1),
-                                            child: Container(
+                                            const SizedBox(height: 20),
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 12),
                                               decoration: BoxDecoration(
-                                                  color: Colors.white
-                                                      .withOpacity(0.0)),
-                                            ))
-                                      ],
-                                    ))),
+                                                  color: const Color.fromARGB(
+                                                      255, 223, 130, 255),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              child: const Text('解答疑惑',
+                                                  style: TextStyle(
+                                                      height: 1.0,
+                                                      color: Color.fromARGB(
+                                                          255, 12, 13, 32),
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily:
+                                                          'MedievalSharp')),
+                                            )
+                                          ],
+                                        )))),
                           ],
                         )),
-                    const SizedBox(height: 100),
+                    const SizedBox(height: 36),
                   ],
                 )),
           );

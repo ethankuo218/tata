@@ -38,6 +38,7 @@ dependencies:
   flutter_floating_bottom_bar: ^1.2.0
   firebase_messaging: ^14.7.15
   flutter_local_notifications: ^17.0.0
+  gradient_borders: ^1.0.1
 
 dev_dependencies:
   flutter_test:

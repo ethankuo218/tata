@@ -114,8 +114,8 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                         Container(
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                               colors: [
                                 Color.fromARGB(255, 12, 13, 32),
                                 Color.fromARGB(255, 26, 0, 58)
