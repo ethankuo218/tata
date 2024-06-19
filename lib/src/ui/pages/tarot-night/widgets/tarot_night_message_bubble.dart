@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_night_message.dart';
 import 'package:tata/src/utils/avatar.dart';
@@ -137,15 +138,37 @@ class TarotNightMessageBubble extends StatelessWidget {
                       child: Column(
                         children: [
                           if (message.type == TarotNightMessageType.answer)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 4),
-                              child: Text(
-                                message.role,
-                                style: const TextStyle(
-                                    color: Color.fromARGB(255, 12, 13, 32),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400),
-                              ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/images/star_3.svg',
+                                  width: 16,
+                                  height: 16,
+                                  colorFilter: const ColorFilter.mode(
+                                      Color.fromARGB(255, 223, 130, 255),
+                                      BlendMode.srcIn),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  message.role,
+                                  style: const TextStyle(
+                                      height: 1.125,
+                                      color: Color.fromARGB(255, 223, 130, 255),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                const SizedBox(width: 4),
+                                SvgPicture.asset(
+                                  'assets/images/star_3.svg',
+                                  width: 16,
+                                  height: 16,
+                                  colorFilter: const ColorFilter.mode(
+                                      Color.fromARGB(255, 223, 130, 255),
+                                      BlendMode.srcIn),
+                                ),
+                              ],
                             ),
                           Text(
                             message.content,
