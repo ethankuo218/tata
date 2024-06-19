@@ -90,13 +90,13 @@ enum TarotNightRoomTheme {
       case TarotNightRoomTheme.all:
         return 'All';
       case TarotNightRoomTheme.work:
-        return 'Work';
+        return '工作';
       case TarotNightRoomTheme.relation:
-        return 'Relation';
+        return '感情';
       case TarotNightRoomTheme.family:
-        return 'Family';
+        return '家庭';
       case TarotNightRoomTheme.friend:
-        return 'Friend';
+        return '友情';
       default:
         return 'NULL';
     }
