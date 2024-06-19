@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
-import 'package:tata/src/ui/pages/tarot-night/widgets/start_tarot_test_dialog.dart';
+import 'package:tata/src/ui/pages/tarot-night/widgets/start_tarot_test_bottom_sheet.dart';
 
 class TarotNightAnnouncement extends StatefulWidget {
   const TarotNightAnnouncement({super.key, required this.roomInfo});
@@ -98,7 +98,7 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
                     // if (!isTestButtonEnabled) {
                     //   return;
                     // }
-                    showStartTarotTestDialog(context, onClosed: (_) {
+                    showStartTarotTestBottomSheet(context, onClosed: (_) {
                       if (_ == null) {
                         return;
                       }

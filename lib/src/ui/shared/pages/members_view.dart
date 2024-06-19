@@ -82,7 +82,7 @@ class MembersView extends ConsumerWidget {
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w400,
             ),
           ),
           const Spacer(),
@@ -98,7 +98,7 @@ class MembersView extends ConsumerWidget {
                   style: TextStyle(
                       color: Color.fromARGB(255, 223, 130, 255),
                       fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                      fontWeight: FontWeight.w400)),
             )
         ],
       ),
