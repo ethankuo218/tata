@@ -21,7 +21,7 @@ class MemberInfo extends AppUserInfo {
       uid: map['uid'],
       name: map['name'],
       avatar: AvatarKey.toEnum(map['avatar']),
-      fcmToken: map['fcmToken'],
+      fcmToken: map['fcmToken'] ?? '',
       role: map['role'],
       quest: map['quest'] ?? '',
       answer: map['answer'] ?? '',

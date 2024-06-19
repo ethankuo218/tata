@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/router_notifier.dart';
 import 'package:tata/src/core/state/authentication_state.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_role_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/room_info_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_list_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
@@ -92,9 +94,10 @@ final routerProvider = Provider<GoRouter>((ref) {
               TarotNightRoomView(roomId: state.extra as String),
           routes: [
             GoRoute(
-              path: ChatRoomInfoView.routeName,
+              path: TarotNightRoomInfoView.routeName,
               builder: (BuildContext context, GoRouterState state) =>
-                  ChatRoomInfoView(chatRoomInfo: state.extra as ChatRoom),
+                  TarotNightRoomInfoView(
+                      roomInfo: state.extra as TarotNightRoom),
             ),
             GoRoute(
               path: MembersView.routeName,
