@@ -261,7 +261,7 @@ class _CreateTarotNightRoomBottomSheetState
                             });
                           },
                           child: const Text(
-                            "開啟心室之門，創建你的夜話空間",
+                            "開啟心事之門，創建你的夜話空間",
                             style: TextStyle(
                                 color: Color.fromARGB(255, 12, 13, 32),
                                 height: 1.0,
