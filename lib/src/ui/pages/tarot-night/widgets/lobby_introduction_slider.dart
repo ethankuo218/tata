@@ -25,7 +25,7 @@ class _LobbyIntroductionSliderState extends State<LobbyIntroductionSlider> {
               enlargeCenterPage: true,
               viewportFraction: 0.8,
               padEnds: true,
-              enableInfiniteScroll: false,
+              enableInfiniteScroll: true,
               onPageChanged: (index, reason) {
                 setState(() {
                   current = index;
