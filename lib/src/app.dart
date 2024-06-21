@@ -33,7 +33,7 @@ class App extends ConsumerWidget {
           surfaceTintColor: Colors.black,
         ),
         primarySwatch: Colors.purple,
-        fontFamily: "YuseiMagic",
+        fontFamily: "YuPearl",
       ),
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,

@@ -57,11 +57,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
               child: const Column(children: [
                 Text(
                   "TATA",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 70,
-                      fontFamily: "MedievalSharp",
-                      height: 1.2),
+                  style:
+                      TextStyle(color: Colors.white, fontSize: 70, height: 1.2),
                 ),
               ]),
             ),

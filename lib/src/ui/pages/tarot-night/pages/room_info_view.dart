@@ -53,8 +53,7 @@ class TarotNightRoomInfoView extends StatelessWidget {
                               style: TextStyle(
                                   height: 1.0,
                                   color: Color.fromARGB(255, 223, 130, 255),
-                                  fontSize: 24,
-                                  fontFamily: 'MedievalSharp'),
+                                  fontSize: 24),
                             ),
                             const SizedBox(width: 16),
                             SvgPicture.asset('assets/images/star_2.svg'),

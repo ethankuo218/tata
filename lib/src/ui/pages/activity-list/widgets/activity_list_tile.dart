@@ -44,7 +44,6 @@ class ActivityListTile extends StatelessWidget {
                           style: TextStyle(
                               // color: Color.fromARGB(255, 133, 114, 82),
                               color: Colors.white.withOpacity(0.8),
-                              fontFamily: 'MedievalSharp',
                               fontSize: 18,
                               fontWeight: FontWeight.w500),
                         ),
@@ -53,7 +52,6 @@ class ActivityListTile extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Colors.white.withOpacity(0.7),
-                                fontFamily: 'MedievalSharp',
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500)),
                       ],
@@ -68,8 +66,7 @@ class ActivityListTile extends StatelessWidget {
                           activityInfo.timeDescription,
                           style: TextStyle(
                               color: Colors.white.withOpacity(0.8),
-                              fontSize: 13,
-                              fontFamily: 'MedievalSharp'),
+                              fontSize: 13),
                         ),
                         const Spacer(),
                         Text(
@@ -77,7 +74,6 @@ class ActivityListTile extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.8),
                             fontSize: 18,
-                            fontFamily: 'MedievalSharp',
                           ),
                         )
                       ])

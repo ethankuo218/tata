@@ -89,16 +89,15 @@ final List<Widget> introductionSliders = <Widget>[
                       style: TextStyle(
                           color: Color.fromARGB(255, 241, 198, 255),
                           fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'MedievalSharp'),
+                          fontWeight: FontWeight.w400),
                     ),
                     Text(
                       "      解開內心的困擾",
                       style: TextStyle(
-                          color: Color.fromARGB(255, 241, 198, 255),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'MedievalSharp'),
+                        color: Color.fromARGB(255, 241, 198, 255),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     SizedBox(height: 16),
                     Text(
@@ -108,7 +107,6 @@ final List<Widget> introductionSliders = <Widget>[
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        fontFamily: 'MedievalSharp',
                       ),
                     ),
                   ],
@@ -145,17 +143,17 @@ final List<Widget> introductionSliders = <Widget>[
                   children: [
                     Text("遊戲參與者選擇\n",
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'MedievalSharp')),
-                    Text(
-                      "房主：\n當你感到心中有疑惑或困擾時，創建一個聊天室，並描述你的心理困擾，尋求來自其他參與者的見解與建議。\n\n參加者：\n選擇進入聊天室，抽取一張角色牌，每張角色牌將指引你完成特定的任務，幫助房主釐清困惑。",
-                      style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
-                          fontFamily: 'MedievalSharp'),
+                        )),
+                    Text(
+                      "房主：\n當你感到心中有疑惑或困擾時，創建一個聊天室，並描述你的心理困擾，尋求來自其他參與者的見解與建議。\n\n參加者：\n選擇進入聊天室，抽取一張角色牌，每張角色牌將指引你完成特定的任務，幫助房主釐清困惑。",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ],
                 ),
@@ -191,17 +189,17 @@ final List<Widget> introductionSliders = <Widget>[
                   children: [
                     Text("遊戲流程與活動時間\n",
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'MedievalSharp')),
-                    Text(
-                      "• 活動時間：每晚 11:00 至 01:00。\n• 房主在活動開始 30 分鐘後可以進行塔羅牌測驗，輸入想問的問題並抽取一張塔羅牌。\n• 房主將抽出的塔羅牌分享至聊天室。\n• 參加者根據塔羅牌解析提供答案，完成其角色任務。",
-                      style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
-                          fontFamily: 'MedievalSharp'),
+                        )),
+                    Text(
+                      "• 活動時間：每晚 11:00 至 01:00。\n• 房主在活動開始 30 分鐘後可以進行塔羅牌測驗，輸入想問的問題並抽取一張塔羅牌。\n• 房主將抽出的塔羅牌分享至聊天室。\n• 參加者根據塔羅牌解析提供答案，完成其角色任務。",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ],
                 ),

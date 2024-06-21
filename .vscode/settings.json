@@ -6,6 +6,7 @@
         "Firestore",
         "fpdart",
         "LTRB",
+        "Merienda",
         "Pinput",
         "riverpod",
         "subcollection",

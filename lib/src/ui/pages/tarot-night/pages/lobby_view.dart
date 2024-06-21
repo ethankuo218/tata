@@ -73,8 +73,7 @@ class TarotNightLobbyView extends ConsumerWidget {
                                         height: 1.0,
                                         color:
                                             Color.fromARGB(255, 223, 130, 255),
-                                        fontSize: 24,
-                                        fontFamily: 'MedievalSharp'),
+                                        fontSize: 24),
                                   ),
                                   const SizedBox(width: 16),
                                   SvgPicture.asset('assets/images/star_2.svg'),
@@ -185,8 +184,6 @@ class TarotNightLobbyView extends ConsumerWidget {
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         color: Colors.white,
-                                                        fontFamily:
-                                                            'MedievalSharp',
                                                         fontSize: 16)),
                                               ),
                                             ),
@@ -206,13 +203,12 @@ class TarotNightLobbyView extends ConsumerWidget {
                                                     ? '回到聊天室'
                                                     : '分享故事',
                                                 style: const TextStyle(
-                                                    height: 1.0,
-                                                    color: Color.fromARGB(
-                                                        255, 12, 13, 32),
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily:
-                                                        'MedievalSharp')),
+                                                  height: 1.0,
+                                                  color: Color.fromARGB(
+                                                      255, 12, 13, 32),
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                )),
                                           )
                                         ],
                                       )),
@@ -266,8 +262,6 @@ class TarotNightLobbyView extends ConsumerWidget {
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         color: Colors.white,
-                                                        fontFamily:
-                                                            'MedievalSharp',
                                                         fontSize: 16)),
                                               ),
                                             )),
@@ -290,9 +284,7 @@ class TarotNightLobbyView extends ConsumerWidget {
                                                           255, 12, 13, 32),
                                                       fontSize: 16,
                                                       fontWeight:
-                                                          FontWeight.w500,
-                                                      fontFamily:
-                                                          'MedievalSharp')),
+                                                          FontWeight.w500)),
                                             )
                                           ],
                                         )))),

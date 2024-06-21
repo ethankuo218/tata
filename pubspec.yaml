@@ -53,13 +53,13 @@ dev_dependencies:
 
 flutter:
   fonts:
-    - family: MedievalSharp
+    - family: YuPearl
       fonts:
-        - asset: assets/fonts/MedievalSharp-Regular.ttf
+        - asset: assets/fonts/YuPearl-Regular.ttf
           weight: 400
-    - family: YuseiMagic
+    - family: Merienda
       fonts:
-        - asset: assets/fonts/YuseiMagic-Regular.ttf
+        - asset: assets/fonts/Merienda-Regular.ttf
           weight: 400
 
   uses-material-design: true

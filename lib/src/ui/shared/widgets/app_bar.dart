@@ -14,7 +14,6 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               color: Color.fromARGB(255, 223, 130, 255),
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              fontFamily: 'MedievalSharp',
             )),
         titleSpacing: 20,
         centerTitle: false);

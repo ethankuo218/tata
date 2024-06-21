@@ -42,7 +42,6 @@ class _TarotNightRoomListViewState
                         color: Colors.purple,
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'MedievalSharp',
                       )),
                   titleSpacing: 20,
                   centerTitle: false,
