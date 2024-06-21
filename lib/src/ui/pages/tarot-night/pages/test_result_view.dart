@@ -348,19 +348,9 @@ class _TarotNightTestResultViewState
                                             .withOpacity(0.1),
                                         borderRadius: BorderRadius.circular(16),
                                       ),
-                                      child: Column(children: [
-                                        ...List.generate(
-                                            _data.length,
-                                            (index) =>
-                                                TarotNightTestResultExpandablePanel(
-                                                  isFirstElement: index == 0,
-                                                  isLastElement:
-                                                      index == _data.length - 1,
-                                                  header: _data[index].title,
-                                                  body:
-                                                      _data[index].description,
-                                                ))
-                                      ]),
+                                      child:
+                                          TarotNightTestResultExpandablePanel(
+                                              data: _data),
                                     )
                                   ],
                                 )),

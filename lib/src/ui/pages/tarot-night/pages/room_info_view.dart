@@ -88,10 +88,10 @@ class TarotNightRoomInfoView extends StatelessWidget {
               Stack(
                 children: [
                   Transform.rotate(
-                    angle: 0.025,
+                    angle: 3.14159265359 / 67.6,
                     child: Container(
-                      height: 566,
-                      width: 336,
+                      height: 566.46,
+                      width: 336.02,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 241, 198, 255)
                             .withOpacity(0.1),
@@ -114,10 +114,10 @@ class TarotNightRoomInfoView extends StatelessWidget {
                     ),
                   ),
                   Transform.rotate(
-                    angle: -0.025,
+                    angle: -3.14159265359 / 67.6,
                     child: Container(
-                      height: 566,
-                      width: 336,
+                      height: 566.46,
+                      width: 336.02,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 241, 198, 255)
                             .withOpacity(0.1),
@@ -263,14 +263,17 @@ class TarotNightRoomInfoView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        Text(
-                          roomInfo.description,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            height: 1.5,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: Text(
+                            roomInfo.description,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              height: 1.5,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],
