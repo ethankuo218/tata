@@ -1,19 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
+import 'package:tata/src/core/providers/pages/tarot-night/room_info_view_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/create_room_bottom_sheet.dart';
 
-class TarotNightRoomInfoView extends StatelessWidget {
+class TarotNightRoomInfoView extends ConsumerWidget {
   final TarotNightRoom roomInfo;
   const TarotNightRoomInfoView({super.key, required this.roomInfo});
 
   static const String routeName = 'room-info';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 12, 13, 32),
@@ -155,10 +157,23 @@ class TarotNightRoomInfoView extends StatelessWidget {
                                   padding: EdgeInsets.zero,
                                   onPressed: () => {
                                         showCreateTarotNightRoomBottomSheet(
+                                            mode:
+                                                CreateTarotNightRoomBottomSheetMode
+                                                    .edit,
+                                            roomInfo: roomInfo,
                                             context, onClosed: (_) {
                                           if (_ == null) {
                                             return;
                                           }
+                                          ref
+                                              .read(
+                                                  TarotNightRoomInfoViewProvider(
+                                                          roomInfo.id)
+                                                      .notifier)
+                                              .editTarotNightRoomInfo(
+                                                  title: _.title,
+                                                  description: _.description,
+                                                  theme: _.theme);
                                         })
                                       },
                                   icon: const FaIcon(

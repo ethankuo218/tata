@@ -117,7 +117,10 @@ class TarotNightLobbyView extends ConsumerWidget {
                                         break;
                                       case ParticipantStatus.notStarted:
                                         showCreateTarotNightRoomBottomSheet(
-                                            context, onClosed: (_) {
+                                            context,
+                                            mode:
+                                                CreateTarotNightRoomBottomSheetMode
+                                                    .create, onClosed: (_) {
                                           if (_ == null) {
                                             return;
                                           }

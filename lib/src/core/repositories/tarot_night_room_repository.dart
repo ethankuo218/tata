@@ -210,6 +210,21 @@ class TarotNightRoomRepository {
     return TarotNightRoom.fromJson(roomDoc.data()!);
   }
 
+  // Edit Room Info
+  Future<void> editRoomInfo(String roomId,
+      {required String theme,
+      required String title,
+      required description}) async {
+    final DocumentReference<Map<String, dynamic>> roomDoc =
+        _fireStore.collection('tarot_night_rooms').doc(roomId);
+
+    await roomDoc.update({
+      'theme': theme,
+      'title': title,
+      'description': description,
+    });
+  }
+
   // Join a room
   Future<void> joinRoom(
       {required String roomId, required String roleId}) async {

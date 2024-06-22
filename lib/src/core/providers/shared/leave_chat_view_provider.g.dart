@@ -6,7 +6,7 @@ part of 'leave_chat_view_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$leaveChatViewHash() => r'5ab22e74eeef9eeb33231777ba688289ced6c605';
+String _$leaveChatViewHash() => r'52931d42984f26882d55655a23ba02eb5e6c024c';
 
 /// Copied from Dart SDK
 class _SystemHash {

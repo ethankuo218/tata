@@ -4,19 +4,26 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 
 Future<void> showCreateTarotNightRoomBottomSheet(BuildContext context,
-    {required ValueChanged onClosed}) async {
+    {required CreateTarotNightRoomBottomSheetMode mode,
+    TarotNightRoom? roomInfo,
+    required ValueChanged onClosed}) async {
   await showModalBottomSheet(
           context: context,
           isScrollControlled: true,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40), topRight: Radius.circular(40))),
-          builder: (context) => const CreateTarotNightRoomBottomSheet())
+          builder: (context) =>
+              CreateTarotNightRoomBottomSheet(mode: mode, roomInfo: roomInfo))
       .then(onClosed);
 }
 
 class CreateTarotNightRoomBottomSheet extends StatefulWidget {
-  const CreateTarotNightRoomBottomSheet({super.key});
+  const CreateTarotNightRoomBottomSheet(
+      {super.key, required this.mode, required this.roomInfo});
+
+  final CreateTarotNightRoomBottomSheetMode mode;
+  final TarotNightRoom? roomInfo;
 
   @override
   State<CreateTarotNightRoomBottomSheet> createState() =>
@@ -41,6 +48,11 @@ class _CreateTarotNightRoomBottomSheetState
 
   @override
   Widget build(BuildContext context) {
+    if (widget.mode == CreateTarotNightRoomBottomSheetMode.edit) {
+      _selectedTheme = themeList.indexOf(widget.roomInfo!.theme);
+      titleController.text = widget.roomInfo!.title;
+      descriptionController.text = widget.roomInfo!.description;
+    }
     return Container(
       height: 672,
       decoration: BoxDecoration(
@@ -148,26 +160,22 @@ class _CreateTarotNightRoomBottomSheetState
                                 const Color.fromARGB(255, 12, 13, 32),
                             selectedColor:
                                 const Color.fromARGB(255, 12, 13, 32),
-                            avatarBorder: const CircleBorder(
-                                side: BorderSide(
-                                    color: Color.fromARGB(255, 241, 198, 255),
-                                    width: 2)),
-                            padding: const EdgeInsets.all(8),
                             shape: RoundedRectangleBorder(
                                 side: BorderSide(
-                                    color:
-                                        const Color.fromARGB(255, 241, 198, 255)
-                                            .withOpacity(0.2),
+                                    color: const Color.fromARGB(
+                                            255, 241, 198, 255)
+                                        .withOpacity(
+                                            _selectedTheme == index ? 1 : 0.2),
                                     width: 2),
-                                borderRadius: BorderRadius.circular(10)),
+                                borderRadius: BorderRadius.circular(8)),
                             label: Text(
-                                TarotNightRoomTheme.toText(themeList[index]),
-                                style: const TextStyle(
-                                  height: 1.0,
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                )),
+                                TarotNightRoomTheme.toText(themeList[index])),
+                            labelStyle: const TextStyle(
+                              height: 1.0,
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
                             selected: _selectedTheme == index,
                             onSelected: (bool selected) {
                               setState(() {
@@ -283,3 +291,5 @@ class _CreateTarotNightRoomBottomSheetState
     );
   }
 }
+
+enum CreateTarotNightRoomBottomSheetMode { create, edit }
