@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -146,20 +147,22 @@ class TarotNightRoomInfoView extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            IconButton(
-                                color: Colors.white,
-                                iconSize: 16,
-                                padding: EdgeInsets.zero,
-                                onPressed: () => {
-                                      showCreateTarotNightRoomBottomSheet(
-                                          context, onClosed: (_) {
-                                        if (_ == null) {
-                                          return;
-                                        }
-                                      })
-                                    },
-                                icon:
-                                    const FaIcon(FontAwesomeIcons.penToSquare))
+                            if (roomInfo.hostId ==
+                                FirebaseAuth.instance.currentUser!.uid)
+                              IconButton(
+                                  color: Colors.white,
+                                  iconSize: 16,
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () => {
+                                        showCreateTarotNightRoomBottomSheet(
+                                            context, onClosed: (_) {
+                                          if (_ == null) {
+                                            return;
+                                          }
+                                        })
+                                      },
+                                  icon: const FaIcon(
+                                      FontAwesomeIcons.penToSquare))
                           ],
                         ),
                         Text(
