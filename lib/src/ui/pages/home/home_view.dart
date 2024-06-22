@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tata/src/ui/pages/activity-list/activity_list_view.dart';
 import 'package:tata/src/ui/pages/chat-room-list/chat_room_list_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tata/src/ui/pages/my-chat-room/my_chat_room_view.dart';
 import 'package:tata/src/ui/pages/realtime_pair/realtime_pair_view.dart';
 import 'package:tata/src/ui/pages/settings/settings_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
 import 'package:tata/src/ui/shared/widgets/app_bar.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -25,7 +25,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     ChatRoomListView(),
     const MyChatRoomView(),
     const Text('Realtime Chat Button'),
-    const ActivityListView(),
+    const Text('Tarot Night Button'),
     const Text('Settings Button'),
   ];
 
@@ -34,12 +34,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
       switch (index) {
         case 0:
         case 1:
-        case 3:
           _selectedIndex = index;
           break;
         case 2:
           context.push(RealtimePairView.routeName);
           break;
+        case 3:
+          context.push(TarotNightLobbyView.routeName);
         case 4:
           context.push(SettingsView.routeName);
           break;
