@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/providers/shared/members_view_provider.dart';
 import 'package:tata/src/utils/avatar.dart';
@@ -22,43 +23,63 @@ class MembersView extends ConsumerWidget {
 
     return ref.watch(provider).when(
           data: (memberList) {
-            final bool isHost = memberList
-                    .firstWhere((element) =>
-                        element.uid == FirebaseAuth.instance.currentUser!.uid)
-                    .role ==
-                'host';
+            final MemberInfo host = memberList.firstWhere((element) =>
+                element.uid == FirebaseAuth.instance.currentUser!.uid);
+            final bool isHost = host.role == 'host';
+
+            memberList = [
+              host,
+              ...memberList.filter((element) =>
+                  element.uid != FirebaseAuth.instance.currentUser!.uid)
+            ];
+
             return Scaffold(
               appBar: AppBar(
+                backgroundColor: const Color.fromARGB(255, 12, 13, 32),
                 title: const Text('Members'),
+                centerTitle: true,
+                titleSpacing: 0,
               ),
-              body: ListView.separated(
-                padding: const EdgeInsets.all(15),
-                itemBuilder: (context, index) {
-                  final bool isRemovable = memberList[index].role != 'host';
+              body: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color.fromARGB(255, 12, 13, 32),
+                      Color.fromARGB(255, 26, 0, 58)
+                    ],
+                  ),
+                ),
+                child: ListView.separated(
+                  padding: const EdgeInsets.all(15),
+                  itemBuilder: (context, index) {
+                    final bool isRemovable = memberList[index].role != 'host';
 
-                  return isHost && isRemovable
-                      ? Slidable(
-                          endActionPane: ActionPane(
-                              extentRatio: 0.25,
-                              dragDismissible: false,
-                              motion: const BehindMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (_) => ref
-                                      .read(provider.notifier)
-                                      .removeMember(memberList[index].uid),
-                                  backgroundColor: const Color(0xFFFE4A49),
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.delete,
-                                  label: 'Delete',
-                                )
-                              ]),
-                          child: _buildMemberItem(memberList[index]))
-                      : _buildMemberItem(memberList[index]);
-                },
-                itemCount: memberList.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    const SizedBox(width: 10),
+                    return isHost && isRemovable
+                        ? Slidable(
+                            endActionPane: ActionPane(
+                                extentRatio: 0.25,
+                                dragDismissible: false,
+                                motion: const BehindMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (_) => ref
+                                        .read(provider.notifier)
+                                        .removeMember(memberList[index].uid),
+                                    backgroundColor: const Color(0xFFFE4A49),
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.delete,
+                                    label: 'Delete',
+                                  )
+                                ]),
+                            child: _buildMemberItem(memberList[index]))
+                        : _buildMemberItem(memberList[index]);
+                  },
+                  itemCount: memberList.length,
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const SizedBox(width: 10),
+                ),
               ),
             );
           },
