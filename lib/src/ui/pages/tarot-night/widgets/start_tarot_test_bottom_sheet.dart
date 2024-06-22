@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 Future<Object?> showStartTarotTestBottomSheet(BuildContext context,
     {required ValueChanged onClosed}) {
@@ -31,8 +32,18 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
       height: screenHeight * 0.77,
       decoration: BoxDecoration(
           color: const Color.fromARGB(255, 12, 13, 32),
-          border: Border.all(
-              color: const Color.fromARGB(255, 241, 198, 255), width: 2),
+          border: GradientBoxBorder(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  const Color.fromARGB(255, 223, 130, 255).withOpacity(0.8),
+                  const Color.fromARGB(255, 223, 130, 255).withOpacity(0.6),
+                  const Color.fromARGB(255, 241, 198, 255).withOpacity(0.4),
+                  const Color.fromARGB(255, 241, 198, 255).withOpacity(0.2),
+                ],
+              ),
+              width: 2),
           borderRadius: const BorderRadius.all(Radius.circular(40))),
       child: Scaffold(
           backgroundColor: Colors.transparent,
