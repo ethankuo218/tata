@@ -116,15 +116,14 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
                           ? MaterialStateProperty.all(
                               const Color.fromARGB(255, 223, 130, 255))
                           : MaterialStateProperty.all(
-                              const Color.fromARGB(255, 223, 130, 255)
-                                  .withOpacity(0.5))),
+                              const Color.fromARGB(255, 168, 168, 168))),
                   child: Text('開始測驗',
                       style: TextStyle(
                           color: isTestButtonEnabled
                               ? const Color.fromARGB(255, 12, 13, 32)
                               : const Color.fromARGB(255, 12, 13, 32)
-                                  .withOpacity(0.5),
-                          fontSize: 14,
+                                  .withOpacity(0.8),
+                          fontSize: 16,
                           fontWeight: FontWeight.bold)))
           ],
         ),
