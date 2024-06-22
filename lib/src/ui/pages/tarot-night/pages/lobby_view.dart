@@ -116,7 +116,6 @@ class TarotNightLobbyView extends ConsumerWidget {
                                       case ParticipantStatus.participant:
                                         break;
                                       case ParticipantStatus.notStarted:
-                                        print('not started');
                                         showCreateTarotNightRoomBottomSheet(
                                             context, onClosed: (_) {
                                           if (_ == null) {
@@ -218,6 +217,10 @@ class TarotNightLobbyView extends ConsumerWidget {
                                 flex: 1,
                                 child: GestureDetector(
                                     onTap: () {
+                                      if (lobbyInfo.participantStatus ==
+                                          ParticipantStatus.host) {
+                                        return;
+                                      }
                                       context.push(
                                           TarotNightRoomListView.routeName);
                                     },
