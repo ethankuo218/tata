@@ -12,7 +12,6 @@ class LeaveChatView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final double screenHeight = MediaQuery.of(context).size.height;
     final LeaveChatViewProvider provider =
         leaveChatViewProvider(roomId: chatRoomId);
 
@@ -22,28 +21,51 @@ class LeaveChatView extends ConsumerWidget {
       ),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: screenHeight * 0.15, horizontal: 60.0),
+          padding: const EdgeInsets.symmetric(horizontal: 48),
           child: Column(
             children: [
-              const Text('Do you want to leave this chat ?',
+              const SizedBox(height: 200),
+              const Text('您確定要離開此聊天室嗎？ 離開即無法查看您聊天的所有紀錄',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: 24)),
-              SizedBox(height: screenHeight * 0.1),
-              TextButton(
-                  style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(const Size(200, 50)),
-                    backgroundColor: MaterialStateProperty.all(Colors.red),
-                  ),
-                  onPressed: () {
-                    ref.read(provider.notifier).leaveChat().then(
-                        (_) => context.pushReplacement(HomeView.routeName));
-                  },
-                  child: const Text('Confirm',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold))),
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                      flex: 1,
+                      child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color.fromARGB(255, 161, 161, 161)),
+                          ),
+                          onPressed: () {
+                            ref.read(provider.notifier).leaveChat().then((_) =>
+                                context.pushReplacement(HomeView.routeName));
+                          },
+                          child: const Text('Confirm',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold)))),
+                  const SizedBox(width: 16),
+                  Expanded(
+                      flex: 1,
+                      child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.red),
+                          ),
+                          onPressed: () {
+                            ref.read(provider.notifier).leaveChat().then((_) =>
+                                context.pushReplacement(HomeView.routeName));
+                          },
+                          child: const Text('Confirm',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold)))),
+                ],
+              ),
             ],
           ),
         ),
