@@ -24,16 +24,50 @@ class App extends ConsumerWidget {
       ],
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(color: Colors.white, size: 18),
-          titleTextStyle: TextStyle(color: Colors.white, fontSize: 18),
-          backgroundColor: Colors.black,
+          iconTheme: IconThemeData(color: Colors.white, size: 16),
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 17),
+          backgroundColor: Color.fromARGB(255, 7, 9, 47),
         ),
-        scaffoldBackgroundColor: Colors.transparent,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 7, 9, 47),
         bottomSheetTheme: const BottomSheetThemeData(
-          surfaceTintColor: Colors.black,
+          surfaceTintColor: Color.fromARGB(255, 7, 9, 47),
         ),
-        primarySwatch: Colors.purple,
+        primarySwatch: const MaterialColor(0xFFD4BD42, {
+          50: Color(0xFFFFF8E1),
+          100: Color(0xFFFFECB3),
+          200: Color(0xFFFFE082),
+          300: Color(0xFFFFD54F),
+          400: Color(0xFFFFCA28),
+          500: Color(0xFFD4BD42),
+          600: Color(0xFFC0B133),
+          700: Color(0xFFAC9D26),
+          800: Color(0xFF998A1A),
+          900: Color(0xFF7E6B0A),
+        }),
         fontFamily: "YuPearl",
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            ),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              const Color.fromARGB(255, 223, 130, 255),
+            ),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40),
+              ),
+            ),
+            textStyle: MaterialStateProperty.all<TextStyle>(
+              const TextStyle(
+                height: 1.0,
+                color: Color.fromARGB(255, 7, 9, 47),
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
       ),
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,

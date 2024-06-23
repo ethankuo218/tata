@@ -75,7 +75,7 @@ class ChatRoomView extends ConsumerWidget {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             color: const Color.fromARGB(
-                                                255, 223, 130, 255),
+                                                255, 255, 228, 85),
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -98,7 +98,7 @@ class ChatRoomView extends ConsumerWidget {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             color: const Color.fromARGB(
-                                                255, 241, 198, 255),
+                                                255, 212, 189, 66),
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -148,10 +148,7 @@ class ChatRoomView extends ConsumerWidget {
                               gradient: LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
-                                colors: [
-                                  Color.fromARGB(255, 12, 13, 32),
-                                  Color.fromARGB(255, 26, 0, 58)
-                                ],
+                                colors: [Color.fromARGB(255, 7, 9, 47)],
                               ),
                             ),
                             child: StreamBuilder(

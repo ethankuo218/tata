@@ -279,7 +279,7 @@ class _CreateTarotNightRoomBottomSheetState
                           "開啟心事之門，創建你的夜話空間",
                           style: TextStyle(
                               color: Color.fromARGB(255, 12, 13, 32),
-                              height: 1.0,
+                              height: 1.2,
                               fontSize: 16,
                               fontWeight: FontWeight.w500),
                         ),

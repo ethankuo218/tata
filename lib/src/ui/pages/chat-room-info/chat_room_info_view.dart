@@ -18,7 +18,7 @@ class ChatRoomInfoView extends StatelessWidget {
       ),
       body: Container(
         height: screenHeight,
-        decoration: const BoxDecoration(color: Color.fromARGB(255, 30, 30, 30)),
+        decoration: const BoxDecoration(color: Color.fromARGB(255, 7, 9, 47)),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Column(
@@ -80,7 +80,7 @@ class ChatRoomInfoView extends StatelessWidget {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,13 +89,16 @@ class ChatRoomInfoView extends StatelessWidget {
                       width: 80,
                       decoration: BoxDecoration(
                         border: Border.all(
-                            width: 2, color: Colors.purple.withOpacity(0.5)),
+                            width: 2,
+                            color: const Color.fromARGB(255, 255, 228, 85)
+                                .withOpacity(0.8)),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Center(
                         child: Text(chatRoomInfo.category,
                             style: const TextStyle(
-                                color: Colors.purple, fontSize: 16)),
+                                color: Color.fromARGB(255, 255, 228, 85),
+                                fontSize: 16)),
                       ),
                     )
                   ],

@@ -176,7 +176,7 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                             },
                             child: const Text('我再想想',
                                 style: TextStyle(
-                                    height: 1.0,
+                                    height: 1.2,
                                     color: Color.fromARGB(255, 223, 130, 255),
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500)),
@@ -204,7 +204,7 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                               },
                               child: const Text('開始測驗',
                                   style: TextStyle(
-                                      height: 1.0,
+                                      height: 1.2,
                                       color: Color.fromARGB(255, 12, 13, 32),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500)),
