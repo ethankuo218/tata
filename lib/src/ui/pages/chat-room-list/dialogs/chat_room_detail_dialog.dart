@@ -16,7 +16,7 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
           height: screenHeight * 0.6,
           margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
           decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 30, 30, 30),
+              color: Color.fromARGB(255, 7, 9, 47),
               borderRadius: BorderRadius.all(Radius.circular(10))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,13 +111,16 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                       width: 80,
                       decoration: BoxDecoration(
                         border: Border.all(
-                            width: 2, color: Colors.purple.withOpacity(0.5)),
+                            width: 2,
+                            color: const Color.fromARGB(255, 255, 228, 85)
+                                .withOpacity(0.8)),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Center(
                         child: Text(chatRoomInfo.category,
                             style: const TextStyle(
-                                color: Colors.purple, fontSize: 16)),
+                                color: Color.fromARGB(255, 255, 228, 85),
+                                fontSize: 16)),
                       ),
                     ),
                     Container(
@@ -141,7 +144,7 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
               const SizedBox(height: 5),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text('Description',
+                child: Text('心情描述',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -163,7 +166,7 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                 children: [
                   ElevatedButton(
                       onPressed: () => Navigator.of(context).pop(true),
-                      child: const Text('Join chat room'))
+                      child: const Text('立即參與話題'))
                 ],
               ),
             ],

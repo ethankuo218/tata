@@ -32,18 +32,21 @@ class App extends ConsumerWidget {
         bottomSheetTheme: const BottomSheetThemeData(
           surfaceTintColor: Color.fromARGB(255, 7, 9, 47),
         ),
-        primarySwatch: const MaterialColor(0xFFD4BD42, {
-          50: Color(0xFFFFF8E1),
-          100: Color(0xFFFFECB3),
-          200: Color(0xFFFFE082),
-          300: Color(0xFFFFD54F),
-          400: Color(0xFFFFCA28),
-          500: Color(0xFFD4BD42),
-          600: Color(0xFFC0B133),
-          700: Color(0xFFAC9D26),
-          800: Color(0xFF998A1A),
-          900: Color(0xFF7E6B0A),
-        }),
+        primarySwatch: const MaterialColor(
+          0xFFFFE455,
+          <int, Color>{
+            50: Color(0xFFFFE455),
+            100: Color(0xFFFFE455),
+            200: Color(0xFFFFE455),
+            300: Color(0xFFFFE455),
+            400: Color(0xFFFFE455),
+            500: Color(0xFFFFE455),
+            600: Color(0xFFFFE455),
+            700: Color(0xFFFFE455),
+            800: Color(0xFFFFE455),
+            900: Color(0xFFFFE455),
+          },
+        ),
         fontFamily: "YuPearl",
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -51,7 +54,7 @@ class App extends ConsumerWidget {
               const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
             ),
             backgroundColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(255, 223, 130, 255),
+              const Color.fromARGB(255, 255, 228, 85),
             ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(

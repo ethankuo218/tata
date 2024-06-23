@@ -13,7 +13,7 @@ class ChatRoomCategoryTile extends StatelessWidget {
       width: 100,
       decoration: BoxDecoration(
         color: isSelected
-            ? Colors.purple.withOpacity(0.8)
+            ? const Color.fromARGB(255, 7, 9, 47).withOpacity(0.8)
             : Colors.white.withOpacity(0.8),
         borderRadius: BorderRadius.circular(35),
       ),

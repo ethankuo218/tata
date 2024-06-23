@@ -162,7 +162,8 @@ class MyChatRoomTile extends ConsumerWidget {
                                       width: 20,
                                       height: 20,
                                       decoration: BoxDecoration(
-                                        color: Colors.purple,
+                                        color: const Color.fromARGB(
+                                            255, 255, 228, 85),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: const Center(

@@ -51,7 +51,7 @@ class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
     final displayPhoneNumber =
         '+${phoneNumber.countryCode} ${'*' * (phoneNumber.nsn.length - 2)}${phoneNumber.nsn.substring(phoneNumber.nsn.length - 2)}';
 
-    const focusedBorderColor = Colors.purple;
+    const focusedBorderColor = Color.fromARGB(255, 255, 228, 85);
 
     final defaultPinTheme = PinTheme(
       width: 47,
@@ -154,7 +154,9 @@ class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
                 TextSpan(
                     text: isSendOtpCoolDown ? " $timerText" : " Resend Code",
                     style: const TextStyle(
-                        color: Colors.purple, fontSize: 12, height: 1.2),
+                        color: Color.fromARGB(255, 255, 228, 85),
+                        fontSize: 12,
+                        height: 1.2),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         setState(() {
@@ -185,7 +187,7 @@ class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
                   Expanded(
                       child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.purple,
+                              color: const Color.fromARGB(255, 255, 228, 85),
                               borderRadius: BorderRadius.circular(25)),
                           child: TextButton(
                             onPressed: () {
@@ -199,7 +201,7 @@ class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
                             child: const Text(
                               'Verify',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color.fromARGB(255, 7, 9, 47),
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold),
                             ),

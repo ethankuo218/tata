@@ -39,7 +39,7 @@ class _TarotNightRoomListViewState
                   toolbarHeight: 33,
                   title: const Text('TATA',
                       style: TextStyle(
-                        color: Colors.purple,
+                        color: Color.fromARGB(255, 7, 9, 47),
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                       )),

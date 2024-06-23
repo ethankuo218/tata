@@ -86,7 +86,9 @@ class _PhoneVerifyInputViewState extends ConsumerState<PhoneVerifyInputView> {
                 TextSpan(
                     text: " Terms & Conditions",
                     style: const TextStyle(
-                        color: Colors.purple, fontSize: 12, height: 1.2),
+                        color: Color.fromARGB(255, 255, 228, 85),
+                        fontSize: 12,
+                        height: 1.2),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => launchUrlString("https://www.google.com"))
               ])),
@@ -96,7 +98,7 @@ class _PhoneVerifyInputViewState extends ConsumerState<PhoneVerifyInputView> {
                   Expanded(
                       child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.purple,
+                              color: const Color.fromARGB(255, 255, 228, 85),
                               borderRadius: BorderRadius.circular(25)),
                           child: TextButton(
                             onPressed: () async {
@@ -118,7 +120,7 @@ class _PhoneVerifyInputViewState extends ConsumerState<PhoneVerifyInputView> {
                             child: const Text(
                               'Send OTP',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color.fromARGB(255, 7, 9, 47),
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold),
                             ),
