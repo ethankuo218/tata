@@ -12,5 +12,7 @@ class AuthenticationState with _$AuthenticationState {
 
   const factory AuthenticationState.authenticated() = _Authenticated;
 
+  const factory AuthenticationState.firstLogin() = _FirstLogin;
+
   const factory AuthenticationState.otpSent() = _OtpSent;
 }

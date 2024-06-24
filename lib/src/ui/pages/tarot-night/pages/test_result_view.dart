@@ -341,17 +341,8 @@ class _TarotNightTestResultViewState
                                           fontWeight: FontWeight.w400),
                                     ),
                                     const SizedBox(height: 20),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                                255, 241, 198, 255)
-                                            .withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                      child:
-                                          TarotNightTestResultExpandablePanel(
-                                              data: _data),
-                                    )
+                                    TarotNightTestResultExpandablePanel(
+                                        data: _data)
                                   ],
                                 )),
                           ]),

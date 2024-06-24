@@ -22,6 +22,7 @@ mixin _$AuthenticationState {
     required TResult Function() loading,
     required TResult Function() unauthenticated,
     required TResult Function() authenticated,
+    required TResult Function() firstLogin,
     required TResult Function() otpSent,
   }) =>
       throw _privateConstructorUsedError;
@@ -31,6 +32,7 @@ mixin _$AuthenticationState {
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
     TResult? Function()? authenticated,
+    TResult? Function()? firstLogin,
     TResult? Function()? otpSent,
   }) =>
       throw _privateConstructorUsedError;
@@ -40,6 +42,7 @@ mixin _$AuthenticationState {
     TResult Function()? loading,
     TResult Function()? unauthenticated,
     TResult Function()? authenticated,
+    TResult Function()? firstLogin,
     TResult Function()? otpSent,
     required TResult orElse(),
   }) =>
@@ -50,6 +53,7 @@ mixin _$AuthenticationState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_FirstLogin value) firstLogin,
     required TResult Function(_OtpSent value) otpSent,
   }) =>
       throw _privateConstructorUsedError;
@@ -59,6 +63,7 @@ mixin _$AuthenticationState {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_FirstLogin value)? firstLogin,
     TResult? Function(_OtpSent value)? otpSent,
   }) =>
       throw _privateConstructorUsedError;
@@ -68,6 +73,7 @@ mixin _$AuthenticationState {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_FirstLogin value)? firstLogin,
     TResult Function(_OtpSent value)? otpSent,
     required TResult orElse(),
   }) =>
@@ -134,6 +140,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() loading,
     required TResult Function() unauthenticated,
     required TResult Function() authenticated,
+    required TResult Function() firstLogin,
     required TResult Function() otpSent,
   }) {
     return initial();
@@ -146,6 +153,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
     TResult? Function()? authenticated,
+    TResult? Function()? firstLogin,
     TResult? Function()? otpSent,
   }) {
     return initial?.call();
@@ -158,6 +166,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? loading,
     TResult Function()? unauthenticated,
     TResult Function()? authenticated,
+    TResult Function()? firstLogin,
     TResult Function()? otpSent,
     required TResult orElse(),
   }) {
@@ -174,6 +183,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_FirstLogin value) firstLogin,
     required TResult Function(_OtpSent value) otpSent,
   }) {
     return initial(this);
@@ -186,6 +196,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_FirstLogin value)? firstLogin,
     TResult? Function(_OtpSent value)? otpSent,
   }) {
     return initial?.call(this);
@@ -198,6 +209,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_FirstLogin value)? firstLogin,
     TResult Function(_OtpSent value)? otpSent,
     required TResult orElse(),
   }) {
@@ -254,6 +266,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() loading,
     required TResult Function() unauthenticated,
     required TResult Function() authenticated,
+    required TResult Function() firstLogin,
     required TResult Function() otpSent,
   }) {
     return loading();
@@ -266,6 +279,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
     TResult? Function()? authenticated,
+    TResult? Function()? firstLogin,
     TResult? Function()? otpSent,
   }) {
     return loading?.call();
@@ -278,6 +292,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? loading,
     TResult Function()? unauthenticated,
     TResult Function()? authenticated,
+    TResult Function()? firstLogin,
     TResult Function()? otpSent,
     required TResult orElse(),
   }) {
@@ -294,6 +309,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_FirstLogin value) firstLogin,
     required TResult Function(_OtpSent value) otpSent,
   }) {
     return loading(this);
@@ -306,6 +322,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_FirstLogin value)? firstLogin,
     TResult? Function(_OtpSent value)? otpSent,
   }) {
     return loading?.call(this);
@@ -318,6 +335,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_FirstLogin value)? firstLogin,
     TResult Function(_OtpSent value)? otpSent,
     required TResult orElse(),
   }) {
@@ -374,6 +392,7 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     required TResult Function() loading,
     required TResult Function() unauthenticated,
     required TResult Function() authenticated,
+    required TResult Function() firstLogin,
     required TResult Function() otpSent,
   }) {
     return unauthenticated();
@@ -386,6 +405,7 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
     TResult? Function()? authenticated,
+    TResult? Function()? firstLogin,
     TResult? Function()? otpSent,
   }) {
     return unauthenticated?.call();
@@ -398,6 +418,7 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     TResult Function()? loading,
     TResult Function()? unauthenticated,
     TResult Function()? authenticated,
+    TResult Function()? firstLogin,
     TResult Function()? otpSent,
     required TResult orElse(),
   }) {
@@ -414,6 +435,7 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_FirstLogin value) firstLogin,
     required TResult Function(_OtpSent value) otpSent,
   }) {
     return unauthenticated(this);
@@ -426,6 +448,7 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_FirstLogin value)? firstLogin,
     TResult? Function(_OtpSent value)? otpSent,
   }) {
     return unauthenticated?.call(this);
@@ -438,6 +461,7 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_FirstLogin value)? firstLogin,
     TResult Function(_OtpSent value)? otpSent,
     required TResult orElse(),
   }) {
@@ -494,6 +518,7 @@ class _$AuthenticatedImpl implements _Authenticated {
     required TResult Function() loading,
     required TResult Function() unauthenticated,
     required TResult Function() authenticated,
+    required TResult Function() firstLogin,
     required TResult Function() otpSent,
   }) {
     return authenticated();
@@ -506,6 +531,7 @@ class _$AuthenticatedImpl implements _Authenticated {
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
     TResult? Function()? authenticated,
+    TResult? Function()? firstLogin,
     TResult? Function()? otpSent,
   }) {
     return authenticated?.call();
@@ -518,6 +544,7 @@ class _$AuthenticatedImpl implements _Authenticated {
     TResult Function()? loading,
     TResult Function()? unauthenticated,
     TResult Function()? authenticated,
+    TResult Function()? firstLogin,
     TResult Function()? otpSent,
     required TResult orElse(),
   }) {
@@ -534,6 +561,7 @@ class _$AuthenticatedImpl implements _Authenticated {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_FirstLogin value) firstLogin,
     required TResult Function(_OtpSent value) otpSent,
   }) {
     return authenticated(this);
@@ -546,6 +574,7 @@ class _$AuthenticatedImpl implements _Authenticated {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_FirstLogin value)? firstLogin,
     TResult? Function(_OtpSent value)? otpSent,
   }) {
     return authenticated?.call(this);
@@ -558,6 +587,7 @@ class _$AuthenticatedImpl implements _Authenticated {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_FirstLogin value)? firstLogin,
     TResult Function(_OtpSent value)? otpSent,
     required TResult orElse(),
   }) {
@@ -570,6 +600,132 @@ class _$AuthenticatedImpl implements _Authenticated {
 
 abstract class _Authenticated implements AuthenticationState {
   const factory _Authenticated() = _$AuthenticatedImpl;
+}
+
+/// @nodoc
+abstract class _$$FirstLoginImplCopyWith<$Res> {
+  factory _$$FirstLoginImplCopyWith(
+          _$FirstLoginImpl value, $Res Function(_$FirstLoginImpl) then) =
+      __$$FirstLoginImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FirstLoginImplCopyWithImpl<$Res>
+    extends _$AuthenticationStateCopyWithImpl<$Res, _$FirstLoginImpl>
+    implements _$$FirstLoginImplCopyWith<$Res> {
+  __$$FirstLoginImplCopyWithImpl(
+      _$FirstLoginImpl _value, $Res Function(_$FirstLoginImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$FirstLoginImpl implements _FirstLogin {
+  const _$FirstLoginImpl();
+
+  @override
+  String toString() {
+    return 'AuthenticationState.firstLogin()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$FirstLoginImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() unauthenticated,
+    required TResult Function() authenticated,
+    required TResult Function() firstLogin,
+    required TResult Function() otpSent,
+  }) {
+    return firstLogin();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function()? authenticated,
+    TResult? Function()? firstLogin,
+    TResult? Function()? otpSent,
+  }) {
+    return firstLogin?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? unauthenticated,
+    TResult Function()? authenticated,
+    TResult Function()? firstLogin,
+    TResult Function()? otpSent,
+    required TResult orElse(),
+  }) {
+    if (firstLogin != null) {
+      return firstLogin();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_UnAuthentication value) unauthenticated,
+    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_FirstLogin value) firstLogin,
+    required TResult Function(_OtpSent value) otpSent,
+  }) {
+    return firstLogin(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_UnAuthentication value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_FirstLogin value)? firstLogin,
+    TResult? Function(_OtpSent value)? otpSent,
+  }) {
+    return firstLogin?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_UnAuthentication value)? unauthenticated,
+    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_FirstLogin value)? firstLogin,
+    TResult Function(_OtpSent value)? otpSent,
+    required TResult orElse(),
+  }) {
+    if (firstLogin != null) {
+      return firstLogin(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FirstLogin implements AuthenticationState {
+  const factory _FirstLogin() = _$FirstLoginImpl;
 }
 
 /// @nodoc
@@ -614,6 +770,7 @@ class _$OtpSentImpl implements _OtpSent {
     required TResult Function() loading,
     required TResult Function() unauthenticated,
     required TResult Function() authenticated,
+    required TResult Function() firstLogin,
     required TResult Function() otpSent,
   }) {
     return otpSent();
@@ -626,6 +783,7 @@ class _$OtpSentImpl implements _OtpSent {
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
     TResult? Function()? authenticated,
+    TResult? Function()? firstLogin,
     TResult? Function()? otpSent,
   }) {
     return otpSent?.call();
@@ -638,6 +796,7 @@ class _$OtpSentImpl implements _OtpSent {
     TResult Function()? loading,
     TResult Function()? unauthenticated,
     TResult Function()? authenticated,
+    TResult Function()? firstLogin,
     TResult Function()? otpSent,
     required TResult orElse(),
   }) {
@@ -654,6 +813,7 @@ class _$OtpSentImpl implements _OtpSent {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_FirstLogin value) firstLogin,
     required TResult Function(_OtpSent value) otpSent,
   }) {
     return otpSent(this);
@@ -666,6 +826,7 @@ class _$OtpSentImpl implements _OtpSent {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_FirstLogin value)? firstLogin,
     TResult? Function(_OtpSent value)? otpSent,
   }) {
     return otpSent?.call(this);
@@ -678,6 +839,7 @@ class _$OtpSentImpl implements _OtpSent {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_FirstLogin value)? firstLogin,
     TResult Function(_OtpSent value)? otpSent,
     required TResult orElse(),
   }) {

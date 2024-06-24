@@ -15,6 +15,7 @@ class RouterNotifier extends ChangeNotifier {
               authState = const AuthenticationState.unauthenticated(),
           authenticated: () =>
               authState = const AuthenticationState.authenticated(),
+          firstLogin: () => authState = const AuthenticationState.firstLogin(),
           otpSent: () => authState = const AuthenticationState.otpSent(),
         );
   }

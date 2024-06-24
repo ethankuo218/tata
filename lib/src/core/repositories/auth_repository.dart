@@ -7,7 +7,6 @@ import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tata/src/utils/avatar.dart';
 
 part 'auth_repository.g.dart';
 
@@ -23,7 +22,7 @@ class AuthRepository {
       final UserCredential userCredential =
           await _firebaseAuth.signInWithProvider(appleProvider);
 
-      await _saveUserInfo(userCredential);
+      await _saveUserInfoAndCheckIsNewUser(userCredential);
 
       return left(userCredential.user!);
     } on FirebaseAuthException catch (e) {
@@ -51,7 +50,7 @@ class AuthRepository {
       final UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
 
-      await _saveUserInfo(userCredential);
+      await _saveUserInfoAndCheckIsNewUser(userCredential);
 
       return left(userCredential.user!);
     } on FirebaseAuthException catch (e) {
@@ -98,7 +97,7 @@ class AuthRepository {
       UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
 
-      await _saveUserInfo(userCredential);
+      await _saveUserInfoAndCheckIsNewUser(userCredential);
 
       return left(userCredential.user!);
     } on FirebaseAuthException catch (e) {
@@ -133,7 +132,8 @@ class AuthRepository {
     }
   }
 
-  Future<void> _saveUserInfo(UserCredential userCredential) async {
+  Future<void> _saveUserInfoAndCheckIsNewUser(
+      UserCredential userCredential) async {
     DocumentReference<Map<String, dynamic>> doc =
         _fireStore.collection('users').doc(userCredential.user!.uid);
 
@@ -143,10 +143,21 @@ class AuthRepository {
       await doc.set({
         'uid': userCredential.user!.uid,
         'name': null,
-        'avatar': Avatar.getRandomAvatar().value,
+        'avatar': null,
+        'birthday': null,
         'fcm_token': fcmToken
       }, SetOptions(merge: true));
+    } else {
+      await doc.set({'fcm_token': fcmToken}, SetOptions(merge: true));
     }
+  }
+
+// Check if user is new
+  Future<bool> isNewUser() async {
+    DocumentReference<Map<String, dynamic>> doc =
+        _fireStore.collection('users').doc(_firebaseAuth.currentUser!.uid);
+
+    return (await doc.get()).data()?['name'] == null;
   }
 
 // Sign Out

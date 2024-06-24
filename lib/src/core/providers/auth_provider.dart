@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/repositories/auth_repository.dart';
+import 'package:tata/src/core/repositories/user_repository.dart';
 import 'package:tata/src/core/state/authentication_state.dart';
+import 'package:tata/src/utils/avatar.dart';
 
 part 'auth_provider.g.dart';
 
@@ -14,12 +16,18 @@ class Auth extends _$Auth {
   PhoneNumber? get phoneNumber => _phoneNumber;
 
   Auth() {
-    FirebaseAuth.instance.authStateChanges().listen((user) {
+    FirebaseAuth.instance.authStateChanges().listen((user) async {
       if (user != null) {
-        state = const AuthenticationState.authenticated();
+        bool isNewUser = await ref.read(authRepositoryProvider).isNewUser();
+
+        state = isNewUser
+            ? const AuthenticationState.firstLogin()
+            : const AuthenticationState.authenticated();
       } else {
         state = const AuthenticationState.unauthenticated();
       }
+    }, onError: (error) {
+      state = const AuthenticationState.unauthenticated();
     });
   }
 
@@ -54,8 +62,8 @@ class Auth extends _$Auth {
     });
   }
 
-  void signInWithPhoneNumber(String smsCode) {
-    ref
+  Future<void> signInWithPhoneNumber(String smsCode) async {
+    await ref
         .read(authRepositoryProvider)
         .signInWithPhoneNumber(_verificationId!, smsCode);
   }
@@ -73,5 +81,20 @@ class Auth extends _$Auth {
   // Sign out
   Future<void> signOut() async {
     await ref.read(authRepositoryProvider).signOut();
+  }
+
+  // Update User Profile
+  Future<void> updateUserProfile(
+      {required String name,
+      required String birthday,
+      required AvatarKey avatar}) async {
+    await ref.read(userRepositoryProvider).editUserInfo(
+          uid: FirebaseAuth.instance.currentUser!.uid,
+          name: name,
+          birthday: birthday,
+          avatar: avatar,
+        );
+
+    state = const AuthenticationState.authenticated();
   }
 }

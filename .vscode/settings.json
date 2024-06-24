@@ -5,6 +5,7 @@
         "cupertino",
         "Firestore",
         "fpdart",
+        "lerp",
         "LTRB",
         "Merienda",
         "Pinput",

@@ -32,14 +32,18 @@ class UserRepository {
 
   // Edit User Info
   Future<void> editUserInfo(
-      {required String uid, String? name, AvatarKey? avatar}) async {
+      {required String uid,
+      String? name,
+      String? birthday,
+      AvatarKey? avatar}) async {
     if (name == null && avatar == null) {
       throw Exception('Need to provide one of the value you want to edit');
     }
 
     await _fireStore.collection('users').doc(uid).update({
       ...name != null ? {'name': name} : {},
-      ...avatar != null ? {'avatar': avatar} : {},
+      ...birthday != null ? {'birthday': birthday} : {},
+      ...avatar != null ? {'avatar': avatar.value} : {},
     });
   }
 }

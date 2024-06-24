@@ -12,6 +12,7 @@ import 'package:tata/src/ui/pages/tarot-night/pages/room_list_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
 import 'package:tata/src/ui/pages/chat-room/chat_room_view.dart';
+import 'package:tata/src/ui/pages/walkthrough/walkthrough_view.dart';
 import 'package:tata/src/ui/shared/pages/leave_chat_view.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
 import 'package:tata/src/ui/pages/chat-room-info/chat_room_info_view.dart';
@@ -70,7 +71,12 @@ final routerProvider = Provider<GoRouter>((ref) {
           ]),
       GoRoute(
           path: LoginView.routeName,
-          builder: (context, state) => const LoginView()),
+          builder: (BuildContext context, GoRouterState state) =>
+              const LoginView()),
+      GoRoute(
+          path: WalkthroughView.routeName,
+          builder: (BuildContext context, GoRouterState state) =>
+              WalkthroughView()),
       GoRoute(
           path: PhoneVerifyInputView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
@@ -134,6 +140,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       switch (routerListenable.authState) {
         case const AuthenticationState.authenticated():
           return null;
+        case const AuthenticationState.firstLogin():
+          return WalkthroughView.routeName;
         case const AuthenticationState.unauthenticated():
           if (state.fullPath == PhoneVerifyInputView.routeName ||
               state.fullPath == PhoneVerifyOtpView.routeName) {
