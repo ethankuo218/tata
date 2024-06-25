@@ -98,23 +98,11 @@ class _TarotNightTestResultExpandablePanelState
                         const Color.fromARGB(255, 241, 198, 255),
                         isExpanded ? t : 1 - t, // Reverse for closing
                       )!
-                    : Color.lerp(
-                        const Color.fromARGB(255, 241, 198, 255),
-                        const Color.fromARGB(255, 102, 75, 125),
-                        isExpanded ? t : 1 - t, // Reverse for closing
-                      )!;
+                    : const Color.fromARGB(255, 102, 75, 125);
 
                 final borderColor = isExpanded
-                    ? Color.lerp(
-                        const Color.fromARGB(255, 102, 75, 125),
-                        const Color.fromARGB(255, 241, 198, 255),
-                        isExpanded ? t : 1 - t, // Reverse for closing
-                      )!
-                    : Color.lerp(
-                        const Color.fromARGB(255, 241, 198, 255),
-                        const Color.fromARGB(255, 102, 75, 125),
-                        isExpanded ? t : 1 - t, // Reverse for closing
-                      )!;
+                    ? const Color.fromARGB(255, 241, 198, 255)
+                    : const Color.fromARGB(255, 102, 75, 125);
 
                 return Column(
                   children: [
@@ -189,9 +177,7 @@ class _TarotNightTestResultExpandablePanelState
                     SizeTransition(
                         axisAlignment: 0,
                         sizeFactor: _animations[index],
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 100),
-                          curve: Curves.fastOutSlowIn,
+                        child: Container(
                           padding: const EdgeInsets.only(
                               bottom: 16, left: 16, right: 16),
                           decoration: BoxDecoration(
