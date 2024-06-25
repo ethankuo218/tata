@@ -70,7 +70,7 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                     const Color.fromARGB(255, 223, 130, 255).withOpacity(0.8),
                     const Color.fromARGB(255, 223, 130, 255).withOpacity(0.6),
                     const Color.fromARGB(255, 241, 198, 255).withOpacity(0.4),
-                    const Color.fromARGB(255, 241, 198, 255).withOpacity(0.2),
+                    Colors.transparent,
                   ],
                 ),
                 width: 2),
