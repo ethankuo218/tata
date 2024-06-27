@@ -145,11 +145,7 @@ class ChatRoomView extends ConsumerWidget {
                         children: [
                           Container(
                             decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [Color.fromARGB(255, 7, 9, 47)],
-                              ),
+                              color: Color.fromARGB(255, 7, 9, 47),
                             ),
                             child: StreamBuilder(
                               builder: (BuildContext context,
