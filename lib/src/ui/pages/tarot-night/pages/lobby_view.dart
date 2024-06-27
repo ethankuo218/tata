@@ -150,18 +150,32 @@ class TarotNightLobbyView extends ConsumerWidget {
                                           color: const Color.fromARGB(
                                                   255, 241, 198, 255)
                                               .withOpacity(0.1),
-                                          border: const GradientBoxBorder(
+                                          border: GradientBoxBorder(
                                               gradient: LinearGradient(
-                                                colors: [
-                                                  Color.fromARGB(
-                                                      240, 223, 130, 255),
-                                                  Color.fromARGB(
-                                                      51, 241, 198, 255),
-                                                  Color.fromARGB(
-                                                      240, 223, 130, 255),
-                                                  Color.fromARGB(
-                                                      51, 241, 198, 255),
-                                                ],
+                                                colors: lobbyInfo
+                                                            .participantStatus ==
+                                                        ParticipantStatus
+                                                            .participant
+                                                    ? [
+                                                        const Color.fromARGB(
+                                                            240, 126, 126, 126),
+                                                        const Color.fromARGB(
+                                                            51, 241, 198, 255),
+                                                        const Color.fromARGB(
+                                                            240, 126, 126, 126),
+                                                        const Color.fromARGB(
+                                                            51, 241, 198, 255),
+                                                      ]
+                                                    : [
+                                                        const Color.fromARGB(
+                                                            240, 223, 130, 255),
+                                                        const Color.fromARGB(
+                                                            51, 241, 198, 255),
+                                                        const Color.fromARGB(
+                                                            240, 223, 130, 255),
+                                                        const Color.fromARGB(
+                                                            51, 241, 198, 255),
+                                                      ],
                                               ),
                                               width: 2),
                                           borderRadius:
@@ -174,7 +188,19 @@ class TarotNightLobbyView extends ConsumerWidget {
                                             child: SvgPicture.asset(
                                                 'assets/images/star_2.svg',
                                                 width: 30,
-                                                height: 30),
+                                                height: 30,
+                                                colorFilter: lobbyInfo
+                                                            .participantStatus ==
+                                                        ParticipantStatus
+                                                            .participant
+                                                    ? const ColorFilter.mode(
+                                                        Color.fromARGB(
+                                                            255, 126, 126, 126),
+                                                        BlendMode.srcIn)
+                                                    : const ColorFilter.mode(
+                                                        Color.fromARGB(
+                                                            255, 223, 130, 255),
+                                                        BlendMode.srcIn)),
                                           ),
                                           const Expanded(
                                             child: Padding(
@@ -195,8 +221,14 @@ class TarotNightLobbyView extends ConsumerWidget {
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 20, vertical: 12),
                                             decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    255, 223, 130, 255),
+                                                color: lobbyInfo
+                                                            .participantStatus ==
+                                                        ParticipantStatus
+                                                            .participant
+                                                    ? const Color.fromARGB(
+                                                        255, 168, 168, 168)
+                                                    : const Color.fromARGB(
+                                                        255, 223, 130, 255),
                                                 borderRadius:
                                                     BorderRadius.circular(20)),
                                             child: Text(
@@ -232,18 +264,55 @@ class TarotNightLobbyView extends ConsumerWidget {
                                             color: const Color.fromARGB(
                                                     255, 241, 198, 255)
                                                 .withOpacity(0.1),
-                                            border: const GradientBoxBorder(
+                                            border: GradientBoxBorder(
                                                 gradient: LinearGradient(
-                                                  colors: [
-                                                    Color.fromARGB(
-                                                        240, 223, 130, 255),
-                                                    Color.fromARGB(
-                                                        51, 241, 198, 255),
-                                                    Color.fromARGB(
-                                                        240, 223, 130, 255),
-                                                    Color.fromARGB(
-                                                        51, 241, 198, 255),
-                                                  ],
+                                                  colors: lobbyInfo
+                                                              .participantStatus ==
+                                                          ParticipantStatus.host
+                                                      ? [
+                                                          const Color.fromARGB(
+                                                              240,
+                                                              126,
+                                                              126,
+                                                              126),
+                                                          const Color.fromARGB(
+                                                              51,
+                                                              241,
+                                                              198,
+                                                              255),
+                                                          const Color.fromARGB(
+                                                              240,
+                                                              126,
+                                                              126,
+                                                              126),
+                                                          const Color.fromARGB(
+                                                              51,
+                                                              241,
+                                                              198,
+                                                              255),
+                                                        ]
+                                                      : [
+                                                          const Color.fromARGB(
+                                                              240,
+                                                              223,
+                                                              130,
+                                                              255),
+                                                          const Color.fromARGB(
+                                                              51,
+                                                              241,
+                                                              198,
+                                                              255),
+                                                          const Color.fromARGB(
+                                                              240,
+                                                              223,
+                                                              130,
+                                                              255),
+                                                          const Color.fromARGB(
+                                                              51,
+                                                              241,
+                                                              198,
+                                                              255),
+                                                        ],
                                                 ),
                                                 width: 2),
                                             borderRadius:
@@ -256,7 +325,18 @@ class TarotNightLobbyView extends ConsumerWidget {
                                               child: SvgPicture.asset(
                                                   'assets/images/star_2.svg',
                                                   width: 30,
-                                                  height: 30),
+                                                  height: 30,
+                                                  colorFilter: lobbyInfo
+                                                              .participantStatus ==
+                                                          ParticipantStatus.host
+                                                      ? const ColorFilter.mode(
+                                                          Color.fromARGB(255,
+                                                              126, 126, 126),
+                                                          BlendMode.srcIn)
+                                                      : const ColorFilter.mode(
+                                                          Color.fromARGB(255,
+                                                              223, 130, 255),
+                                                          BlendMode.srcIn)),
                                             ),
                                             const Expanded(
                                                 child: Padding(
@@ -278,8 +358,13 @@ class TarotNightLobbyView extends ConsumerWidget {
                                                       horizontal: 20,
                                                       vertical: 12),
                                               decoration: BoxDecoration(
-                                                  color: const Color.fromARGB(
-                                                      255, 223, 130, 255),
+                                                  color: lobbyInfo
+                                                              .participantStatus ==
+                                                          ParticipantStatus.host
+                                                      ? const Color.fromARGB(
+                                                          255, 168, 168, 168)
+                                                      : const Color.fromARGB(
+                                                          255, 223, 130, 255),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           20)),

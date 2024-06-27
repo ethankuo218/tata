@@ -7,6 +7,7 @@ import 'package:tata/src/core/state/authentication_state.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_role_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/quest_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_info_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_list_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
@@ -76,7 +77,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: WalkthroughView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
-              WalkthroughView()),
+              const WalkthroughView()),
       GoRoute(
           path: PhoneVerifyInputView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
@@ -133,6 +134,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           builder: (BuildContext context, GoRouterState state) {
             return TarotNightTestResultView(
               roomId: state.extra as String,
+            );
+          }),
+      GoRoute(
+          path: TarotNightQuestView.routeName,
+          builder: (context, state) {
+            return TarotNightQuestView(
+              roomId: (state.extra as dynamic)['roomId'] as String,
+              quest: (state.extra as dynamic)['quest'] as String,
             );
           }),
     ],

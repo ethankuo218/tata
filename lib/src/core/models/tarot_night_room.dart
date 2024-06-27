@@ -6,6 +6,7 @@ class TarotNightRoom extends Room {
   late String? card;
   late String? question;
   late List<TarotNightAnswer>? answers;
+  late bool isMember = false;
 
   TarotNightRoom({
     required super.id,
@@ -13,6 +14,7 @@ class TarotNightRoom extends Room {
     this.card,
     this.question,
     this.answers,
+    this.isMember = false,
     required super.title,
     required super.description,
     required super.memberCount,
@@ -61,12 +63,12 @@ class TarotNightRoom extends Room {
 }
 
 enum TarotNightRoomTheme {
-  myRoom(0),
-  all(1),
-  work(2),
-  relation(3),
-  family(4),
-  friend(5);
+  all(0),
+  work(1),
+  relation(2),
+  family(3),
+  friend(4),
+  myRoom(5);
 
   const TarotNightRoomTheme(this.value);
 
@@ -88,7 +90,7 @@ enum TarotNightRoomTheme {
       case TarotNightRoomTheme.myRoom:
         return 'My Room';
       case TarotNightRoomTheme.all:
-        return 'All';
+        return '全部';
       case TarotNightRoomTheme.work:
         return '工作';
       case TarotNightRoomTheme.relation:

@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_card.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/test_result_view_provider.dart';
-import 'package:tata/src/ui/pages/tarot-night/widgets/quest_bottom_sheet.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/quest_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/test_result_expandable_panel.dart';
 
 class TarotNightTestResultView extends ConsumerStatefulWidget {
@@ -68,51 +67,42 @@ class _TarotNightTestResultViewState
                     barColor: Colors.transparent,
                     child: roomInfo.hostId !=
                             FirebaseAuth.instance.currentUser!.uid
-                        ? TextButton(
-                            style: TextButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10)),
-                            onPressed: () {
-                              ref
-                                  .read(tarotNightTestResultViewProvider(
-                                          roomId: widget.roomId)
-                                      .notifier)
-                                  .getQuest()
-                                  .then((quest) {
-                                showQuestBottomSheet(context, quest: quest,
-                                    onClosed: (answer) {
-                                  if (answer == null) {
-                                    return;
-                                  }
+                        ? SizedBox(
+                            height: 48,
+                            width: 160.5,
+                            child: FittedBox(
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 223, 130, 255),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 12)),
+                                onPressed: () {
                                   ref
                                       .read(tarotNightTestResultViewProvider(
                                               roomId: widget.roomId)
                                           .notifier)
-                                      .submitTaskAnswer(answer)
-                                      .then((value) {
-                                    context.pop();
+                                      .getQuest()
+                                      .then((quest) {
+                                    context.push(TarotNightQuestView.routeName,
+                                        extra: {
+                                          'roomId': widget.roomId,
+                                          'quest': quest
+                                        });
                                   });
-                                });
-                              });
-                            },
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('去解任務',
+                                },
+                                child: const Text('去解任務囉！',
                                     style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 137, 118, 82),
-                                        fontSize: 20)),
-                                SizedBox(width: 10),
-                                FaIcon(FontAwesomeIcons.arrowRight,
-                                    color: Color.fromARGB(255, 137, 118, 82),
-                                    size: 18)
-                              ],
-                            ),
-                          )
-                        : const SizedBox(),
+                                        height: 1.0,
+                                        color: Color.fromARGB(255, 12, 13, 32),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500)),
+                              ),
+                            ))
+                        : const SizedBox.shrink(),
                     body: (context, controller) => SingleChildScrollView(
                             child: Container(
                           padding: const EdgeInsets.fromLTRB(16, 0, 16, 80),
