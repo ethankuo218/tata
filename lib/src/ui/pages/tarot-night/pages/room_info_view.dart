@@ -1,12 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
-import 'package:tata/src/core/providers/pages/tarot-night/room_info_view_provider.dart';
-import 'package:tata/src/ui/pages/tarot-night/widgets/create_room_bottom_sheet.dart';
 
 class TarotNightRoomInfoView extends ConsumerWidget {
   final TarotNightRoom roomInfo;
@@ -146,49 +142,41 @@ class TarotNightRoomInfoView extends ConsumerWidget {
                     width: 336,
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            if (roomInfo.hostId ==
-                                FirebaseAuth.instance.currentUser!.uid)
-                              IconButton(
-                                  color: Colors.white,
-                                  iconSize: 16,
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () => {
-                                        showCreateTarotNightRoomBottomSheet(
-                                            mode:
-                                                CreateTarotNightRoomBottomSheetMode
-                                                    .edit,
-                                            roomInfo: roomInfo,
-                                            context, onClosed: (_) {
-                                          if (_ == null) {
-                                            return;
-                                          }
-                                          ref
-                                              .read(
-                                                  TarotNightRoomInfoViewProvider(
-                                                          roomInfo.id)
-                                                      .notifier)
-                                              .editTarotNightRoomInfo(
-                                                  title: _.title,
-                                                  description: _.description,
-                                                  theme: _.theme);
-                                        })
-                                      },
-                                  icon: const FaIcon(
-                                      FontAwesomeIcons.penToSquare))
-                          ],
-                        ),
-                        Text(
-                          '- 此刻的心境 -',
-                          style: TextStyle(
-                            height: 1.0,
-                            fontSize: 16,
-                            color: Colors.white.withOpacity(0.5),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   children: [
+                        //     if (roomInfo.hostId ==
+                        //         FirebaseAuth.instance.currentUser!.uid)
+                        //       IconButton(
+                        //           color: Colors.white,
+                        //           iconSize: 16,
+                        //           padding: EdgeInsets.zero,
+                        //           onPressed: () => {
+                        //                 showCreateTarotNightRoomBottomSheet(
+                        //                     mode:
+                        //                         CreateTarotNightRoomBottomSheetMode
+                        //                             .edit,
+                        //                     roomInfo: roomInfo,
+                        //                     context, onClosed: (_) {
+                        //                   if (_ == null) {
+                        //                     return;
+                        //                   }
+                        //                   ref
+                        //                       .read(
+                        //                           TarotNightRoomInfoViewProvider(
+                        //                                   roomInfo.id)
+                        //                               .notifier)
+                        //                       .editTarotNightRoomInfo(
+                        //                           title: _.title,
+                        //                           description: _.description,
+                        //                           theme: _.theme);
+                        //                 })
+                        //               },
+                        //           icon: const FaIcon(
+                        //               FontAwesomeIcons.penToSquare))
+                        //   ],
+                        // ),
+                        const SizedBox(height: 48),
                         Text(
                           roomInfo.title,
                           style: const TextStyle(
