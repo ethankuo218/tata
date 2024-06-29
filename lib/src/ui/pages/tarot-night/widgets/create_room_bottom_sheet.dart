@@ -47,12 +47,18 @@ class _CreateTarotNightRoomBottomSheetState
   bool _showNotSelectThemeError = false;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+
     if (widget.mode == CreateTarotNightRoomBottomSheetMode.edit) {
       _selectedTheme = themeList.indexOf(widget.roomInfo!.theme);
       titleController.text = widget.roomInfo!.title;
       descriptionController.text = widget.roomInfo!.description;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 672,
       decoration: BoxDecoration(
@@ -72,7 +78,7 @@ class _CreateTarotNightRoomBottomSheetState
           borderRadius: const BorderRadius.all(Radius.circular(40))),
       child: Scaffold(
           backgroundColor: Colors.transparent,
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           body: SingleChildScrollView(
             padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
             child: Form(

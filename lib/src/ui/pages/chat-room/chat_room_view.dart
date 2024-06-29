@@ -310,7 +310,7 @@ class ChatRoomView extends ConsumerWidget {
               ),
               onPressed: () {
                 context.push('$routeName/${ChatRoomInfoView.routeName}',
-                    extra: chatRoomInfo);
+                    extra: chatRoomInfo.id);
               },
             ),
           if (chatRoomInfo.type == ChatRoomType.normal)

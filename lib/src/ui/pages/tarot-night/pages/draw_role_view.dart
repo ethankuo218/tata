@@ -185,7 +185,8 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                 const SizedBox(height: 20),
                                 ElevatedButton(
                                   onPressed: () {
-                                    context.push(TarotNightRoomView.routeName,
+                                    context.pushReplacement(
+                                        TarotNightRoomView.routeName,
                                         extra: roomId);
                                   },
                                   style: ElevatedButton.styleFrom(

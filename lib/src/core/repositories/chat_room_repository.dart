@@ -313,6 +313,21 @@ class ChatRoomRepository {
     return chatRoom;
   }
 
+  // Edit Room Info
+  Future<void> editChatRoomInfo(
+      {required String roomId,
+      required String title,
+      required String description,
+      required String category,
+      required int limit}) async {
+    await _fireStore.collection('chat_rooms').doc(roomId).update({
+      'title': title,
+      'description': description,
+      'category': category,
+      'limit': limit,
+    });
+  }
+
   // Join a chat room
   Future<void> joinChatRoom(String roomId) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;

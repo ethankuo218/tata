@@ -17,7 +17,6 @@ import 'package:tata/src/ui/pages/walkthrough/walkthrough_view.dart';
 import 'package:tata/src/ui/shared/pages/leave_chat_view.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
 import 'package:tata/src/ui/pages/chat-room-info/chat_room_info_view.dart';
-import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/ui/pages/home/home_view.dart';
 import 'package:tata/src/ui/pages/auth/login_view.dart';
 import 'package:tata/src/ui/pages/auth/phone_verify_input_page.dart';
@@ -56,7 +55,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             GoRoute(
               path: ChatRoomInfoView.routeName,
               builder: (BuildContext context, GoRouterState state) =>
-                  ChatRoomInfoView(chatRoomInfo: state.extra as ChatRoom),
+                  ChatRoomInfoView(chatRoomId: state.extra as String),
             ),
             GoRoute(
               path: MembersView.routeName,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/chat_room.dart';
-import 'package:tata/src/utils/tarot.dart';
 
 Future<void> showCreateChatRoomBottomSheet(BuildContext context,
     {required CreateChatRoomBottomSheetMode mode,
@@ -51,13 +50,18 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
   bool _showNotSelectCategoryError = false;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     if (widget.mode == CreateChatRoomBottomSheetMode.edit) {
       _selectedCategory = categoryList.indexOf(widget.roomInfo!.category);
       titleController.text = widget.roomInfo!.title;
       descriptionController.text = widget.roomInfo!.description;
+      maxParticipants = widget.roomInfo!.limit;
     }
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Container(
         height: 672,
         decoration: BoxDecoration(
@@ -346,13 +350,15 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                   "category": categoryList[_selectedCategory!],
                                   "title": titleController.text,
                                   "description": descriptionController.text,
-                                  "limit": maxParticipants,
-                                  "backgroundImage": Tarot.getRandomCard()
+                                  "limit": maxParticipants
                                 });
                               },
-                              child: const Text(
-                                "創建",
-                                style: TextStyle(
+                              child: Text(
+                                widget.mode ==
+                                        CreateChatRoomBottomSheetMode.create
+                                    ? "創建"
+                                    : "確定",
+                                style: const TextStyle(
                                     color: Color.fromARGB(255, 12, 13, 32),
                                     height: 1.2,
                                     fontSize: 16,
