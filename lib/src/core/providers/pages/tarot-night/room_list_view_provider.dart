@@ -7,7 +7,8 @@ part 'room_list_view_provider.g.dart';
 @riverpod
 class TarotNightRoomListView extends _$TarotNightRoomListView {
   late Map<TarotNightRoomTheme, List<TarotNightRoom>> _themeRoomListMap;
-  late List<TarotNightRoom> _myRoomList;
+  late List<TarotNightRoom> _joinedRooms;
+
   @override
   Future<Map<TarotNightRoomTheme, List<TarotNightRoom>>> build() async {
     await _updateThemeRoomListMap();
@@ -19,86 +20,48 @@ class TarotNightRoomListView extends _$TarotNightRoomListView {
   }
 
   Future<void> _updateThemeRoomListMap() async {
-    List<TarotNightRoom> joinedRooms =
+    _joinedRooms =
         await ref.read(tarotNightRoomRepositoryProvider).getJoinedRooms();
-
-    _myRoomList = joinedRooms;
 
     return ref
         .read(tarotNightRoomRepositoryProvider)
         .getLobbyRoomList()
         .then((list) {
       _themeRoomListMap = {
-        // TarotNightRoomTheme.myRoom: joinedRooms,
-        TarotNightRoomTheme.all: list
-            .map((info) => TarotNightRoom(
-                id: info.id,
-                theme: info.theme,
-                title: info.title,
-                description: info.description,
-                memberCount: info.memberCount,
-                createTime: info.createTime,
-                hostId: info.hostId,
-                isMember: joinedRooms.any((room) => room.id == info.id)))
-            .toList(),
+        TarotNightRoomTheme.all:
+            list.map((roomInfo) => checkIsJoinedRoom(roomInfo)).toList(),
         TarotNightRoomTheme.work: list
             .where((room) => room.theme == TarotNightRoomTheme.work)
             .toList()
-            .map((info) => TarotNightRoom(
-                id: info.id,
-                theme: info.theme,
-                title: info.title,
-                description: info.description,
-                memberCount: info.memberCount,
-                createTime: info.createTime,
-                hostId: info.hostId,
-                isMember: joinedRooms.any((room) => room.id == info.id)))
+            .map(
+              (roomInfo) => checkIsJoinedRoom(roomInfo),
+            )
             .toList(),
         TarotNightRoomTheme.relation: list
             .where((room) => room.theme == TarotNightRoomTheme.relation)
             .toList()
-            .map((info) => TarotNightRoom(
-                id: info.id,
-                theme: info.theme,
-                title: info.title,
-                description: info.description,
-                memberCount: info.memberCount,
-                createTime: info.createTime,
-                hostId: info.hostId,
-                isMember: joinedRooms.any((room) => room.id == info.id)))
+            .map((roomInfo) => checkIsJoinedRoom(roomInfo))
             .toList(),
         TarotNightRoomTheme.family: list
             .where((room) => room.theme == TarotNightRoomTheme.family)
             .toList()
-            .map((info) => TarotNightRoom(
-                id: info.id,
-                theme: info.theme,
-                title: info.title,
-                description: info.description,
-                memberCount: info.memberCount,
-                createTime: info.createTime,
-                hostId: info.hostId,
-                isMember: joinedRooms.any((room) => room.id == info.id)))
+            .map((roomInfo) => checkIsJoinedRoom(roomInfo))
             .toList(),
         TarotNightRoomTheme.friend: list
             .where((room) => room.theme == TarotNightRoomTheme.friend)
             .toList()
-            .map((info) => TarotNightRoom(
-                id: info.id,
-                theme: info.theme,
-                title: info.title,
-                description: info.description,
-                memberCount: info.memberCount,
-                createTime: info.createTime,
-                hostId: info.hostId,
-                isMember: joinedRooms.any((room) => room.id == info.id)))
+            .map((roomInfo) => checkIsJoinedRoom(roomInfo))
             .toList(),
       };
       state = AsyncData(_themeRoomListMap);
     });
   }
 
-  bool isJoinedRoom(String roomId) {
-    return _myRoomList.any((element) => element.id == roomId);
+  TarotNightRoom checkIsJoinedRoom(TarotNightRoom roomInfo) {
+    bool isJoined = _joinedRooms.any((element) => element.id == roomInfo.id);
+
+    return isJoined
+        ? _joinedRooms.firstWhere((element) => element.id == roomInfo.id)
+        : roomInfo;
   }
 }

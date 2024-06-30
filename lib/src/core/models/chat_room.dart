@@ -8,6 +8,7 @@ class ChatRoom extends Room {
   final String category;
   final TarotCardKey? backgroundImage;
   late List<Message>? messages = [];
+  final bool isClosed;
 
   ChatRoom(
       {required super.id,
@@ -18,6 +19,7 @@ class ChatRoom extends Room {
       required this.category,
       this.backgroundImage,
       this.messages,
+      required this.isClosed,
       super.latestMessage,
       required super.hostId,
       required super.createTime,
@@ -37,6 +39,7 @@ class ChatRoom extends Room {
       latestMessage: map['latest_message'] == null
           ? null
           : Message.fromJson(map['latest_message']),
+      isClosed: map['is_closed'] ?? false,
       hostId: map['host_id'],
       createTime: map['create_time'],
       memberCount: map['member_count'],
@@ -56,6 +59,7 @@ class ChatRoom extends Room {
           ? null
           : TarotCardKey.toValue(backgroundImage!),
       'latest_message': latestMessage?.toJson(),
+      'is_closed': isClosed,
       'host_id': hostId,
       'member_count': memberCount,
       'create_time': createTime

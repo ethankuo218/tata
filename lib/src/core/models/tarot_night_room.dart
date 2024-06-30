@@ -6,6 +6,7 @@ class TarotNightRoom extends Room {
   late String? card;
   late String? question;
   late List<TarotNightAnswer>? answers;
+  late String? role;
   late bool isMember = false;
 
   TarotNightRoom({
@@ -14,6 +15,7 @@ class TarotNightRoom extends Room {
     this.card,
     this.question,
     this.answers,
+    this.role = '',
     this.isMember = false,
     required super.title,
     required super.description,
@@ -41,6 +43,8 @@ class TarotNightRoom extends Room {
       latestMessage: map['latest_message'] == null
           ? null
           : Message.fromJson(map['latest_message']),
+      isMember: map['is_member'] ?? false,
+      role: map['role'],
     );
   }
 

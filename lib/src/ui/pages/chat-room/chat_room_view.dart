@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -133,7 +134,7 @@ class ChatRoomView extends ConsumerWidget {
                                 MaterialStatePropertyAll(Colors.transparent),
                           ),
                           children: ChatMenuEntry.build(
-                              _getMenus(context, data.roomInfo)))
+                              _getMenus(context, data.roomInfo, provider, ref)))
                     ],
                     centerTitle: false,
                     titleSpacing: 0,
@@ -165,6 +166,76 @@ class ChatRoomView extends ConsumerWidget {
                                         index + 1 <= snapshot.data!.length - 1
                                             ? snapshot.data![index + 1]
                                             : null;
+
+                                    if (snapshot.data![index].content ==
+                                            '聊天室已經關閉' &&
+                                        data.roomInfo.hostId !=
+                                            FirebaseAuth
+                                                .instance.currentUser!.uid) {
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((_) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return SimpleDialog(
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 241, 198, 255),
+                                                title: const Text(
+                                                  "聊天室已經關閉",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 12, 13, 32)),
+                                                ),
+                                                contentPadding:
+                                                    const EdgeInsets.all(15),
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    15.0))),
+                                                children: <Widget>[
+                                                  SimpleDialogOption(
+                                                    onPressed: () {
+                                                      context.pop();
+                                                    },
+                                                    child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(5),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(255,
+                                                              223, 130, 255),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        child: const Text(
+                                                          'OK',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      12,
+                                                                      13,
+                                                                      32),
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        )),
+                                                  ),
+                                                ],
+                                              );
+                                            }).then((value) => {context.pop()});
+                                      });
+                                    }
 
                                     return snapshot.data != null
                                         ? ChatMessageBubble(
@@ -294,7 +365,8 @@ class ChatRoomView extends ConsumerWidget {
         );
   }
 
-  List<ChatMenuEntry> _getMenus(BuildContext context, ChatRoom chatRoomInfo) {
+  List<ChatMenuEntry> _getMenus(BuildContext context, ChatRoom chatRoomInfo,
+      ChatRoomViewProvider provider, WidgetRef ref) {
     final List<ChatMenuEntry> result = <ChatMenuEntry>[
       ChatMenuEntry(
         label: const Icon(
@@ -381,8 +453,82 @@ class ChatRoomView extends ConsumerWidget {
               style: TextStyle(color: Colors.red),
             ),
             onPressed: () {
-              context.push('$routeName/${LeaveChatView.routeName}',
-                  extra: chatRoomInfo.id);
+              if (chatRoomInfo.hostId ==
+                  FirebaseAuth.instance.currentUser!.uid) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SimpleDialog(
+                        backgroundColor:
+                            const Color.fromARGB(255, 241, 198, 255),
+                        title: const Text(
+                          "You are the host of this chat room. Are you sure you want to leave?",
+                          textAlign: TextAlign.center,
+                          style:
+                              TextStyle(color: Color.fromARGB(255, 12, 13, 32)),
+                        ),
+                        contentPadding: const EdgeInsets.all(15),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.0))),
+                        children: <Widget>[
+                          SimpleDialogOption(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 223, 130, 255),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Text(
+                                  'Cancel',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 12, 13, 32),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
+                                )),
+                          ),
+                          SimpleDialogOption(
+                            onPressed: () {
+                              context.pop(true);
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 223, 130, 255),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Text(
+                                  'Confirm',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 12, 13, 32),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
+                                )),
+                          ),
+                        ],
+                      );
+                    }).then((value) => {
+                      if (value == true)
+                        {
+                          ref
+                              .read(provider.notifier)
+                              .leaveChatRoom()
+                              .then((value) {
+                            context.pop();
+                          })
+                        }
+                    });
+              } else {
+                context.push('$routeName/${LeaveChatView.routeName}',
+                    extra: chatRoomInfo.id);
+              }
             },
           ),
         ],

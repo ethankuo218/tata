@@ -75,11 +75,14 @@ class TarotNightRoomRepository {
         DocumentReference<Map<String, dynamic>> roomRef =
             memberDoc.reference.parent.parent!;
         DocumentSnapshot<Map<String, dynamic>> roomDoc = await roomRef.get();
-
         Timestamp createTime = roomDoc.data()!['create_time'] as Timestamp;
         if (createTime.toDate().isAfter(startTime) &&
             createTime.toDate().isBefore(endTime)) {
-          joinedRooms.add(TarotNightRoom.fromJson(roomDoc.data()!));
+          joinedRooms.add(TarotNightRoom.fromJson({
+            ...roomDoc.data()!,
+            'is_member': true,
+            'role': memberDoc.data()['role'],
+          }));
         }
       }
 

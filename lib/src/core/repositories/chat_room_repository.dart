@@ -29,10 +29,12 @@ class ChatRoomRepository {
     Query<Map<String, dynamic>> collection = category == 'All'
         ? _fireStore
             .collection('chat_rooms')
+            .where('is_closed', isEqualTo: false)
             .where('type', isEqualTo: ChatRoomType.normal.value)
             .orderBy('create_time', descending: true)
         : _fireStore
             .collection('chat_rooms')
+            .where('is_closed', isEqualTo: false)
             .where('type', isEqualTo: ChatRoomType.normal.value)
             .where('category', isEqualTo: category)
             .orderBy('create_time', descending: true);
@@ -191,8 +193,8 @@ class ChatRoomRepository {
     required String title,
     required String description,
     required String category,
-    required TarotCardKey backgroundImage,
     required int limit,
+    TarotCardKey? backgroundImage,
   }) async {
     final DocumentReference newChatRoomDoc =
         _fireStore.collection('chat_rooms').doc();
@@ -203,7 +205,7 @@ class ChatRoomRepository {
         title: title,
         description: description,
         category: category,
-        backgroundImage: backgroundImage,
+        backgroundImage: backgroundImage ?? Tarot.getRandomCard(),
         limit: limit,
         hostId: _firebaseAuth.currentUser!.uid,
         memberCount: 1,
@@ -214,7 +216,8 @@ class ChatRoomRepository {
           avatar: AvatarKey.theFool,
           content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
-        ));
+        ),
+        isClosed: false);
 
     final userInfo = await _fireStore
         .collection('users')
@@ -269,7 +272,8 @@ class ChatRoomRepository {
           avatar: AvatarKey.theFool,
           content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
-        ));
+        ),
+        isClosed: false);
 
     final userInfo = await _fireStore
         .collection('users')
@@ -375,6 +379,34 @@ class ChatRoomRepository {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
 
     await removeMember(chatRoomId: chatRoomId, memberId: currentUserId);
+  }
+
+  // Close a chat room
+  Future<void> closeChatRoom(String chatRoomId) async {
+    await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
+      'is_closed': true,
+    });
+
+    await _fireStore
+        .collection('chat_rooms')
+        .doc(chatRoomId)
+        .collection('members')
+        .get()
+        .then((value) => value.docs.forEach((member) {
+              removeMember(chatRoomId: chatRoomId, memberId: member.id);
+            }));
+
+    await _fireStore
+        .collection('chat_rooms')
+        .doc(chatRoomId)
+        .collection('messages')
+        .add(Message(
+          senderId: 'system',
+          name: 'system',
+          avatar: AvatarKey.theFool,
+          content: '聊天室已經關閉',
+          timestamp: Timestamp.now(),
+        ).toJson());
   }
 
   // Get members of a chat room

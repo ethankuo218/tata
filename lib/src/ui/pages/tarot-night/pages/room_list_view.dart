@@ -145,11 +145,7 @@ class _TarotNightRoomListViewState
                 ? rooms
                     .map((room) => GestureDetector(
                         onTap: () async {
-                          final bool isJoined = ref
-                              .read(tarotNightRoomListViewProvider.notifier)
-                              .isJoinedRoom(room.id);
-
-                          if (!isJoined) {
+                          if (!room.isMember) {
                             showTarotNightRoomDetailDialog(context,
                                 roomInfo: room, onClosed: (_) {
                               if (_ == true) {
@@ -240,7 +236,7 @@ class _TarotNightRoomListViewState
                                                 255, 241, 198, 255)
                                             .withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(8)),
-                                child: Text(room.isMember ? '愚人' : '?',
+                                child: Text(room.isMember ? room.role! : '?',
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                         height: 1.0,

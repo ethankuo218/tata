@@ -47,4 +47,9 @@ class ChatRoomView extends _$ChatRoomView {
           (element) => element.uid != FirebaseAuth.instance.currentUser?.uid);
     });
   }
+
+  // Leave chat room
+  Future<void> leaveChatRoom() async {
+    await ref.read(chatRoomRepositoryProvider).closeChatRoom(_roomInfo.id);
+  }
 }

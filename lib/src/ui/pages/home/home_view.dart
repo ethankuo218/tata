@@ -72,7 +72,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       title: _["title"],
                       description: _["description"],
                       category: _["category"],
-                      backgroundImage: _["backgroundImage"],
                       limit: _["limit"] ?? 2)
                   .then((value) {
                 context.push(ChatRoomView.routeName, extra: value);
