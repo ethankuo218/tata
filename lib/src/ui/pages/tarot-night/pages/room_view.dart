@@ -126,45 +126,48 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                             builder: (BuildContext context,
                                     AsyncSnapshot<List<TarotNightMessage>>
                                         snapshot) =>
-                                ListView.builder(
-                              reverse: true,
-                              controller: scrollController,
-                              itemBuilder: (context, index) {
-                                if (snapshot.connectionState !=
-                                    ConnectionState.active) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                } else {
-                                  Message? nextMessage = index - 1 >= 0
-                                      ? snapshot.data![index - 1]
-                                      : null;
-                                  Message? lastMessage =
-                                      index + 1 <= snapshot.data!.length - 1
-                                          ? snapshot.data![index + 1]
-                                          : null;
+                                snapshot.connectionState ==
+                                        ConnectionState.waiting
+                                    ? const Center(
+                                        child: CircularProgressIndicator())
+                                    : ListView.builder(
+                                        reverse: true,
+                                        controller: scrollController,
+                                        itemBuilder: (context, index) {
+                                          Message? nextMessage = index - 1 >= 0
+                                              ? snapshot.data![index - 1]
+                                              : null;
+                                          Message? lastMessage = index + 1 <=
+                                                  snapshot.data!.length - 1
+                                              ? snapshot.data![index + 1]
+                                              : null;
 
-                                  return snapshot.data != null
-                                      ? TarotNightMessageBubble(
-                                          message: snapshot.data![index],
-                                          roomId: widget.roomId,
-                                          isLastMsgSentBySameUser:
-                                              lastMessage == null
-                                                  ? false
-                                                  : lastMessage.senderId ==
-                                                      snapshot.data![index]
-                                                          .senderId,
-                                          isNextMsgSentBySameUser:
-                                              nextMessage == null
-                                                  ? false
-                                                  : nextMessage.senderId ==
-                                                      snapshot.data![index]
-                                                          .senderId,
-                                        )
-                                      : null;
-                                }
-                              },
-                              itemCount: snapshot.data?.length,
-                            ),
+                                          return snapshot.data != null
+                                              ? TarotNightMessageBubble(
+                                                  message:
+                                                      snapshot.data![index],
+                                                  roomId: widget.roomId,
+                                                  isLastMsgSentBySameUser:
+                                                      lastMessage == null
+                                                          ? false
+                                                          : lastMessage
+                                                                  .senderId ==
+                                                              snapshot
+                                                                  .data![index]
+                                                                  .senderId,
+                                                  isNextMsgSentBySameUser:
+                                                      nextMessage == null
+                                                          ? false
+                                                          : nextMessage
+                                                                  .senderId ==
+                                                              snapshot
+                                                                  .data![index]
+                                                                  .senderId,
+                                                )
+                                              : null;
+                                        },
+                                        itemCount: snapshot.data?.length,
+                                      ),
                             stream: data.messageStream,
                           ),
                         ),
