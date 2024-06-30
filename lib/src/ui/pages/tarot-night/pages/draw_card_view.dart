@@ -78,7 +78,7 @@ class TarotNightDrawCardView extends ConsumerWidget {
                       ref
                           .read(tarotNightDrawCardViewProvider.notifier)
                           .drawCard(roomId: roomId, question: question)
-                          .then((value) => context.push(
+                          .then((value) => context.pushReplacement(
                               TarotNightTestResultView.routeName,
                               extra: roomId));
                     },

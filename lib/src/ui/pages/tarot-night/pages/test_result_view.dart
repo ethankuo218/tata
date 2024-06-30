@@ -55,6 +55,13 @@ class _TarotNightTestResultViewState
               ),
             ];
 
+            final bool isAnswered = roomInfo.answers == null
+                ? false
+                : roomInfo.answers!.any((element) =>
+                        element.uid == FirebaseAuth.instance.currentUser!.uid)
+                    ? true
+                    : false;
+
             return Scaffold(
                 appBar: AppBar(
                     backgroundColor: const Color.fromARGB(255, 12, 13, 32),
@@ -76,11 +83,18 @@ class _TarotNightTestResultViewState
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(20)),
-                                    backgroundColor: const Color.fromARGB(
-                                        255, 223, 130, 255),
+                                    backgroundColor: isAnswered
+                                        ? const Color.fromARGB(
+                                            255, 168, 168, 168)
+                                        : const Color.fromARGB(
+                                            255, 223, 130, 255),
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 20, vertical: 12)),
                                 onPressed: () {
+                                  if (isAnswered) {
+                                    return;
+                                  }
+
                                   ref
                                       .read(tarotNightTestResultViewProvider(
                                               roomId: widget.roomId)
@@ -94,8 +108,8 @@ class _TarotNightTestResultViewState
                                         });
                                   });
                                 },
-                                child: const Text('去解任務囉！',
-                                    style: TextStyle(
+                                child: Text(isAnswered ? '已經完成任務囉' : '去解任務囉！',
+                                    style: const TextStyle(
                                         height: 1.0,
                                         color: Color.fromARGB(255, 12, 13, 32),
                                         fontSize: 16,

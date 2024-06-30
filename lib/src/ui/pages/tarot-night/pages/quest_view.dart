@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/test_result_view_provider.dart';
-import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 
 class TarotNightQuestView extends ConsumerWidget {
   const TarotNightQuestView(
