@@ -65,6 +65,7 @@ class AuthRepository {
     _firebaseAuth.verifyPhoneNumber(
       phoneNumber: '+${phoneNumber.countryCode}${phoneNumber.nsn}',
       verificationCompleted: (PhoneAuthCredential credential) async {
+        print('Auto-retrieval success: User signed in');
         try {
           await _firebaseAuth.signInWithCredential(credential);
           completer.complete(right("Auto-retrieval success: User signed in"));

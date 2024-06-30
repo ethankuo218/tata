@@ -39,12 +39,18 @@ class Auth extends _$Auth {
 
   // Sign in with Apple
   Future<void> signInWithApple() async {
-    await ref.read(authRepositoryProvider).signInWithApple();
+    return ref
+        .read(authRepositoryProvider)
+        .signInWithApple()
+        .then((value) => value.fold((l) => {}, (r) => throw r));
   }
 
   // Sign in with Google
   Future<void> signInWithGoogle() async {
-    await ref.read(authRepositoryProvider).signInWithGoogle();
+    return ref
+        .read(authRepositoryProvider)
+        .signInWithGoogle()
+        .then((value) => value.fold((l) => {}, (r) => throw r));
   }
 
   // Sign in with Phone Number
@@ -62,10 +68,11 @@ class Auth extends _$Auth {
     });
   }
 
-  Future<void> signInWithPhoneNumber(String smsCode) async {
-    await ref
+  Future<void> signInWithPhoneNumber(String smsCode) {
+    return ref
         .read(authRepositoryProvider)
-        .signInWithPhoneNumber(_verificationId!, smsCode);
+        .signInWithPhoneNumber(_verificationId!, smsCode)
+        .then((value) => value.fold((l) => {}, (r) => throw r));
   }
 
   // Resend Otp

@@ -69,14 +69,40 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 ? AnimatedButton(
                     brand: Brand.apple,
                     btnAnimationController: _btnAnimationController,
-                    onPress: () =>
-                        ref.read(authProvider.notifier).signInWithApple())
+                    onPress: () {
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          });
+
+                      ref
+                          .read(authProvider.notifier)
+                          .signInWithApple()
+                          .catchError((error) => context.pop());
+                    })
                 : const SizedBox(),
             AnimatedButton(
                 brand: Brand.google,
                 btnAnimationController: _btnAnimationController,
-                onPress: () =>
-                    ref.read(authProvider.notifier).signInWithGoogle()),
+                onPress: () {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      });
+
+                  ref
+                      .read(authProvider.notifier)
+                      .signInWithGoogle()
+                      .catchError((error) => context.pop());
+                }),
             AnimatedButton(
               brand: Brand.phone,
               btnAnimationController: _btnAnimationController,

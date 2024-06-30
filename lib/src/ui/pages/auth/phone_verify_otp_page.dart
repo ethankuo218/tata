@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tata/src/core/providers/auth_provider.dart';
@@ -109,9 +110,21 @@ class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
                         validator: (value) =>
                             value!.length == 6 ? null : 'Invalid OTP',
                         hapticFeedbackType: HapticFeedbackType.lightImpact,
-                        onCompleted: (pin) => ref
-                            .read(authProvider.notifier)
-                            .signInWithPhoneNumber(pin),
+                        onCompleted: (pin) {
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              });
+
+                          ref
+                              .read(authProvider.notifier)
+                              .signInWithPhoneNumber(pin)
+                              .catchError((error) => context.pop());
+                        },
                         cursor: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -193,9 +206,19 @@ class _PhoneVerifyOtpViewState extends ConsumerState<PhoneVerifyOtpView> {
                             onPressed: () {
                               focusNode.unfocus();
                               if (formKey.currentState!.validate()) {
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    });
+
                                 ref
                                     .read(authProvider.notifier)
-                                    .signInWithPhoneNumber(pinController.text);
+                                    .signInWithPhoneNumber(pinController.text)
+                                    .catchError((error) => context.pop());
                               }
                             },
                             child: const Text(
