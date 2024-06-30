@@ -27,7 +27,7 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
   @override
   void initState() {
     super.initState();
-
+    isTestButtonEnabled = widget.roomInfo.question != null;
     // Create a timer that will run at 1 AM tomorrow
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final now = DateTime.now();
@@ -95,9 +95,10 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
                 FirebaseAuth.instance.currentUser?.uid)
               TextButton(
                   onPressed: () {
-                    // if (!isTestButtonEnabled) {
-                    //   return;
-                    // }
+                    if (!isTestButtonEnabled) {
+                      return;
+                    }
+
                     showStartTarotTestBottomSheet(context, onClosed: (_) {
                       if (_ == null) {
                         return;
