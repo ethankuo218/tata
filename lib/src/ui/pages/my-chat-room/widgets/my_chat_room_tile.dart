@@ -20,13 +20,13 @@ class MyChatRoomTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isRealtimeChat =
-        roomInfo.fold((l) => l.type == ChatRoomType.realtime, (r) => false);
+    // final bool isRealtimeChat =
+    //     roomInfo.fold((l) => l.type == ChatRoomType.realtime, (r) => false);
     final provider = myChatRoomTileProvider(
         chatRoomId: roomInfo.fold((l) => l.id, (r) => r.id));
 
     return ref.watch(provider).when(
-        data: (otherUserInfo) => GestureDetector(
+        data: (unReadMessageCount) => GestureDetector(
               onTap: () => onTap(),
               child: Container(
                   height: 80,
@@ -39,71 +39,52 @@ class MyChatRoomTile extends ConsumerWidget {
                         vertical: 10, horizontal: 15),
                     child: Row(
                       children: [
-                        isRealtimeChat
-                            ? Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.white.withOpacity(0.8),
-                                    width: 1,
+                        Stack(
+                          children: [
+                            SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white.withOpacity(0.8),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
-                                  borderRadius: BorderRadius.circular(30),
+                                  child: Image.asset(
+                                      'assets/avatars/the_magician.png',
+                                      fit: BoxFit.cover),
                                 ),
-                                child: Image.asset(
-                                    'assets/avatars/the_magician.png',
-                                    fit: BoxFit.cover),
-                              )
-                            : Stack(
-                                children: [
-                                  SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color:
-                                                Colors.white.withOpacity(0.8),
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: Image.asset(
-                                            'assets/avatars/the_magician.png',
-                                            fit: BoxFit.cover),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color:
-                                                Colors.white.withOpacity(0.8),
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: Image.asset(
-                                            'assets/avatars/the_magician.png',
-                                            fit: BoxFit.cover),
-                                      ),
-                                    ),
-                                  )
-                                ],
                               ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white.withOpacity(0.8),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Image.asset(
+                                      'assets/avatars/the_magician.png',
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                         const SizedBox(width: 15),
                         Expanded(
                             child: Column(
@@ -111,10 +92,10 @@ class MyChatRoomTile extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              isRealtimeChat
-                                  ? otherUserInfo?.name ?? 'Unknown'
-                                  : roomInfo.fold(
-                                      (l) => l.title, (r) => r.title),
+                              // isRealtimeChat
+                              //     ? otherUserInfo?.name ?? 'Unknown'
+                              //     :
+                              roomInfo.fold((l) => l.title, (r) => r.title),
                               style: const TextStyle(
                                   overflow: TextOverflow.ellipsis,
                                   color: Colors.white,
@@ -157,25 +138,26 @@ class MyChatRoomTile extends ConsumerWidget {
                                           fontWeight: FontWeight.w400),
                                     ),
                                     const SizedBox(height: 10),
-                                    // if (chatRoomInfo.unreadCount > 0)
-                                    Container(
-                                      width: 20,
-                                      height: 20,
-                                      decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                            255, 255, 228, 85),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const Center(
-                                        child: Text(
-                                          '1',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400),
+                                    if (unReadMessageCount > 0)
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              255, 255, 228, 85),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
-                                      ),
-                                    )
+                                        child: Center(
+                                          child: Text(
+                                            unReadMessageCount.toString(),
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        ),
+                                      )
                                   ],
                                 ),
                               )

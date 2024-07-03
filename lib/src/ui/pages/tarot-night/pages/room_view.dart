@@ -25,12 +25,24 @@ class TarotNightRoomView extends ConsumerStatefulWidget {
 }
 
 class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
+  final ScrollController scrollController = ScrollController();
+  final TextEditingController textEditingController = TextEditingController();
+  late TarotNightRoomViewProvider provider;
+
+  @override
+  void initState() {
+    super.initState();
+    provider = tarotNightRoomViewProvider(roomId: widget.roomId);
+
+    scrollController.addListener(() {
+      if (scrollController.offset == 0.0) {
+        ref.read(provider.notifier).markAsRead();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ScrollController scrollController = ScrollController();
-    final TextEditingController textEditingController = TextEditingController();
-    final provider = tarotNightRoomViewProvider(roomId: widget.roomId);
-
     return ref.watch(provider).when(
           data: (data) => GestureDetector(
               onTap: () {
@@ -137,10 +149,10 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                           Message? nextMessage = index - 1 >= 0
                                               ? snapshot.data![index - 1]
                                               : null;
-                                          Message? lastMessage = index + 1 <=
-                                                  snapshot.data!.length - 1
-                                              ? snapshot.data![index + 1]
-                                              : null;
+                                          Message? lastMessage =
+                                              index + 1 < snapshot.data!.length
+                                                  ? snapshot.data![index + 1]
+                                                  : null;
 
                                           return snapshot.data != null
                                               ? TarotNightMessageBubble(
@@ -241,6 +253,10 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                                 .sendMessage(
                                                     textEditingController.text)
                                                 .then((value) {
+                                              ref
+                                                  .read(provider.notifier)
+                                                  .markAsRead();
+
                                               if (scrollController.offset !=
                                                   0.0) {
                                                 scrollController.animateTo(

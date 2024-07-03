@@ -6,7 +6,7 @@ part of 'my_chat_room_tile_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$myChatRoomTileHash() => r'f5a96090b6c920426d294fd4bf32dc5c8349591e';
+String _$myChatRoomTileHash() => r'25fff68c71ad14285ded8c5bddcf628c0999c1a8';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,10 +30,10 @@ class _SystemHash {
 }
 
 abstract class _$MyChatRoomTile
-    extends BuildlessAutoDisposeAsyncNotifier<MemberInfo?> {
+    extends BuildlessAutoDisposeStreamNotifier<int> {
   late final String chatRoomId;
 
-  FutureOr<MemberInfo?> build({
+  Stream<int> build({
     required String chatRoomId,
   });
 }
@@ -43,7 +43,7 @@ abstract class _$MyChatRoomTile
 const myChatRoomTileProvider = MyChatRoomTileFamily();
 
 /// See also [MyChatRoomTile].
-class MyChatRoomTileFamily extends Family<AsyncValue<MemberInfo?>> {
+class MyChatRoomTileFamily extends Family<AsyncValue<int>> {
   /// See also [MyChatRoomTile].
   const MyChatRoomTileFamily();
 
@@ -82,7 +82,7 @@ class MyChatRoomTileFamily extends Family<AsyncValue<MemberInfo?>> {
 
 /// See also [MyChatRoomTile].
 class MyChatRoomTileProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<MyChatRoomTile, MemberInfo?> {
+    extends AutoDisposeStreamNotifierProviderImpl<MyChatRoomTile, int> {
   /// See also [MyChatRoomTile].
   MyChatRoomTileProvider({
     required String chatRoomId,
@@ -113,7 +113,7 @@ class MyChatRoomTileProvider
   final String chatRoomId;
 
   @override
-  FutureOr<MemberInfo?> runNotifierBuild(
+  Stream<int> runNotifierBuild(
     covariant MyChatRoomTile notifier,
   ) {
     return notifier.build(
@@ -138,7 +138,7 @@ class MyChatRoomTileProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<MyChatRoomTile, MemberInfo?>
+  AutoDisposeStreamNotifierProviderElement<MyChatRoomTile, int>
       createElement() {
     return _MyChatRoomTileProviderElement(this);
   }
@@ -157,13 +157,13 @@ class MyChatRoomTileProvider
   }
 }
 
-mixin MyChatRoomTileRef on AutoDisposeAsyncNotifierProviderRef<MemberInfo?> {
+mixin MyChatRoomTileRef on AutoDisposeStreamNotifierProviderRef<int> {
   /// The parameter `chatRoomId` of this provider.
   String get chatRoomId;
 }
 
 class _MyChatRoomTileProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<MyChatRoomTile, MemberInfo?>
+    extends AutoDisposeStreamNotifierProviderElement<MyChatRoomTile, int>
     with MyChatRoomTileRef {
   _MyChatRoomTileProviderElement(super.provider);
 

@@ -16,7 +16,7 @@ import 'package:tata/src/core/models/message.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class ChatRoomView extends ConsumerWidget {
+class ChatRoomView extends ConsumerStatefulWidget {
   const ChatRoomView({super.key, required this.chatRoomId});
 
   final String chatRoomId;
@@ -24,11 +24,28 @@ class ChatRoomView extends ConsumerWidget {
   static const routeName = '/chat-room';
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final ScrollController scrollController = ScrollController();
-    final TextEditingController textEditingController = TextEditingController();
-    final provider = chatRoomViewProvider(roomId: chatRoomId);
+  ConsumerState<ChatRoomView> createState() => _ChatRoomViewState();
+}
 
+class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
+  final ScrollController scrollController = ScrollController();
+  final TextEditingController textEditingController = TextEditingController();
+  late ChatRoomViewProvider provider;
+
+  @override
+  void initState() {
+    super.initState();
+    provider = chatRoomViewProvider(roomId: widget.chatRoomId);
+
+    scrollController.addListener(() {
+      if (scrollController.offset == 0.0) {
+        ref.read(provider.notifier).markAsRead();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return ref.watch(provider).when(
           data: (data) {
             bool isRealtimeChat = data.roomInfo.type == ChatRoomType.realtime;
@@ -333,6 +350,9 @@ class ChatRoomView extends ConsumerWidget {
                                                       textEditingController
                                                           .text)
                                                   .then((value) {
+                                                ref
+                                                    .read(provider.notifier)
+                                                    .markAsRead();
                                                 if (scrollController.offset !=
                                                     0.0) {
                                                   scrollController.animateTo(
@@ -381,7 +401,8 @@ class ChatRoomView extends ConsumerWidget {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                context.push('$routeName/${ChatRoomInfoView.routeName}',
+                context.push(
+                    '${ChatRoomView.routeName}/${ChatRoomInfoView.routeName}',
                     extra: chatRoomInfo.id);
               },
             ),
@@ -392,7 +413,8 @@ class ChatRoomView extends ConsumerWidget {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                context.push('$routeName/${MembersView.routeName}',
+                context.push(
+                    '${ChatRoomView.routeName}/${MembersView.routeName}',
                     extra: chatRoomInfo.id);
               },
             ),
@@ -526,7 +548,8 @@ class ChatRoomView extends ConsumerWidget {
                         }
                     });
               } else {
-                context.push('$routeName/${LeaveChatView.routeName}',
+                context.push(
+                    '${ChatRoomView.routeName}/${LeaveChatView.routeName}',
                     extra: chatRoomInfo.id);
               }
             },

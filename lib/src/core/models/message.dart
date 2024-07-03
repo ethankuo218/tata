@@ -7,6 +7,7 @@ class Message {
   final AvatarKey avatar;
   final String content;
   final Timestamp timestamp;
+  final List<String> readBy;
 
   Message({
     required this.senderId,
@@ -14,15 +15,17 @@ class Message {
     required this.avatar,
     required this.content,
     required this.timestamp,
+    required this.readBy,
   });
 
-  factory Message.fromJson(Map<String, dynamic> map) {
+  factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
-      senderId: map['sender_id'] ?? '',
-      name: map['name'] ?? '',
-      avatar: AvatarKey.toEnum(map['avatar']),
-      content: map['content'],
-      timestamp: map['timestamp'],
+      senderId: json['sender_id'] ?? '',
+      name: json['name'] ?? '',
+      avatar: AvatarKey.toEnum(json['avatar']),
+      content: json['content'],
+      timestamp: json['timestamp'],
+      readBy: json['read_by'].cast<String>(),
     );
   }
 
@@ -33,6 +36,7 @@ class Message {
       'avatar': avatar.value,
       'content': content,
       'timestamp': timestamp,
+      'read_by': readBy,
     };
   }
 }

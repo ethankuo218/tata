@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
@@ -73,9 +75,6 @@ class ChatRoomRepository {
   // Get User Chat Room List
   Stream<List<Either<ChatRoom, TarotNightRoom>>> getUserChatRoomList() {
     final String currentUserId = _firebaseAuth.currentUser?.uid ?? '';
-    if (currentUserId.isEmpty) {
-      return Stream.value([]);
-    }
 
     return _fireStore
         .collectionGroup('members')
@@ -158,6 +157,7 @@ class ChatRoomRepository {
       avatar: userInfo.avatar,
       content: message,
       timestamp: timestamp,
+      readBy: [userInfo.uid],
     );
 
     await _fireStore
@@ -188,6 +188,39 @@ class ChatRoomRepository {
     });
   }
 
+  // Mark as read
+  Future<void> markAsRead(String chatRoomId) async {
+    final String currentUserId = _firebaseAuth.currentUser!.uid;
+
+    await _fireStore
+        .collection('chat_rooms')
+        .doc(chatRoomId)
+        .collection('messages')
+        .get()
+        .then((querySnapshot) {
+      for (var message in querySnapshot.docs) {
+        message.reference.update({
+          'read_by': FieldValue.arrayUnion([currentUserId]),
+        });
+      }
+    });
+  }
+
+  // Get Unread Message Count
+  Stream<int> getUnreadMessageCount(String chatRoomId) {
+    final String currentUserId = _firebaseAuth.currentUser!.uid;
+
+    return _fireStore
+        .collection('chat_rooms')
+        .doc(chatRoomId)
+        .collection('messages')
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .where((message) =>
+                !(message.get('read_by') as List).contains(currentUserId))
+            .length);
+  }
+
   // Create a new chat room
   Future<String> createChatRoom({
     required String title,
@@ -216,6 +249,7 @@ class ChatRoomRepository {
           avatar: AvatarKey.theFool,
           content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
+          readBy: [_firebaseAuth.currentUser!.uid],
         ),
         isClosed: false);
 
@@ -245,6 +279,7 @@ class ChatRoomRepository {
           avatar: AvatarKey.theFool,
           content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
+          readBy: [_firebaseAuth.currentUser!.uid],
         ).toJson());
 
     return newChatRoom.id;
@@ -272,6 +307,7 @@ class ChatRoomRepository {
           avatar: AvatarKey.theFool,
           content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
+          readBy: [_firebaseAuth.currentUser!.uid],
         ),
         isClosed: false);
 
@@ -301,6 +337,7 @@ class ChatRoomRepository {
           avatar: AvatarKey.theFool,
           content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
+          readBy: [_firebaseAuth.currentUser!.uid],
         ).toJson());
 
     return newChatRoom.id;
@@ -406,6 +443,7 @@ class ChatRoomRepository {
           avatar: AvatarKey.theFool,
           content: '聊天室已經關閉',
           timestamp: Timestamp.now(),
+          readBy: [_firebaseAuth.currentUser!.uid],
         ).toJson());
   }
 

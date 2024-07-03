@@ -25,6 +25,8 @@ class TarotNightRoomView extends _$TarotNightRoomView {
     final Stream<List<TarotNightMessage>> messages =
         ref.read(tarotNightRoomRepositoryProvider).getMessages(_roomInfo.id);
 
+    markAsRead();
+
     return TarotNightRoomInfo(roomInfo: _roomInfo, messageStream: messages);
   }
 
@@ -32,5 +34,12 @@ class TarotNightRoomView extends _$TarotNightRoomView {
   Future<void> sendMessage(String message) async {
     ref.read(tarotNightRoomRepositoryProvider).sendMessage(
         memberInfo: _memberInfo, chatRoomId: _roomInfo.id, content: message);
+  }
+
+  // Mark as read
+  Future<void> markAsRead() async {
+    ref
+        .read(tarotNightRoomRepositoryProvider)
+        .markAsRead(roomId: _roomInfo.id, memberId: _memberInfo.uid);
   }
 }

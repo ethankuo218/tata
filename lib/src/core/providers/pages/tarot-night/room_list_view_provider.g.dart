@@ -7,7 +7,7 @@ part of 'room_list_view_provider.dart';
 // **************************************************************************
 
 String _$tarotNightRoomListViewHash() =>
-    r'2243781a51af32ed961f1b47b161b7e5f751be2c';
+    r'8b56b050aeedb9931c7995b72fb331c26e51905f';
 
 /// See also [TarotNightRoomListView].
 @ProviderFor(TarotNightRoomListView)

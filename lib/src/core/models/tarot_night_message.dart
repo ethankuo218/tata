@@ -12,6 +12,7 @@ class TarotNightMessage extends Message {
     required super.avatar,
     required super.content,
     required super.timestamp,
+    required super.readBy,
     this.type = TarotNightMessageType.normal,
     this.role = '',
   });
@@ -25,6 +26,7 @@ class TarotNightMessage extends Message {
       timestamp: json['timestamp'] as Timestamp,
       type: TarotNightMessageType.toEnum(json['type']),
       role: json['role'] as String,
+      readBy: json['read_by'].cast<String>(),
     );
   }
 
@@ -38,6 +40,7 @@ class TarotNightMessage extends Message {
       'timestamp': timestamp,
       'type': type.value,
       'role': role,
+      'read_by': readBy,
     };
   }
 }

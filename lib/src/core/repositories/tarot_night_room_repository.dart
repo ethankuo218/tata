@@ -137,6 +137,7 @@ class TarotNightRoomRepository {
       timestamp: timestamp,
       type: type ?? TarotNightMessageType.normal,
       role: memberInfo.role,
+      readBy: [currentUserId],
     );
 
     await _fireStore
@@ -164,6 +165,23 @@ class TarotNightRoomRepository {
           .toList();
 
       return messages.isEmpty ? <TarotNightMessage>[] : messages;
+    });
+  }
+
+  // Mark as Read
+  Future<void> markAsRead({required String roomId, required String memberId}) {
+    return _fireStore
+        .collection('tarot_night_rooms')
+        .doc(roomId)
+        .collection('messages')
+        .where('sender_id', isNotEqualTo: memberId)
+        .get()
+        .then((querySnapshot) {
+      for (var message in querySnapshot.docs) {
+        message.reference.update({
+          'read_by': FieldValue.arrayUnion([memberId]),
+        });
+      }
     });
   }
 

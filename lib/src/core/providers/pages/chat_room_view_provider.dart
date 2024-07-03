@@ -24,6 +24,8 @@ class ChatRoomView extends _$ChatRoomView {
         .read(userRepositoryProvider)
         .getUserInfo(FirebaseAuth.instance.currentUser!.uid);
 
+    markAsRead();
+
     final Stream<List<Message>> messages =
         ref.read(chatRoomRepositoryProvider).getMessages(_roomInfo.id);
 
@@ -46,6 +48,11 @@ class ChatRoomView extends _$ChatRoomView {
       return memberList.firstWhere(
           (element) => element.uid != FirebaseAuth.instance.currentUser?.uid);
     });
+  }
+
+  // Mark as read
+  Future<void> markAsRead() async {
+    await ref.read(chatRoomRepositoryProvider).markAsRead(_roomInfo.id);
   }
 
   // Leave chat room

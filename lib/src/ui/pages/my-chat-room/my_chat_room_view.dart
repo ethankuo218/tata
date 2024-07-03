@@ -31,30 +31,32 @@ class _MyChatRoomViewState extends ConsumerState<MyChatRoomView> {
   @override
   Widget build(BuildContext context) {
     return ref.watch(myChatRoomViewProvider).when(
-          data: (list) => Scaffold(
-              body: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-            child: Column(
-              children: [
-                Expanded(
-                    child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    var chatRoomInfo = list[index];
+          data: (list) {
+            return Scaffold(
+                body: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              child: Column(
+                children: [
+                  Expanded(
+                      child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      var chatRoomInfo = list[index];
 
-                    return MyChatRoomTile(
-                        userUid: user.uid,
-                        roomInfo: chatRoomInfo,
-                        onTap: () => context.push(ChatRoomView.routeName,
-                            extra:
-                                chatRoomInfo.fold((l) => l.id, (r) => r.id)));
-                  },
-                  itemCount: list.length,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(height: 15),
-                ))
-              ],
-            ),
-          )),
+                      return MyChatRoomTile(
+                          userUid: user.uid,
+                          roomInfo: chatRoomInfo,
+                          onTap: () => context.push(ChatRoomView.routeName,
+                              extra:
+                                  chatRoomInfo.fold((l) => l.id, (r) => r.id)));
+                    },
+                    itemCount: list.length,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(height: 15),
+                  ))
+                ],
+              ),
+            ));
+          },
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stackTrace) => Center(child: Text('Error: $error')),
         );

@@ -1,5 +1,5 @@
-import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/core/models/room.dart';
+import 'package:tata/src/core/models/tarot_night_message.dart';
 
 class TarotNightRoom extends Room {
   final TarotNightRoomTheme theme;
@@ -42,7 +42,7 @@ class TarotNightRoom extends Room {
       hostId: map['host_id'],
       latestMessage: map['latest_message'] == null
           ? null
-          : Message.fromJson(map['latest_message']),
+          : TarotNightMessage.fromJson(map['latest_message']),
       isMember: map['is_member'] ?? false,
       role: map['role'],
     );
