@@ -245,7 +245,7 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                                         ],
                                                       ),
                                                       const SizedBox(
-                                                          height: 20),
+                                                          height: 40),
                                                       Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
