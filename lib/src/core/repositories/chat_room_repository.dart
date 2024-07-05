@@ -32,14 +32,10 @@ class ChatRoomRepository {
         ? _fireStore
             .collection('chat_rooms')
             .where('is_closed', isEqualTo: false)
-            .where('type', isEqualTo: ChatRoomType.normal.value)
-            .where('host', isNotEqualTo: _firebaseAuth.currentUser!.uid)
             .orderBy('create_time', descending: true)
         : _fireStore
             .collection('chat_rooms')
             .where('is_closed', isEqualTo: false)
-            .where('type', isEqualTo: ChatRoomType.normal.value)
-            .where('host', isNotEqualTo: _firebaseAuth.currentUser!.uid)
             .where('category', isEqualTo: category)
             .orderBy('create_time', descending: true);
 
@@ -53,6 +49,7 @@ class ChatRoomRepository {
 
     List<ChatRoom> chatRoomList = querySnapshot.docs
         .map((chatRoom) => ChatRoom.fromJson(chatRoom.data()))
+        .filter((chatRoom) => chatRoom.hostId != _firebaseAuth.currentUser!.uid)
         .toList();
 
     _lastDocument = querySnapshot.docs.last;
