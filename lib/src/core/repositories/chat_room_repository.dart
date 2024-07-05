@@ -33,11 +33,13 @@ class ChatRoomRepository {
             .collection('chat_rooms')
             .where('is_closed', isEqualTo: false)
             .where('type', isEqualTo: ChatRoomType.normal.value)
+            .where('host', isNotEqualTo: _firebaseAuth.currentUser!.uid)
             .orderBy('create_time', descending: true)
         : _fireStore
             .collection('chat_rooms')
             .where('is_closed', isEqualTo: false)
             .where('type', isEqualTo: ChatRoomType.normal.value)
+            .where('host', isNotEqualTo: _firebaseAuth.currentUser!.uid)
             .where('category', isEqualTo: category)
             .orderBy('create_time', descending: true);
 
