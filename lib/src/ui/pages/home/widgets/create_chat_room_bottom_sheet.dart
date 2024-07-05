@@ -33,11 +33,11 @@ class CreateChatRoomBottomSheet extends StatefulWidget {
 class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
   static const categoryList = [
     'All',
-    'Relation',
+    'Romance',
     'Work',
     'Interest',
     'Sport',
-    'Chat',
+    'ChitChat',
     'School'
   ];
 

@@ -227,10 +227,35 @@ class ChatRoomRepository {
     required String description,
     required String category,
     required int limit,
-    TarotCardKey? backgroundImage,
+    // TarotCardKey? backgroundImage,
   }) async {
     final DocumentReference newChatRoomDoc =
         _fireStore.collection('chat_rooms').doc();
+
+    late TarotCardKey backgroundImage;
+
+    switch (category) {
+      case 'Romance':
+        backgroundImage = TarotCardKey.lovers;
+        break;
+      case 'Work':
+        backgroundImage = TarotCardKey.chariot;
+        break;
+      case 'Interest':
+        backgroundImage = TarotCardKey.magician;
+        break;
+      case 'Sport':
+        backgroundImage = TarotCardKey.sun;
+        break;
+      case 'ChitChat':
+        backgroundImage = TarotCardKey.fool;
+        break;
+      case 'School':
+        backgroundImage = TarotCardKey.highPriestess;
+        break;
+      default:
+        backgroundImage = Tarot.getRandomCard();
+    }
 
     final ChatRoom newChatRoom = ChatRoom(
         id: newChatRoomDoc.id,
@@ -238,7 +263,7 @@ class ChatRoomRepository {
         title: title,
         description: description,
         category: category,
-        backgroundImage: backgroundImage ?? Tarot.getRandomCard(),
+        backgroundImage: backgroundImage,
         limit: limit,
         hostId: _firebaseAuth.currentUser!.uid,
         memberCount: 1,

@@ -4,6 +4,7 @@ import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:tata/src/core/models/tarot_card.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/test_result_view_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/quest_view.dart';
@@ -231,7 +232,8 @@ class _TarotNightTestResultViewState
                                                                     .all(0.0),
                                                             color: Colors.white,
                                                             onPressed: () {
-                                                              print('Share');
+                                                              Share.share(
+                                                                  'Check out this Tarot Card: ${card.name}');
                                                             },
                                                             icon: const Icon(
                                                                 Icons.share)),

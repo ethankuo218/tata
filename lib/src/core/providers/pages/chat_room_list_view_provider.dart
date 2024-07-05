@@ -67,7 +67,6 @@ class ChatRoomListView extends _$ChatRoomListView {
           title: title,
           description: description,
           category: category,
-          backgroundImage: backgroundImage,
           limit: limit,
         )
         .then((value) {
