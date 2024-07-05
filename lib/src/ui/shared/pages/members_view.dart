@@ -54,7 +54,7 @@ class MembersView extends ConsumerWidget {
                 child: ListView.separated(
                   padding: const EdgeInsets.all(15),
                   itemBuilder: (context, index) {
-                    final bool isRemovable = memberList[index].role != 'host';
+                    final bool isRemovable = memberList[index].role == 'member';
 
                     return isHost && isRemovable
                         ? Slidable(
