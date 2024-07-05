@@ -100,6 +100,14 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
                     return;
                   }
 
+                  if (isHost && isTestCompleted) {
+                    context.push(TarotNightDrawCardView.routeName, extra: {
+                      'roomId': widget.roomInfo.id,
+                      'question': widget.roomInfo.question
+                    });
+                    return;
+                  }
+
                   if (isHost) {
                     showStartTarotTestBottomSheet(context, onClosed: (_) {
                       if (_ == null) {
@@ -125,7 +133,7 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
                                 const Color.fromARGB(255, 223, 130, 255))
                             : MaterialStateProperty.all(
                                 const Color.fromARGB(255, 168, 168, 168))),
-                child: Text(isHost ? '開始測驗' : '查看結果',
+                child: Text(isHost && !isTestCompleted ? '開始測驗' : '查看結果',
                     style: TextStyle(
                         color: isTestButtonEnabled
                             ? const Color.fromARGB(255, 12, 13, 32)
