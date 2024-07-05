@@ -27,8 +27,23 @@ class TarotNightRoomListView extends ConsumerStatefulWidget {
       _TarotNightRoomListViewState();
 }
 
-class _TarotNightRoomListViewState
-    extends ConsumerState<TarotNightRoomListView> {
+class _TarotNightRoomListViewState extends ConsumerState<TarotNightRoomListView>
+    with RouteAware {
+  final RouteObserver<ModalRoute<void>> routeObserver =
+      RouteObserver<ModalRoute<void>>();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+    ref.read(tarotNightRoomListViewProvider.notifier).reload();
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ref.watch(tarotNightRoomListViewProvider).when(
