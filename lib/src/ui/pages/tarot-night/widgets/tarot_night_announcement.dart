@@ -18,10 +18,13 @@ class TarotNightAnnouncement extends StatefulWidget {
 }
 
 class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
+  late bool isHost =
+      FirebaseAuth.instance.currentUser?.uid == widget.roomInfo.hostId;
   late DateTime enableTestButtonTime =
       widget.roomInfo.createTime.toDate().add(const Duration(minutes: 30));
   late Timer timer;
   late String timerView = '--:--:--';
+  late bool isTestCompleted = widget.roomInfo.question != null;
   late bool isTestButtonEnabled = false;
 
   @override
@@ -74,7 +77,7 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         height: 60,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
+          color: const Color.fromARGB(255, 37, 37, 55),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
@@ -91,14 +94,13 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
                     fontSize: 16,
                     fontWeight: FontWeight.w600)),
             const Spacer(),
-            if (widget.roomInfo.hostId ==
-                FirebaseAuth.instance.currentUser?.uid)
-              TextButton(
-                  onPressed: () {
-                    if (!isTestButtonEnabled) {
-                      return;
-                    }
+            TextButton(
+                onPressed: () {
+                  if (!isTestButtonEnabled || (!isHost && !isTestCompleted)) {
+                    return;
+                  }
 
+                  if (isHost) {
                     showStartTarotTestBottomSheet(context, onClosed: (_) {
                       if (_ == null) {
                         return;
@@ -107,25 +109,30 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
                       context.push(TarotNightDrawCardView.routeName,
                           extra: {'roomId': widget.roomInfo.id, 'question': _});
                     });
-                  },
-                  style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(Size.zero),
-                      padding: MaterialStateProperty.all(
-                          const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8)),
-                      backgroundColor: isTestButtonEnabled
-                          ? MaterialStateProperty.all(
-                              const Color.fromARGB(255, 223, 130, 255))
-                          : MaterialStateProperty.all(
-                              const Color.fromARGB(255, 168, 168, 168))),
-                  child: Text('開始測驗',
-                      style: TextStyle(
-                          color: isTestButtonEnabled
-                              ? const Color.fromARGB(255, 12, 13, 32)
-                              : const Color.fromARGB(255, 12, 13, 32)
-                                  .withOpacity(0.8),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)))
+                  } else {
+                    context.push(TarotNightDrawCardView.routeName,
+                        extra: {'roomId': widget.roomInfo.id});
+                  }
+                },
+                style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(Size.zero),
+                    padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8)),
+                    backgroundColor:
+                        isTestButtonEnabled && (!isHost && isTestCompleted)
+                            ? MaterialStateProperty.all(
+                                const Color.fromARGB(255, 223, 130, 255))
+                            : MaterialStateProperty.all(
+                                const Color.fromARGB(255, 168, 168, 168))),
+                child: Text(isHost ? '開始測驗' : '查看結果',
+                    style: TextStyle(
+                        color: isTestButtonEnabled
+                            ? const Color.fromARGB(255, 12, 13, 32)
+                            : const Color.fromARGB(255, 12, 13, 32)
+                                .withOpacity(0.8),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold)))
           ],
         ),
       ),
