@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tata/src/core/services/push_notifications_service.dart';
+import 'package:tata/src/ui/pages/chat-room-info/chat_room_info_view.dart';
 
 import 'firebase_options.dart';
 import 'src/app.dart';
@@ -12,6 +13,8 @@ Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     print('Handling a background message ${message.messageId}');
   }
 }
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +35,10 @@ void main() async {
   // Listen to on tap message
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.notification != null) {
-      print('A new onMessageOpenedApp event was published!');
+      navigatorKey.currentState
+          ?.pushNamed(ChatRoomInfoView.routeName, arguments: {
+        "chatRoomId": message.data['chatRoomId'],
+      });
     }
   });
 

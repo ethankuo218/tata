@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tata/main.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/router_notifier.dart';
 import 'package:tata/src/core/state/authentication_state.dart';
@@ -24,13 +25,11 @@ import 'package:tata/src/ui/pages/auth/phone_verify_otp_page.dart';
 import 'package:tata/src/ui/pages/realtime_pair/realtime_pair_view.dart';
 import 'package:tata/src/ui/pages/settings/settings_view.dart';
 
-final _key = GlobalKey<NavigatorState>();
-
 final routerProvider = Provider<GoRouter>((ref) {
   final routerListenable = ref.watch(routerNotifierProvider);
 
   return GoRouter(
-    navigatorKey: _key,
+    navigatorKey: navigatorKey,
     debugLogDiagnostics: true,
     initialLocation: '/home',
     refreshListenable: routerListenable,
