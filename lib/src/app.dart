@@ -54,7 +54,7 @@ class App extends ConsumerWidget {
               const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
             ),
             backgroundColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(255, 255, 228, 85),
+              const Color.fromARGB(255, 255, 195, 79),
             ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
@@ -64,8 +64,8 @@ class App extends ConsumerWidget {
             textStyle: MaterialStateProperty.all<TextStyle>(
               const TextStyle(
                 height: 1.0,
-                color: Color.fromARGB(255, 7, 9, 47),
-                fontSize: 18,
+                color: Color.fromARGB(255, 24, 24, 24),
+                fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 
@@ -72,9 +73,9 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    const Color.fromARGB(255, 223, 130, 255).withOpacity(0.8),
-                    const Color.fromARGB(255, 223, 130, 255).withOpacity(0.6),
-                    const Color.fromARGB(255, 241, 198, 255).withOpacity(0.4),
+                    const Color.fromARGB(255, 255, 244, 185).withOpacity(0.8),
+                    const Color.fromARGB(255, 255, 244, 185).withOpacity(0.6),
+                    const Color.fromARGB(255, 255, 244, 185).withOpacity(0.4),
                     Colors.transparent,
                   ],
                 ),
@@ -97,10 +98,11 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                               Opacity(
                                   opacity: 0.4,
                                   child: SvgPicture.asset(
-                                    'assets/images/star_2.svg',
-                                    width: 20,
-                                    height: 20,
-                                  )),
+                                      'assets/images/star_2.svg',
+                                      width: 20,
+                                      height: 20,
+                                      colorFilter: const ColorFilter.mode(
+                                          Colors.white, BlendMode.srcIn))),
                               const SizedBox(width: 4),
                               const Text(
                                 '聊天室名稱',
@@ -115,7 +117,7 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                           const SizedBox(height: 16),
                           Container(
                             decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 241, 198, 255)
+                                color: const Color.fromARGB(255, 255, 244, 185)
                                     .withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(20)),
                             child: TextFormField(
@@ -134,7 +136,7 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                   contentPadding: const EdgeInsets.all(16),
                                   hintText: "輸入聊天室名稱",
                                   hintStyle: TextStyle(
-                                      height: 1.71,
+                                      height: 2,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.white.withOpacity(0.5))),
@@ -146,10 +148,11 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                               Opacity(
                                   opacity: 0.4,
                                   child: SvgPicture.asset(
-                                    'assets/images/star_2.svg',
-                                    width: 20,
-                                    height: 20,
-                                  )),
+                                      'assets/images/star_2.svg',
+                                      width: 20,
+                                      height: 20,
+                                      colorFilter: const ColorFilter.mode(
+                                          Colors.white, BlendMode.srcIn))),
                               const SizedBox(width: 4),
                               const Text(
                                 '類別',
@@ -176,7 +179,7 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                   shape: RoundedRectangleBorder(
                                       side: BorderSide(
                                           color: const Color.fromARGB(
-                                                  255, 241, 198, 255)
+                                                  255, 255, 244, 185)
                                               .withOpacity(
                                                   _selectedCategory == index
                                                       ? 1
@@ -216,63 +219,11 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                               Opacity(
                                   opacity: 0.4,
                                   child: SvgPicture.asset(
-                                    'assets/images/star_2.svg',
-                                    width: 20,
-                                    height: 20,
-                                  )),
-                              const SizedBox(width: 4),
-                              const Text(
-                                '心情描述',
-                                style: TextStyle(
-                                    height: 1.0,
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400),
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 241, 198, 255)
-                                    .withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: TextFormField(
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  height: 1.71,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                              onTapOutside: (event) =>
-                                  FocusManager.instance.primaryFocus?.unfocus(),
-                              minLines: 9,
-                              maxLines: 9,
-                              controller: descriptionController,
-                              validator: (value) =>
-                                  value == null || value.isEmpty
-                                      ? 'Please enter the description'
-                                      : null,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: const EdgeInsets.all(16),
-                                  hintText: "最近在想什麼呢？",
-                                  hintStyle: TextStyle(
-                                      color: Colors.white.withOpacity(0.5),
-                                      height: 1.71,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400)),
-                            ),
-                          ),
-                          const SizedBox(height: 28),
-                          Row(
-                            children: [
-                              Opacity(
-                                  opacity: 0.4,
-                                  child: SvgPicture.asset(
-                                    'assets/images/star_2.svg',
-                                    width: 20,
-                                    height: 20,
-                                  )),
+                                      'assets/images/star_2.svg',
+                                      width: 20,
+                                      height: 20,
+                                      colorFilter: const ColorFilter.mode(
+                                          Colors.white, BlendMode.srcIn))),
                               const SizedBox(width: 4),
                               const Text(
                                 '參與人數',
@@ -288,11 +239,14 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                           Container(
                               decoration: BoxDecoration(
                                   color:
-                                      const Color.fromARGB(255, 241, 198, 255)
+                                      const Color.fromARGB(255, 255, 244, 185)
                                           .withOpacity(0.2),
                                   borderRadius: BorderRadius.circular(25)),
                               child: DropdownButtonFormField(
                                 alignment: Alignment.center,
+                                iconEnabledColor: Colors.white,
+                                icon: const FaIcon(FontAwesomeIcons.caretDown,
+                                    color: Colors.white, size: 16),
                                 validator: (value) =>
                                     value == null ? '請選擇參與人數' : null,
                                 decoration: const InputDecoration(
@@ -333,10 +287,90 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                 ],
                               )),
                           const SizedBox(
-                            height: 20,
+                            height: 28,
                           ),
+                          Row(
+                            children: [
+                              Opacity(
+                                  opacity: 0.4,
+                                  child: SvgPicture.asset(
+                                      'assets/images/star_2.svg',
+                                      width: 20,
+                                      height: 20,
+                                      colorFilter: const ColorFilter.mode(
+                                          Colors.white, BlendMode.srcIn))),
+                              const SizedBox(width: 4),
+                              const Text(
+                                '心情描述',
+                                style: TextStyle(
+                                    height: 1.0,
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 255, 244, 185)
+                                    .withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: TextFormField(
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  height: 1.71,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                              onTapOutside: (event) =>
+                                  FocusManager.instance.primaryFocus?.unfocus(),
+                              minLines: 9,
+                              maxLines: 9,
+                              controller: descriptionController,
+                              validator: (value) =>
+                                  value == null || value.isEmpty
+                                      ? 'Please enter the description'
+                                      : null,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: const EdgeInsets.all(16),
+                                  hintText: "最近在想什麼呢？",
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.5),
+                                      height: 1.71,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400)),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
                           Center(
                             child: ElevatedButton(
+                              style: ButtonStyle(
+                                fixedSize: MaterialStateProperty.all<Size>(
+                                    const Size(100, 40)),
+                                padding: MaterialStateProperty.all<
+                                    EdgeInsetsGeometry>(
+                                  const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 20),
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  const Color.fromARGB(255, 255, 195, 79),
+                                ),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                textStyle: MaterialStateProperty.all<TextStyle>(
+                                    const TextStyle(
+                                  height: 1.0,
+                                  color: Color.fromARGB(255, 24, 24, 24),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                              ),
                               onPressed: () {
                                 setState(() {
                                   _showNotSelectCategoryError =
@@ -361,7 +395,7 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                     ? "創建"
                                     : "確定",
                                 style: const TextStyle(
-                                    color: Color.fromARGB(255, 12, 13, 32),
+                                    color: Color.fromARGB(255, 24, 24, 24),
                                     height: 1.2,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500),
