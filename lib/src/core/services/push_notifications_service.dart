@@ -22,7 +22,7 @@ class PushNotificationsService {
   // initialize the local notifications
   static Future<void> initLocalNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('assets/images/flutter_logo.png');
+        AndroidInitializationSettings('assets/images/tata_logo.png');
 
     final DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(

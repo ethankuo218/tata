@@ -31,13 +31,15 @@ class CreateChatRoomBottomSheet extends StatefulWidget {
 }
 
 class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
-  static const categoryList = [
-    'Romance',
-    'Work',
-    'Interest',
-    'Sport',
-    'ChitChat',
-    'School'
+  static const List<ChatRoomCategory> categoryList = [
+    ChatRoomCategory.romance,
+    ChatRoomCategory.work,
+    ChatRoomCategory.interest,
+    ChatRoomCategory.sport,
+    ChatRoomCategory.family,
+    ChatRoomCategory.friend,
+    ChatRoomCategory.chitchat,
+    ChatRoomCategory.school
   ];
 
   final _formKey = GlobalKey<FormState>();
@@ -181,7 +183,8 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                                       : 0.2),
                                           width: 2),
                                       borderRadius: BorderRadius.circular(8)),
-                                  label: Text(categoryList[index]),
+                                  label: Text(ChatRoomCategory.toText(
+                                      categoryList[index])),
                                   labelStyle: const TextStyle(
                                     height: 1.0,
                                     color: Colors.white,

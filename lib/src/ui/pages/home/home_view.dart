@@ -11,7 +11,6 @@ import 'package:tata/src/ui/pages/home/widgets/create_chat_room_bottom_sheet.dar
 import 'package:tata/src/ui/pages/my-chat-room/my_chat_room_view.dart';
 import 'package:tata/src/ui/pages/settings/settings_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/lobby_view.dart';
-import 'package:tata/src/ui/shared/widgets/app_bar.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -54,7 +53,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const AppBarWidget(),
+        appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 12, 13, 32),
+            centerTitle: false,
+            titleSpacing: 0,
+            toolbarHeight: 0),
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
@@ -143,7 +146,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   icon: FaIcon(
                     FontAwesomeIcons.house,
                     color: _selectedIndex == 0
-                        ? const Color.fromARGB(255, 212, 189, 66)
+                        ? const Color.fromARGB(255, 255, 195, 79)
                         : const Color.fromARGB(255, 161, 160, 161),
                   ),
                   label: '',
@@ -152,7 +155,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   icon: FaIcon(
                     FontAwesomeIcons.solidComment,
                     color: _selectedIndex == 1
-                        ? const Color.fromARGB(255, 212, 189, 66)
+                        ? const Color.fromARGB(255, 255, 195, 79)
                         : const Color.fromARGB(255, 161, 160, 161),
                   ),
                   label: '',
@@ -162,7 +165,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   icon: FaIcon(
                     FontAwesomeIcons.hourglassStart,
                     color: _selectedIndex == 3
-                        ? const Color.fromARGB(255, 212, 189, 66)
+                        ? const Color.fromARGB(255, 255, 195, 79)
                         : const Color.fromARGB(255, 161, 160, 161),
                   ),
                   label: '',
@@ -171,7 +174,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   icon: FaIcon(
                     FontAwesomeIcons.gear,
                     color: _selectedIndex == 4
-                        ? const Color.fromARGB(255, 212, 189, 66)
+                        ? const Color.fromARGB(255, 255, 195, 79)
                         : const Color.fromARGB(255, 161, 160, 161),
                   ),
                   label: '',

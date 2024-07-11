@@ -1,3 +1,4 @@
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/utils/tarot.dart';
 import 'package:flutter/material.dart';
@@ -18,101 +19,125 @@ class ChatRoomTile extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              height: 150,
+              height: 140,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(backgroundImage),
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
-                ),
-                borderRadius: BorderRadius.circular(20),
-              ),
+                  image: DecorationImage(
+                    image: AssetImage(backgroundImage),
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  border: GradientBoxBorder(
+                    gradient: LinearGradient(colors: [
+                      const Color.fromARGB(255, 241, 189, 88).withOpacity(0.8),
+                      const Color.fromARGB(255, 227, 216, 157).withOpacity(0.2),
+                      const Color.fromARGB(255, 241, 189, 88).withOpacity(0.8),
+                      const Color.fromARGB(255, 227, 216, 157).withOpacity(0.2),
+                    ]),
+                    width: 2,
+                  )),
             ),
             Container(
-              height: 150,
+              height: 140,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  colors: [
-                    Colors.black.withOpacity(0.7),
-                    Colors.black.withOpacity(0.0),
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Stack(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+                  borderRadius: BorderRadius.circular(20),
+                  border: GradientBoxBorder(
+                    gradient: LinearGradient(colors: [
+                      const Color.fromARGB(255, 241, 189, 88).withOpacity(0.8),
+                      const Color.fromARGB(255, 227, 216, 157).withOpacity(0.2),
+                      const Color.fromARGB(255, 241, 189, 88).withOpacity(0.8),
+                      const Color.fromARGB(255, 227, 216, 157).withOpacity(0.2),
+                    ]),
+                    width: 2,
+                  )),
+              child: Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              padding: const EdgeInsets.symmetric(vertical: 8),
                               width: 80,
                               decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(25),
+                                color: const Color.fromARGB(255, 255, 244, 185),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                               child: Center(
                                 child: Text(
-                                  chatRoomInfo.category,
+                                  ChatRoomCategory.toText(
+                                      chatRoomInfo.category),
                                   style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
+                                      height: 1.0,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color.fromARGB(255, 12, 13, 32)),
                                 ),
                               ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                const Color.fromARGB(255, 12, 13, 32)
+                                    .withOpacity(0),
+                                const Color.fromARGB(255, 0, 0, 0)
+                                    .withOpacity(0.8),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20))),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 20),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              chatRoomInfo.title,
+                              style: const TextStyle(
+                                  height: 25 / 18,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
                             ),
                             Container(
                                 alignment: Alignment.bottomRight,
                                 child: Row(
                                   children: [
-                                    Icon(Icons.person,
-                                        color: Colors.white.withOpacity(0.8)),
+                                    const Icon(Icons.person,
+                                        color:
+                                            Color.fromARGB(255, 255, 244, 185)),
+                                    const SizedBox(width: 4),
                                     Text(
-                                      ' ${chatRoomInfo.memberCount}/${chatRoomInfo.limit}',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white.withOpacity(0.8)),
+                                      chatRoomInfo.memberCount.toString(),
+                                      style: const TextStyle(
+                                          height: 24 / 14,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color.fromARGB(
+                                              255, 255, 244, 185)),
                                     ),
                                   ],
                                 ))
                           ],
                         ),
-                        const SizedBox(height: 15),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Text(
-                            chatRoomInfo.title,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        ),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        //   child: Text(
-                        //     maxLines: 2,
-                        //     overflow: TextOverflow.ellipsis,
-                        //     chatRoomInfo.description,
-                        //     style: TextStyle(
-                        //         fontSize: 14,
-                        //         fontWeight: FontWeight.w500,
-                        //         color: Colors.white.withOpacity(0.8)),
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],

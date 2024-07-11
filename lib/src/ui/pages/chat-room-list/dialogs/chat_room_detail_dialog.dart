@@ -117,7 +117,8 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Center(
-                        child: Text(chatRoomInfo.category,
+                        child: Text(
+                            ChatRoomCategory.toText(chatRoomInfo.category),
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 255, 228, 85),
                                 fontSize: 16)),

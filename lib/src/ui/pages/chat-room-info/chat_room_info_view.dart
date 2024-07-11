@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/providers/pages/chat_room_info_view_provider.dart';
 import 'package:tata/src/ui/pages/home/widgets/create_chat_room_bottom_sheet.dart';
 import 'package:tata/src/utils/tarot.dart';
@@ -108,7 +109,9 @@ class ChatRoomInfoView extends ConsumerWidget {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Center(
-                                child: Text(chatRoomInfo.category,
+                                child: Text(
+                                    ChatRoomCategory.toText(
+                                        chatRoomInfo.category),
                                     style: const TextStyle(
                                         color:
                                             Color.fromARGB(255, 255, 228, 85),

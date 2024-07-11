@@ -27,8 +27,7 @@ class ChatRoomRepository {
     if (isInitFetch) {
       _lastDocument = null;
     }
-
-    Query<Map<String, dynamic>> collection = category == 'All'
+    Query<Map<String, dynamic>> collection = category == 'all'
         ? _fireStore
             .collection('chat_rooms')
             .where('is_closed', isEqualTo: false)
@@ -224,7 +223,7 @@ class ChatRoomRepository {
   Future<String> createChatRoom({
     required String title,
     required String description,
-    required String category,
+    required ChatRoomCategory category,
     required int limit,
     // TarotCardKey? backgroundImage,
   }) async {
@@ -234,22 +233,28 @@ class ChatRoomRepository {
     late TarotCardKey backgroundImage;
 
     switch (category) {
-      case 'Romance':
+      case ChatRoomCategory.romance:
         backgroundImage = TarotCardKey.lovers;
         break;
-      case 'Work':
+      case ChatRoomCategory.work:
         backgroundImage = TarotCardKey.chariot;
         break;
-      case 'Interest':
+      case ChatRoomCategory.interest:
         backgroundImage = TarotCardKey.magician;
         break;
-      case 'Sport':
+      case ChatRoomCategory.sport:
         backgroundImage = TarotCardKey.sun;
         break;
-      case 'ChitChat':
+      case ChatRoomCategory.family:
+        backgroundImage = TarotCardKey.moon;
+        break;
+      case ChatRoomCategory.friend:
+        backgroundImage = TarotCardKey.world;
+        break;
+      case ChatRoomCategory.chitchat:
         backgroundImage = TarotCardKey.fool;
         break;
-      case 'School':
+      case ChatRoomCategory.school:
         backgroundImage = TarotCardKey.highPriestess;
         break;
       default:
@@ -319,7 +324,7 @@ class ChatRoomRepository {
         type: ChatRoomType.realtime,
         title: '',
         description: '',
-        category: '',
+        category: ChatRoomCategory.chitchat,
         backgroundImage: TarotCardKey.fool,
         limit: 2,
         memberCount: 1,

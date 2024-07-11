@@ -9,7 +9,7 @@ part 'chat_room_list_view_provider.g.dart';
 class ChatRoomListView extends _$ChatRoomListView {
   final List<ChatRoom> _chatRoomList = [];
   bool _hasMore = true;
-  String _category = 'All';
+  String _category = 'all';
 
   @override
   Future<List<ChatRoom>> build() async {
@@ -48,16 +48,16 @@ class ChatRoomListView extends _$ChatRoomListView {
   }
 
   // Set Category
-  void setCategory(String category) {
-    _category = category;
-    fetchFirstList();
+  Future<void> setCategory(ChatRoomCategory category) async {
+    _category = category.value;
+    await fetchFirstList();
   }
 
   // Create Chat Room
   Future<String> createChatRoom({
     required String title,
     required String description,
-    required String category,
+    required ChatRoomCategory category,
     required TarotCardKey backgroundImage,
     required int limit,
   }) async {

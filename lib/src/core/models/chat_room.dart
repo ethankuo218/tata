@@ -5,7 +5,7 @@ import 'package:tata/src/utils/tarot.dart';
 class ChatRoom extends Room {
   final ChatRoomType type;
   final int limit;
-  final String category;
+  final ChatRoomCategory category;
   final TarotCardKey? backgroundImage;
   late List<Message>? messages = [];
   final bool isClosed;
@@ -32,7 +32,7 @@ class ChatRoom extends Room {
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       limit: map['limit'],
-      category: map['category'] ?? '',
+      category: ChatRoomCategory.toEnum(map['category']),
       backgroundImage: map['background_image'] != null
           ? TarotCardKey.toEnum(map['background_image'])
           : null,
@@ -54,7 +54,7 @@ class ChatRoom extends Room {
       'title': title,
       'description': description,
       'limit': limit,
-      'category': category,
+      'category': category.value,
       'background_image': backgroundImage == null
           ? null
           : TarotCardKey.toValue(backgroundImage!),
@@ -98,4 +98,58 @@ enum ChatRoomType {
   }
 
   final int value;
+}
+
+enum ChatRoomCategory {
+  all('all'),
+  romance('romance'),
+  work('work'),
+  interest('interest'),
+  sport('sport'),
+  family('family'),
+  friend('friend'),
+  chitchat('chitchat'),
+  school('school');
+
+  /// Convert value to enum type
+  ///
+  /// When value not found, and [defaultValue] is null will Return first enum value.
+  factory ChatRoomCategory.toEnum(String x, {dynamic defaultValue}) {
+    var filter = values.where((element) => element.value == x);
+
+    if (filter.isEmpty) {
+      throw Exception('Invalid input value');
+    }
+
+    return filter.first;
+  }
+
+  static String toText(ChatRoomCategory x) {
+    switch (x) {
+      case ChatRoomCategory.all:
+        return '全部';
+      case ChatRoomCategory.romance:
+        return '感情';
+      case ChatRoomCategory.work:
+        return '工作';
+      case ChatRoomCategory.interest:
+        return '興趣';
+      case ChatRoomCategory.sport:
+        return '運動';
+      case ChatRoomCategory.family:
+        return '家庭';
+      case ChatRoomCategory.friend:
+        return '友情';
+      case ChatRoomCategory.chitchat:
+        return '閒聊';
+      case ChatRoomCategory.school:
+        return '學校';
+      default:
+        return '全部';
+    }
+  }
+
+  const ChatRoomCategory(this.value);
+
+  final String value;
 }
