@@ -63,6 +63,7 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                 },
                 child: Scaffold(
                   appBar: AppBar(
+                    backgroundColor: const Color.fromARGB(255, 12, 13, 32),
                     title: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -93,7 +94,7 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             color: const Color.fromARGB(
-                                                255, 255, 228, 85),
+                                                255, 255, 195, 79),
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -116,7 +117,7 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             color: const Color.fromARGB(
-                                                255, 212, 189, 66),
+                                                255, 255, 244, 185),
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -163,8 +164,13 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                         children: [
                           Container(
                             decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 7, 9, 47),
-                            ),
+                                gradient: LinearGradient(
+                                    colors: [
+                                  Color.fromARGB(255, 12, 13, 32),
+                                  Color.fromARGB(255, 26, 0, 58)
+                                ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight)),
                             child: StreamBuilder(
                               builder: (BuildContext context,
                                       AsyncSnapshot<List<Message>> snapshot) =>
@@ -283,7 +289,10 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                 announcement: data.roomInfo.description)
                         ],
                       )),
-                      Padding(
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 26, 0, 58),
+                        ),
                         padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 35.0),
                         child: Row(
                           children: [
@@ -315,7 +324,7 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                               fontSize: 14,
                                               color: Colors.white),
                                           decoration: const InputDecoration(
-                                            hintText: 'Message...',
+                                            hintText: '輸入訊息',
                                             hintStyle: TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 255, 255, 255),

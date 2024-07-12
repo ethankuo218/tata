@@ -1,173 +1,193 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/utils/tarot.dart';
 
 Future<Object?> showChatRoomDetailDialog(BuildContext context,
     {required ChatRoom chatRoomInfo, required ValueChanged onClosed}) {
-  final screenHeight = MediaQuery.of(context).size.height;
-  final screenWidth = MediaQuery.of(context).size.width;
-
   return showGeneralDialog(
     context: context,
     pageBuilder: (context, _, __) => DefaultTextStyle(
       style: const TextStyle(),
       child: Center(
         child: Container(
-          height: screenHeight * 0.6,
-          margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
-          decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 7, 9, 47),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
+          height: 541,
+          width: 361,
+          padding: const EdgeInsets.all(20),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 12, 13, 32),
+              border: Border.all(
+                  color: const Color.fromARGB(255, 255, 244, 185), width: 2),
+              borderRadius: const BorderRadius.all(Radius.circular(40))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                clipBehavior: Clip.none,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(Tarot.getTarotCardImage(
-                              chatRoomInfo.backgroundImage!)),
-                          fit: BoxFit.cover,
-                          alignment: Alignment.topCenter,
-                        ),
-                        borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(10), bottom: Radius.zero),
-                      ),
-                      child: Container(
-                          decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            Colors.black.withOpacity(0.8),
-                            Colors.black.withOpacity(0.6),
-                            Colors.black.withOpacity(0.1),
-                            Colors.black.withOpacity(0.0),
-                          ],
-                        ),
-                        borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(10), bottom: Radius.zero),
-                      ))),
-                  Container(
-                    height: 200,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(10), bottom: Radius.zero),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop();
-                                  },
-                                  child: Container(
-                                    height: screenWidth * 0.08,
-                                    width: screenWidth * 0.08,
-                                    decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.6),
-                                        shape: BoxShape.circle),
-                                    child: const Icon(
-                                      Icons.close,
-                                      color: Colors.white,
-                                    ),
-                                  ))
-                            ],
-                          ),
-                          const Spacer(),
-                          Row(
-                            children: [
-                              const SizedBox(width: 10),
-                              Text(chatRoomInfo.title,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                            ],
-                          )
-                        ],
-                      ),
+                  GestureDetector(
+                    child: const FaIcon(
+                      FontAwesomeIcons.xmark,
+                      color: Colors.white,
                     ),
                   )
                 ],
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 80,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 2,
-                            color: const Color.fromARGB(255, 255, 228, 85)
-                                .withOpacity(0.8)),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: Text(
-                            ChatRoomCategory.toText(chatRoomInfo.category),
-                            style: const TextStyle(
-                                color: Color.fromARGB(255, 255, 228, 85),
-                                fontSize: 16)),
-                      ),
+              const SizedBox(height: 20),
+              Container(
+                  height: 180,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(Tarot.getTarotCardImage(
+                          chatRoomInfo.backgroundImage!)),
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: Row(
-                        children: [
-                          Icon(Icons.person,
-                              color: Colors.white.withOpacity(0.4)),
-                          const SizedBox(width: 5),
-                          Text(
-                              '${chatRoomInfo.memberCount.toString()}/${chatRoomInfo.limit}',
-                              style: TextStyle(
-                                  color: Colors.white.withOpacity(0.4),
-                                  fontSize: 16)),
+                    border: GradientBoxBorder(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            const Color.fromARGB(255, 241, 189, 88)
+                                .withOpacity(0.8),
+                            const Color.fromARGB(255, 227, 216, 157)
+                                .withOpacity(0.2),
+                            const Color.fromARGB(255, 241, 189, 88)
+                                .withOpacity(0.8),
+                            const Color.fromARGB(255, 227, 216, 157)
+                                .withOpacity(0.2),
+                          ]),
+                      width: 2,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 80),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          const Color.fromARGB(255, 12, 13, 32).withOpacity(0),
+                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.8),
                         ],
                       ),
-                    )
-                  ],
-                ),
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          height: 32,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 255, 244, 185),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Center(
+                            child: Text(
+                              ChatRoomCategory.toText(chatRoomInfo.category),
+                              style: const TextStyle(
+                                  height: 1.1,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromARGB(255, 12, 13, 32)),
+                            ),
+                          ),
+                        ),
+                        Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 2),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.person,
+                                    color: Color.fromARGB(255, 255, 244, 185)),
+                                const SizedBox(width: 4),
+                                Text(chatRoomInfo.memberCount.toString(),
+                                    style: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 255, 244, 185),
+                                        fontSize: 14)),
+                              ],
+                            ))
+                      ],
+                    ),
+                  )),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('- ${chatRoomInfo.title} -',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600)),
+                ],
               ),
-              const SizedBox(height: 5),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text('心情描述',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold)),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('- 描述 -',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white.withOpacity(0.5),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400)),
+                ],
               ),
-              const SizedBox(height: 10),
-              Container(
-                  height: screenHeight * 0.18,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+              const SizedBox(height: 16),
+              SizedBox(
+                  height: 100,
                   child: Scrollbar(
                       child: SingleChildScrollView(
                     child: Text(chatRoomInfo.description,
                         style:
                             const TextStyle(color: Colors.white, fontSize: 14)),
                   ))),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
+                      style: ButtonStyle(
+                        fixedSize: MaterialStateProperty.all<Size>(
+                            const Size(136, 40)),
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 20),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 255, 195, 79),
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        textStyle: MaterialStateProperty.all<TextStyle>(
+                            const TextStyle(
+                          height: 1.0,
+                          color: Color.fromARGB(255, 24, 24, 24),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        )),
+                      ),
                       onPressed: () => Navigator.of(context).pop(true),
-                      child: const Text('立即參與話題'))
+                      child: const Text(
+                        "立即參與話題",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 24, 24, 24),
+                            height: 1.2,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
+                      ))
                 ],
               ),
             ],

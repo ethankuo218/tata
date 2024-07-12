@@ -62,8 +62,9 @@ class ChatMessageBubble extends StatelessWidget {
                   color: isSystemMessage
                       ? Colors.grey.withOpacity(0.3)
                       : isSentByMe
-                          ? const Color(0xfff1c6ff)
-                          : const Color.fromARGB(51, 241, 198, 255),
+                          ? const Color.fromARGB(255, 255, 244, 185)
+                          : const Color.fromARGB(255, 255, 244, 185)
+                              .withOpacity(0.2),
                   borderRadius: isSystemMessage
                       ? const BorderRadius.all(Radius.circular(16))
                       : isSentByMe
