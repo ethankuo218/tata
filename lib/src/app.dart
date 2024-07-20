@@ -20,17 +20,18 @@ class App extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''), // English, no country code
+        Locale('en', ''), // English
+        Locale('zh_hant', ''), // Chinese
       ],
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           iconTheme: IconThemeData(color: Colors.white, size: 16),
           titleTextStyle: TextStyle(color: Colors.white, fontSize: 17),
-          backgroundColor: Color.fromARGB(255, 7, 9, 47),
+          backgroundColor: Color.fromARGB(255, 12, 13, 32),
         ),
-        scaffoldBackgroundColor: const Color.fromARGB(255, 7, 9, 47),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 12, 13, 32),
         bottomSheetTheme: const BottomSheetThemeData(
-          surfaceTintColor: Color.fromARGB(255, 7, 9, 47),
+          surfaceTintColor: Color.fromARGB(255, 12, 13, 32),
         ),
         primarySwatch: const MaterialColor(
           0xFFFFE455,

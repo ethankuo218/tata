@@ -2,35 +2,41 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
+import 'package:tata/src/core/providers/pages/tarot-night/tarot_night_announcement_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/start_tarot_test_bottom_sheet.dart';
 
-class TarotNightAnnouncement extends StatefulWidget {
+class TarotNightAnnouncement extends ConsumerStatefulWidget {
   const TarotNightAnnouncement({super.key, required this.roomInfo});
 
   final TarotNightRoom roomInfo;
 
   @override
-  State<TarotNightAnnouncement> createState() => _TarotNightAnnouncementState();
+  ConsumerState<TarotNightAnnouncement> createState() =>
+      _TarotNightAnnouncementState();
 }
 
-class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
-  late bool isHost =
-      FirebaseAuth.instance.currentUser?.uid == widget.roomInfo.hostId;
+class _TarotNightAnnouncementState
+    extends ConsumerState<TarotNightAnnouncement> {
   late DateTime enableTestButtonTime =
-      widget.roomInfo.createTime.toDate().add(const Duration(minutes: 30));
+      widget.roomInfo.createTime.toDate().add(const Duration(minutes: 3));
   late Timer timer;
   late String timerView = '--:--:--';
-  late bool isTestCompleted = widget.roomInfo.question != null;
   late bool isTestButtonEnabled = false;
 
   @override
   void initState() {
     super.initState();
-    isTestButtonEnabled = widget.roomInfo.question != null;
+
+    ref
+        .read(tarotNightAnnouncementProvider.notifier)
+        .loadTarotNightRoomInfo(widget.roomInfo.id);
+
     // Create a timer that will run at 1 AM tomorrow
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final now = DateTime.now();
@@ -71,79 +77,81 @@ class _TarotNightAnnouncementState extends State<TarotNightAnnouncement> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        height: 60,
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 37, 37, 55),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            const FaIcon(
-              FontAwesomeIcons.clock,
-              color: Colors.white,
-              size: 16,
-            ),
-            const SizedBox(width: 8),
-            Text(timerView,
-                style: const TextStyle(
+    return ref.watch(tarotNightAnnouncementProvider).when(
+        data: (roomInfo) {
+          final bool isHost =
+              FirebaseAuth.instance.currentUser?.uid == roomInfo?.hostId;
+          final bool isTestCompleted = roomInfo?.question != null;
+
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              height: 60,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 37, 37, 55),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  const FaIcon(
+                    FontAwesomeIcons.clock,
                     color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600)),
-            const Spacer(),
-            TextButton(
-                onPressed: () {
-                  if (!isTestButtonEnabled || (!isHost && !isTestCompleted)) {
-                    return;
-                  }
+                    size: 16,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(timerView,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600)),
+                  const Spacer(),
+                  TextButton(
+                      onPressed: () {
+                        if (!isTestButtonEnabled) {
+                          return;
+                        }
 
-                  if (isHost && isTestCompleted) {
-                    context.push(TarotNightDrawCardView.routeName, extra: {
-                      'roomId': widget.roomInfo.id,
-                      'question': widget.roomInfo.question
-                    });
-                    return;
-                  }
+                        if (isHost && !isTestCompleted) {
+                          showStartTarotTestBottomSheet(context, onClosed: (_) {
+                            if (_ == null) {
+                              return;
+                            }
 
-                  if (isHost) {
-                    showStartTarotTestBottomSheet(context, onClosed: (_) {
-                      if (_ == null) {
-                        return;
-                      }
+                            context.push(TarotNightDrawCardView.routeName,
+                                extra: {'roomId': roomInfo?.id, 'question': _});
+                          });
 
-                      context.push(TarotNightDrawCardView.routeName,
-                          extra: {'roomId': widget.roomInfo.id, 'question': _});
-                    });
-                  } else {
-                    context.push(TarotNightDrawCardView.routeName,
-                        extra: {'roomId': widget.roomInfo.id});
-                  }
-                },
-                style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(Size.zero),
-                    padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8)),
-                    backgroundColor:
-                        isTestButtonEnabled && (!isHost && isTestCompleted)
-                            ? MaterialStateProperty.all(
-                                const Color.fromARGB(255, 223, 130, 255))
-                            : MaterialStateProperty.all(
-                                const Color.fromARGB(255, 168, 168, 168))),
-                child: Text(isHost && !isTestCompleted ? '開始測驗' : '查看結果',
-                    style: TextStyle(
-                        color: isTestButtonEnabled
-                            ? const Color.fromARGB(255, 12, 13, 32)
-                            : const Color.fromARGB(255, 12, 13, 32)
-                                .withOpacity(0.8),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold)))
-          ],
-        ),
-      ),
-    );
+                          return;
+                        }
+
+                        context.push(TarotNightTestResultView.routeName,
+                            extra: roomInfo?.id);
+                      },
+                      style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(Size.zero),
+                          padding: MaterialStateProperty.all(
+                              const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8)),
+                          backgroundColor: isTestButtonEnabled
+                              ? MaterialStateProperty.all(
+                                  const Color.fromARGB(255, 223, 130, 255))
+                              : MaterialStateProperty.all(
+                                  const Color.fromARGB(255, 168, 168, 168))),
+                      child: Text(isHost && !isTestCompleted ? '開始測驗' : '查看結果',
+                          style: TextStyle(
+                              color: isTestButtonEnabled
+                                  ? const Color.fromARGB(255, 12, 13, 32)
+                                  : const Color.fromARGB(255, 12, 13, 32)
+                                      .withOpacity(0.8),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)))
+                ],
+              ),
+            ),
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, _) => Center(child: Text(error.toString())));
   }
 }

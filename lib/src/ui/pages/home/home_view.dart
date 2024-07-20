@@ -62,72 +62,68 @@ class _HomeViewState extends ConsumerState<HomeView> {
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
         floatingActionButton: GestureDetector(
-          onTap: () => {
-            showCreateChatRoomBottomSheet(context,
-                mode: CreateChatRoomBottomSheetMode.create, onClosed: (_) {
-              if (_ == null) {
-                return;
-              }
+            onTap: () => {
+                  showCreateChatRoomBottomSheet(context,
+                      mode: CreateChatRoomBottomSheetMode.create,
+                      onClosed: (_) {
+                    if (_ == null) {
+                      return;
+                    }
 
-              ref
-                  .read(chatRoomRepositoryProvider)
-                  .createChatRoom(
-                      title: _["title"],
-                      description: _["description"],
-                      category: _["category"],
-                      limit: _["limit"] ?? 2)
-                  .then((value) {
-                context.push(ChatRoomView.routeName, extra: value);
-              }).catchError((e) {
-                SnackbarService()
-                    .showSnackBar(context: context, message: e.toString());
-              });
-            })
-          },
-          child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        const Color.fromARGB(255, 12, 13, 32),
-                        const Color.fromARGB(255, 147, 162, 86)
-                            .withOpacity(0.6),
-                        const Color.fromARGB(255, 12, 13, 32)
-                      ]),
-                  shape: BoxShape.circle,
-                  border: GradientBoxBorder(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            const Color.fromARGB(255, 215, 255, 3),
-                            const Color.fromARGB(255, 255, 255, 255)
-                                .withOpacity(0.8),
-                            const Color.fromARGB(255, 215, 255, 3)
-                          ]),
-                      width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                        color: const Color.fromARGB(255, 215, 255, 53)
-                            .withOpacity(0.5),
-                        blurRadius: 30,
-                        offset: const Offset(0, 0))
-                  ]),
-              child: const FaIcon(FontAwesomeIcons.plus,
-                  color: Color.fromARGB(255, 215, 255, 3))),
-        ),
+                    ref
+                        .read(chatRoomRepositoryProvider)
+                        .createChatRoom(
+                            title: _["title"],
+                            description: _["description"],
+                            category: _["category"],
+                            limit: _["limit"] ?? 2)
+                        .then((value) {
+                      context.push(ChatRoomView.routeName, extra: value);
+                    }).catchError((e) {
+                      SnackbarService().showSnackBar(
+                          context: context, message: e.toString());
+                    });
+                  })
+                },
+            child: Container(
+                alignment: Alignment.center,
+                width: 60,
+                height: 60,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                        begin: Alignment(-1, -1),
+                        end: Alignment(0.7, 0.7),
+                        colors: [
+                          Color.fromARGB(255, 12, 13, 32),
+                          Color.fromARGB(255, 93, 102, 65),
+                          Color.fromARGB(255, 12, 13, 32)
+                        ]),
+                    shape: BoxShape.circle,
+                    border: GradientBoxBorder(
+                        gradient: LinearGradient(
+                            begin: const Alignment(-1, -1),
+                            end: const Alignment(0.7, 0.7),
+                            colors: [
+                              const Color.fromARGB(255, 215, 255, 3),
+                              const Color.fromARGB(255, 255, 255, 255)
+                                  .withOpacity(0.8),
+                              const Color.fromARGB(255, 215, 255, 3)
+                            ]),
+                        width: 3),
+                    boxShadow: [
+                      BoxShadow(
+                          color: const Color.fromARGB(255, 215, 255, 53)
+                              .withOpacity(0.5),
+                          blurRadius: 30,
+                          offset: const Offset(0, 0))
+                    ]),
+                child: const FaIcon(FontAwesomeIcons.plus,
+                    color: Color.fromARGB(255, 215, 255, 3)))),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: NavigationBarTheme(
           data: NavigationBarThemeData(
-            backgroundColor: const Color.fromARGB(255, 7, 9, 47),
-            labelTextStyle: MaterialStateProperty.resolveWith(
-              (states) => TextStyle(
-                color: Colors.white.withOpacity(0.7),
-                fontSize: 12,
-              ),
-            ),
+            backgroundColor: const Color.fromARGB(255, 12, 13, 32),
             iconTheme: MaterialStateProperty.resolveWith(
               (states) => IconThemeData(
                 color: Colors.white.withOpacity(0.7),

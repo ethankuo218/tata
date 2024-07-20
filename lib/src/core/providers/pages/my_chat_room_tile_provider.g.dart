@@ -6,7 +6,7 @@ part of 'my_chat_room_tile_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$myChatRoomTileHash() => r'25fff68c71ad14285ded8c5bddcf628c0999c1a8';
+String _$myChatRoomTileHash() => r'd4cade136d959d6d11bdc8bca9aa02f128588fc1';
 
 /// Copied from Dart SDK
 class _SystemHash {

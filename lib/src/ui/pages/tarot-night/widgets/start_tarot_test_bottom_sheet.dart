@@ -67,7 +67,7 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            '我是Slogan 我是Slogan 我是Slogan',
+                            '讓神秘力量，揭開你心中的秘密',
                             style: TextStyle(
                                 height: 1.0,
                                 color: Colors.white.withOpacity(0.6),

@@ -33,7 +33,17 @@ class _MyChatRoomViewState extends ConsumerState<MyChatRoomView> {
     return ref.watch(myChatRoomViewProvider).when(
           data: (list) {
             return Scaffold(
-                body: Padding(
+                body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color.fromARGB(255, 12, 13, 32),
+                    Color.fromARGB(255, 26, 0, 58),
+                  ],
+                ),
+              ),
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: Column(
                 children: [

@@ -46,9 +46,9 @@ class TarotNightQuestView extends ConsumerWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.w400)),
                   const SizedBox(height: 20),
-                  const Text('請提供一段話，鼓勵房主從這次的低潮中，\n看到學習和成長的機會。',
+                  Text(quest,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           height: 12 / 7,
                           color: Colors.white,
                           fontSize: 14,

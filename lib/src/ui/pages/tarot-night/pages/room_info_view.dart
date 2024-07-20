@@ -76,7 +76,7 @@ class TarotNightRoomInfoView extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              Text('我是Slogan 我是Slogan 我是Slogan',
+              Text('揭開你內心的秘密',
                   style: TextStyle(
                     height: 1.0,
                     fontSize: 14,

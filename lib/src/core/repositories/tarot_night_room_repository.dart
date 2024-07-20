@@ -19,7 +19,7 @@ class TarotNightRoomRepository {
   // Get Tarot Night Room List
   Future<List<TarotNightRoom>> getLobbyRoomList() async {
     final DateTime now = DateTime.now();
-    final DateTime startTime = DateTime(now.year, now.month, now.day, 23);
+    final DateTime startTime = DateTime(now.year, now.month, now.day, 8);
     final DateTime endTime =
         DateTime(now.year, now.month, now.day, 1).add(const Duration(days: 1));
 
@@ -54,7 +54,7 @@ class TarotNightRoomRepository {
     final DateTime now = DateTime.now();
 
     // Calculate the start time (today at 11 PM)
-    final DateTime startTime = DateTime(now.year, now.month, now.day, 23);
+    final DateTime startTime = DateTime(now.year, now.month, now.day, 8);
 
     // Calculate the end time (tomorrow at 1 AM)
     final DateTime endTime =
@@ -97,7 +97,7 @@ class TarotNightRoomRepository {
   // Get Host Room Info
   Future<TarotNightRoom?> getHostRoomInfo() async {
     final DateTime now = DateTime.now();
-    final DateTime startTime = DateTime(now.year, now.month, now.day, 23);
+    final DateTime startTime = DateTime(now.year, now.month, now.day, 8);
     final DateTime endTime =
         DateTime(now.year, now.month, now.day, 1).add(const Duration(days: 1));
 

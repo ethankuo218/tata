@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/draw_card_view_provider.dart';
+import 'package:tata/src/core/providers/pages/tarot-night/tarot_night_announcement_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
 
 class TarotNightDrawCardView extends ConsumerWidget {
@@ -45,9 +46,15 @@ class TarotNightDrawCardView extends ConsumerWidget {
                             ref
                                 .read(tarotNightDrawCardViewProvider.notifier)
                                 .drawCard(roomId: roomId, question: question)
-                                .then((value) => context.pushReplacement(
-                                    TarotNightTestResultView.routeName,
-                                    extra: roomId));
+                                .then((value) {
+                              ref
+                                  .read(tarotNightAnnouncementProvider.notifier)
+                                  .loadTarotNightRoomInfo(roomId);
+
+                              context.pushReplacement(
+                                  TarotNightTestResultView.routeName,
+                                  extra: roomId);
+                            });
                           },
                           child: const Text('查看結果',
                               style: TextStyle(

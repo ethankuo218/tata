@@ -429,57 +429,6 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
             ),
           ChatMenuEntry(
             label: const Text(
-              'Report',
-              style: TextStyle(color: Colors.red),
-            ),
-            onPressed: () {
-              launchUrlString('mailto:support@tatarot.app').then((value) => {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return SimpleDialog(
-                            backgroundColor:
-                                const Color.fromARGB(255, 241, 198, 255),
-                            title: const Text(
-                              "Report Mail Sent!",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 12, 13, 32)),
-                            ),
-                            contentPadding: const EdgeInsets.all(15),
-                            shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15.0))),
-                            children: <Widget>[
-                              SimpleDialogOption(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                    padding: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          255, 223, 130, 255),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: const Text(
-                                      'Confirm',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 12, 13, 32),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    )),
-                              ),
-                            ],
-                          );
-                        })
-                  });
-            },
-          ),
-          ChatMenuEntry(
-            label: const Text(
               'Leave Chat',
               style: TextStyle(color: Colors.red),
             ),
@@ -490,59 +439,97 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                     context: context,
                     builder: (BuildContext context) {
                       return SimpleDialog(
-                        backgroundColor:
-                            const Color.fromARGB(255, 241, 198, 255),
-                        title: const Text(
-                          "You are the host of this chat room. Are you sure you want to leave?",
-                          textAlign: TextAlign.center,
-                          style:
-                              TextStyle(color: Color.fromARGB(255, 12, 13, 32)),
-                        ),
-                        contentPadding: const EdgeInsets.all(15),
+                        backgroundColor: const Color.fromARGB(255, 12, 13, 32),
                         shape: const RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Color.fromARGB(255, 255, 244, 185)),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(15.0))),
+                                BorderRadius.all(Radius.circular(40))),
+                        contentPadding: const EdgeInsets.all(20),
                         children: <Widget>[
-                          SimpleDialogOption(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 223, 130, 255),
-                                  borderRadius: BorderRadius.circular(10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                child: const FaIcon(
+                                  FontAwesomeIcons.xmark,
+                                  color: Colors.white,
                                 ),
-                                child: const Text(
-                                  'Cancel',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 12, 13, 32),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500),
-                                )),
+                              )
+                            ],
                           ),
-                          SimpleDialogOption(
-                            onPressed: () {
-                              context.pop(true);
-                            },
-                            child: Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 223, 130, 255),
-                                  borderRadius: BorderRadius.circular(10),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 26),
+                            child: Text(
+                              '您確定要離開此聊天室嗎？\n離開即無法查看您聊天的所有紀錄',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                height: 6 / 4,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SimpleDialogOption(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                      width: 100,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 255, 195, 79),
+                                        border: Border.all(
+                                            color: const Color.fromARGB(
+                                                255, 255, 195, 79)),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: const Text(
+                                        '取消',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            height: 1,
+                                            color:
+                                                Color.fromARGB(255, 24, 24, 24),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
+                                      )),
                                 ),
-                                child: const Text(
-                                  'Confirm',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 12, 13, 32),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500),
-                                )),
-                          ),
+                                SimpleDialogOption(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    context.pop(true);
+                                  },
+                                  child: Container(
+                                      width: 100,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 12, 13, 32),
+                                        border: Border.all(
+                                            color: const Color.fromARGB(
+                                                255, 255, 195, 79)),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: const Text(
+                                        '確定',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 255, 195, 79),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      )),
+                                ),
+                              ])
                         ],
                       );
                     }).then((value) => {

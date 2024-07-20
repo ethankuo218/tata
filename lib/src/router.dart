@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/main.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
+import 'package:tata/src/core/providers/pages/tarot-night/lobby_view_provider.dart'
+    as lobby_view_provider;
 import 'package:tata/src/core/providers/router_notifier.dart';
 import 'package:tata/src/core/state/authentication_state.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
@@ -154,6 +156,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               state.fullPath == PhoneVerifyOtpView.routeName) {
             return null;
           } else {
+            ref.invalidate(lobby_view_provider.tarotNightLobbyViewProvider);
             return LoginView.routeName;
           }
         case const AuthenticationState.otpSent():

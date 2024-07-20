@@ -48,7 +48,6 @@ class ChatRoomRepository {
 
     List<ChatRoom> chatRoomList = querySnapshot.docs
         .map((chatRoom) => ChatRoom.fromJson(chatRoom.data()))
-        .filter((chatRoom) => chatRoom.hostId != _firebaseAuth.currentUser!.uid)
         .toList();
 
     _lastDocument = querySnapshot.docs.last;
@@ -274,7 +273,7 @@ class ChatRoomRepository {
         createTime: Timestamp.now(),
         latestMessage: Message(
           senderId: 'system',
-          name: 'system',
+          name: 'title',
           avatar: AvatarKey.theFool,
           content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
@@ -304,7 +303,7 @@ class ChatRoomRepository {
         .collection('messages')
         .add(Message(
           senderId: 'system',
-          name: 'system',
+          name: newChatRoom.title,
           avatar: AvatarKey.theFool,
           content: 'Welcome to the chat room!',
           timestamp: Timestamp.now(),
@@ -468,7 +467,7 @@ class ChatRoomRepository {
         .collection('messages')
         .add(Message(
           senderId: 'system',
-          name: 'system',
+          name: 'SYSTEM',
           avatar: AvatarKey.theFool,
           content: '聊天室已經關閉',
           timestamp: Timestamp.now(),

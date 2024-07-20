@@ -41,6 +41,7 @@ class MembersView extends ConsumerWidget {
                 titleSpacing: 0,
               ),
               body: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
@@ -52,7 +53,6 @@ class MembersView extends ConsumerWidget {
                   ),
                 ),
                 child: ListView.separated(
-                  padding: const EdgeInsets.all(15),
                   itemBuilder: (context, index) {
                     final bool isRemovable = memberList[index].role == 'member';
 
@@ -90,37 +90,31 @@ class MembersView extends ConsumerWidget {
 
   Widget _buildMemberItem(MemberInfo member) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
           CircleAvatar(
-              radius: 30,
+              radius: 20,
               backgroundImage:
                   Image.asset(Avatar.getAvatarImage(member.avatar)).image),
-          const SizedBox(width: 10),
+          const SizedBox(width: 16),
           Text(
             member.name,
             style: const TextStyle(
+              height: 6 / 4,
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
           ),
           const Spacer(),
           if (member.role == 'host')
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: const Color.fromARGB(255, 223, 130, 255), width: 2),
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: const Text('Host',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 223, 130, 255),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400)),
-            )
+            const Text('Host',
+                style: TextStyle(
+                    height: 6 / 4,
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400))
         ],
       ),
     );

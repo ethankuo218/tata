@@ -34,6 +34,7 @@ class TarotNightDrawCardView extends _$TarotNightDrawCardView {
         roomId: roomId,
         question: question,
         card: number.toString());
+
     state = AsyncData(_card);
   }
 }

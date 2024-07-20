@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/utils/tarot.dart';
@@ -16,84 +17,87 @@ class ChatRoomTile extends StatelessWidget {
         Tarot.getTarotCardImage(chatRoomInfo.backgroundImage!);
     return GestureDetector(
         onTap: () => onTap(),
-        child: Container(
-          height: 140,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(backgroundImage),
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-              ),
-              borderRadius: BorderRadius.circular(20),
-              border: GradientBoxBorder(
-                gradient: LinearGradient(colors: [
-                  const Color.fromARGB(255, 241, 189, 88).withOpacity(0.8),
-                  const Color.fromARGB(255, 227, 216, 157).withOpacity(0.2),
-                  const Color.fromARGB(255, 241, 189, 88).withOpacity(0.8),
-                  const Color.fromARGB(255, 227, 216, 157).withOpacity(0.2),
-                ]),
-                width: 2,
-              )),
-          child: Stack(
+        child: Stack(children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
+              SvgPicture.asset('assets/images/star_2.svg',
+                  width: 20,
+                  height: 20,
+                  colorFilter: const ColorFilter.mode(
+                      Color.fromARGB(255, 255, 195, 79), BlendMode.srcIn)),
+              SvgPicture.asset('assets/images/star_2.svg',
+                  width: 12,
+                  height: 12,
+                  colorFilter: const ColorFilter.mode(
+                      Color.fromARGB(255, 255, 195, 79), BlendMode.srcIn)),
+              const SizedBox(width: 11),
+              Expanded(
+                  child: Container(
+                height: 120,
+                padding: const EdgeInsets.fromLTRB(72, 16, 16, 16),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      const Color.fromARGB(255, 255, 244, 185).withOpacity(0.6),
+                      const Color.fromARGB(255, 255, 244, 185).withOpacity(0.3),
+                      const Color.fromARGB(255, 255, 244, 185).withOpacity(0.1),
+                    ]),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(40),
+                        topRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(40),
+                        bottomRight: Radius.circular(20)),
+                    border: GradientBoxBorder(
+                      gradient: LinearGradient(colors: [
+                        const Color.fromARGB(255, 241, 189, 88)
+                            .withOpacity(0.8),
+                        const Color.fromARGB(255, 227, 216, 157)
+                            .withOpacity(0.2),
+                        const Color.fromARGB(255, 241, 189, 88)
+                            .withOpacity(0.8),
+                        const Color.fromARGB(255, 227, 216, 157)
+                            .withOpacity(0.2),
+                      ]),
+                      width: 2,
+                    )),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          width: 80,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 255, 244, 185),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Center(
-                            child: Text(
+                        Row(
+                          children: [
+                            Opacity(
+                                opacity: 0.5,
+                                child: SvgPicture.asset(
+                                    'assets/images/star_2.svg',
+                                    width: 16,
+                                    height: 16,
+                                    colorFilter: const ColorFilter.mode(
+                                        Color.fromARGB(255, 255, 195, 79),
+                                        BlendMode.srcIn))),
+                            const SizedBox(width: 8),
+                            Text(
                               ChatRoomCategory.toText(chatRoomInfo.category),
                               style: const TextStyle(
-                                  height: 1.0,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromARGB(255, 12, 13, 32)),
+                                  height: 25 / 18,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 255, 195, 79)),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            const Color.fromARGB(255, 12, 13, 32)
-                                .withOpacity(0),
-                            const Color.fromARGB(255, 0, 0, 0).withOpacity(0.8),
+                            const SizedBox(width: 8),
+                            Opacity(
+                                opacity: 0.5,
+                                child: SvgPicture.asset(
+                                    'assets/images/star_2.svg',
+                                    width: 16,
+                                    height: 16,
+                                    colorFilter: const ColorFilter.mode(
+                                        Color.fromARGB(255, 255, 195, 79),
+                                        BlendMode.srcIn))),
                           ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20))),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 20),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          chatRoomInfo.title,
-                          style: const TextStyle(
-                              height: 25 / 18,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
                         ),
                         Container(
                             alignment: Alignment.bottomRight,
@@ -115,11 +119,37 @@ class ChatRoomTile extends StatelessWidget {
                             ))
                       ],
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(height: 8),
+                    Text(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      chatRoomInfo.title,
+                      style: const TextStyle(
+                          height: 25 / 18,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                  ],
+                ),
+              ))
             ],
           ),
-        ));
+          Container(
+            height: 100,
+            width: 100,
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: const Color.fromARGB(255, 255, 195, 79), width: 2),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50)),
+                image: DecorationImage(
+                    image: AssetImage(backgroundImage), fit: BoxFit.cover)),
+          ),
+        ]));
   }
 }

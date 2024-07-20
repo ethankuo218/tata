@@ -29,14 +29,14 @@ class MyChatRoomTile extends ConsumerWidget {
         data: (unReadMessageCount) => GestureDetector(
               onTap: () => onTap(),
               child: Container(
-                  height: 80,
+                  height: 70,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 40, 40, 40),
+                    color: const Color.fromARGB(255, 255, 244, 185)
+                        .withOpacity(0.1),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 15),
+                    padding: const EdgeInsets.all(8),
                     child: Row(
                       children: [
                         Stack(
@@ -85,83 +85,94 @@ class MyChatRoomTile extends ConsumerWidget {
                             )
                           ],
                         ),
-                        const SizedBox(width: 15),
+                        const SizedBox(width: 16),
                         Expanded(
                             child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              // isRealtimeChat
-                              //     ? otherUserInfo?.name ?? 'Unknown'
-                              //     :
-                              roomInfo.fold((l) => l.title, (r) => r.title),
-                              style: const TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400),
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: Text(
+                                  // isRealtimeChat
+                                  //     ? otherUserInfo?.name ?? 'Unknown'
+                                  //     :
+                                  roomInfo.fold((l) => l.title, (r) => r.title),
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                      height: 11 / 8,
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                                const SizedBox(width: 8),
+                                roomInfo.fold((l) => l.latestMessage,
+                                            (r) => r.latestMessage) !=
+                                        null
+                                    ? Text(
+                                        getDisplayTime(roomInfo.fold(
+                                            (l) => l.latestMessage?.timestamp,
+                                            (r) => r.latestMessage?.timestamp)),
+                                        style: TextStyle(
+                                            height: 11 / 7,
+                                            color: const Color.fromARGB(
+                                                    255, 255, 244, 185)
+                                                .withOpacity(0.5),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    : const SizedBox()
+                              ],
                             ),
-                            const SizedBox(height: 5),
-                            SizedBox(
-                              height: 20,
-                              child: Text(
-                                roomInfo.fold((l) => l.latestMessage?.content,
-                                        (r) => r.latestMessage?.content) ??
-                                    'Break the ice!',
-                                style: TextStyle(
-                                    overflow: TextOverflow.ellipsis,
-                                    color: Colors.white.withOpacity(0.6),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400),
-                              ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: SizedBox(
+                                  height: 22,
+                                  child: Text(
+                                    roomInfo.fold(
+                                            (l) => l.latestMessage?.content,
+                                            (r) => r.latestMessage?.content) ??
+                                        'Break the ice!',
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        height: 11 / 7,
+                                        overflow: TextOverflow.ellipsis,
+                                        color: Colors.white.withOpacity(0.5),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                )),
+                                if (unReadMessageCount > 0)
+                                  const SizedBox(width: 8),
+                                if (unReadMessageCount > 0)
+                                  Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 255, 195, 79),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        unReadMessageCount.toString(),
+                                        style: const TextStyle(
+                                            height: 1,
+                                            color:
+                                                Color.fromARGB(255, 12, 13, 32),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  )
+                              ],
                             ),
                           ],
-                        )),
-                        roomInfo.fold((l) => l.latestMessage,
-                                    (r) => r.latestMessage) !=
-                                null
-                            ? SizedBox(
-                                width: 60,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      getDisplayTime(roomInfo.fold(
-                                          (l) => l.latestMessage?.timestamp,
-                                          (r) => r.latestMessage?.timestamp)),
-                                      style: TextStyle(
-                                          color: Colors.white.withOpacity(0.6),
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    if (unReadMessageCount > 0)
-                                      Container(
-                                        width: 20,
-                                        height: 20,
-                                        decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                              255, 255, 228, 85),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            unReadMessageCount.toString(),
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        ),
-                                      )
-                                  ],
-                                ),
-                              )
-                            : const SizedBox(),
+                        ))
                       ],
                     ),
                   )),

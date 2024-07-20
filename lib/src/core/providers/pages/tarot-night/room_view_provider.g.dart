@@ -7,7 +7,7 @@ part of 'room_view_provider.dart';
 // **************************************************************************
 
 String _$tarotNightRoomViewHash() =>
-    r'4cc3083695e7850ff9fbe304a3df14ec2a665b0c';
+    r'1aa297207c6c6611348bd50fb477725ac7252545';
 
 /// Copied from Dart SDK
 class _SystemHash {

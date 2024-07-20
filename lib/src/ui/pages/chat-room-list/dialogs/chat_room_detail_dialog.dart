@@ -150,7 +150,7 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                         style:
                             const TextStyle(color: Colors.white, fontSize: 14)),
                   ))),
-              const SizedBox(height: 20),
+              const SizedBox(height: 18),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

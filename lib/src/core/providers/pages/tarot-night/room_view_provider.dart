@@ -15,6 +15,15 @@ class TarotNightRoomView extends _$TarotNightRoomView {
 
   @override
   Future<TarotNightRoomInfo> build({required String roomId}) async {
+    await loadRoomInfo();
+
+    markAsRead();
+
+    return state.value!;
+  }
+
+  // Load Room Info
+  Future<void> loadRoomInfo() async {
     _roomInfo =
         await ref.read(tarotNightRoomRepositoryProvider).getRoomInfo(roomId);
 
@@ -24,10 +33,8 @@ class TarotNightRoomView extends _$TarotNightRoomView {
 
     final Stream<List<TarotNightMessage>> messages =
         ref.read(tarotNightRoomRepositoryProvider).getMessages(_roomInfo.id);
-
-    markAsRead();
-
-    return TarotNightRoomInfo(roomInfo: _roomInfo, messageStream: messages);
+    state = AsyncData(
+        TarotNightRoomInfo(roomInfo: _roomInfo, messageStream: messages));
   }
 
   // Send message
