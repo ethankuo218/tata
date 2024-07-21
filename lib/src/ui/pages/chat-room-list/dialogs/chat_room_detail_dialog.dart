@@ -10,6 +10,7 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
     {required ChatRoom chatRoomInfo, required ValueChanged onClosed}) {
   late bool isHost =
       chatRoomInfo.hostId == FirebaseAuth.instance.currentUser!.uid;
+  late bool isFull = chatRoomInfo.memberCount == chatRoomInfo.limit;
 
   return showGeneralDialog(
     context: context,
@@ -185,9 +186,19 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                           fontWeight: FontWeight.w500,
                         )),
                       ),
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () {
+                        if (isFull) {
+                          return;
+                        }
+
+                        context.pop(true);
+                      },
                       child: Text(
-                        isHost ? "回到聊天室" : "立即參與話題",
+                        isFull
+                            ? "房間已滿"
+                            : isHost
+                                ? "回到聊天室"
+                                : "立即參與話題",
                         style: const TextStyle(
                             color: Color.fromARGB(255, 24, 24, 24),
                             height: 1.2,

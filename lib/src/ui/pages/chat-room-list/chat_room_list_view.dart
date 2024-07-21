@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -162,6 +163,13 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView>
                   showChatRoomDetailDialog(context, chatRoomInfo: chatRoomInfo,
                       onClosed: (_) {
                     if (_ == null) {
+                      return;
+                    }
+
+                    if (chatRoomInfo.hostId ==
+                        FirebaseAuth.instance.currentUser!.uid) {
+                      context.push(ChatRoomView.routeName,
+                          extra: chatRoomInfo.id);
                       return;
                     }
 
