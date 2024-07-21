@@ -28,31 +28,17 @@ class TarotNightRoomListView extends _$TarotNightRoomListView {
         .getLobbyRoomList()
         .then((list) {
       _themeRoomListMap = {
-        TarotNightRoomTheme.all:
-            list.map((roomInfo) => checkIsJoinedRoom(roomInfo)).toList(),
-        TarotNightRoomTheme.work: list
-            .where((room) => room.theme == TarotNightRoomTheme.work)
-            .toList()
-            .map(
-              (roomInfo) => checkIsJoinedRoom(roomInfo),
-            )
-            .toList(),
-        TarotNightRoomTheme.relation: list
-            .where((room) => room.theme == TarotNightRoomTheme.relation)
-            .toList()
-            .map((roomInfo) => checkIsJoinedRoom(roomInfo))
-            .toList(),
-        TarotNightRoomTheme.family: list
-            .where((room) => room.theme == TarotNightRoomTheme.family)
-            .toList()
-            .map((roomInfo) => checkIsJoinedRoom(roomInfo))
-            .toList(),
-        TarotNightRoomTheme.friend: list
-            .where((room) => room.theme == TarotNightRoomTheme.friend)
-            .toList()
-            .map((roomInfo) => checkIsJoinedRoom(roomInfo))
-            .toList(),
+        TarotNightRoomTheme.all: list,
+        TarotNightRoomTheme.work: [],
+        TarotNightRoomTheme.relation: [],
+        TarotNightRoomTheme.family: [],
+        TarotNightRoomTheme.friend: [],
       };
+
+      for (var room in list) {
+        _themeRoomListMap[room.theme]?.add(checkIsJoinedRoom(room));
+      }
+
       state = AsyncData(_themeRoomListMap);
     });
   }

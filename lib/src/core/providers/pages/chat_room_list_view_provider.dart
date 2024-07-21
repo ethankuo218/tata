@@ -7,27 +7,47 @@ part 'chat_room_list_view_provider.g.dart';
 
 @riverpod
 class ChatRoomListView extends _$ChatRoomListView {
-  final List<ChatRoom> _chatRoomList = [];
   bool _hasMore = true;
-  String _category = 'all';
+  final List<ChatRoom> _chatRoomList = [];
+  late Map<ChatRoomCategory, List<ChatRoom>> _categoryRoomListMap;
+
+  void setCategoryRoomListMap() {
+    for (var room in _chatRoomList) {
+      _categoryRoomListMap[ChatRoomCategory.all]?.add(room);
+      _categoryRoomListMap[room.category]?.add(room);
+    }
+
+    state = AsyncData(_categoryRoomListMap);
+  }
 
   @override
-  Future<List<ChatRoom>> build() async {
+  Future<Map<ChatRoomCategory, List<ChatRoom>>> build() async {
     await fetchFirstList();
-    return _chatRoomList;
+    return _categoryRoomListMap;
   }
 
   // Fetch first page
   Future<void> fetchFirstList() async {
     _chatRoomList.clear();
+    _categoryRoomListMap = {
+      ChatRoomCategory.all: [],
+      ChatRoomCategory.romance: [],
+      ChatRoomCategory.work: [],
+      ChatRoomCategory.interest: [],
+      ChatRoomCategory.sport: [],
+      ChatRoomCategory.family: [],
+      ChatRoomCategory.friend: [],
+      ChatRoomCategory.chitchat: [],
+      ChatRoomCategory.school: [],
+    };
 
     final List<ChatRoom> list = await ref
         .read(chatRoomRepositoryProvider)
-        .getLobbyChatRoomList(isInitFetch: true, category: _category);
+        .getLobbyChatRoomList(isInitFetch: true);
 
     _chatRoomList.addAll(list);
 
-    state = AsyncData(_chatRoomList);
+    setCategoryRoomListMap();
   }
 
   // Fetch next page
@@ -36,21 +56,18 @@ class ChatRoomListView extends _$ChatRoomListView {
 
     final List<ChatRoom> list = await ref
         .read(chatRoomRepositoryProvider)
-        .getLobbyChatRoomList(isInitFetch: false, category: _category);
+        .getLobbyChatRoomList(isInitFetch: false);
 
     if (list.isEmpty) {
       _hasMore = false;
       return;
+    } else {
+      _hasMore = true;
     }
 
     _chatRoomList.addAll(list);
-    state = AsyncData(_chatRoomList);
-  }
 
-  // Set Category
-  Future<void> setCategory(ChatRoomCategory category) async {
-    _category = category.value;
-    await fetchFirstList();
+    setCategoryRoomListMap();
   }
 
   // Create Chat Room

@@ -33,31 +33,12 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView>
     with SingleTickerProviderStateMixin {
   final provider = chatRoomListViewProvider;
   late TabController _tabController;
-  bool _isCalledFromTap = false;
-  int _preCurrentIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(
         length: ChatRoomListView.categoryList.length, vsync: this);
-
-    _tabController.animation?.addListener(() {
-      if (!_tabController.indexIsChanging) {
-        _isCalledFromTap = false;
-      }
-
-      bool canRefetch = _isCalledFromTap
-          ? _preCurrentIndex != _tabController.index
-          : _tabController.indexIsChanging;
-
-      if (canRefetch) {
-        _preCurrentIndex = _tabController.index;
-        ref
-            .read(provider.notifier)
-            .setCategory(ChatRoomListView.categoryList[_tabController.index]);
-      }
-    });
 
     widget._scrollController.addListener(() {
       if (mounted &&
@@ -71,9 +52,7 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView>
   @override
   Widget build(BuildContext context) {
     return ref.watch(provider).when(
-          data: (chatRoomList) {
-            Widget chatRoomListView = _buildListView(chatRoomList);
-
+          data: (chatRoomListMap) {
             return Container(
               decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -98,7 +77,6 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView>
                                   const BorderRadius.all(Radius.circular(8.0))),
                           child: TabBar(
                             controller: _tabController,
-                            onTap: (_) => _isCalledFromTap = true,
                             isScrollable: true,
                             tabAlignment: TabAlignment.start,
                             labelColor: const Color.fromARGB(255, 255, 195, 79),
@@ -132,15 +110,24 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView>
                       child: TabBarView(
                     controller: _tabController,
                     children: [
-                      chatRoomListView,
-                      chatRoomListView,
-                      chatRoomListView,
-                      chatRoomListView,
-                      chatRoomListView,
-                      chatRoomListView,
-                      chatRoomListView,
-                      chatRoomListView,
-                      chatRoomListView,
+                      _buildListView(
+                          chatRoomListMap[ChatRoomCategory.all] ?? []),
+                      _buildListView(
+                          chatRoomListMap[ChatRoomCategory.romance] ?? []),
+                      _buildListView(
+                          chatRoomListMap[ChatRoomCategory.work] ?? []),
+                      _buildListView(
+                          chatRoomListMap[ChatRoomCategory.interest] ?? []),
+                      _buildListView(
+                          chatRoomListMap[ChatRoomCategory.sport] ?? []),
+                      _buildListView(
+                          chatRoomListMap[ChatRoomCategory.family] ?? []),
+                      _buildListView(
+                          chatRoomListMap[ChatRoomCategory.friend] ?? []),
+                      _buildListView(
+                          chatRoomListMap[ChatRoomCategory.chitchat] ?? []),
+                      _buildListView(
+                          chatRoomListMap[ChatRoomCategory.school] ?? []),
                     ],
                   ))
                 ],

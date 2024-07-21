@@ -1,11 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/utils/tarot.dart';
 
 Future<Object?> showChatRoomDetailDialog(BuildContext context,
     {required ChatRoom chatRoomInfo, required ValueChanged onClosed}) {
+  late bool isHost =
+      chatRoomInfo.hostId == FirebaseAuth.instance.currentUser!.uid;
+
   return showGeneralDialog(
     context: context,
     pageBuilder: (context, _, __) => DefaultTextStyle(
@@ -28,6 +33,7 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
+                    onTap: () => context.pop(),
                     child: const FaIcon(
                       FontAwesomeIcons.xmark,
                       color: Colors.white,
@@ -180,9 +186,9 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                         )),
                       ),
                       onPressed: () => Navigator.of(context).pop(true),
-                      child: const Text(
-                        "立即參與話題",
-                        style: TextStyle(
+                      child: Text(
+                        isHost ? "回到聊天室" : "立即參與話題",
+                        style: const TextStyle(
                             color: Color.fromARGB(255, 24, 24, 24),
                             height: 1.2,
                             fontSize: 16,
