@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,6 +7,9 @@ import 'package:tata/src/core/models/tarot_night_room.dart';
 
 Future<Object?> showTarotNightRoomDetailDialog(BuildContext context,
     {required TarotNightRoom roomInfo, required ValueChanged onClosed}) {
+  final bool isHost = roomInfo.hostId == FirebaseAuth.instance.currentUser!.uid;
+  final bool isFull = roomInfo.memberCount == 5;
+
   return showGeneralDialog(
     context: context,
     pageBuilder: (context, _, __) => DefaultTextStyle(
@@ -168,10 +172,18 @@ Future<Object?> showTarotNightRoomDetailDialog(BuildContext context,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
+                    if (isFull) {
+                      return;
+                    }
                     Navigator.of(context).pop(true);
                   },
-                  child: const Text("立即參與",
-                      style: TextStyle(
+                  child: Text(
+                      isFull
+                          ? "房間已滿"
+                          : isHost
+                              ? "回到聊天室"
+                              : "立即參與",
+                      style: const TextStyle(
                           height: 1.2,
                           color: Color.fromARGB(255, 12, 13, 32),
                           fontSize: 16,
