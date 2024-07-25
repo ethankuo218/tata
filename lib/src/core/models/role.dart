@@ -4,6 +4,7 @@ class Role {
   final List<String> tags;
   final String description;
   final String image;
+  final String intro;
   final List<String> quest;
 
   Role({
@@ -12,6 +13,7 @@ class Role {
     required this.tags,
     required this.description,
     required this.image,
+    required this.intro,
     required this.quest,
   });
 
@@ -22,6 +24,7 @@ class Role {
       tags: json['tags'] == null ? [] : List<String>.from(json['tags']),
       description: json['description'],
       image: json['image'],
+      intro: json['intro'],
       quest: json['quest'] == null ? [] : List<String>.from(json['quest']),
     );
   }

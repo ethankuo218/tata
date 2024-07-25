@@ -1,6 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/core/models/room.dart';
 import 'package:tata/src/utils/tarot.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatRoom extends Room {
   final ChatRoomType type;
@@ -124,28 +126,28 @@ enum ChatRoomCategory {
     return filter.first;
   }
 
-  static String toText(ChatRoomCategory x) {
+  static String toText(BuildContext context, ChatRoomCategory x) {
     switch (x) {
       case ChatRoomCategory.all:
-        return '全部';
+        return 'All';
       case ChatRoomCategory.romance:
-        return '感情';
+        return AppLocalizations.of(context)!.category_romance;
       case ChatRoomCategory.work:
-        return '工作';
+        return AppLocalizations.of(context)!.category_work;
       case ChatRoomCategory.interest:
-        return '興趣';
+        return AppLocalizations.of(context)!.category_interest;
       case ChatRoomCategory.sport:
-        return '運動';
+        return AppLocalizations.of(context)!.category_sport;
       case ChatRoomCategory.family:
-        return '家庭';
+        return AppLocalizations.of(context)!.category_family;
       case ChatRoomCategory.friend:
-        return '友情';
+        return AppLocalizations.of(context)!.category_friendship;
       case ChatRoomCategory.chitchat:
-        return '閒聊';
+        return AppLocalizations.of(context)!.category_chitchat;
       case ChatRoomCategory.school:
-        return '學校';
+        return AppLocalizations.of(context)!.category_school;
       default:
-        return '全部';
+        return 'All';
     }
   }
 

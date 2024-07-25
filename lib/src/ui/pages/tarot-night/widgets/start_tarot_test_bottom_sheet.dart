@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<Object?> showStartTarotTestBottomSheet(BuildContext context,
     {required ValueChanged onClosed}) {
@@ -57,9 +58,9 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                           vertical: 32, horizontal: 20),
                       child: Column(
                         children: [
-                          const Text(
-                            '- 占星塔羅夜 -',
-                            style: TextStyle(
+                          Text(
+                            '- ${AppLocalizations.of(context)!.activity_chat_room_tarot_test_question_title} -',
+                            style: const TextStyle(
                                 height: 1.0,
                                 color: Color.fromARGB(255, 223, 130, 255),
                                 fontSize: 24,
@@ -67,7 +68,8 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            '讓神秘力量，揭開你心中的秘密',
+                            AppLocalizations.of(context)!
+                                .activity_chat_room_tarot_test_question_slogan,
                             style: TextStyle(
                                 height: 1.0,
                                 color: Colors.white.withOpacity(0.6),
@@ -82,9 +84,10 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                     padding: const EdgeInsets.fromLTRB(24, 24, 24, 36),
                     child: Column(
                       children: [
-                        const Text(
-                          '你/妳想詢問什麼？',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!
+                              .activity_chat_room_tarot_test_question_enter,
+                          style: const TextStyle(
                               height: 1.0,
                               color: Color.fromARGB(255, 241, 198, 255),
                               fontSize: 20,
@@ -96,32 +99,15 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                           child: Column(
                             children: [
                               Text(
-                                '請靜下心來，細心感受困惑您的問題。',
+                                AppLocalizations.of(context)!
+                                    .activity_chat_room_tarot_test_question_enter_description,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     height: 4 / 3,
                                     color: Colors.white.withOpacity(0.5),
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400),
-                              ),
-                              Text(
-                                '輸入時要清晰明確，一旦提交，便無法更改。',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    height: 4 / 3,
-                                    color: Colors.white.withOpacity(0.5),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              Text(
-                                '因此，在按下確認之前，請深思熟慮。',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    height: 4 / 3,
-                                    color: Colors.white.withOpacity(0.5),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400),
-                              ),
+                              )
                             ],
                           ),
                         ),
@@ -145,7 +131,8 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 contentPadding: const EdgeInsets.all(16),
-                                hintText: "請輸入您想詢問的問題",
+                                hintText: AppLocalizations.of(context)!
+                                    .activity_chat_room_tarot_test_question_enter_description_placeholder,
                                 hintStyle: TextStyle(
                                     color: Colors.white.withOpacity(0.5),
                                     height: 1.71,
@@ -158,10 +145,10 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                           Expanded(
                               child: ElevatedButton(
                             style: ButtonStyle(
-                                padding: MaterialStateProperty.all(
+                                padding: WidgetStateProperty.all(
                                     const EdgeInsets.symmetric(
                                         horizontal: 20, vertical: 12)),
-                                shape: MaterialStateProperty.all(
+                                shape: WidgetStateProperty.all(
                                     RoundedRectangleBorder(
                                         side: const BorderSide(
                                             color: Color.fromARGB(
@@ -169,13 +156,15 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                                             width: 1),
                                         borderRadius:
                                             BorderRadius.circular(20))),
-                                backgroundColor: MaterialStateProperty.all(
+                                backgroundColor: WidgetStateProperty.all(
                                     const Color.fromARGB(255, 12, 13, 32))),
                             onPressed: () {
                               context.pop();
                             },
-                            child: const Text('我再想想',
-                                style: TextStyle(
+                            child: Text(
+                                AppLocalizations.of(context)!
+                                    .activity_chat_room_tarot_test_cancel,
+                                style: const TextStyle(
                                     height: 1.2,
                                     color: Color.fromARGB(255, 223, 130, 255),
                                     fontSize: 16,
@@ -185,10 +174,10 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                           Expanded(
                             child: ElevatedButton(
                               style: ButtonStyle(
-                                  padding: MaterialStateProperty.all(
+                                  padding: WidgetStateProperty.all(
                                       const EdgeInsets.symmetric(
                                           horizontal: 20, vertical: 12)),
-                                  shape: MaterialStateProperty.all(
+                                  shape: WidgetStateProperty.all(
                                       RoundedRectangleBorder(
                                           side: const BorderSide(
                                               color: Color.fromARGB(
@@ -196,14 +185,14 @@ class _StartTarotTestBottomSheetState extends State<StartTarotTestBottomSheet> {
                                               width: 1),
                                           borderRadius:
                                               BorderRadius.circular(20))),
-                                  backgroundColor: MaterialStateProperty.all(
+                                  backgroundColor: WidgetStateProperty.all(
                                       const Color.fromARGB(
                                           255, 223, 130, 255))),
                               onPressed: () {
                                 context.pop(textEditingController.text);
                               },
-                              child: const Text('開始測驗',
-                                  style: TextStyle(
+                              child:  Text(AppLocalizations.of(context)!.activity_chat_room_tarot_test_start,
+                                  style:const TextStyle(
                                       height: 1.2,
                                       color: Color.fromARGB(255, 12, 13, 32),
                                       fontSize: 16,

@@ -9,6 +9,8 @@ import 'package:tata/src/core/models/tarot_card.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/test_result_view_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/quest_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/test_result_expandable_panel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tata/src/utils/tarot.dart';
 
 class TarotNightTestResultView extends ConsumerStatefulWidget {
   const TarotNightTestResultView({super.key, required this.roomId});
@@ -39,20 +41,24 @@ class _TarotNightTestResultViewState
 
             _data = [
               DescriptionItem(
-                title: '工作',
-                description: card.workDescription,
+                title: AppLocalizations.of(context)!.category_work,
+                description:
+                    Tarot.getTarotCardWorkDescription(context, card.work),
               ),
               DescriptionItem(
-                title: '感情',
-                description: card.relationDescription,
+                title: AppLocalizations.of(context)!.category_romance,
+                description:
+                    Tarot.getTarotCardRomanceDescription(context, card.romance),
               ),
               DescriptionItem(
-                title: '友情',
-                description: card.friendDescription,
+                title: AppLocalizations.of(context)!.category_friendship,
+                description:
+                    Tarot.getTarotCardFriendDescription(context, card.friend),
               ),
               DescriptionItem(
-                title: '家庭',
-                description: card.familyDescription,
+                title: AppLocalizations.of(context)!.category_family,
+                description:
+                    Tarot.getTarotCardFamilyDescription(context, card.family),
               ),
             ];
 
@@ -109,7 +115,12 @@ class _TarotNightTestResultViewState
                                         });
                                   });
                                 },
-                                child: Text(isAnswered ? '已經完成任務囉' : '去解任務囉！',
+                                child: Text(
+                                    isAnswered
+                                        ? AppLocalizations.of(context)!
+                                            .tarot_result_task_completed
+                                        : AppLocalizations.of(context)!
+                                            .tarot_result_task_uncompleted,
                                     style: const TextStyle(
                                         height: 1.0,
                                         color: Color.fromARGB(255, 12, 13, 32),
@@ -139,8 +150,10 @@ class _TarotNightTestResultViewState
                                     SvgPicture.asset('assets/images/star_4.svg',
                                         width: 20, height: 20),
                                     const SizedBox(width: 10),
-                                    const Text('這是你的測驗解析',
-                                        style: TextStyle(
+                                    Text(
+                                        AppLocalizations.of(context)!
+                                            .tarot_result_tarot_result_title,
+                                        style: const TextStyle(
                                             height: 1.0,
                                             color: Color.fromARGB(
                                                 255, 223, 130, 255),
@@ -233,7 +246,7 @@ class _TarotNightTestResultViewState
                                                             color: Colors.white,
                                                             onPressed: () {
                                                               Share.share(
-                                                                  'Check out this Tarot Card: ${card.name}');
+                                                                  'Check out this Tarot Card: ${card.title}');
                                                             },
                                                             icon: const Icon(
                                                                 Icons.share)),
@@ -328,19 +341,20 @@ class _TarotNightTestResultViewState
                                       ],
                                     ),
                                     const SizedBox(height: 16),
-                                    const Text(
-                                      '- 樂觀、自發性以及對未知的擁抱 -',
-                                      style: TextStyle(
+                                    Text(
+                                      '- ${Tarot.getTarotCardTitle(context, card.title)} -',
+                                      style: const TextStyle(
                                           height: 1.0,
                                           color: Colors.white,
                                           fontSize: 18,
                                           fontWeight: FontWeight.w400),
                                     ),
                                     const SizedBox(height: 16),
-                                    const Text(
-                                      '描繪一位年輕人站在懸崖邊緣，代表旅程的開始。餘人背著一個小袋，象徵他們擁有的潛力和資源。身後升起的太陽預示著新的開始和冒險的承諾。愚人通常有一隻狗相伴，代表忠誠和保護。',
+                                    Text(
+                                      Tarot.getTarotCardDescription(
+                                          context, card.description),
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           height: 12 / 7,
                                           color: Colors.white,
                                           fontSize: 14,

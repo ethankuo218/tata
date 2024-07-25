@@ -21,7 +21,7 @@ class App extends ConsumerWidget {
       ],
       supportedLocales: const [
         Locale('en', ''), // English
-        Locale('zh_hant', ''), // Chinese
+        Locale('zh', 'Hant'), // Chinese
       ],
       theme: ThemeData(
         appBarTheme: const AppBarTheme(

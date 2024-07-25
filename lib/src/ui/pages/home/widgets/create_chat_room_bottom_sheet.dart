@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/chat_room.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> showCreateChatRoomBottomSheet(BuildContext context,
     {required CreateChatRoomBottomSheetMode mode,
@@ -104,9 +105,10 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                       colorFilter: const ColorFilter.mode(
                                           Colors.white, BlendMode.srcIn))),
                               const SizedBox(width: 4),
-                              const Text(
-                                '聊天室名稱',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .create_room_room_title,
+                                style: const TextStyle(
                                     height: 1.0,
                                     color: Colors.white,
                                     fontSize: 16,
@@ -129,12 +131,14 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                               controller: titleController,
                               validator: (value) =>
                                   value == null || value.isEmpty
-                                      ? '請輸入聊天室名稱'
+                                      ? AppLocalizations.of(context)!
+                                          .create_room_room_title_placeholder
                                       : null,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.all(16),
-                                  hintText: "輸入聊天室名稱",
+                                  hintText: AppLocalizations.of(context)!
+                                      .create_room_room_title_placeholder,
                                   hintStyle: TextStyle(
                                       height: 2,
                                       fontSize: 14,
@@ -154,9 +158,10 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                       colorFilter: const ColorFilter.mode(
                                           Colors.white, BlendMode.srcIn))),
                               const SizedBox(width: 4),
-                              const Text(
-                                '類別',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .create_room_classification,
+                                style: const TextStyle(
                                     height: 1.0,
                                     color: Colors.white,
                                     fontSize: 16,
@@ -187,7 +192,7 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                           width: 2),
                                       borderRadius: BorderRadius.circular(8)),
                                   label: Text(ChatRoomCategory.toText(
-                                      categoryList[index])),
+                                      context, categoryList[index])),
                                   labelStyle: const TextStyle(
                                     height: 1.0,
                                     color: Colors.white,
@@ -206,9 +211,10 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                             ).toList(),
                           ),
                           _showNotSelectCategoryError
-                              ? const Text(
-                                  'Please select the category',
-                                  style: TextStyle(
+                              ? Text(
+                                  AppLocalizations.of(context)!
+                                      .create_room_room_title_no_enter,
+                                  style: const TextStyle(
                                       color: Color.fromARGB(255, 179, 38, 30),
                                       fontSize: 12),
                                 )
@@ -225,9 +231,10 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                       colorFilter: const ColorFilter.mode(
                                           Colors.white, BlendMode.srcIn))),
                               const SizedBox(width: 4),
-                              const Text(
-                                '參與人數',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .create_room_participant_limit,
+                                style: const TextStyle(
                                     height: 1.0,
                                     color: Colors.white,
                                     fontSize: 16,
@@ -247,8 +254,10 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                 iconEnabledColor: Colors.white,
                                 icon: const FaIcon(FontAwesomeIcons.caretDown,
                                     color: Colors.white, size: 16),
-                                validator: (value) =>
-                                    value == null ? '請選擇參與人數' : null,
+                                validator: (value) => value == null
+                                    ? AppLocalizations.of(context)!
+                                        .create_room_participant_limit_no_enter
+                                    : null,
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   contentPadding:
@@ -300,9 +309,10 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                       colorFilter: const ColorFilter.mode(
                                           Colors.white, BlendMode.srcIn))),
                               const SizedBox(width: 4),
-                              const Text(
-                                '心情描述',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .create_room_description,
+                                style: const TextStyle(
                                     height: 1.0,
                                     color: Colors.white,
                                     fontSize: 16,
@@ -329,12 +339,14 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                               controller: descriptionController,
                               validator: (value) =>
                                   value == null || value.isEmpty
-                                      ? 'Please enter the description'
+                                      ? AppLocalizations.of(context)!
+                                          .create_room_mood_description_no_enter
                                       : null,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.all(16),
-                                  hintText: "最近在想什麼呢？",
+                                  hintText: AppLocalizations.of(context)!
+                                      .create_room_mood_description_placeholder,
                                   hintStyle: TextStyle(
                                       color: Colors.white.withOpacity(0.5),
                                       height: 1.71,
@@ -392,8 +404,10 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                               child: Text(
                                 widget.mode ==
                                         CreateChatRoomBottomSheetMode.create
-                                    ? "創建"
-                                    : "確定",
+                                    ? AppLocalizations.of(context)!
+                                        .create_room_create
+                                    : AppLocalizations.of(context)!
+                                        .common_confirm,
                                 style: const TextStyle(
                                     color: Color.fromARGB(255, 24, 24, 24),
                                     height: 1.2,

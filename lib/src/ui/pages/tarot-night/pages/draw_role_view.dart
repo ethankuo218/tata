@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/draw_role_view_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TarotNightDrawRoleView extends ConsumerWidget {
   const TarotNightDrawRoleView({super.key, required this.roomId});
@@ -50,7 +51,12 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                     .drawRole(roomId: roomId);
                               }
                             },
-                            child: Text(isDrew ? '開始聊天' : '抽取角色',
+                            child: Text(
+                                isDrew
+                                    ? AppLocalizations.of(context)!
+                                        .activity_draw_role_start_chat
+                                    : AppLocalizations.of(context)!
+                                        .activity_draw_role_draw_card,
                                 style: const TextStyle(
                                     height: 1.0,
                                     color: Color.fromARGB(255, 12, 13, 32),
@@ -89,9 +95,11 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                                       height: 20,
                                                     ),
                                                     const SizedBox(width: 16),
-                                                    const Text(
-                                                      '這是你的角色',
-                                                      style: TextStyle(
+                                                    Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .activity_draw_your_role,
+                                                      style: const TextStyle(
                                                         height: 1.0,
                                                         color: Color.fromARGB(
                                                             255, 223, 130, 255),
@@ -327,8 +335,7 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                                           )),
                                                       const SizedBox(
                                                           height: 20),
-                                                      Text(
-                                                          '接下來，\n請以一顆樂觀開朗的心，為房主帶來希望的曙光！',
+                                                      Text(role.intro,
                                                           textAlign:
                                                               TextAlign.center,
                                                           style: TextStyle(
@@ -353,10 +360,10 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                                 height: 40,
                                               ),
                                               const SizedBox(height: 24),
-                                              const Text(
-                                                '進入聊天室前，\n需要拾起你的神秘角色和任務！',
+                                              Text(
+                                                role!.intro,
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   height: 7 / 5,
                                                   color: Color.fromARGB(
                                                       255, 241, 198, 255),
@@ -415,10 +422,11 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                                           .withOpacity(0.2),
                                                       BlendMode.srcIn)),
                                               const SizedBox(height: 115),
-                                              const Text(
-                                                '在今夜的會話落幕前，\n完成它來解鎖心靈的交流。\n每個角色都擁有專屬的使命，\n這將引導本次對話，\n協助解惑他人的煩惱！',
+                                              Text(
+                                                AppLocalizations.of(context)!
+                                                    .activity_draw_role_description_2,
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Color.fromARGB(
                                                       255, 241, 198, 255),
                                                   fontSize: 20,

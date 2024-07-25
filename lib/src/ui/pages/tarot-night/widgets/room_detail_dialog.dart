@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<Object?> showTarotNightRoomDetailDialog(BuildContext context,
     {required TarotNightRoom roomInfo, required ValueChanged onClosed}) {
@@ -68,8 +69,10 @@ Future<Object?> showTarotNightRoomDetailDialog(BuildContext context,
                           Colors.white.withOpacity(0.4), BlendMode.srcIn),
                     ),
                     const SizedBox(width: 4),
-                    const Text('主題：',
-                        style: TextStyle(
+                    Text(
+                        AppLocalizations.of(context)!
+                            .activity_room_toast_activity_toast_category,
+                        style: const TextStyle(
                             height: 1.15,
                             color: Color.fromARGB(255, 255, 255, 255),
                             fontSize: 16,
@@ -83,7 +86,7 @@ Future<Object?> showTarotNightRoomDetailDialog(BuildContext context,
                               .withOpacity(0.2),
                           borderRadius: BorderRadius.circular(8)),
                       child: Text(
-                        TarotNightRoomTheme.toText(roomInfo.theme),
+                        TarotNightRoomTheme.toText(context, roomInfo.theme),
                         style: const TextStyle(
                             height: 12 / 7,
                             color: Color.fromARGB(255, 241, 198, 255),
@@ -101,8 +104,10 @@ Future<Object?> showTarotNightRoomDetailDialog(BuildContext context,
                           Colors.white.withOpacity(0.4), BlendMode.srcIn),
                     ),
                     const SizedBox(width: 4),
-                    const Text('人數：',
-                        style: TextStyle(
+                    Text(
+                        AppLocalizations.of(context)!
+                            .activity_room_toast_activity_toast_category,
+                        style: const TextStyle(
                             height: 1.15,
                             color: Color.fromARGB(255, 255, 255, 255),
                             fontSize: 16,
@@ -135,8 +140,10 @@ Future<Object?> showTarotNightRoomDetailDialog(BuildContext context,
                       Colors.white.withOpacity(0.4), BlendMode.srcIn),
                 ),
                 const SizedBox(width: 4),
-                const Text('房主的心事分享',
-                    style: TextStyle(
+                Text(
+                    AppLocalizations.of(context)!
+                        .activity_room_toast_activity_toast_title,
+                    style: const TextStyle(
                         height: 1.15,
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 16,
@@ -179,10 +186,12 @@ Future<Object?> showTarotNightRoomDetailDialog(BuildContext context,
                   },
                   child: Text(
                       isFull
-                          ? "房間已滿"
+                          ? AppLocalizations.of(context)!.common_room_is_full
                           : isHost
-                              ? "回到聊天室"
-                              : "立即參與",
+                              ? AppLocalizations.of(context)!
+                                  .common_room_back_to_room
+                              : AppLocalizations.of(context)!
+                                  .common_room_join_now,
                       style: const TextStyle(
                           height: 1.2,
                           color: Color.fromARGB(255, 12, 13, 32),

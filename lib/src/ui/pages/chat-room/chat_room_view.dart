@@ -15,6 +15,7 @@ import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatRoomView extends ConsumerStatefulWidget {
   const ChatRoomView({super.key, required this.chatRoomId});
@@ -191,7 +192,7 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                             : null;
 
                                     if (snapshot.data![index].content ==
-                                            '聊天室已經關閉' &&
+                                            'chat_room_is_closed' &&
                                         data.roomInfo.hostId !=
                                             FirebaseAuth
                                                 .instance.currentUser!.uid) {
@@ -204,10 +205,11 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                                 backgroundColor:
                                                     const Color.fromARGB(
                                                         255, 241, 198, 255),
-                                                title: const Text(
-                                                  "聊天室已經關閉",
+                                                title: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .chat_room_is_closed,
                                                   textAlign: TextAlign.center,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Color.fromARGB(
                                                           255, 12, 13, 32)),
                                                 ),
@@ -323,17 +325,20 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                           style: const TextStyle(
                                               fontSize: 14,
                                               color: Colors.white),
-                                          decoration: const InputDecoration(
-                                            hintText: '輸入訊息',
-                                            hintStyle: TextStyle(
+                                          decoration: InputDecoration(
+                                            hintText:
+                                                AppLocalizations.of(context)!
+                                                    .chat_room_message_enter,
+                                            hintStyle: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 255, 255, 255),
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w400),
                                             isDense: true,
-                                            contentPadding: EdgeInsets.fromLTRB(
-                                                8, 12, 8, 12),
-                                            border: OutlineInputBorder(
+                                            contentPadding:
+                                                const EdgeInsets.fromLTRB(
+                                                    8, 12, 8, 12),
+                                            border: const OutlineInputBorder(
                                               borderSide: BorderSide.none,
                                             ),
                                           ),
@@ -405,9 +410,9 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
         menuChildren: <ChatMenuEntry>[
           if (chatRoomInfo.type == ChatRoomType.normal)
             ChatMenuEntry(
-              label: const Text(
-                'Room Info',
-                style: TextStyle(color: Colors.white),
+              label: Text(
+                AppLocalizations.of(context)!.common_room_info,
+                style: const TextStyle(color: Colors.white),
               ),
               onPressed: () {
                 context.push(
@@ -417,9 +422,9 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
             ),
           if (chatRoomInfo.type == ChatRoomType.normal)
             ChatMenuEntry(
-              label: const Text(
-                'Members',
-                style: TextStyle(color: Colors.white),
+              label: Text(
+                AppLocalizations.of(context)!.common_room_member,
+                style: const TextStyle(color: Colors.white),
               ),
               onPressed: () {
                 context.push(
@@ -428,9 +433,9 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
               },
             ),
           ChatMenuEntry(
-            label: const Text(
-              'Leave Chat',
-              style: TextStyle(color: Colors.red),
+            label: Text(
+              AppLocalizations.of(context)!.common_leave_chat,
+              style: const TextStyle(color: Colors.red),
             ),
             onPressed: () {
               if (chatRoomInfo.hostId ==
@@ -458,12 +463,13 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                               )
                             ],
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 26),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 26),
                             child: Text(
-                              '您確定要離開此聊天室嗎？\n離開即無法查看您聊天的所有紀錄',
+                              AppLocalizations.of(context)!
+                                  .common_leave_chat_message,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 height: 6 / 4,
                                 color: Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 16,
@@ -491,10 +497,11 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                                 255, 255, 195, 79)),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: const Text(
-                                        '取消',
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .common_cancel,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             height: 1,
                                             color:
                                                 Color.fromARGB(255, 24, 24, 24),
@@ -519,10 +526,11 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                                 255, 255, 195, 79)),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: const Text(
-                                        '確定',
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .common_confirm,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Color.fromARGB(
                                                 255, 255, 195, 79),
                                             fontSize: 14,

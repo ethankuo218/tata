@@ -9,6 +9,7 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/draw_card_view_provider.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/tarot_night_announcement_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TarotNightDrawCardView extends ConsumerWidget {
   const TarotNightDrawCardView(
@@ -56,8 +57,10 @@ class TarotNightDrawCardView extends ConsumerWidget {
                                   extra: roomId);
                             });
                           },
-                          child: const Text('查看結果',
-                              style: TextStyle(
+                          child: Text(
+                              AppLocalizations.of(context)!
+                                  .activity_chat_room_tarot_test_result,
+                              style: const TextStyle(
                                   height: 1.0,
                                   color: Color.fromARGB(255, 12, 13, 32),
                                   fontSize: 16,
@@ -90,10 +93,11 @@ class TarotNightDrawCardView extends ConsumerWidget {
                                         height: 40,
                                       ),
                                       const SizedBox(height: 24),
-                                      const Text(
-                                        '在您抽牌前，請先做一次深呼吸，\n讓心靈平靜下來。',
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .draw_tarot_draw_card_title,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           height: 7 / 5,
                                           color: Color.fromARGB(
                                               255, 241, 198, 255),
@@ -102,10 +106,11 @@ class TarotNightDrawCardView extends ConsumerWidget {
                                         ),
                                       ),
                                       const SizedBox(height: 40),
-                                      const Text(
-                                        '閉上眼睛，\n想想您想問的問題以及相關的人事物，\n與塔羅牌卡做深層的連結。',
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .draw_tarot_draw_card_description,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           height: 14 / 9,
                                           color: Color.fromARGB(
                                               255, 255, 255, 255),

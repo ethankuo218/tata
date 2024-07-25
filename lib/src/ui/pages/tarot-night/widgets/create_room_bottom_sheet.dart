@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> showCreateTarotNightRoomBottomSheet(BuildContext context,
     {required CreateTarotNightRoomBottomSheetMode mode,
@@ -87,6 +88,7 @@ class _CreateTarotNightRoomBottomSheetState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Opacity(
                             opacity: 0.4,
@@ -96,14 +98,18 @@ class _CreateTarotNightRoomBottomSheetState
                               height: 20,
                             )),
                         const SizedBox(width: 4),
-                        const Text(
-                          '用一句話描繪你此刻的心境',
-                          style: TextStyle(
-                              height: 1.0,
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400),
-                        )
+                        ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 300),
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .activity_lobby_activity_room_title,
+                              maxLines: 2,
+                              style: const TextStyle(
+                                  height: 1.2,
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400),
+                            ))
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -120,12 +126,14 @@ class _CreateTarotNightRoomBottomSheetState
                         maxLines: 1,
                         controller: titleController,
                         validator: (value) => value == null || value.isEmpty
-                            ? 'Please enter the title'
+                            ? AppLocalizations.of(context)!
+                                .activity_lobby_activity_room_tile_no_enter
                             : null,
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             contentPadding: const EdgeInsets.all(16),
-                            hintText: "此心情會變為你的房間名稱",
+                            hintText: AppLocalizations.of(context)!
+                                .activity_lobby_activity_room_title_placeholder,
                             hintStyle: TextStyle(
                                 height: 1.71,
                                 fontSize: 14,
@@ -144,9 +152,10 @@ class _CreateTarotNightRoomBottomSheetState
                               height: 20,
                             )),
                         const SizedBox(width: 4),
-                        const Text(
-                          '主題',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!
+                              .activity_room_toast_activity_toast_category,
+                          style: const TextStyle(
                               height: 1.0,
                               color: Colors.white,
                               fontSize: 16,
@@ -174,8 +183,8 @@ class _CreateTarotNightRoomBottomSheetState
                                             _selectedTheme == index ? 1 : 0.2),
                                     width: 2),
                                 borderRadius: BorderRadius.circular(8)),
-                            label: Text(
-                                TarotNightRoomTheme.toText(themeList[index])),
+                            label: Text(TarotNightRoomTheme.toText(
+                                context, themeList[index])),
                             labelStyle: const TextStyle(
                               height: 1.0,
                               color: Colors.white,
@@ -202,6 +211,7 @@ class _CreateTarotNightRoomBottomSheetState
                         : const SizedBox(),
                     const SizedBox(height: 28),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Opacity(
                             opacity: 0.4,
@@ -211,14 +221,17 @@ class _CreateTarotNightRoomBottomSheetState
                               height: 20,
                             )),
                         const SizedBox(width: 4),
-                        const Text(
-                          '什麼事情讓您感到不安或迷惘呢？',
-                          style: TextStyle(
-                              height: 1.0,
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400),
-                        )
+                        ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 300),
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .activity_lobby_activity_room_description,
+                              style: const TextStyle(
+                                  height: 1.2,
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400),
+                            ))
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -239,13 +252,14 @@ class _CreateTarotNightRoomBottomSheetState
                         maxLines: 9,
                         controller: descriptionController,
                         validator: (value) => value == null || value.isEmpty
-                            ? 'Please enter the description'
+                            ? AppLocalizations.of(context)!
+                                .activity_lobby_activity_room_description_no_enter
                             : null,
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             contentPadding: const EdgeInsets.all(16),
-                            hintText:
-                                "在這個安全的空間，您的心事將被傾聽與尊重，詳細描述每一個感受，更能探討藏在內心的秘密。",
+                            hintText: AppLocalizations.of(context)!
+                                .activity_lobby_activity_room_description_placeholder,
                             hintStyle: TextStyle(
                                 color: Colors.white.withOpacity(0.5),
                                 height: 1.71,
@@ -257,12 +271,12 @@ class _CreateTarotNightRoomBottomSheetState
                     Center(
                       child: ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
+                            backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(255, 223, 130, 255)),
-                            padding: MaterialStateProperty.all(
+                            padding: WidgetStateProperty.all(
                                 const EdgeInsets.symmetric(
                                     vertical: 12, horizontal: 20)),
-                            shape: MaterialStateProperty.all(
+                            shape: WidgetStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)))),
                         onPressed: () {
@@ -281,9 +295,10 @@ class _CreateTarotNightRoomBottomSheetState
                             "description": descriptionController.text
                           });
                         },
-                        child: const Text(
-                          "開啟心事之門，創建你的夜話空間",
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .activity_lobby_activity_create,
+                          style: const TextStyle(
                               color: Color.fromARGB(255, 12, 13, 32),
                               height: 1.2,
                               fontSize: 16,

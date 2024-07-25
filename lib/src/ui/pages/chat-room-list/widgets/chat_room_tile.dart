@@ -38,8 +38,8 @@ class ChatRoomTile extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(72, 16, 16, 16),
                 decoration: BoxDecoration(
                     gradient: LinearGradient(colors: [
-                      const Color.fromARGB(255, 255, 244, 185).withOpacity(0.6),
                       const Color.fromARGB(255, 255, 244, 185).withOpacity(0.3),
+                      const Color.fromARGB(255, 255, 244, 185).withOpacity(0.2),
                       const Color.fromARGB(255, 255, 244, 185).withOpacity(0.1),
                     ]),
                     borderRadius: const BorderRadius.only(
@@ -80,7 +80,8 @@ class ChatRoomTile extends StatelessWidget {
                                         BlendMode.srcIn))),
                             const SizedBox(width: 8),
                             Text(
-                              ChatRoomCategory.toText(chatRoomInfo.category),
+                              ChatRoomCategory.toText(
+                                  context, chatRoomInfo.category),
                               style: const TextStyle(
                                   height: 25 / 18,
                                   fontSize: 18,

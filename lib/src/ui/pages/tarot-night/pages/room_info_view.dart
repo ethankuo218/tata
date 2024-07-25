@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TarotNightRoomInfoView extends ConsumerWidget {
   final TarotNightRoom roomInfo;
@@ -15,8 +16,8 @@ class TarotNightRoomInfoView extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 12, 13, 32),
-        title: const Text('Room info',
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+        title: Text(AppLocalizations.of(context)!.common_room_info,
+            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
         centerTitle: true,
         titleSpacing: 0,
       ),
@@ -47,9 +48,10 @@ class TarotNightRoomInfoView extends ConsumerWidget {
                           children: [
                             SvgPicture.asset('assets/images/star_2.svg'),
                             const SizedBox(width: 16),
-                            const Text(
-                              '占星塔羅夜',
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!
+                                  .activity_chat_room_tarot_test_question_title,
+                              style: const TextStyle(
                                   height: 1.0,
                                   color: Color.fromARGB(255, 223, 130, 255),
                                   fontSize: 24),
@@ -76,7 +78,9 @@ class TarotNightRoomInfoView extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              Text('揭開你內心的秘密',
+              Text(
+                  AppLocalizations.of(context)!
+                      .activity_chat_room_activity_room_info_slogan,
                   style: TextStyle(
                     height: 1.0,
                     fontSize: 14,
@@ -249,7 +253,7 @@ class TarotNightRoomInfoView extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            TarotNightRoomTheme.toText(roomInfo.theme),
+                            TarotNightRoomTheme.toText(context, roomInfo.theme),
                             style: const TextStyle(
                               height: 1.0,
                               fontSize: 16,
@@ -260,7 +264,7 @@ class TarotNightRoomInfoView extends ConsumerWidget {
                         ),
                         const SizedBox(height: 32),
                         Text(
-                          '- 內心小煩惱 -',
+                          '- ${AppLocalizations.of(context)!.activity_chat_room_activity_room_info_description} -',
                           style: TextStyle(
                             height: 1.0,
                             fontSize: 16,

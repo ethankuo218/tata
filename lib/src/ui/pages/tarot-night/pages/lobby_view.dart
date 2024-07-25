@@ -11,6 +11,7 @@ import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/create_room_bottom_sheet.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/lobby_introduction_slider.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_walkthrough_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TarotNightLobbyView extends ConsumerWidget {
   const TarotNightLobbyView({super.key});
@@ -69,9 +70,10 @@ class TarotNightLobbyView extends ConsumerWidget {
                                     SvgPicture.asset(
                                         'assets/images/star_2.svg'),
                                     const SizedBox(width: 16),
-                                    const Text(
-                                      '占星塔羅夜',
-                                      style: TextStyle(
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .activity_lobby_activity_title,
+                                      style: const TextStyle(
                                           height: 1.0,
                                           color: Color.fromARGB(
                                               255, 223, 130, 255),
@@ -87,7 +89,7 @@ class TarotNightLobbyView extends ConsumerWidget {
                           ),
                           Positioned(
                             left: 85,
-                            top: 8,
+                            top: 0,
                             child: Opacity(
                               opacity: 0.5,
                               child: SvgPicture.asset(
@@ -233,16 +235,19 @@ class TarotNightLobbyView extends ConsumerWidget {
                                                               223, 130, 255),
                                                           BlendMode.srcIn)),
                                             ),
-                                            const Expanded(
+                                            Expanded(
                                               child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 8),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 8),
                                                 child: Center(
                                                   child: Text(
-                                                      '創建一個聊天室，並描述你的心理困擾，尋求建議 !',
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .activity_lobby_host_introduction,
                                                       textAlign:
                                                           TextAlign.center,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 16)),
                                                 ),
@@ -269,8 +274,13 @@ class TarotNightLobbyView extends ConsumerWidget {
                                               child: Text(
                                                   lobbyInfo.participantStatus ==
                                                           ParticipantStatus.host
-                                                      ? '回到聊天室'
-                                                      : '分享故事',
+                                                      ? AppLocalizations.of(
+                                                              context)!
+                                                          .common_room_back_to_room
+                                                      : AppLocalizations.of(
+                                                              context)!
+                                                          .activity_lobby_share_story,
+                                                  textAlign: TextAlign.center,
                                                   style: const TextStyle(
                                                     height: 1.0,
                                                     color: Color.fromARGB(
@@ -359,16 +369,19 @@ class TarotNightLobbyView extends ConsumerWidget {
                                                                 223, 130, 255),
                                                             BlendMode.srcIn)),
                                               ),
-                                              const Expanded(
+                                              Expanded(
                                                   child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 8),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 8),
                                                 child: Center(
                                                   child: Text(
-                                                      '選擇要解決的問題，進入聊天室幫助房主釐清困惑！',
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .activity_lobby_participant_introduction,
                                                       textAlign:
                                                           TextAlign.center,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 16)),
                                                 ),
@@ -391,8 +404,12 @@ class TarotNightLobbyView extends ConsumerWidget {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             20)),
-                                                child: const Text('解答疑惑',
-                                                    style: TextStyle(
+                                                child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .activity_lobby_answer_worry,
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
                                                         height: 1.0,
                                                         color: Color.fromARGB(
                                                             255, 12, 13, 32),

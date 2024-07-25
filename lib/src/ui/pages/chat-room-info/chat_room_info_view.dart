@@ -5,6 +5,7 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/providers/pages/chat_room_info_view_provider.dart';
 import 'package:tata/src/utils/tarot.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatRoomInfoView extends ConsumerWidget {
   const ChatRoomInfoView({super.key, required this.chatRoomId});
@@ -96,7 +97,7 @@ class ChatRoomInfoView extends ConsumerWidget {
                                   child: Center(
                                     child: Text(
                                       ChatRoomCategory.toText(
-                                          chatRoomInfo.category),
+                                          context, chatRoomInfo.category),
                                       style: const TextStyle(
                                           height: 1.1,
                                           fontSize: 16,
@@ -218,7 +219,8 @@ class ChatRoomInfoView extends ConsumerWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('- 描述 -',
+                                Text(
+                                    '- ${AppLocalizations.of(context)!.chat_room_room_info_description} -',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Colors.white.withOpacity(0.5),

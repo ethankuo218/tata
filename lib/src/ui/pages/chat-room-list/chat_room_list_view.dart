@@ -91,15 +91,16 @@ class _ChatRoomListViewState extends ConsumerState<ChatRoomListView>
                                 fontWeight: FontWeight.w400),
                             dividerColor: Colors.transparent,
                             labelPadding:
-                                const EdgeInsets.symmetric(horizontal: 0),
+                                const EdgeInsets.symmetric(horizontal: 8),
                             tabs: ChatRoomListView.categoryList
                                 .map((e) => ConstrainedBox(
                                     constraints: const BoxConstraints(
                                         maxHeight: 32,
                                         minHeight: 32,
-                                        minWidth: 56),
-                                    child:
-                                        Tab(text: ChatRoomCategory.toText(e))))
+                                        minWidth: 40),
+                                    child: Tab(
+                                        text: ChatRoomCategory.toText(
+                                            context, e))))
                                 .toList(),
                           ),
                         ),

@@ -7,6 +7,7 @@ import 'package:tata/src/core/providers/auth_provider.dart';
 import 'package:tata/src/core/providers/user_provider.dart';
 import 'package:tata/src/utils/avatar.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsView extends ConsumerStatefulWidget {
   const SettingsView({super.key});
@@ -34,7 +35,10 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
 
     return ref.watch(provider).when(
           data: (userInfo) => Scaffold(
-            appBar: AppBar(title: const Text('Settings')),
+            appBar: AppBar(
+                title: Text(
+              AppLocalizations.of(context)!.setting_title,
+            )),
             body: Padding(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
               child: Column(
@@ -135,51 +139,53 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                       child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        const SizedBox(
-                            height: 60,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                    width: 40,
-                                    child: FaIcon(FontAwesomeIcons.globe,
-                                        color: Colors.white)),
-                                Text(
-                                  'Language',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Expanded(
-                                    child: Text(
-                                  'English',
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(color: Colors.white),
-                                ))
-                              ],
-                            )),
+                        // SizedBox(
+                        //     height: 60,
+                        //     child: Row(
+                        //       crossAxisAlignment: CrossAxisAlignment.center,
+                        //       children: [
+                        //         const SizedBox(
+                        //             width: 40,
+                        //             child: FaIcon(FontAwesomeIcons.globe,
+                        //                 color: Colors.white)),
+                        //         Text(
+                        //           AppLocalizations.of(context)!
+                        //               .setting_language,
+                        //           style: const TextStyle(
+                        //             color: Colors.white,
+                        //             fontSize: 16,
+                        //           ),
+                        //         ),
+                        //         const Expanded(
+                        //             child: Text(
+                        //           'English',
+                        //           textAlign: TextAlign.end,
+                        //           style: TextStyle(color: Colors.white),
+                        //         ))
+                        //       ],
+                        //     )),
                         GestureDetector(
                             onTap: () =>
                                 launchUrlString('mailto:support@tatarot.app'),
-                            child: const SizedBox(
+                            child: SizedBox(
                                 height: 60,
                                 child: Row(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 40,
                                       child: FaIcon(
                                           FontAwesomeIcons.circleQuestion,
                                           color: Colors.white),
                                     ),
                                     Text(
-                                      'Help Center',
-                                      style: TextStyle(
+                                      AppLocalizations.of(context)!
+                                          .setting_help_center,
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
                                       ),
                                     ),
-                                    Expanded(
+                                    const Expanded(
                                         child: Align(
                                       alignment: Alignment.centerRight,
                                       child: Icon(
@@ -192,21 +198,23 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                         GestureDetector(
                             onTap: () => Share.share(
                                 'Hi! Join TATA to enjoy the most incredible anonymous chat activity: MIDNIGHT TAROT !'),
-                            child: const SizedBox(
+                            child: SizedBox(
                                 height: 60,
                                 child: Row(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 40,
                                       child: FaIcon(FontAwesomeIcons.userGroup,
                                           color: Colors.white),
                                     ),
-                                    Text('Invite Friends',
-                                        style: TextStyle(
+                                    Text(
+                                        AppLocalizations.of(context)!
+                                            .setting_invite_friends,
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,
                                         )),
-                                    Expanded(
+                                    const Expanded(
                                         child: Align(
                                       alignment: Alignment.centerRight,
                                       child: Icon(
@@ -218,23 +226,24 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                                 ))),
                         GestureDetector(
                           onTap: () => launchUrlString('Terms & Conditions'),
-                          child: const SizedBox(
+                          child: SizedBox(
                               height: 60,
                               child: Row(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 40,
                                     child: FaIcon(FontAwesomeIcons.listCheck,
                                         color: Colors.white),
                                   ),
                                   Text(
-                                    'Terms & Conditions',
-                                    style: TextStyle(
+                                    AppLocalizations.of(context)!
+                                        .setting_terms_and_conditions,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
                                     ),
                                   ),
-                                  Expanded(
+                                  const Expanded(
                                       child: Align(
                                     alignment: Alignment.centerRight,
                                     child: Icon(
@@ -247,22 +256,23 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                         ),
                         GestureDetector(
                           onTap: () => launchUrlString('Privacy Policy'),
-                          child: const SizedBox(
+                          child: SizedBox(
                               height: 60,
                               child: Row(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                       width: 40,
                                       child: FaIcon(FontAwesomeIcons.lock,
                                           color: Colors.white)),
                                   Text(
-                                    'Privacy Policy',
-                                    style: TextStyle(
+                                    AppLocalizations.of(context)!
+                                        .setting_privacy_policy,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
                                     ),
                                   ),
-                                  Expanded(
+                                  const Expanded(
                                       child: Align(
                                     alignment: Alignment.centerRight,
                                     child: Icon(
@@ -276,11 +286,11 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                         GestureDetector(
                           onTap: () =>
                               ref.read(authProvider.notifier).signOut(),
-                          child: const SizedBox(
+                          child: SizedBox(
                               height: 60,
                               child: Row(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 40,
                                     child: FaIcon(
                                         FontAwesomeIcons.arrowRightFromBracket,
@@ -288,8 +298,9 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                                             Color.fromARGB(255, 220, 78, 68)),
                                   ),
                                   Text(
-                                    'Logout',
-                                    style: TextStyle(
+                                    AppLocalizations.of(context)!
+                                        .setting_logout,
+                                    style: const TextStyle(
                                       color: Color.fromARGB(255, 220, 78, 68),
                                       fontSize: 16,
                                     ),
@@ -297,7 +308,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                                 ],
                               )),
                         ),
-                        SizedBox(height: screenHeight * 0.2),
+                        SizedBox(height: screenHeight * 0.3),
                         SizedBox(
                             height: 60,
                             child: GestureDetector(
@@ -305,7 +316,9 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                                   launchUrlString('mailto:support@tatarot.app');
                                 },
                                 child: Center(
-                                    child: Text('Delete Account',
+                                    child: Text(
+                                        AppLocalizations.of(context)!
+                                            .setting_delete_account,
                                         style: TextStyle(
                                           color: Colors.red.withOpacity(0.7),
                                           fontSize: 16,

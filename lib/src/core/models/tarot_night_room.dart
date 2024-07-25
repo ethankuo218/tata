@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:tata/src/core/models/room.dart';
 import 'package:tata/src/core/models/tarot_night_message.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TarotNightRoom extends Room {
   final TarotNightRoomTheme theme;
@@ -89,20 +91,20 @@ enum TarotNightRoomTheme {
     return filter.first;
   }
 
-  static String toText(TarotNightRoomTheme x) {
+  static String toText(BuildContext context, TarotNightRoomTheme x) {
     switch (x) {
       case TarotNightRoomTheme.myRoom:
         return 'My Room';
       case TarotNightRoomTheme.all:
         return '全部';
       case TarotNightRoomTheme.work:
-        return '工作';
+        return AppLocalizations.of(context)!.category_work;
       case TarotNightRoomTheme.relation:
-        return '感情';
+        return AppLocalizations.of(context)!.category_romance;
       case TarotNightRoomTheme.family:
-        return '家庭';
+        return AppLocalizations.of(context)!.category_family;
       case TarotNightRoomTheme.friend:
-        return '友情';
+        return AppLocalizations.of(context)!.category_friendship;
       default:
         return 'NULL';
     }

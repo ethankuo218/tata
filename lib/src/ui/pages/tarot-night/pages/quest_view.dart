@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/test_result_view_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TarotNightQuestView extends ConsumerWidget {
   const TarotNightQuestView(
@@ -19,7 +20,7 @@ class TarotNightQuestView extends ConsumerWidget {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 12, 13, 32),
-            title: const Text('進行解任務')),
+            title: Text(AppLocalizations.of(context)!.tarot_quest_title)),
         body: SingleChildScrollView(
             child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -71,7 +72,8 @@ class TarotNightQuestView extends ConsumerWidget {
                           border: InputBorder.none,
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 15),
-                          hintText: "輸入文字來完成任務",
+                          hintText:
+                              AppLocalizations.of(context)!.tarot_quest_error,
                           hintStyle: TextStyle(
                             height: 12 / 7,
                             color: const Color.fromARGB(255, 255, 255, 255)
@@ -91,8 +93,9 @@ class TarotNightQuestView extends ConsumerWidget {
                               horizontal: 20, vertical: 12)),
                       onPressed: () {
                         if (answerController.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('請輸入文字來完成任務')));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(AppLocalizations.of(context)!
+                                  .tarot_quest_error)));
                         } else {
                           ref
                               .read(tarotNightTestResultViewProvider(
@@ -105,8 +108,9 @@ class TarotNightQuestView extends ConsumerWidget {
                           });
                         }
                       },
-                      child: const Text('送出回答',
-                          style: TextStyle(
+                      child: Text(
+                          AppLocalizations.of(context)!.tarot_quest_submit,
+                          style: const TextStyle(
                               height: 1.2,
                               color: Color.fromARGB(255, 12, 13, 32),
                               fontSize: 16,

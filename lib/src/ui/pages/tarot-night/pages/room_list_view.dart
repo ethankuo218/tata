@@ -8,6 +8,7 @@ import 'package:tata/src/core/providers/pages/tarot-night/room_list_view_provide
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_role_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/room_detail_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TarotNightRoomListView extends ConsumerStatefulWidget {
   const TarotNightRoomListView({super.key});
@@ -51,7 +52,9 @@ class _TarotNightRoomListViewState extends ConsumerState<TarotNightRoomListView>
             initialIndex: TarotNightRoomTheme.all.value,
             length: TarotNightRoomListView.themeList.length,
             child: Scaffold(
-                appBar: AppBar(title: const Text('占星塔羅夜')),
+                appBar: AppBar(
+                    title: Text(AppLocalizations.of(context)!
+                        .activity_lobby_activity_title)),
                 body: Container(
                   decoration: const BoxDecoration(
                       gradient: LinearGradient(colors: [
@@ -89,16 +92,16 @@ class _TarotNightRoomListViewState extends ConsumerState<TarotNightRoomListView>
                                   fontWeight: FontWeight.w400),
                               dividerColor: Colors.transparent,
                               labelPadding:
-                                  const EdgeInsets.symmetric(horizontal: 0),
+                                  const EdgeInsets.symmetric(horizontal: 8),
                               tabs: TarotNightRoomListView.themeList
                                   .map((e) => ConstrainedBox(
                                       constraints: const BoxConstraints(
                                           maxHeight: 32,
                                           minHeight: 32,
-                                          minWidth: 56),
+                                          minWidth: 40),
                                       child: Tab(
-                                          text: TarotNightRoomTheme.toText(e)
-                                              .toUpperCase())))
+                                          text: TarotNightRoomTheme.toText(
+                                              context, e))))
                                   .toList(),
                             ),
                           ),
@@ -117,8 +120,10 @@ class _TarotNightRoomListViewState extends ConsumerState<TarotNightRoomListView>
                               height: 16,
                             ),
                             const SizedBox(width: 8),
-                            const Text('請選擇問題，進入聊天室幫助房主釐清困惑！',
-                                style: TextStyle(
+                            Text(
+                                AppLocalizations.of(context)!
+                                    .activity_room_list_activity_join_description,
+                                style: const TextStyle(
                                     height: 4 / 3,
                                     color: Colors.white,
                                     fontSize: 12,

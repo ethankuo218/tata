@@ -10,6 +10,7 @@ import 'package:tata/src/core/providers/pages/tarot-night/tarot_night_announceme
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_card_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/start_tarot_test_bottom_sheet.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TarotNightAnnouncement extends ConsumerStatefulWidget {
   const TarotNightAnnouncement({super.key, required this.roomInfo});
@@ -129,23 +130,29 @@ class _TarotNightAnnouncementState
                             extra: roomInfo?.id);
                       },
                       style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(Size.zero),
-                          padding: MaterialStateProperty.all(
+                          minimumSize: WidgetStateProperty.all(Size.zero),
+                          padding: WidgetStateProperty.all(
                               const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 8)),
                           backgroundColor: isTestButtonEnabled
-                              ? MaterialStateProperty.all(
+                              ? WidgetStateProperty.all(
                                   const Color.fromARGB(255, 223, 130, 255))
-                              : MaterialStateProperty.all(
+                              : WidgetStateProperty.all(
                                   const Color.fromARGB(255, 168, 168, 168))),
-                      child: Text(isHost && !isTestCompleted ? '開始測驗' : '查看結果',
-                          style: TextStyle(
-                              color: isTestButtonEnabled
-                                  ? const Color.fromARGB(255, 12, 13, 32)
-                                  : const Color.fromARGB(255, 12, 13, 32)
-                                      .withOpacity(0.8),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold)))
+                      child: Text(
+                          isHost && !isTestCompleted
+                              ? AppLocalizations.of(context)!
+                                  .activity_chat_room_tarot_test_start
+                              : AppLocalizations.of(context)!
+                                  .activity_chat_room_tarot_test_result,
+                          style:
+                              TextStyle(
+                                  color: isTestButtonEnabled
+                                      ? const Color.fromARGB(255, 12, 13, 32)
+                                      : const Color.fromARGB(255, 12, 13, 32)
+                                          .withOpacity(0.8),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold)))
                 ],
               ),
             ),

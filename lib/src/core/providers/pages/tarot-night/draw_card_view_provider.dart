@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/models/app_user_info.dart';
@@ -24,8 +26,8 @@ class TarotNightDrawCardView extends _$TarotNightDrawCardView {
 
   Future<void> drawCard(
       {required String roomId, required String question}) async {
-    // final int number = Random().nextInt(22) + 1;
-    const int number = 1;
+    final int number = Random().nextInt(22) + 1;
+    // const int number = 1;
     _card = await ref
         .read(referenceRepositoryProvider)
         .getTarotCard(number.toString());

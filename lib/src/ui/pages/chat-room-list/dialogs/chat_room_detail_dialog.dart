@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/utils/tarot.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<Object?> showChatRoomDetailDialog(BuildContext context,
     {required ChatRoom chatRoomInfo, required ValueChanged onClosed}) {
@@ -98,7 +99,8 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                           ),
                           child: Center(
                             child: Text(
-                              ChatRoomCategory.toText(chatRoomInfo.category),
+                              ChatRoomCategory.toText(
+                                  context, chatRoomInfo.category),
                               style: const TextStyle(
                                   height: 1.1,
                                   fontSize: 16,
@@ -140,7 +142,8 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('- 描述 -',
+                  Text(
+                      '- ${AppLocalizations.of(context)!.home_dialog_description} -',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white.withOpacity(0.5),
@@ -163,23 +166,22 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                 children: [
                   ElevatedButton(
                       style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all<Size>(
-                            const Size(136, 40)),
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        minimumSize:
+                            WidgetStateProperty.all<Size>(const Size(136, 40)),
+                        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                           const EdgeInsets.symmetric(
                               vertical: 12, horizontal: 20),
                         ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
+                        backgroundColor: WidgetStateProperty.all<Color>(
                           const Color.fromARGB(255, 255, 195, 79),
                         ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        textStyle: MaterialStateProperty.all<TextStyle>(
-                            const TextStyle(
+                        textStyle:
+                            WidgetStateProperty.all<TextStyle>(const TextStyle(
                           height: 1.0,
                           color: Color.fromARGB(255, 24, 24, 24),
                           fontSize: 16,
@@ -195,10 +197,12 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                       },
                       child: Text(
                         isFull
-                            ? "房間已滿"
+                            ? AppLocalizations.of(context)!.common_room_is_full
                             : isHost
-                                ? "回到聊天室"
-                                : "立即參與話題",
+                                ? AppLocalizations.of(context)!
+                                    .common_room_back_to_room
+                                : AppLocalizations.of(context)!
+                                    .common_room_join_now,
                         style: const TextStyle(
                             color: Color.fromARGB(255, 24, 24, 24),
                             height: 1.2,
