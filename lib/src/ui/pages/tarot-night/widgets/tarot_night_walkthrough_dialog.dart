@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -11,20 +9,21 @@ Future<Object?> showTarotNightWalkthroughDialog(BuildContext context,
     pageBuilder: (context, _, __) {
       int current = 0;
       final CarouselController controller = CarouselController();
-      bool isChecked = false;
+
+      double viewHeight = MediaQuery.of(context).size.height;
 
       return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
         return Center(
           child: Container(
-            height: 350,
-            margin: const EdgeInsets.symmetric(horizontal: 15),
+            height: viewHeight,
+            margin: const EdgeInsets.symmetric(horizontal: 0),
             child: Stack(children: [
               CarouselSlider(
                   items: walkthroughSliders,
                   carouselController: controller,
                   options: CarouselOptions(
-                      height: 350,
+                      height: viewHeight,
                       autoPlay: false,
                       enlargeCenterPage: false,
                       aspectRatio: 2.0,
@@ -37,34 +36,12 @@ Future<Object?> showTarotNightWalkthroughDialog(BuildContext context,
                         });
                       })),
               Container(
-                height: 350,
-                padding: const EdgeInsets.only(bottom: 10),
+                height: viewHeight,
+                padding: const EdgeInsets.only(bottom: 80),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Material(
-                      color: Colors.transparent,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Checkbox(
-                              checkColor: Colors.white,
-                              value: isChecked,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  isChecked = value!;
-                                });
-                              }),
-                          const Text("Don't show again",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500)),
-                        ],
-                      ),
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: walkthrough.asMap().entries.map((entry) {
@@ -87,15 +64,27 @@ Future<Object?> showTarotNightWalkthroughDialog(BuildContext context,
                 ),
               ),
               Container(
-                height: 350,
-                alignment: Alignment.topRight,
-                padding: const EdgeInsets.only(top: 10, right: 10),
-                child: IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white),
-                    onPressed: () {
-                      context.pop(isChecked);
-                    }),
-              )
+                height: viewHeight,
+                padding: const EdgeInsets.only(bottom: 40),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              context.pop();
+                            },
+                            child: Text(current != 4 ? '跳過' : '開始',
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.white))),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ]),
           ),
         );
@@ -117,29 +106,277 @@ Future<Object?> showTarotNightWalkthroughDialog(BuildContext context,
 
 final List<int> walkthrough = [1, 2, 3, 4, 5];
 
-final List<Widget> walkthroughSliders = walkthrough
-    .map((item) => Stack(
+final List<Widget> walkthroughSliders = [
+  Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: const SizedBox.shrink(),
+      ),
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
           children: [
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.8),
-                  border: Border.all(
-                      color: const Color.fromARGB(255, 137, 118, 82)
-                          .withOpacity(0.6),
-                      width: 2),
-                  borderRadius: BorderRadius.circular(20)),
-              child: Image.asset("assets/images/star.png", fit: BoxFit.contain),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 241, 198, 255)
+                          .withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('選角開啟活動 !',
+                      style: TextStyle(
+                          height: 12 / 7,
+                          color: Color.fromARGB(255, 241, 198, 255),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400)),
+                ),
+              ],
             ),
-            BackdropFilter(
-                blendMode: BlendMode.overlay,
-                filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                child: Container(
-                  decoration:
-                      BoxDecoration(color: Colors.white.withOpacity(0.0)),
-                ))
+            const SizedBox(height: 16),
+            const Text('1. 成為房主，分享您的煩惱\n2.成為參加者，與房主聊聊心事',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16, color: Colors.white)),
+            const SizedBox(height: 16),
+            Container(
+              width: 265,
+              height: 520,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: const Color.fromARGB(255, 241, 198, 255),
+                      width: 1),
+                  borderRadius: BorderRadius.circular(40)),
+            )
           ],
-        ))
-    .toList();
+        ),
+      )),
+  Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: const SizedBox.shrink(),
+      ),
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 241, 198, 255)
+                          .withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('房主',
+                      style: TextStyle(
+                          height: 12 / 7,
+                          color: Color.fromARGB(255, 241, 198, 255),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('分享心事',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 16, color: Color.fromARGB(255, 241, 198, 255))),
+            const Text('開啟專屬你的塔羅測驗！',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 12, color: Colors.white)),
+            const SizedBox(height: 16),
+            Container(
+              width: 265,
+              height: 520,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: const Color.fromARGB(255, 241, 198, 255),
+                      width: 1),
+                  borderRadius: BorderRadius.circular(40)),
+            )
+          ],
+        ),
+      )),
+  Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: const SizedBox.shrink(),
+      ),
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 241, 198, 255)
+                          .withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('房主',
+                      style: TextStyle(
+                          height: 12 / 7,
+                          color: Color.fromARGB(255, 241, 198, 255),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400)),
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 241, 198, 255)
+                          .withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('參加者',
+                      style: TextStyle(
+                          height: 12 / 7,
+                          color: Color.fromARGB(255, 241, 198, 255),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400)),
+                )
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('查看測驗結果',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 16, color: Color.fromARGB(255, 241, 198, 255))),
+            const Text('讓塔羅一窺內心的煩惱並提供建議!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 12, color: Colors.white)),
+            const SizedBox(height: 16),
+            Container(
+              width: 265,
+              height: 520,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: const Color.fromARGB(255, 241, 198, 255),
+                      width: 1),
+                  borderRadius: BorderRadius.circular(40)),
+            )
+          ],
+        ),
+      )),
+  Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: const SizedBox.shrink(),
+      ),
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 241, 198, 255)
+                          .withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('參加者',
+                      style: TextStyle(
+                          height: 12 / 7,
+                          color: Color.fromARGB(255, 241, 198, 255),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('隨機角色',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 16, color: Color.fromARGB(255, 241, 198, 255))),
+            const Text('進入聊天室前，先抽取本次擔任的角色!!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 12, color: Colors.white)),
+            const SizedBox(height: 16),
+            Container(
+              width: 265,
+              height: 520,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: const Color.fromARGB(255, 241, 198, 255),
+                      width: 1),
+                  borderRadius: BorderRadius.circular(40)),
+            )
+          ],
+        ),
+      )),
+  Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: const SizedBox.shrink(),
+      ),
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 241, 198, 255)
+                          .withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('參加者',
+                      style: TextStyle(
+                          height: 12 / 7,
+                          color: Color.fromARGB(255, 241, 198, 255),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('根據角色特質，解鎖任務',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 16, color: Color.fromARGB(255, 241, 198, 255))),
+            const Text('您的回覆，將會帶給房主滿滿的動力！',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 12, color: Colors.white)),
+            const SizedBox(height: 16),
+            Container(
+              width: 265,
+              height: 520,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: const Color.fromARGB(255, 241, 198, 255),
+                      width: 1),
+                  borderRadius: BorderRadius.circular(40)),
+            )
+          ],
+        ),
+      )),
+];

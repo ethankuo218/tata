@@ -3,6 +3,7 @@ import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tata/src/core/models/role.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/draw_role_view_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -288,8 +289,10 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                                                             .circular(8),
                                                                   ),
                                                                   child: Text(
-                                                                      role.tags[
-                                                                          index],
+                                                                      Role.getRoleTag(
+                                                                          context,
+                                                                          role.tags[
+                                                                              index]),
                                                                       style:
                                                                           const TextStyle(
                                                                         height:
@@ -309,7 +312,8 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                                       ),
                                                       const SizedBox(
                                                           height: 16),
-                                                      Text('- ${role.name} -',
+                                                      Text(
+                                                          '- ${Role.getRoleName(context, role.name)} -',
                                                           textAlign:
                                                               TextAlign.center,
                                                           style:
@@ -322,7 +326,10 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                                           )),
                                                       const SizedBox(
                                                           height: 16),
-                                                      Text(role.description,
+                                                      Text(
+                                                          Role.getRoleDescription(
+                                                              context,
+                                                              role.description),
                                                           textAlign:
                                                               TextAlign.center,
                                                           style:
@@ -335,7 +342,10 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                                           )),
                                                       const SizedBox(
                                                           height: 20),
-                                                      Text(role.intro,
+                                                      Text(
+                                                          Role.getRoleIntro(
+                                                              context,
+                                                              role.intro),
                                                           textAlign:
                                                               TextAlign.center,
                                                           style: TextStyle(
@@ -361,7 +371,8 @@ class TarotNightDrawRoleView extends ConsumerWidget {
                                               ),
                                               const SizedBox(height: 24),
                                               Text(
-                                                role!.intro,
+                                                AppLocalizations.of(context)!
+                                                    .activity_draw_role_introduction,
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
                                                   height: 7 / 5,

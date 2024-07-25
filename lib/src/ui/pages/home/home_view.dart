@@ -168,7 +168,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ),
                 NavigationDestination(
                   icon: FaIcon(
-                    FontAwesomeIcons.gear,
+                    FontAwesomeIcons.solidUser,
                     color: _selectedIndex == 4
                         ? const Color.fromARGB(255, 255, 195, 79)
                         : const Color.fromARGB(255, 161, 160, 161),

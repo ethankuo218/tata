@@ -153,7 +153,7 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
               ),
               const SizedBox(height: 16),
               SizedBox(
-                  height: 100,
+                  height: 99,
                   child: Scrollbar(
                       child: SingleChildScrollView(
                     child: Text(chatRoomInfo.description,
@@ -172,9 +172,11 @@ Future<Object?> showChatRoomDetailDialog(BuildContext context,
                           const EdgeInsets.symmetric(
                               vertical: 12, horizontal: 20),
                         ),
-                        backgroundColor: WidgetStateProperty.all<Color>(
-                          const Color.fromARGB(255, 255, 195, 79),
-                        ),
+                        backgroundColor: isFull
+                            ? WidgetStateProperty.all<Color>(
+                                const Color.fromARGB(255, 168, 168, 168))
+                            : WidgetStateProperty.all<Color>(
+                                const Color.fromARGB(255, 255, 195, 79)),
                         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),

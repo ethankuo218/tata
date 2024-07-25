@@ -26,11 +26,9 @@ class TarotNightLobbyView extends ConsumerWidget {
             if (lobbyInfo.markedAsNotShowAgain == false) {
               showTarotNightWalkthroughDialog(context,
                   onClosed: (markAsNotShowAgain) {
-                if (markAsNotShowAgain == true) {
-                  ref
-                      .read(tarotNightLobbyViewProvider.notifier)
-                      .markAsNotShowAgain();
-                }
+                ref
+                    .read(tarotNightLobbyViewProvider.notifier)
+                    .markAsNotShowAgain();
               });
             }
           });

@@ -23,7 +23,7 @@ class ChatRoomInfoView extends ConsumerWidget {
         data: (chatRoomInfo) => Scaffold(
               appBar: AppBar(
                 backgroundColor: const Color.fromARGB(255, 12, 13, 32),
-                title: const Text('Room Info'),
+                title: Text(AppLocalizations.of(context)!.common_room_info),
               ),
               body: Scaffold(
                 body: Container(
