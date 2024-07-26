@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tata/src/core/models/role.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/test_result_view_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -47,7 +48,7 @@ class TarotNightQuestView extends ConsumerWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.w400)),
                   const SizedBox(height: 20),
-                  Text(quest,
+                  Text(Role.getRoleQuest(context, quest),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           height: 12 / 7,

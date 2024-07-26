@@ -99,4 +99,35 @@ class Role {
         throw Exception('Role intro not found');
     }
   }
+
+  static getRoleQuest(BuildContext context, String key) {
+    switch (key) {
+      case 'fool_quest_1':
+        return AppLocalizations.of(context)!.fool_quest_1;
+      case 'fool_quest_2':
+        return AppLocalizations.of(context)!.fool_quest_2;
+      case 'fool_quest_3':
+        return AppLocalizations.of(context)!.fool_quest_3;
+      case 'death_quest_1':
+        return AppLocalizations.of(context)!.death_quest_1;
+      case 'death_quest_2':
+        return AppLocalizations.of(context)!.death_quest_2;
+      case 'death_quest_3':
+        return AppLocalizations.of(context)!.death_quest_3;
+      case 'hanged_man_quest_1':
+        return AppLocalizations.of(context)!.hanged_man_quest_1;
+      case 'hanged_man_quest_2':
+        return AppLocalizations.of(context)!.hanged_man_quest_2;
+      case 'hanged_man_quest_3':
+        return AppLocalizations.of(context)!.hanged_man_quest_3;
+      case 'empress_quest_1':
+        return AppLocalizations.of(context)!.empress_quest_1;
+      case 'empress_quest_2':
+        return AppLocalizations.of(context)!.empress_quest_2;
+      case 'empress_quest_3':
+        return AppLocalizations.of(context)!.empress_quest_3;
+      default:
+        throw Exception('Role quest not found');
+    }
+  }
 }

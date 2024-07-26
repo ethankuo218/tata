@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_context_menu/flutter_context_menu.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tata/src/core/models/role.dart';
 import 'package:tata/src/core/models/tarot_night_message.dart';
 import 'package:tata/src/core/services/snackbar_service.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/custom_context_menu_item.dart';
@@ -166,7 +167,7 @@ class TarotNightMessageBubble extends StatelessWidget {
                                       ),
                                       const SizedBox(width: 4),
                                       Text(
-                                        message.role,
+                                        Role.getRoleName(context, message.role),
                                         style: const TextStyle(
                                             height: 1.125,
                                             color: Color.fromARGB(

@@ -106,7 +106,7 @@ Future<Object?> showTarotNightRoomDetailDialog(BuildContext context,
                     const SizedBox(width: 4),
                     Text(
                         AppLocalizations.of(context)!
-                            .activity_room_toast_activity_toast_category,
+                            .activity_room_toast_activity_toast_number_of_people,
                         style: const TextStyle(
                             height: 1.15,
                             color: Color.fromARGB(255, 255, 255, 255),

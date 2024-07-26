@@ -144,14 +144,18 @@ final List<Widget> walkthroughSliders = [
                 style: TextStyle(fontSize: 16, color: Colors.white)),
             const SizedBox(height: 16),
             Container(
-              width: 265,
-              height: 520,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: const Color.fromARGB(255, 241, 198, 255),
-                      width: 1),
-                  borderRadius: BorderRadius.circular(40)),
-            )
+                width: 265,
+                height: 520,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 241, 198, 255),
+                        width: 1),
+                    borderRadius: BorderRadius.circular(40)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Image.asset('assets/images/walkthrough-1.png',
+                      fit: BoxFit.fill),
+                ))
           ],
         ),
       )),
@@ -203,6 +207,8 @@ final List<Widget> walkthroughSliders = [
                       color: const Color.fromARGB(255, 241, 198, 255),
                       width: 1),
                   borderRadius: BorderRadius.circular(40)),
+              child: Image.asset('assets/images/walkthrough-2.png',
+                  fit: BoxFit.fill),
             )
           ],
         ),
@@ -271,6 +277,8 @@ final List<Widget> walkthroughSliders = [
                       color: const Color.fromARGB(255, 241, 198, 255),
                       width: 1),
                   borderRadius: BorderRadius.circular(40)),
+              child: Image.asset('assets/images/walkthrough-3.png',
+                  fit: BoxFit.fill),
             )
           ],
         ),
@@ -323,6 +331,8 @@ final List<Widget> walkthroughSliders = [
                       color: const Color.fromARGB(255, 241, 198, 255),
                       width: 1),
                   borderRadius: BorderRadius.circular(40)),
+              child: Image.asset('assets/images/walkthrough-4.png',
+                  fit: BoxFit.fill),
             )
           ],
         ),
@@ -375,6 +385,8 @@ final List<Widget> walkthroughSliders = [
                       color: const Color.fromARGB(255, 241, 198, 255),
                       width: 1),
                   borderRadius: BorderRadius.circular(40)),
+              child: Image.asset('assets/images/walkthrough-5.png',
+                  fit: BoxFit.fill),
             )
           ],
         ),

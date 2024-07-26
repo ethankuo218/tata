@@ -40,49 +40,49 @@ class Tarot {
 
   static String getTarotCardTitle(BuildContext context, String key) {
     switch (key) {
-      case 'fool_title':
+      case 'the_fool_title':
         return AppLocalizations.of(context)!.the_fool_title;
-      case 'magician_title':
+      case 'the_magician_title':
         return AppLocalizations.of(context)!.the_magician_title;
-      case 'high_priestess_title':
+      case 'the_high_priestess_title':
         return AppLocalizations.of(context)!.the_high_priestess_title;
-      case 'empress_title':
+      case 'the_empress_title':
         return AppLocalizations.of(context)!.the_empress_title;
-      case 'emperor_title':
+      case 'the_emperor_title':
         return AppLocalizations.of(context)!.the_emperor_title;
-      case 'hierophant_title':
+      case 'the_hierophant_title':
         return AppLocalizations.of(context)!.the_hierophant_title;
-      case 'lovers_title':
+      case 'the_lovers_title':
         return AppLocalizations.of(context)!.the_lover_title;
-      case 'chariot_title':
+      case 'the_chariot_title':
         return AppLocalizations.of(context)!.the_chariot_title;
       case 'strength_title':
         return AppLocalizations.of(context)!.strength_title;
-      case 'hermit_title':
+      case 'the_hermit_title':
         return AppLocalizations.of(context)!.the_hermit_title;
-      case 'wheel_of_fortune_title':
+      case 'the_wheel_of_fortune_title':
         return AppLocalizations.of(context)!.the_wheel_of_fortune_title;
       case 'justice_title':
         return AppLocalizations.of(context)!.the_justice_title;
-      case 'hanged_man_title':
+      case 'the_hanged_man_title':
         return AppLocalizations.of(context)!.the_hanged_man_title;
       case 'death_title':
         return AppLocalizations.of(context)!.death_title;
       case 'temperance_title':
         return AppLocalizations.of(context)!.temperance_title;
-      case 'devil_title':
+      case 'the_devil_title':
         return AppLocalizations.of(context)!.the_devil_title;
-      case 'tower_title':
+      case 'the_tower_title':
         return AppLocalizations.of(context)!.the_tower_title;
-      case 'star_title':
+      case 'the_star_title':
         return AppLocalizations.of(context)!.the_star_title;
-      case 'moon_title':
+      case 'the_moon_title':
         return AppLocalizations.of(context)!.the_moon_title;
-      case 'sun_title':
+      case 'the_sun_title':
         return AppLocalizations.of(context)!.the_sun_title;
       case 'judgement_title':
         return AppLocalizations.of(context)!.judgement_title;
-      case 'world_title':
+      case 'the_world_title':
         return AppLocalizations.of(context)!.the_world_title;
       default:
         throw Exception('Invalid card key');
@@ -91,49 +91,49 @@ class Tarot {
 
   static String getTarotCardDescription(BuildContext context, String key) {
     switch (key) {
-      case 'fool_description':
+      case 'the_fool_description':
         return AppLocalizations.of(context)!.the_fool_description;
-      case 'magician_description':
+      case 'the_magician_description':
         return AppLocalizations.of(context)!.the_magician_description;
-      case 'high_priestess_description':
+      case 'the_high_priestess_description':
         return AppLocalizations.of(context)!.the_high_priestess_description;
-      case 'empress_description':
+      case 'the_empress_description':
         return AppLocalizations.of(context)!.the_empress_description;
-      case 'emperor_description':
+      case 'the_emperor_description':
         return AppLocalizations.of(context)!.the_emperor_description;
-      case 'hierophant_description':
+      case 'the_hierophant_description':
         return AppLocalizations.of(context)!.the_hierophant_description;
-      case 'lovers_description':
+      case 'the_lovers_description':
         return AppLocalizations.of(context)!.the_lover_description;
-      case 'chariot_description':
+      case 'the_chariot_description':
         return AppLocalizations.of(context)!.the_chariot_description;
       case 'strength_description':
         return AppLocalizations.of(context)!.strength_description;
-      case 'hermit_description':
+      case 'the_hermit_description':
         return AppLocalizations.of(context)!.the_hermit_description;
-      case 'wheel_of_fortune_description':
+      case 'the_wheel_of_fortune_description':
         return AppLocalizations.of(context)!.the_wheel_of_fortune_description;
       case 'justice_description':
         return AppLocalizations.of(context)!.the_justice_description;
-      case 'hangman_description':
+      case 'the_hangman_description':
         return AppLocalizations.of(context)!.the_hanged_man_description;
       case 'death_description':
         return AppLocalizations.of(context)!.death_description;
       case 'temperance_description':
         return AppLocalizations.of(context)!.temperance_description;
-      case 'devil_description':
+      case 'the_devil_description':
         return AppLocalizations.of(context)!.the_devil_description;
-      case 'tower_description':
+      case 'the_tower_description':
         return AppLocalizations.of(context)!.the_tower_description;
-      case 'star_description':
+      case 'the_star_description':
         return AppLocalizations.of(context)!.the_star_description;
-      case 'moon_description':
+      case 'the_moon_description':
         return AppLocalizations.of(context)!.the_moon_description;
-      case 'sun_description':
+      case 'the_sun_description':
         return AppLocalizations.of(context)!.the_sun_description;
       case 'judgement_description':
         return AppLocalizations.of(context)!.judgement_description;
-      case 'world_description':
+      case 'the_world_description':
         return AppLocalizations.of(context)!.the_world_description;
       default:
         throw Exception('Invalid card key');

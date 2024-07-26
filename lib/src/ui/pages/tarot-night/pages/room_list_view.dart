@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:tata/src/core/models/role.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/room_list_view_provider.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/draw_role_view.dart';
@@ -256,7 +257,10 @@ class _TarotNightRoomListViewState extends ConsumerState<TarotNightRoomListView>
                                                 255, 241, 198, 255)
                                             .withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(8)),
-                                child: Text(room.isMember ? room.role! : '?',
+                                child: Text(
+                                    room.isMember
+                                        ? Role.getRoleName(context, room.role!)
+                                        : '?',
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                         height: 1.0,

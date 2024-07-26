@@ -18,6 +18,12 @@ class TarotNightRoomRepository {
 
   // Get Tarot Night Room List
   Future<List<TarotNightRoom>> getLobbyRoomList() async {
+    // Ensure there is a currently authenticated user
+    final currentUser = _firebaseAuth.currentUser;
+    if (currentUser == null) {
+      return []; // Return an empty list if there is no user logged in
+    }
+    final String currentUserId = currentUser.uid;
     final DateTime now = DateTime.now();
     final DateTime startTime = DateTime(now.year, now.month, now.day, 8);
     final DateTime endTime =
@@ -34,9 +40,35 @@ class TarotNightRoomRepository {
       return [];
     }
 
+    // Start a collection group query on 'members' subcollection across all 'tarot_night_rooms'
+    final QuerySnapshot<Map<String, dynamic>> memberDocs = await _fireStore
+        .collectionGroup('participants')
+        .where('uid', isEqualTo: currentUserId)
+        .where('role', isNotEqualTo: 'host')
+        .get();
+
     List<TarotNightRoom> roomList = querySnapshot.docs
         .map((chatRoom) => TarotNightRoom.fromJson(chatRoom.data()))
         .toList();
+
+    for (var room in roomList) {
+      final DocumentReference<Map<String, dynamic>> roomRef =
+          _fireStore.collection('tarot_night_rooms').doc(room.id);
+      final DocumentSnapshot<Map<String, dynamic>> roomDoc =
+          await roomRef.get();
+      final Timestamp createTime = roomDoc.data()!['create_time'] as Timestamp;
+      if (createTime.toDate().isAfter(startTime) &&
+          createTime.toDate().isBefore(endTime)) {
+        room.isMember = memberDocs.docs.any(
+            (memberDoc) => memberDoc.reference.parent.parent!.id == room.id);
+        room.role = room.isMember
+            ? memberDocs.docs
+                .firstWhere((memberDoc) =>
+                    memberDoc.reference.parent.parent!.id == room.id)
+                .data()['role']
+            : null;
+      }
+    }
 
     return roomList;
   }

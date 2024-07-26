@@ -126,15 +126,17 @@ class _TarotNightAnnouncementState
                           return;
                         }
 
-                        context.push(TarotNightTestResultView.routeName,
-                            extra: roomInfo?.id);
+                        if (isTestCompleted) {
+                          context.push(TarotNightTestResultView.routeName,
+                              extra: roomInfo?.id);
+                        }
                       },
                       style: ButtonStyle(
                           minimumSize: WidgetStateProperty.all(Size.zero),
-                          padding: WidgetStateProperty.all(
-                              const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8)),
-                          backgroundColor: isTestButtonEnabled
+                          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8)),
+                          backgroundColor: (isHost && isTestButtonEnabled) ||
+                                  isTestCompleted
                               ? WidgetStateProperty.all(
                                   const Color.fromARGB(255, 223, 130, 255))
                               : WidgetStateProperty.all(
@@ -145,14 +147,10 @@ class _TarotNightAnnouncementState
                                   .activity_chat_room_tarot_test_start
                               : AppLocalizations.of(context)!
                                   .activity_chat_room_tarot_test_result,
-                          style:
-                              TextStyle(
-                                  color: isTestButtonEnabled
-                                      ? const Color.fromARGB(255, 12, 13, 32)
-                                      : const Color.fromARGB(255, 12, 13, 32)
-                                          .withOpacity(0.8),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold)))
+                          style: TextStyle(
+                              color: isTestButtonEnabled ? const Color.fromARGB(255, 12, 13, 32) : const Color.fromARGB(255, 12, 13, 32).withOpacity(0.8),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)))
                 ],
               ),
             ),
