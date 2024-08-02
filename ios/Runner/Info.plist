@@ -22,6 +22,8 @@
 		<string>$(FLUTTER_BUILD_NAME)</string>
 		<key>CFBundleSignature</key>
 		<string>????</string>
+		<key>FlutterDeepLinkingEnabled</key>
+		<true />
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
@@ -46,6 +48,8 @@
 			<string>fetch</string>
 			<string>remote-notification</string>
 		</array>
+		<key>LSApplicationCategoryType</key>
+		<string></string>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
@@ -70,5 +74,7 @@
 			<string>en</string>
 			<string>zh_Hant</string>
 		</array>
+		<key>GADApplicationIdentifier</key>
+		<string>ca-app-pub-4687997855228972~7426369037</string>
 	</dict>
 </plist>

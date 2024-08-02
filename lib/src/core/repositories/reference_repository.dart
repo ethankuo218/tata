@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/models/role.dart';
 import 'package:tata/src/core/models/tarot_card.dart';
@@ -24,9 +25,12 @@ class ReferenceRepository {
     });
   }
 
-  Future<Role> getRole(String id) async {
-    return _firebaseFirestore.collection('roles').doc(id).get().then((value) {
-      return Role.fromJson(value.data()!);
+  Future<Role> getRole(String roleName) async {
+    return _firebaseFirestore.collection('roles').get().then((roleList) {
+      QueryDocumentSnapshot<Map<String, dynamic>> target =
+          roleList.docs.filter((role) => role.data()['name'] == roleName).first;
+
+      return Role.fromJson(target.data());
     });
   }
 }

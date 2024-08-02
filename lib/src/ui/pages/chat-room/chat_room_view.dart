@@ -14,7 +14,6 @@ import 'package:tata/src/utils/avatar.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/models/message.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatRoomView extends ConsumerStatefulWidget {
@@ -102,7 +101,8 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                               BorderRadius.circular(30),
                                         ),
                                         child: Image.asset(
-                                            'assets/avatars/the_magician.png',
+                                            Avatar.getAvatarImage(
+                                                Avatar.getRandomAvatar()),
                                             fit: BoxFit.cover),
                                       ),
                                     ),
@@ -125,7 +125,8 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                               BorderRadius.circular(30),
                                         ),
                                         child: Image.asset(
-                                            'assets/avatars/the_magician.png',
+                                            Avatar.getAvatarImage(
+                                                Avatar.getRandomAvatar()),
                                             fit: BoxFit.cover),
                                       ),
                                     ),
@@ -148,9 +149,9 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                     actions: [
                       MenuBar(
                           style: const MenuStyle(
-                            padding: MaterialStatePropertyAll(EdgeInsets.zero),
+                            padding: WidgetStatePropertyAll(EdgeInsets.zero),
                             backgroundColor:
-                                MaterialStatePropertyAll(Colors.transparent),
+                                WidgetStatePropertyAll(Colors.transparent),
                           ),
                           children: ChatMenuEntry.build(
                               _getMenus(context, data.roomInfo, provider, ref)))
@@ -181,7 +182,7 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                                 itemBuilder: (context, index) {
                                   if (snapshot.connectionState !=
                                       ConnectionState.active) {
-                                    return const CircularProgressIndicator();
+                                    return const LinearProgressIndicator();
                                   } else {
                                     Message? nextMessage = index - 1 >= 0
                                         ? snapshot.data![index - 1]

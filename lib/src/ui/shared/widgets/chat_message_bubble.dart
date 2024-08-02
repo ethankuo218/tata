@@ -7,6 +7,7 @@ import 'package:tata/src/core/services/snackbar_service.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/custom_context_menu_item.dart';
 import 'package:tata/src/utils/avatar.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatMessageBubble extends StatelessWidget {
   final Message chatMessage;
@@ -121,7 +122,7 @@ class ChatMessageBubble extends StatelessWidget {
                 ),
                 entries: [
                   CustomContextMenuItem(
-                    label: '檢舉',
+                    label: AppLocalizations.of(context)!.common_report,
                     textColor: Colors.red,
                     onSelected: () {
                       showDialog(
@@ -130,10 +131,11 @@ class ChatMessageBubble extends StatelessWidget {
                             return SimpleDialog(
                               backgroundColor:
                                   const Color.fromARGB(255, 12, 13, 32),
-                              title: const Text(
-                                "這則留言讓您感到冒犯或不適嗎？",
+                              title: Text(
+                                AppLocalizations.of(context)!
+                                    .common_room_report_title,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Color.fromARGB(255, 223, 130, 255),
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500),
@@ -146,10 +148,11 @@ class ChatMessageBubble extends StatelessWidget {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15.0))),
                               children: <Widget>[
-                                const Text(
-                                  'TATA 致力於創造一個友善的匿名聊天環境，任何不當行為都是不被允許的。我們將會立即盤查並處理您的檢舉。',
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .common_room_report_content,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Color.fromARGB(255, 255, 255, 255),
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400),
@@ -177,10 +180,11 @@ class ChatMessageBubble extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
-                                              child: const Text(
-                                                '取消',
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .common_cancel,
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Color.fromARGB(
                                                         255, 223, 130, 255),
                                                     fontSize: 14,
@@ -203,10 +207,11 @@ class ChatMessageBubble extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
-                                              child: const Text(
-                                                '確定',
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .common_confirm,
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Color.fromARGB(
                                                         255, 12, 13, 32),
                                                     fontSize: 14,
@@ -223,7 +228,8 @@ class ChatMessageBubble extends StatelessWidget {
                           launchUrlString('mailto:support@tatarot.app').then(
                               (value) => SnackbarService().showSnackBar(
                                   context: context,
-                                  message: '檢舉已送出，我們將會盡快處理。'));
+                                  message: AppLocalizations.of(context)!
+                                      .common_room_report_snackbar_msg));
                         }
                       });
                     },
@@ -301,7 +307,9 @@ class ChatMessageBubble extends StatelessWidget {
                                     ),
                         ),
                         child: Text(
-                          chatMessage.content,
+                          isSystemMessage
+                              ? getSystemMessage(context, chatMessage.content)
+                              : chatMessage.content,
                           style: TextStyle(
                               color: isSentByMe
                                   ? const Color.fromARGB(255, 12, 13, 32)
@@ -315,5 +323,14 @@ class ChatMessageBubble extends StatelessWidget {
                 ],
               ),
             ));
+  }
+
+  String getSystemMessage(BuildContext context, String key) {
+    switch (key) {
+      case 'room_closed':
+        return AppLocalizations.of(context)!.common_room_closed;
+      default:
+        return '';
+    }
   }
 }

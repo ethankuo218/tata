@@ -462,7 +462,7 @@ class ChatRoomRepository {
           senderId: 'system',
           name: 'SYSTEM',
           avatar: AvatarKey.theFool,
-          content: '聊天室已經關閉',
+          content: 'room_closed',
           timestamp: Timestamp.now(),
           readBy: [_firebaseAuth.currentUser!.uid],
         ).toJson());

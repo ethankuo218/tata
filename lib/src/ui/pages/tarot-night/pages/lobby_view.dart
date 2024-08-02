@@ -239,15 +239,19 @@ class TarotNightLobbyView extends ConsumerWidget {
                                                     const EdgeInsets.symmetric(
                                                         vertical: 8),
                                                 child: Center(
-                                                  child: Text(
-                                                      AppLocalizations.of(
-                                                              context)!
-                                                          .activity_lobby_host_introduction,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 16)),
+                                                  child: SingleChildScrollView(
+                                                      child: Text(
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .activity_lobby_host_introduction,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      16))),
                                                 ),
                                               ),
                                             ),
@@ -373,15 +377,19 @@ class TarotNightLobbyView extends ConsumerWidget {
                                                     const EdgeInsets.symmetric(
                                                         vertical: 8),
                                                 child: Center(
-                                                  child: Text(
-                                                      AppLocalizations.of(
-                                                              context)!
-                                                          .activity_lobby_participant_introduction,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 16)),
+                                                  child: SingleChildScrollView(
+                                                      child: Text(
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .activity_lobby_participant_introduction,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      16))),
                                                 ),
                                               )),
                                               const SizedBox(height: 20),

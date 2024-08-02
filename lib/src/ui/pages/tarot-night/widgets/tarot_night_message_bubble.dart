@@ -10,6 +10,7 @@ import 'package:tata/src/ui/pages/tarot-night/widgets/custom_context_menu_item.d
 import 'package:tata/src/utils/avatar.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/test_result_view.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TarotNightMessageBubble extends StatelessWidget {
   final TarotNightMessage message;
@@ -201,13 +202,13 @@ class TarotNightMessageBubble extends StatelessWidget {
                                     TarotNightMessageType.testResult)
                                   TextButton(
                                       style: ButtonStyle(
-                                          padding: MaterialStateProperty.resolveWith(
+                                          padding: WidgetStateProperty.resolveWith(
                                               (state) =>
                                                   const EdgeInsets.symmetric(
                                                       vertical: 8,
                                                       horizontal: 16)),
                                           backgroundColor:
-                                              MaterialStateProperty.resolveWith(
+                                              WidgetStateProperty.resolveWith(
                                                   (state) => const Color.fromARGB(
                                                       255, 223, 130, 255))),
                                       onPressed: () {
@@ -215,8 +216,8 @@ class TarotNightMessageBubble extends StatelessWidget {
                                             TarotNightTestResultView.routeName,
                                             extra: roomId);
                                       },
-                                      child: const Text('查看測驗結果',
-                                          style: TextStyle(
+                                      child: Text(AppLocalizations.of(context)!.activity_chat_room_tarot_view_test_result,
+                                          style: const TextStyle(
                                               color: Color.fromARGB(255, 12, 13, 32),
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500))),
@@ -239,7 +240,7 @@ class TarotNightMessageBubble extends StatelessWidget {
                 ),
                 entries: [
                   CustomContextMenuItem(
-                    label: '檢舉',
+                    label: AppLocalizations.of(context)!.common_report,
                     textColor: Colors.red,
                     onSelected: () {
                       showDialog(
@@ -248,10 +249,11 @@ class TarotNightMessageBubble extends StatelessWidget {
                             return SimpleDialog(
                               backgroundColor:
                                   const Color.fromARGB(255, 12, 13, 32),
-                              title: const Text(
-                                "這則留言讓您感到冒犯或不適嗎？",
+                              title: Text(
+                                AppLocalizations.of(context)!
+                                    .common_room_report_title,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Color.fromARGB(255, 223, 130, 255),
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500),
@@ -264,10 +266,11 @@ class TarotNightMessageBubble extends StatelessWidget {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15.0))),
                               children: <Widget>[
-                                const Text(
-                                  'TATA 致力於創造一個友善的匿名聊天環境，任何不當行為都是不被允許的。我們將會立即盤查並處理您的檢舉。',
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .common_room_report_content,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Color.fromARGB(255, 255, 255, 255),
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400),
@@ -295,10 +298,11 @@ class TarotNightMessageBubble extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
-                                              child: const Text(
-                                                '取消',
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .common_cancel,
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Color.fromARGB(
                                                         255, 223, 130, 255),
                                                     fontSize: 14,
@@ -321,10 +325,11 @@ class TarotNightMessageBubble extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
-                                              child: const Text(
-                                                '確定',
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .common_confirm,
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Color.fromARGB(
                                                         255, 12, 13, 32),
                                                     fontSize: 14,
@@ -341,7 +346,8 @@ class TarotNightMessageBubble extends StatelessWidget {
                           launchUrlString('mailto:support@tatarot.app').then(
                               (value) => SnackbarService().showSnackBar(
                                   context: context,
-                                  message: '檢舉已送出，我們將會盡快處理。'));
+                                  message: AppLocalizations.of(context)!
+                                      .common_room_report_snackbar_msg));
                         }
                       });
                     },
@@ -513,7 +519,8 @@ class TarotNightMessageBubble extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 4),
                                         Text(
-                                          message.role,
+                                          Role.getRoleName(
+                                              context, message.role),
                                           style: const TextStyle(
                                               height: 1.125,
                                               color: Color.fromARGB(
@@ -548,24 +555,23 @@ class TarotNightMessageBubble extends StatelessWidget {
                                       TarotNightMessageType.testResult)
                                     TextButton(
                                         style: ButtonStyle(
-                                            padding: MaterialStateProperty.resolveWith(
+                                            padding: WidgetStateProperty.resolveWith(
                                                 (state) =>
                                                     const EdgeInsets.symmetric(
                                                         vertical: 8,
                                                         horizontal: 16)),
                                             backgroundColor:
-                                                MaterialStateProperty.resolveWith(
-                                                    (state) =>
-                                                        const Color.fromARGB(
-                                                            255, 223, 130, 255))),
+                                                WidgetStateProperty.resolveWith(
+                                                    (state) => const Color.fromARGB(
+                                                        255, 223, 130, 255))),
                                         onPressed: () {
                                           context.push(
                                               TarotNightTestResultView
                                                   .routeName,
                                               extra: roomId);
                                         },
-                                        child: const Text('查看測驗結果',
-                                            style: TextStyle(
+                                        child: Text(AppLocalizations.of(context)!.activity_chat_room_tarot_view_test_result,
+                                            style: const TextStyle(
                                                 color: Color.fromARGB(255, 12, 13, 32),
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500))),

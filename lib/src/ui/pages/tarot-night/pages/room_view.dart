@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -5,14 +6,15 @@ import 'package:tata/src/core/models/message.dart';
 import 'package:tata/src/core/models/tarot_night_message.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/pages/tarot-night/room_view_provider.dart';
+import 'package:tata/src/ui/pages/tarot-night/pages/role_info_view.dart';
 import 'package:tata/src/ui/pages/tarot-night/pages/room_info_view.dart';
 import 'package:tata/src/ui/shared/widgets/chat_menu_entry.dart';
 import 'package:tata/src/ui/shared/pages/members_view.dart';
 import 'package:flutter/material.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_announcement.dart';
 import 'package:tata/src/ui/pages/tarot-night/widgets/tarot_night_message_bubble.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tata/src/utils/avatar.dart';
 
 class TarotNightRoomView extends ConsumerStatefulWidget {
   const TarotNightRoomView({super.key, required this.roomId});
@@ -74,7 +76,8 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                                 child: Image.asset(
-                                    'assets/avatars/the_magician.png',
+                                    Avatar.getAvatarImage(
+                                        Avatar.getRandomAvatar()),
                                     fit: BoxFit.cover),
                               ),
                             ),
@@ -96,7 +99,8 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                                 child: Image.asset(
-                                    'assets/avatars/the_magician.png',
+                                    Avatar.getAvatarImage(
+                                        Avatar.getRandomAvatar()),
                                     fit: BoxFit.cover),
                               ),
                             ),
@@ -110,8 +114,8 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                   actions: [
                     MenuBar(
                         style: const MenuStyle(
-                            padding: MaterialStatePropertyAll(EdgeInsets.zero),
-                            backgroundColor: MaterialStatePropertyAll(
+                            padding: WidgetStatePropertyAll(EdgeInsets.zero),
+                            backgroundColor: WidgetStatePropertyAll(
                                 Color.fromARGB(255, 12, 13, 32))),
                         children: ChatMenuEntry.build(
                             _getMenus(context, data.roomInfo)))
@@ -312,6 +316,18 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                   extra: chatRoomInfo);
             },
           ),
+          if (chatRoomInfo.hostId != FirebaseAuth.instance.currentUser!.uid)
+            ChatMenuEntry(
+              label: Text(
+                AppLocalizations.of(context)!.activity_role_info,
+                style: const TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                context.push(
+                    '${TarotNightRoomView.routeName}/${TarotNightRoleInfoView.routeName}',
+                    extra: chatRoomInfo.id);
+              },
+            ),
           ChatMenuEntry(
             label: Text(
               AppLocalizations.of(context)!.common_room_member,

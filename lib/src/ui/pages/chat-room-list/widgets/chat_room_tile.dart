@@ -34,106 +34,114 @@ class ChatRoomTile extends StatelessWidget {
               const SizedBox(width: 11),
               Expanded(
                   child: Container(
-                height: 120,
-                padding: const EdgeInsets.fromLTRB(72, 16, 16, 16),
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                      const Color.fromARGB(255, 255, 244, 185).withOpacity(0.3),
-                      const Color.fromARGB(255, 255, 244, 185).withOpacity(0.2),
-                      const Color.fromARGB(255, 255, 244, 185).withOpacity(0.1),
-                    ]),
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(20),
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(20)),
-                    border: GradientBoxBorder(
-                      gradient: LinearGradient(colors: [
-                        const Color.fromARGB(255, 241, 189, 88)
-                            .withOpacity(0.8),
-                        const Color.fromARGB(255, 227, 216, 157)
-                            .withOpacity(0.2),
-                        const Color.fromARGB(255, 241, 189, 88)
-                            .withOpacity(0.8),
-                        const Color.fromARGB(255, 227, 216, 157)
-                            .withOpacity(0.2),
-                      ]),
-                      width: 2,
-                    )),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
+                      height: 120,
+                      padding: const EdgeInsets.fromLTRB(72, 16, 16, 16),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            const Color.fromARGB(255, 255, 244, 185)
+                                .withOpacity(0.3),
+                            const Color.fromARGB(255, 255, 244, 185)
+                                .withOpacity(0.2),
+                            const Color.fromARGB(255, 255, 244, 185)
+                                .withOpacity(0.1),
+                          ]),
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                              topRight: Radius.circular(20),
+                              bottomLeft: Radius.circular(40),
+                              bottomRight: Radius.circular(20)),
+                          border: GradientBoxBorder(
+                            gradient: LinearGradient(colors: [
+                              const Color.fromARGB(255, 241, 189, 88)
+                                  .withOpacity(0.8),
+                              const Color.fromARGB(255, 227, 216, 157)
+                                  .withOpacity(0.2),
+                              const Color.fromARGB(255, 241, 189, 88)
+                                  .withOpacity(0.8),
+                              const Color.fromARGB(255, 227, 216, 157)
+                                  .withOpacity(0.2),
+                            ]),
+                            width: 2,
+                          )),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Opacity(
-                                opacity: 0.5,
-                                child: SvgPicture.asset(
-                                    'assets/images/star_2.svg',
-                                    width: 16,
-                                    height: 16,
-                                    colorFilter: const ColorFilter.mode(
-                                        Color.fromARGB(255, 255, 195, 79),
-                                        BlendMode.srcIn))),
-                            const SizedBox(width: 8),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Opacity(
+                                        opacity: 0.5,
+                                        child: SvgPicture.asset(
+                                            'assets/images/star_2.svg',
+                                            width: 16,
+                                            height: 16,
+                                            colorFilter: const ColorFilter.mode(
+                                                Color.fromARGB(
+                                                    255, 255, 195, 79),
+                                                BlendMode.srcIn))),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      ChatRoomCategory.toText(
+                                          context, chatRoomInfo.category),
+                                      style: const TextStyle(
+                                          height: 25 / 18,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color.fromARGB(
+                                              255, 255, 195, 79)),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Opacity(
+                                        opacity: 0.5,
+                                        child: SvgPicture.asset(
+                                            'assets/images/star_2.svg',
+                                            width: 16,
+                                            height: 16,
+                                            colorFilter: const ColorFilter.mode(
+                                                Color.fromARGB(
+                                                    255, 255, 195, 79),
+                                                BlendMode.srcIn))),
+                                  ],
+                                ),
+                                Container(
+                                    alignment: Alignment.bottomRight,
+                                    child: Row(
+                                      children: [
+                                        const Icon(Icons.person,
+                                            color: Color.fromARGB(
+                                                255, 255, 244, 185)),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          chatRoomInfo.memberCount.toString(),
+                                          style: const TextStyle(
+                                              height: 24 / 14,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Color.fromARGB(
+                                                  255, 255, 244, 185)),
+                                        ),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                            const SizedBox(height: 8),
                             Text(
-                              ChatRoomCategory.toText(
-                                  context, chatRoomInfo.category),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              chatRoomInfo.title,
                               style: const TextStyle(
                                   height: 25 / 18,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 255, 195, 79)),
+                                  color: Colors.white),
                             ),
-                            const SizedBox(width: 8),
-                            Opacity(
-                                opacity: 0.5,
-                                child: SvgPicture.asset(
-                                    'assets/images/star_2.svg',
-                                    width: 16,
-                                    height: 16,
-                                    colorFilter: const ColorFilter.mode(
-                                        Color.fromARGB(255, 255, 195, 79),
-                                        BlendMode.srcIn))),
                           ],
                         ),
-                        Container(
-                            alignment: Alignment.bottomRight,
-                            child: Row(
-                              children: [
-                                const Icon(Icons.person,
-                                    color: Color.fromARGB(255, 255, 244, 185)),
-                                const SizedBox(width: 4),
-                                Text(
-                                  chatRoomInfo.memberCount.toString(),
-                                  style: const TextStyle(
-                                      height: 24 / 14,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color:
-                                          Color.fromARGB(255, 255, 244, 185)),
-                                ),
-                              ],
-                            ))
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      chatRoomInfo.title,
-                      style: const TextStyle(
-                          height: 25 / 18,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-              ))
+                      )))
             ],
           ),
           Container(

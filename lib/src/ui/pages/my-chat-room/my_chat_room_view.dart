@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:tata/src/core/providers/pages/my_chat_room_view_provider.dart';
 import 'package:tata/src/ui/pages/chat-room/chat_room_view.dart';
 import 'package:tata/src/ui/pages/my-chat-room/widgets/my_chat_room_tile.dart';
@@ -21,6 +24,15 @@ class _MyChatRoomViewState extends ConsumerState<MyChatRoomView> {
   late User user;
   late bool isLoading = false;
 
+  BannerAd? _bannerAd;
+  bool _isLoaded = false;
+
+  final adUnitId = Platform.isIOS
+      // ? 'ca-app-pub-4687997855228972/2128309893'
+      // : 'ca-app-pub-4687997855228972/8148423763';
+      ? 'ca-app-pub-3940256099942544/2934735716'
+      : 'ca-app-pub-3940256099942544/6300978111';
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +42,10 @@ class _MyChatRoomViewState extends ConsumerState<MyChatRoomView> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoaded == false) {
+      loadAd();
+    }
+
     return ref.watch(myChatRoomViewProvider).when(
           data: (list) {
             return Scaffold(
@@ -44,11 +60,23 @@ class _MyChatRoomViewState extends ConsumerState<MyChatRoomView> {
                   ],
                 ),
               ),
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: Column(
                 children: [
+                  if (_bannerAd != null)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SafeArea(
+                        child: SizedBox(
+                          width: _bannerAd!.size.width.toDouble(),
+                          height: _bannerAd!.size.height.toDouble(),
+                          child: AdWidget(ad: _bannerAd!),
+                        ),
+                      ),
+                    ),
+                  const SizedBox(height: 16),
                   Expanded(
                       child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     itemBuilder: (context, index) {
                       var chatRoomInfo = list[index];
 
@@ -61,7 +89,7 @@ class _MyChatRoomViewState extends ConsumerState<MyChatRoomView> {
                     },
                     itemCount: list.length,
                     separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 16),
                   ))
                 ],
               ),
@@ -70,5 +98,29 @@ class _MyChatRoomViewState extends ConsumerState<MyChatRoomView> {
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stackTrace) => Center(child: Text('Error: $error')),
         );
+  }
+
+  /// Loads a banner ad.
+  void loadAd() {
+    _bannerAd = BannerAd(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      size: AdSize.fullBanner,
+      listener: BannerAdListener(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          debugPrint('$ad loaded.');
+          setState(() {
+            _isLoaded = true;
+          });
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('BannerAd failed to load: $err');
+          // Dispose the ad here to free resources.
+          ad.dispose();
+        },
+      ),
+    )..load();
   }
 }

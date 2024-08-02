@@ -60,7 +60,7 @@ class AnimatedButton extends StatelessWidget {
       onTap: onPress,
       child: SizedBox(
         height: 80,
-        width: 250,
+        width: 240,
         child: Stack(children: [
           RiveAnimation.asset(
             "assets/rive-assets/login_button.riv",

@@ -25,7 +25,7 @@ class TarotNightRoomRepository {
     }
     final String currentUserId = currentUser.uid;
     final DateTime now = DateTime.now();
-    final DateTime startTime = DateTime(now.year, now.month, now.day, 8);
+    final DateTime startTime = DateTime(now.year, now.month, now.day, 11);
     final DateTime endTime =
         DateTime(now.year, now.month, now.day, 1).add(const Duration(days: 1));
 
@@ -339,7 +339,7 @@ class TarotNightRoomRepository {
             role: 'system',
             fcmToken: 'system'),
         chatRoomId: roomId,
-        content: '${userInfo.name} 加入了房間',
+        content: '${userInfo.name} join the room',
         type: TarotNightMessageType.system);
   }
 

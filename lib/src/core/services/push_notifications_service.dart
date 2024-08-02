@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:tata/main.dart';
+import 'package:tata/src/ui/pages/chat-room-info/chat_room_info_view.dart';
 
 class PushNotificationsService {
   static final _firebaseMessaging = FirebaseMessaging.instance;
@@ -17,6 +19,37 @@ class PushNotificationsService {
       provisional: false,
       sound: true,
     );
+
+    // await initBackgroundMessaging();
+    await initOnTapMessaging();
+  }
+
+  // initialize on foreground messaging
+  static Future<void> initForegroundMessaging() async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        print('A new onMessage event was published!');
+      }
+    });
+  }
+
+  // initialize on background messaging
+  static Future<void> initBackgroundMessaging() async {
+    FirebaseMessaging.onBackgroundMessage((message) async {
+      print('Handling a background message ${message.messageId}');
+    });
+  }
+
+  // initialize on tap notifications
+  static Future<void> initOnTapMessaging() async {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        navigatorKey.currentState
+            ?.pushNamed(ChatRoomInfoView.routeName, arguments: {
+          "chatRoomId": message.data['chatRoomId'],
+        });
+      }
+    });
   }
 
   // initialize the local notifications

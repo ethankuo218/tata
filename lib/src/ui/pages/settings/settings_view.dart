@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:tata/src/core/providers/auth_provider.dart';
 import 'package:tata/src/core/providers/user_provider.dart';
@@ -22,6 +25,15 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
   final TextEditingController nameEditingController = TextEditingController();
   late bool enableEdit = false;
 
+  BannerAd? _bannerAd;
+  bool _isLoaded = false;
+
+  final adUnitId = Platform.isIOS
+      // ? 'ca-app-pub-4687997855228972/2128309893'
+      // : 'ca-app-pub-4687997855228972/8148423763';
+      ? 'ca-app-pub-3940256099942544/2934735716'
+      : 'ca-app-pub-3940256099942544/6300978111';
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +44,10 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
     final double screenHeight = MediaQuery.of(context).size.height;
     final UserProvider provider =
         userProvider(FirebaseAuth.instance.currentUser!.uid);
+
+    if (_isLoaded == false) {
+      loadAd();
+    }
 
     return ref.watch(provider).when(
           data: (userInfo) => Scaffold(
@@ -197,7 +213,8 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                                 ))),
                         GestureDetector(
                             onTap: () => Share.share(
-                                'Hi! Join TATA to enjoy the most incredible anonymous chat activity: MIDNIGHT TAROT !'),
+                                AppLocalizations.of(context)!
+                                    .setting_share_content),
                             child: SizedBox(
                                 height: 60,
                                 child: Row(
@@ -326,7 +343,18 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                         const SizedBox(height: 15)
                       ],
                     ),
-                  ))
+                  )),
+                  if (_bannerAd != null)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SafeArea(
+                        child: SizedBox(
+                          width: _bannerAd!.size.width.toDouble(),
+                          height: _bannerAd!.size.height.toDouble(),
+                          child: AdWidget(ad: _bannerAd!),
+                        ),
+                      ),
+                    )
                 ],
               ),
             ),
@@ -336,5 +364,29 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
             child: Text('Error: $error'),
           ),
         );
+  }
+
+  /// Loads a banner ad.
+  void loadAd() {
+    _bannerAd = BannerAd(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          debugPrint('$ad loaded.');
+          setState(() {
+            _isLoaded = true;
+          });
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('BannerAd failed to load: $err');
+          // Dispose the ad here to free resources.
+          ad.dispose();
+        },
+      ),
+    )..load();
   }
 }

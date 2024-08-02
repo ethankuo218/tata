@@ -5,6 +5,7 @@ import 'package:tata/src/core/models/chat_room.dart';
 import 'package:flutter/material.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/pages/my_chat_room_tile_provider.dart';
+import 'package:tata/src/utils/avatar.dart';
 
 class MyChatRoomTile extends ConsumerWidget {
   final String userUid;
@@ -57,7 +58,8 @@ class MyChatRoomTile extends ConsumerWidget {
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                   child: Image.asset(
-                                      'assets/avatars/the_magician.png',
+                                      Avatar.getAvatarImage(
+                                          Avatar.getRandomAvatar()),
                                       fit: BoxFit.cover),
                                 ),
                               ),
@@ -78,7 +80,8 @@ class MyChatRoomTile extends ConsumerWidget {
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                   child: Image.asset(
-                                      'assets/avatars/the_magician.png',
+                                      Avatar.getAvatarImage(
+                                          Avatar.getRandomAvatar()),
                                       fit: BoxFit.cover),
                                 ),
                               ),

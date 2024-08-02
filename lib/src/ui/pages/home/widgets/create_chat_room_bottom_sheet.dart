@@ -358,26 +358,25 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                           Center(
                             child: ElevatedButton(
                               style: ButtonStyle(
-                                fixedSize: MaterialStateProperty.all<Size>(
+                                fixedSize: WidgetStateProperty.all<Size>(
                                     const Size(100, 40)),
-                                padding: MaterialStateProperty.all<
-                                    EdgeInsetsGeometry>(
+                                padding:
+                                    WidgetStateProperty.all<EdgeInsetsGeometry>(
                                   const EdgeInsets.symmetric(
                                       vertical: 12, horizontal: 20),
                                 ),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
+                                backgroundColor: WidgetStateProperty.all<Color>(
                                   const Color.fromARGB(255, 255, 195, 79),
                                 ),
-                                shape: MaterialStateProperty.all<
+                                shape: WidgetStateProperty.all<
                                     RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                 ),
-                                textStyle: MaterialStateProperty.all<TextStyle>(
+                                textStyle: WidgetStateProperty.all<TextStyle>(
                                     const TextStyle(
-                                  height: 1.0,
+                                  height: 1,
                                   color: Color.fromARGB(255, 24, 24, 24),
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
@@ -410,7 +409,7 @@ class _CreateChatRoomBottomSheetState extends State<CreateChatRoomBottomSheet> {
                                         .common_confirm,
                                 style: const TextStyle(
                                     color: Color.fromARGB(255, 24, 24, 24),
-                                    height: 1.2,
+                                    height: 1,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500),
                               ),

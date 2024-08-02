@@ -7,7 +7,7 @@ part of 'draw_card_view_provider.dart';
 // **************************************************************************
 
 String _$tarotNightDrawCardViewHash() =>
-    r'44ee97ba65a6b505d5af52e3a4045216bc3af109';
+    r'5246d9ed82a0cf569910869d62391b4e4d0a330b';
 
 /// See also [TarotNightDrawCardView].
 @ProviderFor(TarotNightDrawCardView)

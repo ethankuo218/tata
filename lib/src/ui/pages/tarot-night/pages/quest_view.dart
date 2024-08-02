@@ -8,8 +8,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TarotNightQuestView extends ConsumerWidget {
   const TarotNightQuestView(
-      {super.key, required this.roomId, required this.quest});
+      {super.key,
+      required this.roomId,
+      required this.role,
+      required this.quest});
   final String roomId;
+  final String role;
   final String quest;
 
   static const routeName = '/tarot-night/quest-view';
@@ -40,9 +44,9 @@ class TarotNightQuestView extends ConsumerWidget {
                       colorFilter: const ColorFilter.mode(
                           Color.fromARGB(255, 223, 130, 255), BlendMode.srcIn)),
                   const SizedBox(height: 24),
-                  const Text('做為 『愚者』，\n代表著希望的曙光！',
+                  Text(Role.getRoleIntro(context, role),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           height: 1.4,
                           color: Color.fromARGB(255, 241, 198, 255),
                           fontSize: 20,

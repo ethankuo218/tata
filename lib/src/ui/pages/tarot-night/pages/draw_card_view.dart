@@ -134,6 +134,10 @@ class TarotNightDrawCardView extends ConsumerWidget {
                                                           const EdgeInsets.all(
                                                               16),
                                                       decoration: BoxDecoration(
+                                                          image: const DecorationImage(
+                                                              image: AssetImage(
+                                                                  'assets/images/card_back.png'),
+                                                              fit: BoxFit.fill),
                                                           color:
                                                               const Color
                                                                   .fromARGB(255,
@@ -185,25 +189,6 @@ class TarotNightDrawCardView extends ConsumerWidget {
                                                                         .bottomRight,
                                                                   ),
                                                                   width: 2)),
-                                                      child: Column(
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                            'assets/images/star_2.svg',
-                                                            width: 20,
-                                                            height: 20,
-                                                            colorFilter:
-                                                                const ColorFilter
-                                                                    .mode(
-                                                                    Color.fromARGB(
-                                                                        255,
-                                                                        223,
-                                                                        130,
-                                                                        255),
-                                                                    BlendMode
-                                                                        .srcIn),
-                                                          ),
-                                                        ],
-                                                      ),
                                                     )))),
                                       )
                                     ],

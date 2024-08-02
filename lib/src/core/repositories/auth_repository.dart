@@ -158,11 +158,27 @@ class AuthRepository {
     DocumentReference<Map<String, dynamic>> doc =
         _fireStore.collection('users').doc(_firebaseAuth.currentUser!.uid);
 
-    return (await doc.get()).data()?['name'] == null;
+    try {
+      return (await doc.get()).data()?['name'] == null;
+    } catch (e) {
+      await doc.set({
+        'uid': _firebaseAuth.currentUser!.uid,
+        'name': null,
+        'avatar': null,
+        'birthday': null,
+        'fcm_token': ''
+      });
+      return true;
+    }
   }
 
 // Sign Out
   Future<void> signOut() async {
+    // set fcm token to null
+    DocumentReference<Map<String, dynamic>> doc =
+        _fireStore.collection('users').doc(_firebaseAuth.currentUser!.uid);
+
+    await doc.update({'uid': _firebaseAuth.currentUser!.uid, 'fcm_token': ''});
     await _firebaseAuth.signOut();
   }
 }

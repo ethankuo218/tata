@@ -20,7 +20,7 @@ class _ChatRoomAnnouncementState extends State<ChatRoomAnnouncement> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         height: isExpanded ? null : 50,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
+          color: const Color.fromARGB(255, 37, 38, 55),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(

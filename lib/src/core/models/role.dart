@@ -88,12 +88,16 @@ class Role {
   static getRoleIntro(BuildContext context, String key) {
     switch (key) {
       case 'fool_intro':
+      case 'fool_name':
         return AppLocalizations.of(context)!.fool_intro;
       case 'death_intro':
+      case 'death_name':
         return AppLocalizations.of(context)!.death_intro;
       case 'hanged_man_intro':
+      case 'hanged_man_name':
         return AppLocalizations.of(context)!.hanged_man_intro;
       case 'empress_intro':
+      case 'empress_name':
         return AppLocalizations.of(context)!.empress_intro;
       default:
         throw Exception('Role intro not found');

@@ -181,15 +181,19 @@ class TarotNightRoomInfoView extends ConsumerWidget {
                         //   ],
                         // ),
                         const SizedBox(height: 48),
-                        Text(
-                          roomInfo.title,
-                          style: const TextStyle(
-                            height: 1.0,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
+                        ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: Text(
+                              roomInfo.title,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                height: 1.0,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            )),
                         const SizedBox(height: 16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -272,19 +276,21 @@ class TarotNightRoomInfoView extends ConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: Text(
-                            roomInfo.description,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              height: 1.5,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        ConstrainedBox(
+                            constraints: const BoxConstraints(maxHeight: 250),
+                            child: SingleChildScrollView(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 24),
+                                child: Text(
+                                  roomInfo.description,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    height: 1.5,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                  ),
+                                ))),
                       ],
                     ),
                   )

@@ -50,6 +50,8 @@ Future<Object?> showTarotNightRoomDetailDialog(BuildContext context,
               const SizedBox(height: 20),
               Text(
                 roomInfo.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                     height: 1.0,
                     color: Color.fromARGB(255, 241, 198, 255),
