@@ -38,6 +38,10 @@ final routerProvider = Provider<GoRouter>((ref) {
     refreshListenable: routerListenable,
     routes: <RouteBase>[
       GoRoute(
+        path: '/',
+        redirect: (context, state) => HomeView.routeName,
+      ),
+      GoRoute(
           path: HomeView.routeName,
           builder: (BuildContext context, GoRouterState state) =>
               const HomeView()),

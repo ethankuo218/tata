@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:tata/src/core/models/tarot_night_room.dart';
 import 'package:tata/src/core/providers/pages/my_chat_room_tile_provider.dart';
 import 'package:tata/src/utils/avatar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyChatRoomTile extends ConsumerWidget {
   final String userUid;
@@ -137,7 +138,11 @@ class MyChatRoomTile extends ConsumerWidget {
                                   height: 22,
                                   child: Text(
                                     roomInfo.fold(
-                                            (l) => l.latestMessage?.content,
+                                            (l) => l.latestMessage!.senderId ==
+                                                    'system'
+                                                ? getSystemMessage(context,
+                                                    l.latestMessage!.content)
+                                                : l.latestMessage?.content,
                                             (r) => r.latestMessage?.content) ??
                                         'Break the ice!',
                                     maxLines: 1,
@@ -200,5 +205,25 @@ class MyChatRoomTile extends ConsumerWidget {
     return isToday
         ? '${timestamp.toDate().hour.toString().padLeft(2, '0')}:${timestamp.toDate().minute.toString().padLeft(2, '0')}'
         : '${timestamp.toDate().month.toString().padLeft(2, '0')}/${timestamp.toDate().day.toString().padLeft(2, '0')}';
+  }
+
+  String getSystemMessage(BuildContext context, String key) {
+    List<String> keySplit = key.split(' ');
+    key = keySplit[keySplit.length - 1];
+    keySplit.removeAt(keySplit.length - 1);
+    String name = keySplit.join(' ');
+
+    switch (key) {
+      case 'room_joined':
+        return '$name ${AppLocalizations.of(context)!.chat_room_system_message_join_chat_room}';
+      case 'room_created':
+        return AppLocalizations.of(context)!.chat_room_system_message_welcome;
+      case 'room_closed':
+        return AppLocalizations.of(context)!.common_room_closed;
+      case 'room_left':
+        return '$name ${AppLocalizations.of(context)!.chat_room_system_message_member_leave}';
+      default:
+        return key;
+    }
   }
 }

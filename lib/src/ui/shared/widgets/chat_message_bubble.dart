@@ -246,7 +246,8 @@ class ChatMessageBubble extends StatelessWidget {
                         ? MainAxisAlignment.end
                         : MainAxisAlignment.start,
                 children: [
-                  if (isNextMsgSentBySameUser) const SizedBox(width: 28),
+                  if (isNextMsgSentBySameUser && !isSystemMessage)
+                    const SizedBox(width: 28),
                   if (!isSystemMessage &&
                       !isSentByMe &&
                       !isNextMsgSentBySameUser)
@@ -326,11 +327,22 @@ class ChatMessageBubble extends StatelessWidget {
   }
 
   String getSystemMessage(BuildContext context, String key) {
+    List<String> keySplit = key.split(' ');
+    key = keySplit[keySplit.length - 1];
+    keySplit.removeAt(keySplit.length - 1);
+    String name = keySplit.join(' ');
+
     switch (key) {
+      case 'room_joined':
+        return '$name ${AppLocalizations.of(context)!.chat_room_system_message_join_chat_room}';
+      case 'room_created':
+        return AppLocalizations.of(context)!.chat_room_system_message_welcome;
       case 'room_closed':
         return AppLocalizations.of(context)!.common_room_closed;
+      case 'room_left':
+        return '$name ${AppLocalizations.of(context)!.chat_room_system_message_member_leave}';
       default:
-        return '';
+        return key;
     }
   }
 }

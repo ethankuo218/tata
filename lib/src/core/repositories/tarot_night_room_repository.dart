@@ -252,6 +252,18 @@ class TarotNightRoomRepository {
       'role': 'host',
     }).then((value) => _markAsHost());
 
+    sendMessage(
+        memberInfo: MemberInfo(
+            name: 'system',
+            uid: 'system',
+            avatar: AvatarKey.theFool,
+            birthday: 'system',
+            role: 'system',
+            fcmToken: 'system'),
+        chatRoomId: newRoomDoc.id,
+        content: 'room_joined',
+        type: TarotNightMessageType.system);
+
     return newRoom;
   }
 
@@ -339,7 +351,7 @@ class TarotNightRoomRepository {
             role: 'system',
             fcmToken: 'system'),
         chatRoomId: roomId,
-        content: '${userInfo.name} join the room',
+        content: '${userInfo.name} room_joined',
         type: TarotNightMessageType.system);
   }
 
@@ -384,12 +396,30 @@ class TarotNightRoomRepository {
   // Remove a member from a chat room
   Future<void> removeMember(
       {required String roomId, required String memberId}) async {
+    final MemberInfo memberInfo = await getMemberInfo(roomId, memberId);
+
     await _fireStore
         .collection('tarot_night_rooms')
         .doc(roomId)
         .collection('participants')
         .doc(memberId)
         .delete();
+
+    await _fireStore.collection('tarot_night_rooms').doc(roomId).update({
+      'member_count': FieldValue.increment(-1),
+    });
+
+    sendMessage(
+        memberInfo: MemberInfo(
+            name: 'system',
+            uid: 'system',
+            avatar: AvatarKey.theFool,
+            birthday: 'system',
+            role: 'system',
+            fcmToken: 'system'),
+        chatRoomId: roomId,
+        content: '${memberInfo.name} room_left',
+        type: TarotNightMessageType.system);
   }
 
   // Get Host List

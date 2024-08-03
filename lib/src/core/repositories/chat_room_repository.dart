@@ -138,7 +138,9 @@ class ChatRoomRepository {
 
   // Send Message
   Future<void> sendMessage(
-      AppUserInfo userInfo, String chatRoomId, String message) async {
+      {required MemberInfo userInfo,
+      required String chatRoomId,
+      required String message}) async {
     final Timestamp timestamp = Timestamp.now();
 
     Message newMessage = Message(
@@ -264,20 +266,14 @@ class ChatRoomRepository {
         hostId: _firebaseAuth.currentUser!.uid,
         memberCount: 1,
         createTime: Timestamp.now(),
-        latestMessage: Message(
-          senderId: 'system',
-          name: 'title',
-          avatar: AvatarKey.theFool,
-          content: 'Welcome to the chat room!',
-          timestamp: Timestamp.now(),
-          readBy: [_firebaseAuth.currentUser!.uid],
-        ),
+        latestMessage: null,
         isClosed: false);
 
-    final userInfo = await _fireStore
-        .collection('users')
-        .doc(_firebaseAuth.currentUser!.uid)
-        .get();
+    final DocumentSnapshot<Map<String, dynamic>> userInfoSnapshot =
+        await _fireStore
+            .collection('users')
+            .doc(_firebaseAuth.currentUser!.uid)
+            .get();
 
     await newChatRoomDoc.set(newChatRoom.toJson());
     await _fireStore
@@ -286,22 +282,20 @@ class ChatRoomRepository {
         .collection('members')
         .doc(_firebaseAuth.currentUser!.uid)
         .set({
-      ...userInfo.data()!.cast<String, dynamic>(),
+      ...userInfoSnapshot.data()!.cast<String, dynamic>(),
       'role': 'host',
     });
 
-    await _fireStore
-        .collection('chat_rooms')
-        .doc(newChatRoom.id)
-        .collection('messages')
-        .add(Message(
-          senderId: 'system',
-          name: newChatRoom.title,
-          avatar: AvatarKey.theFool,
-          content: 'Welcome to the chat room!',
-          timestamp: Timestamp.now(),
-          readBy: [_firebaseAuth.currentUser!.uid],
-        ).toJson());
+    sendMessage(
+        userInfo: MemberInfo(
+            name: 'system',
+            uid: 'system',
+            avatar: AvatarKey.theFool,
+            birthday: 'system',
+            role: 'system',
+            fcmToken: 'system'),
+        chatRoomId: newChatRoomDoc.id,
+        message: 'room_created');
 
     return newChatRoom.id;
   }
@@ -415,21 +409,38 @@ class ChatRoomRepository {
       throw Exception('Room is full');
     }
 
-    final userInfo = await _fireStore
-        .collection('users')
-        .doc(_firebaseAuth.currentUser!.uid)
-        .get();
+    final DocumentSnapshot<Map<String, dynamic>> userInfoSnapshot =
+        await _fireStore
+            .collection('users')
+            .doc(_firebaseAuth.currentUser!.uid)
+            .get();
+
+    final AppUserInfo userInfo = AppUserInfo.fromJson(userInfoSnapshot.data()!);
 
     await _fireStore
         .collection('chat_rooms')
         .doc(roomId)
         .collection('members')
         .doc(currentUserId)
-        .set({...userInfo.data()!.cast<String, dynamic>(), 'role': 'member'});
+        .set({
+      ...userInfoSnapshot.data()!.cast<String, dynamic>(),
+      'role': 'member'
+    });
 
     await _fireStore.collection('chat_rooms').doc(roomId).update({
       'member_count': FieldValue.increment(1),
     });
+
+    sendMessage(
+        userInfo: MemberInfo(
+            name: 'system',
+            uid: 'system',
+            avatar: AvatarKey.theFool,
+            birthday: 'system',
+            role: 'system',
+            fcmToken: 'system'),
+        chatRoomId: roomId,
+        message: '${userInfo.name} room_joined');
   }
 
   // Leave a chat room
@@ -454,18 +465,16 @@ class ChatRoomRepository {
               removeMember(chatRoomId: chatRoomId, memberId: member.id);
             }));
 
-    await _fireStore
-        .collection('chat_rooms')
-        .doc(chatRoomId)
-        .collection('messages')
-        .add(Message(
-          senderId: 'system',
-          name: 'SYSTEM',
-          avatar: AvatarKey.theFool,
-          content: 'room_closed',
-          timestamp: Timestamp.now(),
-          readBy: [_firebaseAuth.currentUser!.uid],
-        ).toJson());
+    sendMessage(
+        userInfo: MemberInfo(
+            name: 'system',
+            uid: 'system',
+            avatar: AvatarKey.theFool,
+            birthday: 'system',
+            role: 'system',
+            fcmToken: 'system'),
+        chatRoomId: chatRoomId,
+        message: 'room_closed');
   }
 
   // Get members of a chat room
@@ -482,9 +491,24 @@ class ChatRoomRepository {
     return members;
   }
 
+  // Get Member Info
+  Future<MemberInfo> getMemberInfo(String roomId, String uid) async {
+    final DocumentSnapshot<Map<String, dynamic>> memberDoc = await _fireStore
+        .collection('chat_rooms')
+        .doc(roomId)
+        .collection('members')
+        .doc(uid)
+        .get();
+
+    return MemberInfo.fromJson(memberDoc.data()!);
+  }
+
   // Remove a member from a chat room
   Future<void> removeMember(
       {required String chatRoomId, required String memberId}) async {
+    final MemberInfo removedUserInfo =
+        await getMemberInfo(chatRoomId, memberId);
+
     await _fireStore
         .collection('chat_rooms')
         .doc(chatRoomId)
@@ -495,6 +519,17 @@ class ChatRoomRepository {
     await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
       'member_count': FieldValue.increment(-1),
     });
+
+    sendMessage(
+        userInfo: MemberInfo(
+            name: 'system',
+            uid: 'system',
+            avatar: AvatarKey.theFool,
+            birthday: 'system',
+            role: 'system',
+            fcmToken: 'system'),
+        chatRoomId: chatRoomId,
+        message: '${removedUserInfo.name} room_left');
   }
 
   // Delete a chat room
