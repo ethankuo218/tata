@@ -192,7 +192,7 @@ class _TarotNightTestResultExpandablePanelState
                                   bottomRight: Radius.circular(16))),
                           child: Text(item.description,
                               style: const TextStyle(
-                                  color: Colors.white, fontSize: 16)),
+                                  color: Colors.white, fontSize: 14)),
                         )),
                   ],
                 );

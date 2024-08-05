@@ -76,7 +76,8 @@ class _CreateTarotNightRoomBottomSheetState
                 ],
               ),
               width: 2),
-          borderRadius: const BorderRadius.all(Radius.circular(40))),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(40), topRight: Radius.circular(40))),
       child: Scaffold(
           backgroundColor: Colors.transparent,
           resizeToAvoidBottomInset: true,
@@ -136,7 +137,7 @@ class _CreateTarotNightRoomBottomSheetState
                                 .activity_lobby_activity_room_title_placeholder,
                             hintStyle: TextStyle(
                                 height: 1.71,
-                                fontSize: 14,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white.withOpacity(0.5))),
                       ),
@@ -244,7 +245,7 @@ class _CreateTarotNightRoomBottomSheetState
                         style: const TextStyle(
                             color: Colors.white,
                             height: 1.71,
-                            fontSize: 14,
+                            fontSize: 16,
                             fontWeight: FontWeight.w400),
                         onTapOutside: (event) =>
                             FocusManager.instance.primaryFocus?.unfocus(),
@@ -263,7 +264,7 @@ class _CreateTarotNightRoomBottomSheetState
                             hintStyle: TextStyle(
                                 color: Colors.white.withOpacity(0.5),
                                 height: 1.71,
-                                fontSize: 14,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w400)),
                       ),
                     ),

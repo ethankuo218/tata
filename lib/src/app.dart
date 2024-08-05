@@ -51,24 +51,24 @@ class App extends ConsumerWidget {
         fontFamily: "YuPearl",
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
             ),
-            backgroundColor: MaterialStateProperty.all<Color>(
+            backgroundColor: WidgetStateProperty.all<Color>(
               const Color.fromARGB(255, 255, 195, 79),
             ),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(40),
               ),
             ),
-            textStyle: MaterialStateProperty.all<TextStyle>(
+            textStyle: WidgetStateProperty.all<TextStyle>(
               const TextStyle(
-                height: 1.0,
-                color: Color.fromARGB(255, 24, 24, 24),
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+                  height: 1.0,
+                  color: Color.fromARGB(255, 24, 24, 24),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "YuPearl"),
             ),
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tata/src/core/providers/shared/leave_chat_view_provider.dart';
 import 'package:tata/src/ui/pages/home/home_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LeaveChatView extends ConsumerWidget {
   final String chatRoomId;
@@ -17,7 +18,7 @@ class LeaveChatView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Leave Chat'),
+        title: Text(AppLocalizations.of(context)!.common_leave_chat),
       ),
       body: Center(
         child: Padding(
@@ -25,9 +26,9 @@ class LeaveChatView extends ConsumerWidget {
           child: Column(
             children: [
               const SizedBox(height: 200),
-              const Text('您確定要離開此聊天室嗎？ 離開即無法查看您聊天的所有紀錄',
+              Text(AppLocalizations.of(context)!.common_leave_chat_message,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: 18)),
+                  style: const TextStyle(color: Colors.white, fontSize: 18)),
               const SizedBox(height: 20),
               Row(
                 children: [
@@ -35,15 +36,16 @@ class LeaveChatView extends ConsumerWidget {
                       flex: 1,
                       child: TextButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
+                            backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(255, 161, 161, 161)),
                           ),
                           onPressed: () {
                             ref.read(provider.notifier).leaveChat().then((_) =>
                                 context.pushReplacement(HomeView.routeName));
                           },
-                          child: const Text('Confirm',
-                              style: TextStyle(
+                          child: Text(
+                              AppLocalizations.of(context)!.common_cancel,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold)))),
@@ -53,14 +55,15 @@ class LeaveChatView extends ConsumerWidget {
                       child: TextButton(
                           style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all(Colors.red),
+                                WidgetStateProperty.all(Colors.red),
                           ),
                           onPressed: () {
                             ref.read(provider.notifier).leaveChat().then((_) =>
                                 context.pushReplacement(HomeView.routeName));
                           },
-                          child: const Text('Confirm',
-                              style: TextStyle(
+                          child: Text(
+                              AppLocalizations.of(context)!.common_confirm,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold)))),

@@ -261,17 +261,17 @@ class _TarotNightTestResultViewState
                                                             },
                                                             icon: const Icon(
                                                                 Icons.share)),
-                                                        IconButton(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(0.0),
-                                                            color: Colors.white,
-                                                            onPressed: () {
-                                                              print('Download');
-                                                            },
-                                                            icon: const Icon(
-                                                                Icons
-                                                                    .download)),
+                                                        // IconButton(
+                                                        //     padding:
+                                                        //         const EdgeInsets
+                                                        //             .all(0.0),
+                                                        //     color: Colors.white,
+                                                        //     onPressed: () {
+                                                        //       print('Download');
+                                                        //     },
+                                                        //     icon: const Icon(
+                                                        //         Icons
+                                                        //             .download)),
                                                       ])),
                                                 ],
                                               ),

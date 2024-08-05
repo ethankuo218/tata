@@ -6,6 +6,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:tata/src/core/models/member.dart';
 import 'package:tata/src/core/providers/shared/members_view_provider.dart';
 import 'package:tata/src/utils/avatar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MembersView extends ConsumerWidget {
   const MembersView(
@@ -36,7 +37,7 @@ class MembersView extends ConsumerWidget {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: const Color.fromARGB(255, 12, 13, 32),
-                title: const Text('Members'),
+                title: Text(AppLocalizations.of(context)!.common_room_member),
                 centerTitle: true,
                 titleSpacing: 0,
               ),

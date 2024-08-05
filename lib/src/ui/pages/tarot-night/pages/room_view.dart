@@ -225,12 +225,11 @@ class _TarotNightRoomViewState extends ConsumerState<TarotNightRoomView> {
                                           hintText:
                                               AppLocalizations.of(context)!
                                                   .chat_room_message_enter,
-                                          hintStyle: TextStyle(
-                                              color: const Color.fromARGB(
-                                                      255, 255, 255, 255)
-                                                  .withOpacity(0.5),
+                                          hintStyle: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 255, 255, 255),
                                               fontSize: 16,
-                                              fontWeight: FontWeight.w600),
+                                              fontWeight: FontWeight.w400),
                                           isDense: true,
                                           contentPadding:
                                               const EdgeInsets.fromLTRB(
