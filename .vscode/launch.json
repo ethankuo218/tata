@@ -18,7 +18,7 @@
             "name": "tata (prod mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release",
+            "flutterMode": "debug",
             "args": [
                 "--flavor=prod",
                 "--target=lib/main_prod.dart"

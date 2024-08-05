@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:tata/flavors.dart';
 import 'package:tata/src/core/providers/pages/my_chat_room_view_provider.dart';
 import 'package:tata/src/ui/pages/chat-room/chat_room_view.dart';
 import 'package:tata/src/ui/pages/my-chat-room/widgets/my_chat_room_tile.dart';
@@ -28,10 +29,12 @@ class _MyChatRoomViewState extends ConsumerState<MyChatRoomView> {
   bool _isLoaded = false;
 
   final adUnitId = Platform.isIOS
-      // ? 'ca-app-pub-4687997855228972/2128309893'
-      // : 'ca-app-pub-4687997855228972/8148423763';
-      ? 'ca-app-pub-3940256099942544/2934735716'
-      : 'ca-app-pub-3940256099942544/6300978111';
+      ? F.appFlavor == Flavor.dev
+          ? 'ca-app-pub-3940256099942544/2934735716'
+          : 'ca-app-pub-4687997855228972/2128309893'
+      : F.appFlavor == Flavor.dev
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-4687997855228972/8148423763';
 
   @override
   void initState() {

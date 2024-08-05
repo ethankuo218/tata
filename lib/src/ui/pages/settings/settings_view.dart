@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:tata/flavors.dart';
 import 'package:tata/src/core/providers/auth_provider.dart';
 import 'package:tata/src/core/providers/user_provider.dart';
 import 'package:tata/src/utils/avatar.dart';
@@ -29,10 +30,12 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
   bool _isLoaded = false;
 
   final adUnitId = Platform.isIOS
-      // ? 'ca-app-pub-4687997855228972/2128309893'
-      // : 'ca-app-pub-4687997855228972/8148423763';
-      ? 'ca-app-pub-3940256099942544/2934735716'
-      : 'ca-app-pub-3940256099942544/6300978111';
+      ? F.appFlavor == Flavor.dev
+          ? 'ca-app-pub-3940256099942544/2934735716'
+          : 'ca-app-pub-4687997855228972/2128309893'
+      : F.appFlavor == Flavor.dev
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-4687997855228972/8148423763';
 
   @override
   void initState() {
