@@ -31,6 +31,11 @@ migrate_working_dir/
 .pub/
 /build/
 
+# Firebase related
+.firebase/
+firebase_options_dev.dart
+firebase_options_prod.dart
+
 # Symbolication related
 app.*.symbols
 
@@ -41,3 +46,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Assets
+assets/avatars/
+assets/images/tarot/
+

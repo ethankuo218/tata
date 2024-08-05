@@ -1,0 +1,25 @@
+flavors:
+  dev:
+    app:
+      name: "TATA (Dev)"
+
+    android:
+      applicationId: "com.eq.tata.dev"
+      firebase:
+        config: ".firebase/dev/google-services.json"
+    ios:
+      bundleId: "com.eq.tata.dev"
+      firebase:
+        config: ".firebase/dev/GoogleService-Info.plist"
+  prod:
+    app:
+      name: "TATA"
+
+    android:
+      applicationId: "com.eq.tata"
+      firebase:
+        config: ".firebase/prod/google-services.json"
+    ios:
+      bundleId: "com.eq.tata"
+      firebase:
+        config: ".firebase/prod/GoogleService-Info.plist"

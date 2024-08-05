@@ -5,21 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "tata",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "tata (profile mode)",
+            "name": "tata (dev mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "debug",
+            "args": [
+                "--flavor=dev",
+                "--target=lib/main_dev.dart"
+            ]
         },
         {
-            "name": "tata (release mode)",
+            "name": "tata (prod mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "args": [
+                "--flavor=prod",
+                "--target=lib/main_prod.dart"
+            ]
         }
     ]
 }
