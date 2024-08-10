@@ -288,7 +288,7 @@ class ChatRoomRepository {
 
     sendMessage(
         userInfo: MemberInfo(
-            name: 'system',
+            name: newChatRoom.title,
             uid: 'system',
             avatar: AvatarKey.theFool,
             birthday: 'system',
@@ -433,7 +433,7 @@ class ChatRoomRepository {
 
     sendMessage(
         userInfo: MemberInfo(
-            name: 'system',
+            name: chatRoom.title,
             uid: 'system',
             avatar: AvatarKey.theFool,
             birthday: 'system',
@@ -451,7 +451,7 @@ class ChatRoomRepository {
   }
 
   // Close a chat room
-  Future<void> closeChatRoom(String chatRoomId) async {
+  Future<void> closeChatRoom(String chatRoomId, String title) async {
     await _fireStore.collection('chat_rooms').doc(chatRoomId).update({
       'is_closed': true,
     });
@@ -467,7 +467,7 @@ class ChatRoomRepository {
 
     sendMessage(
         userInfo: MemberInfo(
-            name: 'system',
+            name: title,
             uid: 'system',
             avatar: AvatarKey.theFool,
             birthday: 'system',
@@ -522,7 +522,7 @@ class ChatRoomRepository {
 
     sendMessage(
         userInfo: MemberInfo(
-            name: 'system',
+            name: 'SYSTEM',
             uid: 'system',
             avatar: AvatarKey.theFool,
             birthday: 'system',

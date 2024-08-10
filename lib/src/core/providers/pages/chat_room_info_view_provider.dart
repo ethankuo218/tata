@@ -38,6 +38,6 @@ class ChatRoomInfoView extends _$ChatRoomInfoView {
           category: category,
           limit: limit,
         )
-        .then((value) => {loadChatRoomInfo()});
+        .then((value) => loadChatRoomInfo());
   }
 }

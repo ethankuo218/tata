@@ -211,8 +211,8 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                                 ],
                               ))),
                       GestureDetector(
-                          onTap: () => Share.share(AppLocalizations.of(context)!
-                              .setting_share_content),
+                          onTap: () => Share.share(
+                              '${AppLocalizations.of(context)!.setting_share_content} \n https://www.tatarot.app'),
                           child: SizedBox(
                               height: 60,
                               child: Row(

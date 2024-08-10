@@ -36,11 +36,13 @@ class _TarotNightTestResultViewState
         .watch(tarotNightTestResultViewProvider(roomId: widget.roomId))
         .when(
           data: (roomInfo) {
-            ref
-                .read(tarotNightTestResultViewProvider(roomId: widget.roomId)
-                    .notifier)
-                .getRole()
-                .then((result) => role = result);
+            if (roomInfo.hostId != FirebaseAuth.instance.currentUser!.uid) {
+              ref
+                  .read(tarotNightTestResultViewProvider(roomId: widget.roomId)
+                      .notifier)
+                  .getRole()
+                  .then((result) => role = result);
+            }
 
             final TarotCard card = ref
                 .read(tarotNightTestResultViewProvider(roomId: widget.roomId)
@@ -255,9 +257,7 @@ class _TarotNightTestResultViewState
                                                             color: Colors.white,
                                                             onPressed: () {
                                                               Share.share(
-                                                                  AppLocalizations.of(
-                                                                          context)!
-                                                                      .tarot_result_share_content);
+                                                                  '${AppLocalizations.of(context)!.tarot_result_share_content} \n https://www.tatarot.app');
                                                             },
                                                             icon: const Icon(
                                                                 Icons.share)),

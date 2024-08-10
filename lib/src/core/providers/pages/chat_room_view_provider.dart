@@ -54,6 +54,8 @@ class ChatRoomView extends _$ChatRoomView {
 
   // Leave chat room
   Future<void> leaveChatRoom() async {
-    await ref.read(chatRoomRepositoryProvider).closeChatRoom(_roomInfo.id);
+    await ref
+        .read(chatRoomRepositoryProvider)
+        .closeChatRoom(_roomInfo.id, _roomInfo.title);
   }
 }

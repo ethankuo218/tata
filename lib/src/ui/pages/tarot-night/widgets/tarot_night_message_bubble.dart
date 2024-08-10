@@ -190,7 +190,10 @@ class TarotNightMessageBubble extends StatelessWidget {
                                     ],
                                   ),
                                 Text(
-                                  message.content,
+                                  isSystemMessage
+                                        ? getSystemMessage(
+                                            context, message.content)
+                                        : message.content,
                                   style: TextStyle(
                                       color: isSentByMe
                                           ? const Color.fromARGB(
@@ -441,7 +444,10 @@ class TarotNightMessageBubble extends StatelessWidget {
                                           ),
                               ),
                               child: Text(
-                                message.content,
+                                isSystemMessage
+                                        ? getSystemMessage(
+                                            context, message.content)
+                                        : message.content,
                                 style: TextStyle(
                                     color: isSystemMessage
                                         ? const Color.fromARGB(
@@ -543,7 +549,10 @@ class TarotNightMessageBubble extends StatelessWidget {
                                       ],
                                     ),
                                   Text(
-                                    message.content,
+                                    isSystemMessage
+                                        ? getSystemMessage(
+                                            context, message.content)
+                                        : message.content,
                                     style: TextStyle(
                                         color: isSentByMe
                                             ? const Color.fromARGB(

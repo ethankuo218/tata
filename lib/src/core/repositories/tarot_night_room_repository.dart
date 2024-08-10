@@ -261,7 +261,7 @@ class TarotNightRoomRepository {
             role: 'system',
             fcmToken: 'system'),
         chatRoomId: newRoomDoc.id,
-        content: 'room_joined',
+        content: 'room_created',
         type: TarotNightMessageType.system);
 
     return newRoom;

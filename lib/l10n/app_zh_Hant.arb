@@ -38,7 +38,7 @@
   "activity_lobby_activity_room_title_placeholder": "此心情會變成你的房間名稱",
   "activity_lobby_activity_room_tile_no_enter": "請輸入您的心境",
   "activity_lobby_activity_room_description": "什麼事情讓你感到不安或迷惘呢？",
-  "activity_lobby_activity_room_description_placeholder": "在這個個安全的空間，您的心事將被聆聽與尊重，\n詳細描述每一個感受，更能探討內心的秘密\n。",
+  "activity_lobby_activity_room_description_placeholder": "在這個安全的空間，您的心事將被聆聽與尊重，\n詳細描述每一個感受，更能探討內心的秘密\n。",
   "activity_lobby_activity_room_description_no_enter": "請輸入心情描述",
   "activity_lobby_activity_create": "開啟談心室",
   "activity_lobby_walkthrough_no_show": "不再出現",
@@ -54,6 +54,7 @@
   "activity_room_toast_activity_toast_title": "房主的心事分享",
   "activity_chat_room_tarot_test_start": "開始測驗",
   "activity_chat_room_tarot_test_result": "查看結果",
+  "activity_chat_room_tarot_start_task": "去解任務",
   "activity_chat_room_tarot_view_test_result": "查看測驗結果",
   "activity_chat_room_activity_room_info_slogan": "揭開你內心的秘密",
   "activity_chat_room_activity_room_info_description": "內心小煩惱",
@@ -293,7 +294,7 @@
   "hanged_man_tag_2": "等待",
   "hanged_man_quest_1": "發揮穩重的氣質，從房主訴說的煩惱中，提出你認為房主需要再三思的事件",
   "hanged_man_quest_2": "發揮倒吊者的特質，鼓勵房主用新的視角看現況，可以是寫一小段話給未來的自己或其他方式。",
-  "hanged_man_quest_3": "請用靜下心來，寫下當天的感受，反思水逆的事情XD 並邀請房主一起參加。",
+  "hanged_man_quest_3": "請靜下心來，寫下當天的感受，反思水逆的事情XD 並邀請房主一起參加。",
   "hanged_man_description_content": "倒吊人能在困難的情況下保持耐心、沈著穩重的形象，以新的視角來看待現況，鼓勵反思。",
   "hanged_man_intro": "現在，請以沉著心情幫助房主，讓他在靜下心等待並思考未來的方向！"
 }

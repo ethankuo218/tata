@@ -133,8 +133,9 @@ class _TarotNightAnnouncementState
                       },
                       style: ButtonStyle(
                           minimumSize: WidgetStateProperty.all(Size.zero),
-                          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8)),
+                          padding: WidgetStateProperty.all(
+                              const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8)),
                           backgroundColor: (isHost && isTestButtonEnabled) ||
                                   isTestCompleted
                               ? WidgetStateProperty.all(
@@ -145,10 +146,16 @@ class _TarotNightAnnouncementState
                           isHost && !isTestCompleted
                               ? AppLocalizations.of(context)!
                                   .activity_chat_room_tarot_test_start
-                              : AppLocalizations.of(context)!
-                                  .activity_chat_room_tarot_test_result,
+                              : isHost
+                                  ? AppLocalizations.of(context)!
+                                      .activity_chat_room_tarot_test_result
+                                  : AppLocalizations.of(context)!
+                                      .activity_chat_room_tarot_start_task,
                           style: TextStyle(
-                              color: isTestButtonEnabled ? const Color.fromARGB(255, 12, 13, 32) : const Color.fromARGB(255, 12, 13, 32).withOpacity(0.8),
+                              color: isTestButtonEnabled
+                                  ? const Color.fromARGB(255, 12, 13, 32)
+                                  : const Color.fromARGB(255, 12, 13, 32)
+                                      .withOpacity(0.8),
                               fontSize: 16,
                               fontWeight: FontWeight.bold)))
                 ],

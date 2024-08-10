@@ -50,6 +50,12 @@ class TarotNightLobbyView extends _$TarotNightLobbyView {
     }).catchError((e) => throw e);
   }
 
+  // Update Lobby Info
+  Future<void> updateLobbyInfo() async {
+    _participantStatus = await _getParticipantStatus();
+    _updateState();
+  }
+
   // Check participant status
   Future<ParticipantStatus> _getParticipantStatus() async {
     final List<TarotNightRoom> joinedRooms =

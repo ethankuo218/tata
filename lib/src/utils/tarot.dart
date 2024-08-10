@@ -115,7 +115,7 @@ class Tarot {
         return AppLocalizations.of(context)!.the_wheel_of_fortune_description;
       case 'justice_description':
         return AppLocalizations.of(context)!.the_justice_description;
-      case 'the_hangman_description':
+      case 'the_hanged_man_description':
         return AppLocalizations.of(context)!.the_hanged_man_description;
       case 'death_description':
         return AppLocalizations.of(context)!.death_description;

@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:tata/src/core/models/chat_room.dart';
 import 'package:tata/src/core/providers/pages/chat_room_info_view_provider.dart';
+import 'package:tata/src/ui/pages/home/widgets/create_chat_room_bottom_sheet.dart';
+import 'package:tata/src/ui/shared/widgets/chat_menu_entry.dart';
 import 'package:tata/src/utils/tarot.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -24,6 +27,18 @@ class ChatRoomInfoView extends ConsumerWidget {
               appBar: AppBar(
                 backgroundColor: const Color.fromARGB(255, 12, 13, 32),
                 title: Text(AppLocalizations.of(context)!.common_room_info),
+                actions: [
+                  if (chatRoomInfo.hostId ==
+                      FirebaseAuth.instance.currentUser!.uid)
+                    MenuBar(
+                        style: const MenuStyle(
+                          padding: WidgetStatePropertyAll(EdgeInsets.zero),
+                          backgroundColor:
+                              WidgetStatePropertyAll(Colors.transparent),
+                        ),
+                        children: ChatMenuEntry.build(
+                            _getMenus(context, chatRoomInfo, provider, ref)))
+                ],
               ),
               body: Scaffold(
                 body: Container(
@@ -263,5 +278,40 @@ class ChatRoomInfoView extends ConsumerWidget {
             ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(child: Text(error.toString())));
+  }
+
+  List<ChatMenuEntry> _getMenus(BuildContext context, ChatRoom chatRoomInfo,
+      ChatRoomInfoViewProvider provider, WidgetRef ref) {
+    final List<ChatMenuEntry> result = <ChatMenuEntry>[
+      ChatMenuEntry(
+        label: const Icon(
+          Icons.more_vert,
+          color: Colors.white,
+        ),
+        menuChildren: <ChatMenuEntry>[
+          if (chatRoomInfo.type == ChatRoomType.normal)
+            ChatMenuEntry(
+              label: const Text(
+                'Edit',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                showCreateChatRoomBottomSheet(context,
+                    mode: CreateChatRoomBottomSheetMode.edit,
+                    roomInfo: chatRoomInfo, onClosed: (_) {
+                  if (_ == null) return;
+
+                  ref.read(provider.notifier).editChatRoomInfo(
+                      title: _['title'],
+                      description: _['description'],
+                      category: _['category'].value,
+                      limit: _['limit']);
+                });
+              },
+            )
+        ],
+      ),
+    ];
+    return result;
   }
 }

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tata/src/core/models/role.dart';
+import 'package:tata/src/core/providers/pages/tarot-night/lobby_view_provider.dart';
 import 'package:tata/src/core/repositories/reference_repository.dart';
 import 'package:tata/src/core/repositories/tarot_night_room_repository.dart';
 
@@ -35,6 +36,8 @@ class TarotNightDrawRoleView extends _$TarotNightDrawRoleView {
     await ref
         .read(tarotNightRoomRepositoryProvider)
         .joinRoom(roomId: roomId, roleId: roleList[number].id);
+
+    await ref.read(tarotNightLobbyViewProvider.notifier).updateLobbyInfo();
 
     state = AsyncData(_role);
   }
