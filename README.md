@@ -1,6 +1,6 @@
 # TATA
 
-A new Flutter project
+A stress-free and soul-soothing anonymous chat platform where users can find someone to chat and share their thoughts with at any time.
 
 ## Getting Started
 
