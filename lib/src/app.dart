@@ -1,103 +1,81 @@
-import 'package:tata/src/chat-room/chat_room_page.dart';
-import 'package:tata/src/login/login_page.dart';
-import 'package:tata/src/models/chat_room.dart';
-import 'package:tata/src/realtime_pair/realtime_pair_page.dart';
-import 'package:tata/src/services/auth/auth_gate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tata/src/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'chat-room-list/chat_room_list_page.dart';
-import 'settings/settings_controller.dart';
-import 'settings/settings_view.dart';
-
-/// The Widget that configures your application.
-class MyApp extends StatelessWidget {
-  const MyApp({
-    super.key,
-    required this.settingsController,
-  });
-
-  final SettingsController settingsController;
+class App extends ConsumerWidget {
+  const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Glue the SettingsController to the MaterialApp.
-    //
-    // The ListenableBuilder Widget listens to the SettingsController for changes.
-    // Whenever the user updates their settings, the MaterialApp is rebuilt.
-    return ListenableBuilder(
-      listenable: settingsController,
-      builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
-          // Providing a restorationScopeId allows the Navigator built by the
-          // MaterialApp to restore the navigation stack when a user leaves and
-          // returns to the app after it has been killed while running in the
-          // background.
-          restorationScopeId: 'app',
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
 
-          // Provide the generated AppLocalizations to the MaterialApp. This
-          // allows descendant Widgets to display the correct translations
-          // depending on the user's locale.
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('en', ''), // English, no country code
-          ],
-
-          // Use AppLocalizations to configure the correct application title
-          // depending on the user's locale.
-          //
-          // The appTitle is defined in .arb files found in the localization
-          // directory.
-          onGenerateTitle: (BuildContext context) =>
-              AppLocalizations.of(context)!.appTitle,
-
-          // Define a light and dark color theme. Then, read the user's
-          // preferred ThemeMode (light, dark, or system default) from the
-          // SettingsController to display the correct theme.
-          theme: ThemeData(
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.black,
-            ),
-            scaffoldBackgroundColor: const Color.fromARGB(255, 41, 41, 41),
-            bottomSheetTheme: const BottomSheetThemeData(
-              surfaceTintColor: Colors.transparent,
-            ),
-            primarySwatch: Colors.purple,
-            fontFamily: "Intel",
-          ),
-          // darkTheme: ThemeData.dark(),
-          // themeMode: settingsController.themeMode,
-
-          // Define a function to handle named routes in order to support
-          // Flutter web url navigation and deep linking.
-          onGenerateRoute: (RouteSettings routeSettings) {
-            return MaterialPageRoute<void>(
-              settings: routeSettings,
-              builder: (BuildContext context) {
-                switch (routeSettings.name) {
-                  case SettingsView.routeName:
-                    return SettingsView(controller: settingsController);
-                  case ChatRoomListPage.routeName:
-                    return const ChatRoomListPage();
-                  case ChatRoomPage.routeName:
-                    return ChatRoomPage(
-                        chatRoomInfo: routeSettings.arguments as ChatRoom);
-                  case RealtimePairPage.routeName:
-                    return const RealtimePairPage();
-                  default:
-                    return const AuthGate();
-                }
-              },
-            );
+    return MaterialApp.router(
+      restorationScopeId: 'app',
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''), // English
+        Locale('zh', 'Hant'), // Chinese
+      ],
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.white, size: 16),
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 17),
+          backgroundColor: Color.fromARGB(255, 12, 13, 32),
+        ),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 12, 13, 32),
+        bottomSheetTheme: const BottomSheetThemeData(
+          surfaceTintColor: Color.fromARGB(255, 12, 13, 32),
+        ),
+        primarySwatch: const MaterialColor(
+          0xFFFFE455,
+          <int, Color>{
+            50: Color(0xFFFFE455),
+            100: Color(0xFFFFE455),
+            200: Color(0xFFFFE455),
+            300: Color(0xFFFFE455),
+            400: Color(0xFFFFE455),
+            500: Color(0xFFFFE455),
+            600: Color(0xFFFFE455),
+            700: Color(0xFFFFE455),
+            800: Color(0xFFFFE455),
+            900: Color(0xFFFFE455),
           },
-        );
-      },
+        ),
+        fontFamily: "YuPearl",
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            ),
+            backgroundColor: WidgetStateProperty.all<Color>(
+              const Color.fromARGB(255, 255, 195, 79),
+            ),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40),
+              ),
+            ),
+            textStyle: WidgetStateProperty.all<TextStyle>(
+              const TextStyle(
+                  height: 1.0,
+                  color: Color.fromARGB(255, 24, 24, 24),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "YuPearl"),
+            ),
+          ),
+        ),
+      ),
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
+      routeInformationProvider: router.routeInformationProvider,
     );
   }
 }
