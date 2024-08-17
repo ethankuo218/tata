@@ -29,6 +29,7 @@ Runner/GeneratedPluginRegistrant.*
 Runner/dev/
 Runner/prod/
 Runner/GoogleService-Info.plist
+ios/Runner/GoogleService-Info.plist
 
 # Exceptions to above rules.
 !default.mode1v3
